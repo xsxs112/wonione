@@ -15,7 +15,7 @@
 		</encoder>
 	</appender>
 	
-	<logger name="ksmart36.mybatis" level="info" additivity="false">
+	<logger name="cafe24.wio" level="info" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
