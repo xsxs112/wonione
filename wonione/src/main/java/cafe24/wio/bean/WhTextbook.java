@@ -9,6 +9,7 @@ public class WhTextbook {
 	private String whTxbWriter;		//작성자아이디
 	private String whTxbRegDate;	//등록일자
 	private String whTxb_remark;	//비고
+	
 	public String getWhTxbCode() {
 		return whTxbCode;
 	}

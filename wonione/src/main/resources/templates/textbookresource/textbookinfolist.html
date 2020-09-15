@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="title"></title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+	<h2 th:text="${mainTitle}"></h2>
+		<table class="table table-bordered table-hover table-striped">
+			<thead>
+				<tr>
+				  <th>교재코드</th>
+				  <th>교재명</th>
+				  <th>출판사</th>
+				  <th>저자</th>
+				  <th>작성자아이디</th>
+				  <th>등록일자</th>
+				</tr>
+			</thead>
+			<tbody th:each="til : ${textbookinfolist}">
+				<tr>
+				  <td th:text="${til.txbCode}"></td>
+				  <td th:text="${til.txbName}"></td>
+				  <td th:text="${til.txbPublisher}"></td>
+				  <td th:text="${til.txbAuthor}"></td>
+				  <td th:text="${til.txbWriter}"></td>
+				  <td th:text="${til.txbRegDate}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	 
+	</th:block>
+</html>
