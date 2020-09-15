@@ -14,6 +14,7 @@ public class Member {
 	private String  pmRCode;		// 은행 코드
 	private String  mrAccountNum;	// 계좌 번호
 	private String  shuttleNum;		// 셔틀 번호
+	private String  mrJoinDate;		// 일반 직원 입사일
 	private String  mrRegDate;		// 등록 일자
 	
 	
@@ -83,6 +84,12 @@ public class Member {
 	public void setShuttleNum(String shuttleNum) {
 		this.shuttleNum = shuttleNum;
 	}
+	public String getMrJoinDate() {
+		return mrJoinDate;
+	}
+	public void setMrJoinDate(String mrJoinDate) {
+		this.mrJoinDate = mrJoinDate;
+	}
 	public String getMrRegDate() {
 		return mrRegDate;
 	}
@@ -114,9 +121,12 @@ public class Member {
 		builder.append(mrAccountNum);
 		builder.append(", shuttleNum=");
 		builder.append(shuttleNum);
+		builder.append(", mrJoinDate=");
+		builder.append(mrJoinDate);
 		builder.append(", mrRegDate=");
 		builder.append(mrRegDate);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }

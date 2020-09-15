@@ -19,6 +19,7 @@
 			, 	pm_r_code			AS pmRCode
 			, 	mr_account_num		AS mrAccountNum
 			, 	shuttle_num			AS shuttleNum
+			,	mr_join_date		AS mrJoinDate
 			, 	mr_reg_date			AS mrRegDate
 		FROM 
 			wt_member_registration;
