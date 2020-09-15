@@ -2,14 +2,14 @@ package cafe24.wio.bean;
 
 public class LectureOpen {
 
-	private String lecOpCode;
-	private String lecOsCode;
-	private String lecStatus;
-	private int claCapacity;
-	private int claPeople;
-	private int claLack;
-	private String lecOpWriter;
-	private String lecOpRegDate;
+	private String lecOpCode;		//강의개설코드
+	private String lecOsCode;		//강의개설예정코드
+	private String lecStatus;		//강의상태
+	private int claCapacity;		//수강정원
+	private int claPeople;			//수강인원
+	private int claLack;			//미달인원
+	private String lecOpWriter;		//작성자아이디
+	private String lecOpRegDate;	//등록일자
 	public String getLecOpCode() {
 		return lecOpCode;
 	}

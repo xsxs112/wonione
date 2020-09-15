@@ -2,12 +2,12 @@ package cafe24.wio.bean;
 
 public class TextbookBasicInfo {
 
-	private String txbCode;
-	private String txbName;
-	private String txbPublisher;
-	private String txbAuthor;
-	private String txbWriter;
-	private String txbRegDate;
+	private String txbCode;			//교재코드
+	private String txbName;			//교재명
+	private String txbPublisher;	//출판사
+	private String txbAuthor;		//저자
+	private String txbWriter;		//작성자아이디
+	private String txbRegDate;		//등록일자
 	public String getTxbCode() {
 		return txbCode;
 	}

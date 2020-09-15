@@ -2,13 +2,13 @@ package cafe24.wio.bean;
 
 public class SupplyTextbook {
 	
-	private String supTxbCode;
-	private String txbCode;
-	private int supTxbQuantity;
-	private String txbReceiverId;
-	private String supTxbDate;
-	private String supTxbWriter;
-	private String supTxbRegDate;
+	private String supTxbCode;		//교재지급코드
+	private String txbCode;			//교재코드
+	private int supTxbQuantity;		//지급수량
+	private String txbReceiverId;	//지급대상
+	private String supTxbDate;		//지급일자
+	private String supTxbWriter;	//작성자아이디
+	private String supTxbRegDate;	//등록일자
 	public String getSupTxbCode() {
 		return supTxbCode;
 	}
