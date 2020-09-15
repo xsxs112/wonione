@@ -1,14 +1,14 @@
 package cafe24.wio.bean;
 
 public class WhTextbook {
-	private String whTxbCode;
-	private String txbCode;
-	private int whTxbQuantity;
-	private String whTxbDate;
-	private int stockTxbQuantity;
-	private String whTxbWriter;
-	private String whTxbRegDate;
-	private String whTxb_remark;
+	private String whTxbCode;		//교재입고코드
+	private String txbCode;			//교재코드
+	private int whTxbQuantity;		//입고수량
+	private String whTxbDate;		//입고일자
+	private int stockTxbQuantity;	//재고수량
+	private String whTxbWriter;		//작성자아이디
+	private String whTxbRegDate;	//등록일자
+	private String whTxb_remark;	//비고
 	public String getWhTxbCode() {
 		return whTxbCode;
 	}

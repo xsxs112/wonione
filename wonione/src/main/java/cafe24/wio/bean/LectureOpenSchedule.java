@@ -2,17 +2,17 @@ package cafe24.wio.bean;
 
 public class LectureOpenSchedule {
 	
-	private String lecOsCode;
-	private String lecName;
-	private String mrTeacherId;
-	private String lecTimeCode;
-	private String lecRoomCode;
-	private String lecDay;
-	private String lecLevelCode;
-	private String tfCode;
-	private String lecStDate;
-	private String lecFinDate;
-	private String lecOsRegDate;
+	private String lecOsCode;		//강의개설예정코드
+	private String lecName;			//강의명
+	private String mrTeacherId;		//강사아이디
+	private String lecTimeCode;		//강의시간
+	private String lecRoomCode;		//강의실
+	private String lecDay;			//강의요일
+	private String lecLevelCode;	//수업수준
+	private String tfCode;			//수강료코드
+	private String lecStDate;		//수업시작일자
+	private String lecFinDate;		//수업종료일자
+	private String lecOsRegDate;	//등록일자
 	public String getLecOsCode() {
 		return lecOsCode;
 	}
