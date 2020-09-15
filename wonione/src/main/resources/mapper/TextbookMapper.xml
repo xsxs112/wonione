@@ -15,6 +15,17 @@
 	<result column="txb_reg_date" 	property="txbRegDate"/>
 </resultMap>
 
+<resultMap type="WhTextbook" id="whTextbook">
+	<result column="wh_txb_code" 		property="whTxbCode"/>
+	<result column="txb_code" 		property="txbCode"/>
+	<result column="wh_txb_quantity" 	property="whTxbQuantity"/>
+	<result column="wh_txb_date" 	property="whTxbDate"/>
+	<result column="stock_txb_quantity" 	property="stockTxbQuantity"/>
+	<result column="wh_txb_writer" 	property="whTxbWriter"/>
+	<result column="wh_txb_reg_date" 	property="whTxbRegDate"/>
+	<result column="wh_txb_remark" 	property="whTxb_remark"/>
+</resultMap>
+
 <select id="getTextbookInfoList" resultType="TextbookBasicInfo" resultMap="txbBasicInfo">
 	SELECT 
 			txb_code
@@ -27,6 +38,31 @@
 		wt_textbook_basic_information
 </select>
 
+<select id="getTextbookOwnList">
+SELECT
+		wh_txb_code
+	,	wh_txb_quantity
+	,	wh_txb_date
+	,	stock_txb_quantity
+	,	wh_txb_writer
+	,	wh_txb_reg_date
+	,	wh_txb_remark
+	,	wt_textbook_basic_information.txb_code
+	,	txb_name
+	,	txb_publisher
+	,	txb_author
+	,	txb_writer
+	,	txb_reg_date
+FROM
+	wt_textbook_basic_information 
+	INNER join
+	wt_warehousing_textbook 
+	ON
+	wt_textbook_basic_information.txb_code 
+	=
+	wt_warehousing_textbook.txb_code;
+
+</select>
 
 </mapper>
     
