@@ -6,11 +6,31 @@
     
 <mapper namespace="cafe24.wio.mapper.ReportMapper">
 
+<resultMap type="Report" id="reportResultMap">
+		<result column="lec_open_code" 		property="lecOpenCode"/>
+		<result column="lec_open_sche_code" property="lecOpenScheCode"/>
+		<result column="lec_Tuition" 		property="lecTuition"/>
+		<result column="mr_id" 				property="mrId"/>
+		<result column="lec_target" 		property="lecTarget"/>
+		<result column="lec_plan" 			property="lecPlan"/>
+		<result column="lec_etc" 			property="lecEtc"/>
+		<result column="open_lec_reg_date"  property="openLecRegDate"/>
+</resultMap>
 
+<select id="getReportList" resultType="Report"  resultMap="reportResultMap">
+	SELECT 
+		  lec_open_code
+		, lec_open_sche_code
+		, lec_Tuition
+		, mr_id
+		, lec_target
+		, lec_plan
+		, lec_etc
+		, open_lec_reg_date
+	FROM 
+		wt_open_lecture;
 
-
-
-
+</select>
 
 
 </mapper>
