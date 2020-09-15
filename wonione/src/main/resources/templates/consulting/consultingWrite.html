@@ -8,32 +8,36 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 	 <h1>상담작성</h1>
-	  	<form>
+	  	<form action="/consultingWrite" method="POST" id="addconsulting">
 	 	 	<div class="form-group form-inline">
 				<label  class="col-sm-2 control-label">제목</label>
 				<input type="text" class="form-control" name="consultingTitle">
 			</div>
 			<div class="form-group form-inline">
-				<input type="text" class="form-control" name="consultingTeacher" placeholder="상담진행선생님">
+				<div class="form-group">
+				  		<select name ="consultingTeacher" class="form-control" >
+				  			<option>::상담진행선생님::</option>
+				  			<th:block th:each="t :${Teacher}">
+					  			<option th:value="${t.mr_name}">[[${t.mr_name}]]</option>
+				  			</th:block>
+				  		</select>
+			  		</div>
 					<div class="form-group">
 				  		<select name ="consultingClass" class="form-control">
-				  			<option value="1">관리자</option>
-				  			<option value="1">관리자</option>
-				  			<option value="1">관리자</option>
-				  			<option value="1">관리자</option>
+				  			<option>::강의반목록::</option>
+				  			<th:block th:each="l :${LecName}">
+					  			<option th:value="${l.lec_name}">[[${l.lec_name}]]</option>
+				  			</th:block>
 				  		</select>
 			  		</div>
 				<input type="text" class="form-control" name="consultingStudent"  placeholder="상담받는학생">
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">상담내용</label>
-				<input type="text" class="form-control" name="consultingData" style="text-align:center; width:1200px; height:150px; letter-spacing: -5px">
+				<input type="text" class="form-control" name="consultingData" style="width:1200px; height:150px;">
 			</div>
-				<button type="submit" class="btn btn-default">작성완료</button>
+				<button type="button" class="btn btn-default" id="addconsultingbtn">작성완료</button>
 		</form>
 	</th:block>
 	
-	<th:block layout:fragment="customJsScript">
-	 	<div th:replace="fragments/js :: jsFragment"></div>
-	</th:block>
 </html>
