@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
 	//이것은주석
+	//Pull Push Commit Test
 	@GetMapping("/")
 	public String index() {
 		return "index";
