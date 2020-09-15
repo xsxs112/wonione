@@ -8,7 +8,7 @@ public class WhTextbook {
 	private int stockTxbQuantity;	//재고수량
 	private String whTxbWriter;		//작성자아이디
 	private String whTxbRegDate;	//등록일자
-	private String whTxb_remark;	//비고
+	private String whTxbRemark;	//비고
 	
 	public String getWhTxbCode() {
 		return whTxbCode;
@@ -53,10 +53,10 @@ public class WhTextbook {
 		this.whTxbRegDate = whTxbRegDate;
 	}
 	public String getWhTxb_remark() {
-		return whTxb_remark;
+		return whTxbRemark;
 	}
-	public void setWhTxb_remark(String whTxb_remark) {
-		this.whTxb_remark = whTxb_remark;
+	public void setWhTxb_remark(String whTxbRemark) {
+		this.whTxbRemark = whTxbRemark;
 	}
 	@Override
 	public String toString() {
@@ -75,8 +75,8 @@ public class WhTextbook {
 		builder.append(whTxbWriter);
 		builder.append(", whTxbRegDate=");
 		builder.append(whTxbRegDate);
-		builder.append(", whTxb_remark=");
-		builder.append(whTxb_remark);
+		builder.append(", whTxbRemark=");
+		builder.append(whTxbRemark);
 		builder.append("]");
 		return builder.toString();
 	}
