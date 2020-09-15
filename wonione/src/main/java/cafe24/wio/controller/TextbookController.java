@@ -17,6 +17,19 @@ public class TextbookController {
 	@Autowired
 	private TextbookService textbookService;
 	
+	@GetMapping("/textbookownlist")
+	public String getTextbookOwnList(Model model
+									,TextbookBasicInfo txbBasicInfo ) {
+		
+		List<TextbookBasicInfo> textbookOwnList = textbookService.getTextbookOwnList(txbBasicInfo);
+		System.out.println(textbookOwnList);
+		model.addAttribute("textbookOwnList", textbookOwnList);
+		model.addAttribute("title", "교재보유현황 페이지");
+		model.addAttribute("mainTitle", "교재보유현황 페이지");
+		
+		return "textbookresource/textbookownlist";
+	}
+	
 	@GetMapping("/textbookmanage")
 	public String textbookManage(Model model) {
 		model.addAttribute("title", "교재관리페이지");

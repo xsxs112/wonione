@@ -20,4 +20,8 @@ public class TextbookService {
 		
 		return textbookinfolist;
 	}
+	public List<TextbookBasicInfo> getTextbookOwnList(TextbookBasicInfo txbBasicInfo){
+		List<TextbookBasicInfo> textbookOwnList = textbookMapper.getTextbookOwnList(txbBasicInfo);
+		return textbookOwnList;
+	}
 }

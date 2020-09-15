@@ -7,9 +7,29 @@
 		<title th:text="title"></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-
 	<h2 th:text="${mainTitle}"></h2>
-
+		<table class="table table-bordered table-hover table-striped">
+			<thead>
+				<tr>
+				  <th>교재코드</th>
+				  <th>교재명</th>
+				  <th>출판사</th>
+				  <th>저자</th>
+				  <th>작성자아이디</th>
+				  <th>등록일자</th>
+				</tr>
+			</thead>
+			<tbody th:each="tol : ${textbookOwnList}">
+				<tr>
+				  <td th:text="${tol.txbCode}"></td>
+				  <td th:text="${tol.txbName}"></td>
+				  <td th:text="${tol.txbPublisher}"></td>
+				  <td th:text="${tol.txbAuthor}"></td>
+				  <td th:text="${tol.txbWriter}"></td>
+				  <td th:text="${tol.txbRegDate}"></td>
+				</tr>
+			</tbody>
+		</table>
 	</th:block>
 	<th:block layout:fragment="customJsScript">
 	 
