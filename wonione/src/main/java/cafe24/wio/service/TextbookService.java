@@ -9,15 +9,15 @@ import cafe24.wio.bean.TextbookBasicInfo;
 import cafe24.wio.mapper.TextbookMapper;
 
 @Service
-public class TextBookService {
+public class TextbookService {
 	
 	@Autowired
 	private TextbookMapper textbookMapper;
 	
 	public List<TextbookBasicInfo> getTextbookInfoList(TextbookBasicInfo txbBasicInfo){
-		textbookMapper.getTextbookInfoList(txbBasicInfo);
+		List<TextbookBasicInfo> textbookinfolist = textbookMapper.getTextbookInfoList(txbBasicInfo);
 		
 		
-		return null;
+		return textbookinfolist;
 	}
 }
