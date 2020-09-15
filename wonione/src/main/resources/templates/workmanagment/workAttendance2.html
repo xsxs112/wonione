@@ -5,11 +5,9 @@
 	
 	<th:block layout:fragment="customTitle">
 		<title></title> 
-	</th:block>
-	<th:block layout:fragment="customCss">
 		<link href='css/calendar/main.css' rel='stylesheet' />
 		<script src='js/calendar/main.js'></script>
-		<script>
+	<script>
 	  document.addEventListener('DOMContentLoaded', function() {
 	    var calendarEl = document.getElementById('calendar');
 	
@@ -97,14 +95,16 @@
 	
 	</style>
 	</th:block>
+	
+	
+	
 	<th:block layout:fragment="customContent">
-	 <div id='calendar'></div>
+		<div id='calendar'></div>
 	</th:block>
+	
+	
 	
 	<th:block layout:fragment="customJsScript">
-	 	<div th:replace="fragments/js :: jsFragment"></div>
-	</th:block>
-	<th:block layout:fragment="customJs">
-	
+	  
 	</th:block>
 </html>
