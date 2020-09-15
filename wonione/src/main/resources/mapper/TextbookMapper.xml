@@ -7,25 +7,26 @@
 <mapper namespace="cafe24.wio.mapper.TextbookMapper">
 
 <resultMap type="TextbookBasicInfo" id="resultTxbBasicInfo">
-	<id property="txbCode" column="txb_code"/>
+
 	<result column="txb_code" 		property="txbCode"/>
 	<result column="txb_name" 		property="txbName"/>
 	<result column="txb_publisher" 	property="txbPublisher"/>
 	<result column="txb_author" 	property="txbAuthor"/>
 	<result column="txb_writer" 	property="txbWriter"/>
 	<result column="txb_reg_date" 	property="txbRegDate"/>
-	<collection property="whTextbookList" javaType="java.util.ArrayList" ofType="WhTextbook" resultMap="resultWhTextbook"/>
 </resultMap>
 
 <resultMap type="WhTextbook" id="resultWhTextbook">
-	<result column="wh_txb_code" 		property="whTxbCode"/>
-	<result column="txb_code" 		property="txbCode"/>
-	<result column="wh_txb_quantity" 	property="whTxbQuantity"/>
-	<result column="wh_txb_date" 	property="whTxbDate"/>
-	<result column="stock_txb_quantity" 	property="stockTxbQuantity"/>
-	<result column="wh_txb_writer" 	property="whTxbWriter"/>
-	<result column="wh_txb_reg_date" 	property="whTxbRegDate"/>
-	<result column="wh_txb_remark" 	property="whTxbRemark"/>
+	<id property="txbCode" column="txb_code"/>
+	<result column="wh_txb_code" 			property="whTxbCode"/>
+	<result column="txb_code" 				property="txbCode"/>
+	<result column="wh_txb_quantity" 		property="whTxbQuantity"/>
+	<result column="wh_txb_date" 			property="whTxbDate"/>
+	<result column="stock_txb_quantity"		property="stockTxbQuantity"/>
+	<result column="wh_txb_writer" 			property="whTxbWriter"/>
+	<result column="wh_txb_reg_date" 		property="whTxbRegDate"/>
+	<result column="wh_txb_remark" 			property="whTxbRemark"/>
+	<collection property="textbookBasicInfo" javaType="java.util.ArrayList" ofType="TextbookBasicInfo" resultMap="resultTxbBasicInfo"/>
 </resultMap>
 
 <select id="getTextbookInfoList" resultType="TextbookBasicInfo" resultMap="resultTxbBasicInfo">
@@ -40,21 +41,19 @@
 		wt_textbook_basic_information
 </select>
 
-<select id="getTextbookOwnList" resultMap="resultTxbBasicInfo">
+<select id="getTextbookOwnList" resultMap="resultWhTextbook">
 	SELECT
 			wh_txb_code
+		,	wt_textbook_basic_information.txb_code
+		,	txb_name
+		,	txb_publisher
+		,	txb_author
 		,	wh_txb_quantity
 		,	wh_txb_date
 		,	stock_txb_quantity
 		,	wh_txb_writer
 		,	wh_txb_reg_date
 		,	wh_txb_remark
-		,	wt_textbook_basic_information.txb_code
-		,	txb_name
-		,	txb_publisher
-		,	txb_author
-		,	txb_writer
-		,	txb_reg_date
 	FROM
 		wt_textbook_basic_information 
 		INNER join
@@ -62,7 +61,8 @@
 		ON
 		wt_textbook_basic_information.txb_code 
 		=
-		wt_warehousing_textbook.txb_code;
+		wt_warehousing_textbook.txb_code
+	ORDER BY wh_txb_code ASC;
 
 </select>
 
