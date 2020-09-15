@@ -12,7 +12,9 @@
 		<div th:replace="fragments/footer :: footerFragment"></div>
 	</div>
 	<!-- 사용자 지정 js스크립트 파일  start-->
-	<th:block layout:fragment="customJsScript"></th:block>
+	<th:block layout:fragment="customJsScript">
+		<div th:replace="fragments/js :: jsFragment"></div>
+	</th:block>
 	<!-- 사용자 지정 js스크립트 파일  end-->
 </body>
 </html>
