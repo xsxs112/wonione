@@ -8,9 +8,32 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 		
+		<table border="1">
+		<thead>
+			<tr  class="info">
+				<th>업무계획코드</th>
+				<th>강의예정코드</th>
+				<th>수강료</th>
+				<th>작성자</th>
+				<th>업무목표</th>
+				<th>업무계획</th>
+				<th>기타사항</th>
+			</tr>
+		</thead>	
+		<tbody>
+			<tr th:each="r : ${reportList}">
+			<td th:text=${r.lecOpenCode}></td>
+			<td th:text=${r.lecOpenScheCode}></td>
+			<td th:text=${r.lecTuition}></td>
+			<td th:text=${r.mrId}></td>
+			<td th:text=${r.lecTarget}></td>
+			<td th:text=${r.lecPlan}></td>
+			<td th:text=${r.lecEtc}></td>
+			</tr>
+		</tbody>	
+		</table>
+		
 	</th:block>
-	
 	<th:block layout:fragment="customJsScript">
-	 
 	</th:block>
 </html>
