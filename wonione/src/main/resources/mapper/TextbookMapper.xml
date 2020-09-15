@@ -6,11 +6,26 @@
     
 <mapper namespace="cafe24.wio.mapper.TextbookMapper">
 
+<resultMap type="TextbookBasicInfo" id="txbBasicInfo">
+	<result column="txb_code" 		property="txbCode"/>
+	<result column="txb_name" 		property="txbName"/>
+	<result column="txb_publisher" 	property="txbPublisher"/>
+	<result column="txb_author" 	property="txbAuthor"/>
+	<result column="txb_writer" 	property="txbWriter"/>
+	<result column="txb_reg_date" 	property="txbRegDate"/>
+</resultMap>
 
-
-
-
-
+<select id="getTextbookInfoList" parameterType="TextbookBasicInfo" resultType="TextbookBasicInfo" resultMap="txbBasicInfo">
+	SELECT 
+			txb_code
+		,   txb_name
+		,   txb_publisher
+		,   txb_author
+		,   txb_writer
+		,   txb_reg_date
+	FROM 
+		wt_textbook_basic_information
+</select>
 
 
 </mapper>
