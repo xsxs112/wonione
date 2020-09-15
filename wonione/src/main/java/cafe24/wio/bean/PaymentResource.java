@@ -1,6 +1,7 @@
 package cafe24.wio.bean;
 
 public class PaymentResource {
+	
 	private String pmRCode; //결제수단관리코드
 	private String pmRTitle; //결제수단타이틀
 	private String pmRGroupId; //결제수단그룹아이디 
