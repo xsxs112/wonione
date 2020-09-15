@@ -15,7 +15,7 @@
 	<result column="txb_reg_date" 	property="txbRegDate"/>
 </resultMap>
 
-<select id="getTextbookInfoList" parameterType="TextbookBasicInfo" resultType="TextbookBasicInfo" resultMap="txbBasicInfo">
+<select id="getTextbookInfoList" resultType="TextbookBasicInfo" resultMap="txbBasicInfo">
 	SELECT 
 			txb_code
 		,   txb_name
