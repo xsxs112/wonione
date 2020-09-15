@@ -26,7 +26,7 @@ public class MemberController {
 		model.addAttribute("title", "구성원 목록 조회");
 		model.addAttribute("WIOMemberList", WIOMemberList);
 		
-		return null;
+		return "member/WIOMemberList";
 	}
 	
 }
