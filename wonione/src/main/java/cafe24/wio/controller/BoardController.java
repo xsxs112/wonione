@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class BoardController {
 	
 	//공지사항
-	@GetMapping("/notice")
+	@GetMapping("/getNotice")
 	public String notice() {		
-		return "notice";
+		return "board/notice";
 	}
 	
 }
