@@ -15,23 +15,51 @@
 		<result column="lec_plan" 			property="lecPlan"/>
 		<result column="lec_etc" 			property="lecEtc"/>
 		<result column="open_lec_reg_date"  property="openLecRegDate"/>
+		<result column="mr_name"  			property="mrName"/>
 </resultMap>
 
+
 <select id="getReportList" resultType="Report"  resultMap="reportResultMap">
+	
 	SELECT 
 		  lec_open_code
 		, lec_open_sche_code
 		, lec_Tuition
-		, mr_id
+		, mr_name
 		, lec_target
 		, lec_plan
 		, lec_etc
 		, open_lec_reg_date
 	FROM 
-		wt_open_lecture;
+		wt_open_lecture 
+	INNER JOIN
+		wt_member_registration 
+	ON
+		wt_member_registration.mr_id = wt_open_lecture.mr_id;
 
 </select>
 
+<select id="getReportDetailList" parameterType="String" resultType="Report"  resultMap="reportResultMap">
+	
+	SELECT 
+		  lec_open_code
+		, lec_open_sche_code
+		, lec_Tuition
+		, mr_name
+		, lec_target
+		, lec_plan
+		, lec_etc
+		, open_lec_reg_date
+	FROM 
+		wt_open_lecture 
+	INNER JOIN
+		wt_member_registration 
+	ON
+		wt_member_registration.mr_id = wt_open_lecture.mr_id
+	WHERE
+		lec_open_code = #{lecOpenCode};
+
+</select>
 
 </mapper>
     

@@ -12,5 +12,7 @@ public interface ReportMapper {
 	//보고서조회
 	public List<Report> getReportList(Report report);
 	
+	//id조회
+	public Report getReportDetailList(String lecOpenCode);
 	
 }
