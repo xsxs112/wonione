@@ -18,6 +18,25 @@ public class TextbookController {
 	@Autowired
 	private TextbookService textbookService;
 	
+	@GetMapping("/textbookInfoRegister")
+	public String textbookInfoRegister(Model model) {
+		
+		model.addAttribute("title", "교재기본정보등록  페이지");
+		model.addAttribute("mainTitle", "교재기본정보등록 페이지");
+		
+		return "textbookresource/textbookInfoRegister";
+	}	
+	
+	@GetMapping("/textbookWahoRegister")
+	public String textbookWahoRegister(Model model) {
+		
+		model.addAttribute("title", "교재입고등록  페이지");
+		model.addAttribute("mainTitle", "교재입고등록 페이지");
+		
+		return "textbookresource/textbookWahoRegister";
+	}
+	
+	//교재등록선택페이지
 	@GetMapping("/textbookRegister")
 	public String textbookRegister(Model model) {
 		
@@ -27,6 +46,7 @@ public class TextbookController {
 		return "textbookresource/textbookRegister";
 	}
 	
+	//교재보유목록 
 	@GetMapping("/textbookOwnList")
 	public String getTextbookOwnList(Model model
 									, WhTextbook whTextbook) {
@@ -40,6 +60,7 @@ public class TextbookController {
 		return "textbookresource/textbookOwnlist";
 	}
 	
+	//교재관리메인페이지
 	@GetMapping("/textbookManage")
 	public String textbookManage(Model model) {
 		model.addAttribute("title", "교재관리페이지");
@@ -48,6 +69,7 @@ public class TextbookController {
 		return "textbookresource/textbookManage";
 		}
 	
+	//교재기본정보 리스트
 	@GetMapping("/textbookInfoList")
 	public String getTextbookInfoList(Model model
 									,TextbookBasicInfo txbBasicInfo ) {

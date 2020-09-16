@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+
+	<h2 th:text="${mainTitle}"></h2>
+	
+	<div><a href="/textbookWahoRegister" class="btn btn-info btn-lg"role="button">교재입고등록</a></div>
+	<div><a href="/textbookInfoRegister" class="btn btn-info btn-lg"role="button">교재정보등록</a></div>
+	</th:block>
+	
+	<div class="container-fluid" style="margin: 10px;">
+		<a href="/textbookManage" class="btn btn-primary" role="button">이전 페이지로</a>
+	</div>	
+	<th:block layout:fragment="customJsScript">
+	 
+	</th:block>
+</html>
