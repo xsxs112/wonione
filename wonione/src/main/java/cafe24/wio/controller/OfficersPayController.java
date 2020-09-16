@@ -23,6 +23,17 @@ public class OfficersPayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(OfficersPayController.class);
 
+	//직원급여명세서조회
+	@RequestMapping(value ="/getOfficersPay", method=RequestMethod.GET)
+	public String getOfficersPay(Model model) {
+		List<OfficersPayController> officersPay = officersPayService.getOfficersPay();
+		
+		model.addAttribute("officersPay",officersPay);
+		model.addAttribute("title","직원급여목록조회");
+		return "humanresource/payList";
+		
+	}
+	
 	//직원급여목록조회
 	@RequestMapping(value ="/getOfficersPayList", method=RequestMethod.GET)
 	public String getOfficersPayList(Model model) {

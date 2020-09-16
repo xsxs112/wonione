@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title></title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+		<table class ="table table-striped">
+			<tr>
+				<td>년</td>
+				<td>월</td>
+				<td colspan="4">급여명세서</td>
+			</tr>
+			<tr>
+				<td>아이디</td>
+				<td>내용</td>
+				<td>시급</td>
+				<td>내용</td>
+				<td>이름</td>
+				<td>내용</td>
+			</tr>
+			<tr>
+				<td>입사일자</td>
+				<td colspan="5">내용</td>
+			</tr>
+			<tr class="info">
+				<td rowspan="4">지급내역</td>
+				<td>기본급</td>
+				<td>식비</td>
+				<td>교통비</td>
+				<td>복지후생</td>
+				<td>상여금</td>
+			</tr>				
+		
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr class="info">
+				<td>기타</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>급여계총액</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td rowspan="5">공제내역</td>
+			</tr>
+			<tr class="info">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr class="info">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td rowspan="3">근태내역</td>
+			</tr>
+			<tr class="info">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>사업장</td>
+				<td colspan="2">?</td>
+				<td>학원</td>
+				<td colspan="2">?</td>
+			</tr>
+			<tr hidden="">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><td>
+			</tr>
+		</table>	
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	</th:block>
+</html>
