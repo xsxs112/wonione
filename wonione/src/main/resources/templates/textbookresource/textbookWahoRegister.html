@@ -14,7 +14,7 @@
 				<tr>
 					<td>교재명</td>
 					<td>
-					<select id="txbCode" name = "txbCode" >
+					<select id="txbCode" name = "txbCode" class="form-control">
 						<th:block th:each=" til : ${textbookInfoList} ">
 							<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
 						</th:block>
@@ -28,9 +28,11 @@
 					</td>
 				</tr>
 				<tr>
+				<th:block th:each="wtl : ${whTextbookList}"></th:block>
 					<td>재고수량</td>
 					<td>
-						<input class="form-control"  type="text" name="stockTxbQuantity" id="stockTxbQuantity" placeholder="수량을 입력해주세요"/>
+						<input class="form-control"  type="text" >
+						<!-- th:value="${wtl.stockTxbQuantity}" -->
 					</td>
 				</tr>
 				<tr>
