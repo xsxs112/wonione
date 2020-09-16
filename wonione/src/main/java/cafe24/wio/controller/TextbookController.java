@@ -29,7 +29,7 @@ public class TextbookController {
 		return "textbookresource/textbookInfoRegister";
 	}	
 	
-	
+	//교재 입고등록
 	@PostMapping("/textbookWahoRegister")
 	public String textbookWahoRegister(Model model
 			 					, WhTextbook whTextbook
@@ -46,14 +46,19 @@ public class TextbookController {
 	return "redirect:/textbookManage";
 	} 
 	
+	//교재입고등록 
 	@GetMapping("/textbookWahoRegister")
 	public String textbookWahoRegister(Model model
 									 , TextbookBasicInfo txbBasicInfo) {
 		
 		model.addAttribute("title", "교재입고등록  페이지");
 		model.addAttribute("mainTitle", "교재입고등록 페이지");
+		//교재 기본정보조회
 		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList(txbBasicInfo);
 		model.addAttribute("textbookInfoList", textbookinfolist);
+		//교재입고목록 조회
+		List<WhTextbook> whTextbookList = textbookService.getWhTextbookList();
+		model.addAttribute("whTextbookList", whTextbookList);
 		
 		return "textbookresource/textbookWahoRegister";
 	}
