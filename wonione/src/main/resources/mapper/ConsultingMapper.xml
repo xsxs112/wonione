@@ -13,7 +13,8 @@
 	</resultMap>
 	<select id="SelectTeacher" resultType="hashMap" parameterType="String">
 		SELECT 
-			mr_name
+			mr_id
+			,mr_name
 		FROM 
 			wt_member_registration
 		WHERE
@@ -23,6 +24,24 @@
 		SELECT 
 			lec_name
 		FROM 
-			wt_lecture_open_schedule
+			wt_lecture_open_schedule;
 	</select>
+	<insert id="addConsultingWrite">
+		INSERT INTO 
+			wt_consulting
+			(cs_code
+			, cs_title
+			, mr_o_id
+			, cs_date
+			, cs_lec_name
+			, cs_s_name
+			, cs_data)
+		VALUES 
+			(NULL
+			, #{ConsultingTitle}
+			, #{ConsultingTeacher}
+			, NOW(), #{ConsultingClass}
+			, #{ConsultingStudent}
+			, #{ConsultingData});
+	</insert>
 </mapper>
