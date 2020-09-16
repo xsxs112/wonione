@@ -58,12 +58,16 @@
 }
 .educate-course:before {
   content: "\e906";
+  color: white;
+  font-size: x-large;
 }
 .educate-data-table:before {
   content: "\e907";
 }
 .educate-department:before {
   content: "\e908";
+  color: white;
+  font-size: x-large;
 }
 .educate-event:before {
   content: "\e909";
@@ -73,21 +77,31 @@
 }
 .educate-home:before {
   content: "\e90b";
+  color: white;
+  font-size: x-large;
 }
 .educate-interface:before {
   content: "\e90c";
+  color: white;
+  font-size: x-large;
 }
 .educate-landing:before {
   content: "\e90d";
 }
 .educate-library:before {
   content: "\e90e";
+  color: white;
+  font-size: x-large;
 }
 .educate-menu:before {
   content: "\e90f";
+  color: white;
+  font-size: x-large;
 }
 .educate-message:before {
   content: "\e910";
+  color: white;
+  font-size: x-large;
 }
 .educate-miscellanous:before {
   content: "\e911";
@@ -100,22 +114,36 @@
 }
 .educate-professor:before {
   content: "\e914";
+  color: white;
+  font-size: x-large;
 }
 .educate-project:before {
   content: "\e915";
+  color: white;
+  font-size: x-large;
 }
 .educate-search:before {
   content: "\e916";
+  color: white;
+  font-size: x-large;
 }
 .educate-settings:before {
   content: "\e917";
+  color: white;
+  font-size: x-large;
 }
 .educate-student:before {
   content: "\e918";
+  color: white;
+  font-size: x-large;
 }
 .educate-price-tag:before {
   content: "\e935";
+  color: white;
+  font-size: x-large;
 }
 .educate-price-tags:before {
   content: "\e936";
+  color: white;
+  font-size: x-large;
 }
