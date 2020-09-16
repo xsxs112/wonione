@@ -42,8 +42,9 @@
 		
 		
 		
-		<form action="" method="POST">
-			<input type="hidden" name="goodsSellerId" th:value="${session.SNAME}">
+		<form action="/holidayRequest" method="POST">
+			<input type="hidden" name="mrName" th:value="${session.SNAME}">
+			<input type="hidden" name="mrId" th:value="${session.SID}">
 			<table style="text-align: center;">
 				<tr>
 					<td><h3>휴가신청</h3></td>

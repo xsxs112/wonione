@@ -8,7 +8,13 @@
 
 
 
-	<insert id="addholidayApproval" parameterType="Member">
+	<insert id="addholidayApproval" parameterType="ApprovalRequest">
+	
+		INSERT INTO wt_approval_request
+		(request_code, request_sortation, mr_id, request_date, request_start_date, request_end_date, request_outting_time, request_reason, sortation, request_supervisor, request_processing_date, request_state)
+		VALUES ('자동증가', '', '', NOW(), NOW(), NOW(), 0, '', '', '', NOW(), '')
+	
+	
 		INSERT INTO tb_member
 		(m_code, m_name, m_level, m_age, m_birth, m_number, m_address, m_gender, m_exercise)
 		VALUES (#{memberCode},#{memberName},'일반회원', #{memberAge}

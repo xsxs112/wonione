@@ -11,7 +11,7 @@ import cafe24.wio.bean.Member;
 public interface ApprMapper {
 	
 	//휴가신청 추가
-	public int addholidayApproval(Member member,ApprovalRequest approvalRequest);
+	public int addholidayApproval(ApprovalRequest approvalRequest);
 	
 	//회원 정보 조회
 	public Member getMemberById(String mrId);

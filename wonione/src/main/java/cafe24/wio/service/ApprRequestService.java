@@ -24,10 +24,10 @@ public class ApprRequestService {
 		return holliday;
 	}
 	
-	public int addholidayApproval(Member member,ApprovalRequest approvalRequest) {
+	public int addholidayApproval(ApprovalRequest approvalRequest) {
 
 
-		int result = apprMapper.addholidayApproval(member, approvalRequest);
+		int result = apprMapper.addholidayApproval(approvalRequest);
 		
 		
 		return result;
