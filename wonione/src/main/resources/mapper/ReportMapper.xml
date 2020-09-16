@@ -120,5 +120,30 @@
 </select>
 
 
+<delete id="deleteCode" parameterType="String">
+	DELETE 
+	FROM 
+		wonione.wt_open_lecture
+	WHERE 
+		lec_open_code= #{lecOpenCode};
+</delete>
+
+<update id="updateCode" parameterType="Report">
+	UPDATE 
+		wonione.wt_open_lecture
+	SET 
+		lec_open_sche_code= #{lecOpenScheCode}
+		, mr_id= #{mrId}
+		, lec_target= #{lecTarget}
+		, lec_plan= #{lecPlan}
+		, lec_etc= #{lecEtc}
+		, open_lec_reg_date= NOW()
+	WHERE 
+		lec_open_code= #{lecOpenCode};
+
+</update>
+
+
+
 </mapper>
     

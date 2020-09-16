@@ -7,40 +7,57 @@
 		<title></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-		
-		
-		
-		<table border="1">
-		<thead>
-			<tr  class="info">
-				<th>업무계획코드</th>
-				<th>강의예정코드</th>
+	<form action="/updateworkreport" class="container-fluid" method="post" style="text-align:center" th:each="c : ${Report}">
+	<h3 style="color: grey;" >개설예정 강의 계획보고서 수정하기</h3>
+		<table class="table table-striped">
+			<tr class="info">	
+				<th>강의개설예정과목</th>
 				<th>작성자</th>
-				<th>업무목표</th>
-				<th>업무계획</th>
-				<th>기타사항</th>
-				<th>상세보기</th>
-				
 			</tr>
-		</thead>	
-		<tbody>
-			<tr th:each="r : ${reportList}">
-			<td th:text=${r.lecOpenCode}></td>
-			<td th:text=${r.lecOpenScheCode}></td>
-			<td th:text=${r.lecTuition}></td>
-			<td th:text=${r.mrId}></td>
-			<td th:text=${r.lecTarget}></td>
-			<td th:text=${r.lecPlan}></td>
-			<td th:text=${r.lecEtc}></td>
-			<td th:text=${r.lecEtc}></td>
-			<td>
-				<a th:href="@{/updateMember(lsyId=${l.lsyId})}">수정</a>
-			</td>	
+			<tr>
+				<td>
+					<select name ="lecName" class="form-control">
+						<option>::강의개설예정과목::</option>
+						<th:block th:each="c : ${Report}">
+						<option th:value="${c.lecOpenScheCode}">[[${c.lec_name}]]</option>
+						</th:block>
+					</select>
+				</td>
+				<td>
+					<select name ="mrName" class="form-control">
+						<option>::작성자::</option>
+						<th:block th:each="c: ${Report}">
+						<option th:value="${c.mrId}">[[${c.mr_name}]]</option>
+						</th:block>
+					</select>
+				</td>
 			</tr>
-		</tbody>	
+			<tr class="info">
+				 <th colspan="6">업무목표</th>
+			</tr>
+			<tr>	
+				<td colspan="6"><input type="text" class="form-control" name="lecTarget" th:value="${Report.lec_target}"></td>
+			</tr>
+			<tr class="info">	
+				<th colspan="6">업무계획</th>
+			</tr>
+			<tr class="info">
+			<td colspan="6"><textarea class="form-control" rows="6" name="lecPlan" th:value="${Report.lec_plan}"></textarea></td>
+			</tr>
+			<tr class="info">	
+				<th colspan="6">기타사항</th>
+			</tr>
+			<tr class="info">
+			<td colspan="3"><textarea class="form-control" rows="6" name="lecEtc"  th:value="${Report.lec_etc}"></textarea></td>
+			</tr>
+			
 		</table>
-		
+		<div style="margin-bottom:10px"> 
+			<button type="button" class="btn btn-default btn-info">저장하기</button>
+		</div>
+	</form>	
 	</th:block>
 	<th:block layout:fragment="customJsScript">
 	</th:block>
 </html>
+
