@@ -65,9 +65,30 @@ FROM
 	=
 	wt.txb_code
 
-	
-
 </select>
+<insert id="addWhTextbook" parameterType="WhTextbook">
+INSERT INTO wt_warehousing_textbook
+	(wh_txb_code
+	, txb_code
+	, wh_txb_quantity
+	, wh_txb_date
+	, stock_txb_quantity
+	, wh_txb_writer
+	, wh_txb_reg_date
+	, wh_txb_remark)VALUES (
+		CONCAT('wh_txb_code',
+			(SELECT LPAD(COUNT(*)+1,5,'0')
+		 FROM
+		 wt_warehousing_textbook AS wt))
+	, #{txbCode}
+	, 30
+	, NOW()
+	, 33
+	, 'oid002'
+	, CURRENT_TIME()	
+	, '');
+
+</insert>
 
 </mapper>
     

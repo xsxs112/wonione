@@ -2,16 +2,47 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="layout/default">
-	
 	<th:block layout:fragment="customTitle">
 		<title th:text="${title}"></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
 
 	<h2 th:text="${mainTitle}"></h2>
-	
-	<div><a href="/textbookWahoRegister" class="btn btn-info btn-lg"role="button">교재입고등록</a></div>
-	<div><a href="/textbookInfoRegister" class="btn btn-info btn-lg"role="button">교재정보등록</a></div>
+	<form action="/textbookWahoRegister" method="post" id="addForm" >
+		<div class="container-fluid">
+			<table class="table table-block" border="1" style="text-align: center;" >
+				<tr>
+					<td>교재명</td>
+					<td>
+					<select id="txbCode" name = "txbCode" >
+						<th:block th:each=" til : ${textbookInfoList} ">
+							<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
+						</th:block>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td>입고수량</td>
+					<td>
+						<input class="form-control"  type="text" name="whTxbQuantity" id="whTxbQuantity" placeholder="수량을 입력해주세요"/>
+					</td>
+				</tr>
+				<tr>
+					<td>재고수량</td>
+					<td>
+						<input class="form-control"  type="text" name="stockTxbQuantity" id="stockTxbQuantity" placeholder="수량을 입력해주세요"/>
+					</td>
+				</tr>
+				<tr>
+					<td>비고</td>
+					<td>
+						<input class="form-control"  type="text" id="whTxbRemark" name="whTxbRemark" placeholder="비고"/>
+					</td>
+				</tr>
+			</table>
+		</div>		
+		<input type="submit" class="btn btn-primary btn-block" id="addBtn" value="등록버튼">	
+	</form>
 	</th:block>
 	
 	<div class="container-fluid" style="margin: 10px;">
