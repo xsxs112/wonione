@@ -9,6 +9,10 @@ public class MainController {
 	//이것은주석
 	//Pull Push Commit Test
 	@GetMapping("/")
+	public String main() {
+		return "login/login";
+	}
+	@GetMapping("/login")
 	public String index() {
 		return "index";
 	}

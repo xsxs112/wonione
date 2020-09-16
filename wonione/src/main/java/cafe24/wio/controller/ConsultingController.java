@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cafe24.wio.bean.Consulting;
@@ -36,10 +38,22 @@ public class ConsultingController {
 									,@RequestParam(value="consultingStudent", required = false) String consultingStudent
 									,@RequestParam(value="consultingData", required = false) String consultingData) {
 		consultingService.addConsultingWrite(consulting);
-		return "/consulting/consultingList";
+		return "redirect:/consultingList";
 	}
-	@GetMapping("/consultingList")
-	public String consultingList() {
-		return "/consulting/consultingList";
-	}
+	
+	@RequestMapping(value="/consultingList", method=RequestMethod.GET)
+	   public String consultingList(Model model
+	               ,@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
+	         Map<String,Object> consultingListMap = consultingService.consultingList(currentPage);
+	                  
+	         model.addAttribute("title", "상담내역");
+	         model.addAttribute("lastPage", consultingListMap.get("lastPage"));
+	         model.addAttribute("consultingList", consultingListMap.get("consultingList"));
+	         model.addAttribute("startPageNum", consultingListMap.get("startPageNum"));
+	         model.addAttribute("lastPageNum", consultingListMap.get("lastPageNum"));
+	         model.addAttribute("currentPage",currentPage);         
+	         
+	         return "/consulting/consultingList";
+	   } 
+	
 }
