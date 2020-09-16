@@ -13,6 +13,6 @@ public interface BoardMapper {
 	public List<Board> getNotice(Board board);
 	
 	//자료게시판 목록 조회
-	
+	public List<Board> getDataLibrary(Board board);
 
 }

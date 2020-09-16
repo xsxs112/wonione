@@ -15,18 +15,16 @@
 					<th>제목</th>
 					<th>작성자 ID</th>
 					<th>작성자</th>
-					<th>작성일자</th>
-					
+					<th>작성일자</th>					
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="n : ${dataList}">
-					<td th:text=${n.boardNum}></td>
-					<td th:text=${n.boardTitle}></td>
-					<td th:text=${n.boardWriterId}></td>
-					<td th:text=${n.boardWriterName}></td>
-					<td th:text=${n.boardRegDate}></td>					
-					
+				<tr th:each="d : ${dataList}">
+					<td th:text=${d.boardNum}></td>
+					<td th:text=${d.boardTitle}></td>
+					<td th:text=${d.boardWriterId}></td>
+					<td th:text=${d.boardWriterName}></td>
+					<td th:text=${d.boardRegDate}></td>										
 				</tr>
 			</tbody>			
 		</table>

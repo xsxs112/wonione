@@ -13,22 +13,22 @@ import cafe24.wio.service.BoardService;
 
 @Controller
 public class BoardController {
-	
+
 	@Autowired
 	private BoardService boardService;
-	
-		//공지사항 조회
-		@RequestMapping(value = "/getNotice", method = RequestMethod.GET)
-		public String getNotice(Model model, Board board) {
-			
-			List<Board> noticeList = boardService.getNotice(board);
-			System.out.println(noticeList + "noticeList");
-			
-			model.addAttribute("title", "공지사항");
-			model.addAttribute("noticeList", noticeList);
-			
-			return "board/notice";
-		}
+
+	// 공지사항 조회
+	@RequestMapping(value = "/getNotice", method = RequestMethod.GET)
+	public String getNotice(Model model, Board board) {
+
+		List<Board> noticeList = boardService.getNotice(board);
+		System.out.println(noticeList + "noticeList");
+
+		model.addAttribute("title", "공지사항");
+		model.addAttribute("noticeList", noticeList);
+
+		return "board/notice";
+	}
 
 	/*
 	 * //공지사항 상세보기
@@ -42,14 +42,24 @@ public class BoardController {
 	 * 
 	 * }
 	 */
+
+	// 자료게시판 조회
+	@RequestMapping(value = "/getDataLibrary", method = RequestMethod.GET)
+	public String getDataLibrary(Model model, Board board) {
 		
-		//자료게시판 조회
+		List<Board> dataList = boardService.getDataLibrary(board);
+		System.out.println(dataList + "dataList");
 		
+		model.addAttribute("title", "자료게시판");
+		model.addAttribute("dataList", dataList);
 		
-		//수강후기 조회
-		@GetMapping("/getReview")
-		public String viewList() {
-			return "board/view";			
-		}
-	
+		return "board/dataLibrary";
+	}
+
+	// 수강후기 조회
+	@GetMapping("/getReview")
+	public String viewList() {
+		return "board/view";
+	}
+
 }

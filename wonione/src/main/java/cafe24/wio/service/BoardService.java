@@ -21,6 +21,10 @@ public class BoardService {
 	}
 	
 	//자료게시판 조회
-	
+	public List<Board> getDataLibrary(Board board){
+		System.out.println(board + " <-- board");
+		List<Board> dataList = boardMapper.getDataLibrary(board);
+		return dataList;
+	}
 
 }
