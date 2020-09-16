@@ -10,12 +10,28 @@
 	
 	<!-- css---------------------------------------- -->
 	<th:block layout:fragment="customCss">
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script type="text/javascript">
+	<script type="text/javascript">
+		$(function(){
+			$('#loginCheckBtn').click(function(){
+				
+				var mrId = $('#mrId').val();
+				var mrPw = $('#mrPw').val();
+				
+				if(mrId == null || mrId ==''){
+					alert('아이디를 입력해주세요');
+					$('#mrId').focus();
+					return;
+				}
+				if(mrPw == null || mrPw ==''){
+					alert('비밀번호를 입력해주세요');
+					$('#mrPw').focus();
+					return;
+				}
+				$('#logincheck').submit();
+			})
+		})
 		
-		
-		</script>
+	</script>
 
 	</th:block>
 	
@@ -25,25 +41,32 @@
 		<div class="static-table-area">
             <div class="container-fluid">
                 <div class="sparkline8-list">
-                	<form action=""></form>
+          			<form action="/logincheck" id="logincheck" method="POST">
                 		<table>
                 			<tr>
                 				<td>아이디</td>
-                				<td><input type="text"></td>
+                				<td><input type="text" name="mrId" id="mrId"></td>
                 			</tr>
                 			<tr>
                 				<td>비밀번호</td>
-                				<td><input type="text"></td>
+                				<td><input type="text" name="mrPw" id="mrPw"></td>
                 			</tr>
                 			<tr>
-                				<td>휴가 신청</td>
-                				<td><input type="date" id = "hollyStart"> ~ <input type="date" id = "hollyEnd"></td>
+                				<td colspan="2"><button type="button" id = "loginCheckBtn">아이디,비밀번호 확인</button></td>
                 			</tr>
-                			<tr>
-                				<td colspan="2"><button type="button">신청</button></td>
-                			</tr>
-                		</table>
-						
+               			</table>
+           			</form>
+          			<form action="/holidayApproval" id="holidayForm">
+            			<table>
+	             			<tr>
+	             				<td>휴가 신청</td>
+	             				<td><input type="date" name = "holiStart"> ~ <input type="date" name = "holiEnd"></td>
+	             			</tr>
+	             			<tr>
+	             				<td colspan="2"><button type="button">신청</button></td>
+	             			</tr>
+             			</table>
+					</form>
 						
 						
 						
