@@ -35,6 +35,7 @@ public class OfficersPay {
 	private int opPay;							//직원급여여실지급액
 	private String opRegDate;					//직원급여지급 작성일자
 	private String opWriter;					//직원급여지급 작성자
+	
 	public String getOpcCode() {
 		return opcCode;
 	}
