@@ -1,6 +1,7 @@
 package cafe24.wio.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,12 @@ public class ReportService {
 		
 	}
 	
+	//보고서작성
+	   public int getReportWrite(Report report) {
+	      int wrtite = reportMapper.getReportWrite(report);
+	      return wrtite;
+	   }
+	
 	
 	//코드로 조회
 		public Report getReportDetailList(String lecOpenCode) {
@@ -28,6 +35,18 @@ public class ReportService {
 			return report;
 		}
 
+	//강의예정코드조회	
+	public List<Map<String, Object>> classCode() {
+		List<Map<String, Object>> clCode = reportMapper.classCode();
+		System.out.println(clCode);
+		return clCode;
+	}	
 	
+	public List<Map<String, Object>> writeName(){
+		List<Map<String, Object>> wName = reportMapper.writeName();
+		System.out.println(wName);
+		return wName;
+		
+	}
 	
 }

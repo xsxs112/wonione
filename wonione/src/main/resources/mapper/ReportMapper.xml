@@ -9,22 +9,22 @@
 <resultMap type="Report" id="reportResultMap">
 		<result column="lec_open_code" 		property="lecOpenCode"/>
 		<result column="lec_open_sche_code" property="lecOpenScheCode"/>
-		<result column="lec_Tuition" 		property="lecTuition"/>
 		<result column="mr_id" 				property="mrId"/>
 		<result column="lec_target" 		property="lecTarget"/>
 		<result column="lec_plan" 			property="lecPlan"/>
 		<result column="lec_etc" 			property="lecEtc"/>
 		<result column="open_lec_reg_date"  property="openLecRegDate"/>
 		<result column="mr_name"  			property="mrName"/>
+		<result column="lec_name"  			property="lecName"/>
+		
 </resultMap>
 
-
+<!--보고서리스트  -->
 <select id="getReportList" resultType="Report"  resultMap="reportResultMap">
 	
 	SELECT 
 		  lec_open_code
 		, lec_open_sche_code
-		, lec_Tuition
 		, mr_name
 		, lec_target
 		, lec_plan
@@ -39,12 +39,12 @@
 
 </select>
 
+<!--보고서 상세보기  -->
 <select id="getReportDetailList" parameterType="String" resultType="Report"  resultMap="reportResultMap">
 	
 	SELECT 
 		  lec_open_code
 		, lec_open_sche_code
-		, lec_Tuition
 		, mr_name
 		, lec_target
 		, lec_plan
@@ -60,6 +60,62 @@
 		lec_open_code = #{lecOpenCode};
 
 </select>
+
+<!--보고서작성쿼리문  -->
+<insert id="getReportWrite" parameterType="Report">
+   
+   INSERT INTO wt_open_lecture
+         ( lec_open_code
+         , lec_open_sche_code
+         , mr_id
+         , lec_target
+         , lec_plan
+         , lec_etc
+         , open_lec_reg_date)
+   VALUES(
+         CONCAT('work_num',
+         (SELECT 
+         		LPAD(COUNT(*)+1,5,'0')
+       		FROM
+       			wt_open_lecture as wt))
+         , #{lecOpenScheCode}
+         , #{mrId}
+         , #{lecTarget}
+         , #{lecPlan}
+         , #{lecEtc}
+         , NOW());
+
+</insert>
+
+<!-- 수업명가져오기   -->
+
+<select id="classCode" resultType="hashMap"  parameterType="String">
+
+	SELECT
+		wt_lecture_open_schedule.lec_name
+	FROM
+		wt_lecture_open_schedule
+		INNER join
+		wt_lecture_open
+		on
+		wt_lecture_open.lec_os_code = wt_lecture_open_schedule.lec_os_code;	
+
+</select>
+
+<!-- 작성자이름가져오기  -->
+<select id="writeName" resultType="hashMap"  parameterType="String">
+
+	SELECT
+			wt_member_registration.mr_name
+	FROM
+			wt_member_registration
+			INNER join
+			wt_open_lecture
+			on
+			wt_member_registration.mr_id = wt_open_lecture.mr_id;
+
+</select>
+
 
 </mapper>
     
