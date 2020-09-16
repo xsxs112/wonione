@@ -8,9 +8,11 @@
 		<result column="opc_code"						property="opcCode"/>
 		<result column="mr_id"							property="mrId"/>
 		<result column="mr_name"						property="mrName"/>
-		<result column="pm_r_code"						property="hourlyWageCode"/>
-		<result column="attendance_time"				property="attendanceTime"/>
+		<result column="p_r_title"						property="monthCode"/>	
+		<result column="pm_r_title"						property="hourlyWageCode"/> <!-- 정리필요 -->
 		<result column="opc_hourly_wage"				property="opcHourlyWage"/>
+		<result column="opc_total_hour"					property="opcTotalHour"/>
+		<result column="opc_base_pay"					property="opcBasePay"/>
 		<result column="opc_food expenses"				property="opcFoodExpenses"/>
 		<result column="opc_transportation"				property="opcTransportation"/>
 		<result column="opc_welfare"					property="opcWelfare"/>
@@ -31,15 +33,60 @@
 		<result column="opd_reg_date"					property="opdRegDate"/>
 		<result column="opd_writer"						property="opdWriter"/>
 		<result column="op_code"						property="opCode"/>
-		<result column="p_r_code"						property="monthCode"/>	
 		<result column="op_date"						property="opDate"/>	
 		<result column="op_pay"							property="opPay"/>	
 		<result column="op_reg_date"					property="opRegDate"/>	
 		<result column="op_writer"						property="opWriter"/>	
-	</resultMap>	
-	
+	</resultMap>
+		<!-- 직원급여명세서조회-->
+	<select id = "getOfficersPay" resultType="OfficersPay">
+		SELECT
+			c.mr_id								AS mrId
+			,c.opc_hourly_wage					AS opcHourlyWage
+			,m.mr_name							AS mrName
+			,c.opc_base_pay						AS opcBasePay
+			,c.opc_food_expenses				AS opcFoodExpenses
+			,c.opc_transportation				AS opcTransportation
+			,c.opc_welfare						AS opcWelfare
+			,c.opc_bonus						AS opcBonus
+			,c.opc_ect							AS opcEct
+			,c.opc_total						AS opcTotal
+			,d.opd_income_tax					AS opdIncomeTax
+			,d.opd_resident_income_tax			AS opdResidentIncomTax
+			,d.opd_employment_insurance			AS opdEmploymentInsurance
+			,d.opd_national_pension				AS opdNationalPension
+			,d.opd_health_insurance				AS opdHealthInsurance
+			,d.opd_longterm_nursing_insurance	AS opdLongtermNursingInsurance
+			,d.opd_total						AS opdTotal
+			,p.op_pay							AS opPay
+			,c.opc_total_hour					AS opcTotalHour
+			,d.iy_code							AS iyCode
+			,pr.p_r_title						AS monthCode
+			
+		FROM
+			wt_officers_pay AS p
+			INNER JOIN 
+			wt_officers_pay_calculate AS c
+			ON 
+			p.mr_id=c.mr_id
+			LEFT join
+			wt_officers_pay_deduction AS d
+			ON 
+			p.mr_id = d.mr_id
+			LEFT JOIN 
+			wt_member_registration AS m
+			ON 
+			p.mr_id = m.mr_id 
+			LEFT JOIN 
+			wt_pay_resource AS pr
+			ON 
+			p.p_r_code = pr.p_r_code 
+		WHERE 
+			p.mr_id = #{mrId};	
+			<!-- p.mr_id = '수정하기'; -->	
+	</select>
 		<!-- 직원급여목록조회  [최근것만 받아오게 쿼리문 수정해야함]-->
-	<select id = "getOfficersPayList" resultType="OfficersPay">
+	<select id = "getOfficersPayList" resultType="OfficersPay" >
 		SELECT
 			op.op_code 		AS opCode
 			,op.mr_id 		AS mrId

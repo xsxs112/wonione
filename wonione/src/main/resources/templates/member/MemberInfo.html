@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	  
+	<th:block layout:fragment="customTitle">
+	
+		<title th:text="title"></title>
+	
+	</th:block>	  
+	  
+	<th:block layout:fragment="customContent">
+	
+		<h2>구성원 정보 보기</h2>
+	<!-- 여기서 구성원 기본 정보  + 수강중 또는 강의중인 강의 목록을 보여주려면 th:each 어떻게 써야할까 ? 아래쪽에서 조회하는 정보는 다르니까 <tr>에 다시 each 걸어줄까? 0916_16:40 -->
+		<table class="table table-striped table-bordered">	
+			<tr>
+				<td>아이디</td>
+				<td th:text="${WIOMemberInfo.mrId}"></td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td th:text="${WIOMemberInfo.mrPw}"></td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td th:text="${WIOMemberInfo.mrName}"></td>
+			</tr>
+			
+			<tr>
+				<td>연락처</td>
+				<td th:text="${WIOMemberInfo.mrPhone}"></td>
+			</tr>
+			
+			<tr>
+				<td>주소</td>
+				<td th:text="${WIOMemberInfo.mrAddr}"></td>
+			</tr>
+			
+			<tr>
+				<td>목표 점수</td>
+				<td th:text="${WIOMemberInfo.mrTargetScore}"></td>
+			</tr>
+			
+			<tr>
+				<td>은행 코드</td>
+				<td th:text="${WIOMemberInfo.pmRCode}"></td>
+			</tr>
+			
+			<tr>
+				<td>계좌 번호</td>
+				<td th:text="${WIOMemberInfo.mrAccountNum}"></td>
+			</tr>
+			
+			<tr>
+				<td>입사일</td>
+				<td th:text="${WIOMemberInfo.mrJoinDate}"></td>
+			</tr>
+			
+			<tr>
+				<td>등록일</td>
+				<td th:text="${WIOMemberInfo.mrRegDate}"></td>
+			</tr>
+		</table>	
+			
+	</th:block> 
+</html>

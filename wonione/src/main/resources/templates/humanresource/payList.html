@@ -7,9 +7,9 @@
 		<title th:text="${title}">직원급여목록</title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-	  	<table border="1">
+	  	<table class ="table table-striped">
 	  		<thead>
-	  			<tr>
+	  			<tr class="info">
 	  				<th>직원급여지급코드</th>
 	  				<th>아이디</th>
 	  				<th>이름</th>
@@ -30,7 +30,7 @@
 	  				<td th:text="${l.opRegDate}"></td>
 	  				<td th:text="${l.opWriter}"></td>
 	  				<!-- get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음) -->
-	  				<td><a th:href="@{#}">급여명세서</a></td>
+	  				<td><a th:href="@{/getOfficersPay(mrId=${l.mrId})}">급여명세서</a></td>
 	  				<!-- <td><a th:href="@{/미정(memberId=${l.memberId},memberPw=${l.memberPw})}">수정</a></td> -->
 	  			</tr>
 	  		</tbody>	

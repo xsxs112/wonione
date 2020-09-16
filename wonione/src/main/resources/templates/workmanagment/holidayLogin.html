@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default">
+
+<th:block layout:fragment="customTitle">
+	<title>휴가신청</title>
+</th:block>
+
+
+<!-- css---------------------------------------- -->
+<th:block layout:fragment="customCss">
+	<script type="text/javascript">
+		$(function() {
+			$('#loginCheckBtn').click(function() {
+
+				var mrId = $('#mrId').val();
+				var mrPw = $('#mrPw').val();
+
+				if (mrId == null || mrId == '') {
+					alert('아이디를 입력해주세요');
+					$('#mrId').focus();
+					return;
+				}
+				if (mrPw == null || mrPw == '') {
+					alert('비밀번호를 입력해주세요');
+					$('#mrPw').focus();
+					return;
+				}
+				$('#logincheck').submit();
+			})
+		})
+	</script>
+
+</th:block>
+
+<!-- 본문----------------------------------------- -->
+<th:block layout:fragment="customContent">
+
+	<div class="static-table-area">
+		<div class="container-fluid">
+			<div class="sparkline8-hd">
+				<div class="main-sparkline8-hd">
+					<h1>휴가 신청 로그인</h1>
+				</div>
+			</div>
+			<div class="sparkline8-list">
+				<form action="/holidayApproval" id="logincheck" method="POST">
+					<table border="1">
+						<tr>
+							<td>아이디</td>
+							<td><input type="text" name="mrId" id="mrId"></td>
+						</tr>
+						<tr>
+							<td>비밀번호</td>
+							<td><input type="text" name="mrPw" id="mrPw"></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: center;">
+							<button type="button" id="loginCheckBtn">로그인</button></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+
+
+<!-- 스크립트 -------------------------------------------->
+<th:block layout:fragment="customJsScript">
+	<div th:replace="fragments/js :: jsFragment"></div>
+
+</th:block>
+
+<!-- js	 ------------------------------------------------>
+<th:block layout:fragment="customJs">
+
+</th:block>
+</html>

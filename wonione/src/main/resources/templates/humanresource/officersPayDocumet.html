@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}">직원급여명세서</title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+		<table class ="table table-striped" th:each="l : ${officersPay}">
+			<tr>
+				<td></td>
+				<td style="text-align: center;" th:text="${l.iyCode +'년'}">년</td>
+				<td style="text-align: center;" th:text="${l.monthCode +'월'}">월</td>
+				<td colspan="3">급여명세서</td>
+			</tr>
+			<tr>
+				<td style="text-align: right;">아이디</td>
+				<td th:text="${l.mrId}"></td>
+				<td style="text-align: right;">시급</td>
+				<td th:text="${l.opcHourlyWage}"></td>
+				<td style="text-align: right;">이름</td>
+				<td th:text="${l.mrName}"></td>
+			</tr>
+			<tr>
+				<td style="text-align: right;">입사일자</td>
+				<td colspan="5"></td> <!-- 추가필요 -->
+			</tr>
+			<tr>
+				<td rowspan="5" style="text-align: center;">지급내역</td>
+			</tr>
+			<tr class="info" style="text-align: center;">	
+				<td>기본급</td>
+				<td>식비</td>
+				<td>교통비</td>
+				<td>복지후생</td>
+				<td>상여금</td>
+			</tr>
+			<tr style="text-align: center;">
+				<td th:text="${l.opcBasePay}"></td>
+				<td th:text="${l.opcFoodExpenses}"></td>
+				<td th:text="${l.opcTransportation}"></td>
+				<td th:text="${l.opcWelfare}"></td>
+				<td th:text="${l.opcBonus}"></td>
+			</tr>
+			<tr class="info" style="text-align: center;">
+				<td>기타</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>급여계총액</td>
+			</tr>
+			<tr style="text-align: center;">
+				<td th:text="${l.opcEct}"></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td th:text="${l.opcTotal}"></td>
+			</tr>
+			<tr style="text-align: center;">
+				<td rowspan="5">공제내역</td>
+			</tr>
+			<tr class="info" style="text-align: center;">
+				<td>소득세</td>
+				<td>주민소득세</td>
+				<td>고용보험료</td>
+				<td>국민연금</td>
+				<td>건강보험료</td>
+			</tr>
+			<tr style="text-align: center;">
+				<td th:text="${l.opdIncomeTax}"></td>
+				<td th:text="${l.opdResidentIncomTax}"></td>
+				<td th:text="${l.opdEmploymentInsurance}"></td>
+				<td th:text="${l.opdNationalPension}"></td>
+				<td th:text="${l.opdHealthInsurance}"></td>
+			</tr>
+			<tr class="info"  style="text-align: center;">
+				<td>장기요양보험료</td>
+				<td></td>
+				<td></td>
+				<td>공제총액</td>
+				<td>실지급금</td>
+			</tr>
+			<tr style="text-align: center;">
+				<td th:text="${l.opdLongtermNursingInsurance}"></td>
+				<td></td>
+				<td></td>
+				<td th:text="${l.opdTotal}"></td>
+				<td th:text="${l.opPay}"></td>
+			</tr>
+			<tr style="text-align: center;">
+				<td rowspan="3">근태내역</td>
+			</tr>
+			<tr class="info" style="text-align: center;">
+				<td>정상근무</td>
+				<td>결근</td>
+				<td></td>
+				<td></td>
+				<td>총근무시간</td>
+			</tr>
+			<tr style="text-align: center;">
+				<td th:text="${l.opcTotalHour}"></td> <!-- 수정필요 -->
+				<td></td> <!-- 수정필요 -->
+				<td></td>
+				<td></td>
+				<td th:text="${l.opcTotalHour}"></td> <!-- 수정필요 -->
+			</tr>
+			<tr>
+				<td style="text-align: right;">사업장</td>
+				<td colspan="2"></td>
+				<td></td>
+				<td colspan="2"></td>
+			</tr>
+			<tr hidden="">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><td>
+			</tr>
+		</table>	
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	</th:block>
+</html>

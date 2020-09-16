@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import cafe24.wio.bean.TextbookBasicInfo;
 import cafe24.wio.bean.WhTextbook;
@@ -27,11 +29,36 @@ public class TextbookController {
 		return "textbookresource/textbookInfoRegister";
 	}	
 	
+	//교재 입고등록
+	@PostMapping("/textbookWahoRegister")
+	public String textbookWahoRegister(Model model
+			 					, WhTextbook whTextbook
+			 					,@RequestParam(value="txbCode", required = false)String txbCode
+			 					,@RequestParam(value="whTxbQuantity", required = false)String whTxbQuantity
+			 					,@RequestParam(value="stockTxbQuantity", required = false)String stockTxbQuantity
+			 					,@RequestParam(value="whTxbRemark", required = false)String whTxbRemark) {
+	System.out.println(txbCode + "  < -- txbCode");
+	System.out.println(whTxbQuantity + "  < -- whTxbQuantity");
+	System.out.println(stockTxbQuantity + "stockTxbQuantity");
+	System.out.println(whTxbRemark + "  < -- whTxbRemark");
+	textbookService.addWhTextbook(whTextbook);
+	
+	return "redirect:/textbookManage";
+	} 
+	
+	//교재입고등록 
 	@GetMapping("/textbookWahoRegister")
-	public String textbookWahoRegister(Model model) {
+	public String textbookWahoRegister(Model model
+									 , TextbookBasicInfo txbBasicInfo) {
 		
 		model.addAttribute("title", "교재입고등록  페이지");
 		model.addAttribute("mainTitle", "교재입고등록 페이지");
+		//교재 기본정보조회
+		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList(txbBasicInfo);
+		model.addAttribute("textbookInfoList", textbookinfolist);
+		//교재입고목록 조회
+		List<WhTextbook> whTextbookList = textbookService.getWhTextbookList();
+		model.addAttribute("whTextbookList", whTextbookList);
 		
 		return "textbookresource/textbookWahoRegister";
 	}

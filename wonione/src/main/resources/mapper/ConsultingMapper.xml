@@ -4,6 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cafe24.wio.mapper.ConsultingMapper">
 	<resultMap type="Consulting" id="ConsultingMap">
+		<result column="cs_code" 		property="ConsultingCode"/>
 		<result column="cs_date" 		property="ConsultingTitle"/>
 		<result column="mr_o_id" 		property="ConsultingTeacher"/>
 		<result column="cs_date" 		property="ConsultingDate"/>
@@ -11,6 +12,39 @@
 		<result column="cs_s_name" 		property="ConsultingStudent"/>
 		<result column="cs_data" 		property="ConsultingData"/>
 	</resultMap>
+	<select id="consultingList" resultType="hashMap" parameterType="map">
+		 SELECT 
+		 	cs.rowNum   AS rowNum
+		 	, cs_code		AS ConsultingCode
+         	, cs_title		AS ConsultingTitle
+			, mr_o_id		AS ConsultingTeacher
+			, cs_date		AS ConsultingDate
+			, cs_lec_name	AS ConsultingClass
+			, cs_s_name		AS ConsultingStudent
+			, cs_data		AS ConsultingData
+      FROM 
+         (SELECT
+            (@rowNum := @rowNum+1) AS rowNum
+            , cs_code
+           	, cs_title
+			, mr_o_id
+			, cs_date
+			, cs_lec_name
+			, cs_s_name
+			, cs_data
+         FROM   
+            wt_consulting AS c
+            JOIN
+            (SELECT @rowNum :=0 ) AS r   
+        	ORDER BY c.cs_code ASC) AS cs
+     		LIMIT #{startRow},#{rowPerPage};  
+	</select>
+	<select id="consultingListCount" resultType="int">
+      SELECT
+         COUNT(*)
+      FROM
+         wt_consulting;
+    </select>
 	<select id="SelectTeacher" resultType="hashMap" parameterType="String">
 		SELECT 
 			mr_id
