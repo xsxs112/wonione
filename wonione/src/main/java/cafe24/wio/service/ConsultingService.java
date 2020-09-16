@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cafe24.wio.bean.Consulting;
 import cafe24.wio.mapper.ConsultingMapper;
 
 @Service
@@ -25,6 +26,11 @@ public class ConsultingService {
 		List<Map<String, Object>> SelectLecName = consultingMapper.SelectLecName();
 		System.out.println(SelectLecName);
 		return SelectLecName;
+	}
+	public int addConsultingWrite(Consulting consulting) {
+		int result = consultingMapper.addConsultingWrite(consulting);
+		return result;
+		
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cafe24.wio.bean.Consulting;
 import cafe24.wio.service.ConsultingService;
 
 @Controller
@@ -28,16 +29,17 @@ public class ConsultingController {
 		return "/consulting/consultingWrite";
 	}
 	@PostMapping("/consultingWrite")
-	public String addconsultingWrite(@RequestParam(value="consultingTitle", required = false) String consultingTitle
+	public String addConsultingWrite(Consulting consulting
+									,@RequestParam(value="consultingTitle", required = false) String consultingTitle
 									,@RequestParam(value="consultingTeacher", required = false) String consultingTeacher
 									,@RequestParam(value="consultingClass", required = false) String consultingClass
 									,@RequestParam(value="consultingStudent", required = false) String consultingStudent
 									,@RequestParam(value="consultingData", required = false) String consultingData) {
-		System.out.println(consultingTitle);
-		System.out.println(consultingTeacher);
-		System.out.println(consultingClass);
-		System.out.println(consultingStudent);
-		System.out.println(consultingData);
+		consultingService.addConsultingWrite(consulting);
+		return "/consulting/consultingList";
+	}
+	@GetMapping("/consultingList")
+	public String consultingList() {
 		return "/consulting/consultingList";
 	}
 }
