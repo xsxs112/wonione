@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cafe24.wio.mapper.BoardMapper">
+
+	<resultMap type="Board" id="boardResultMap">
+		<result column="board_num"          property="boardNum"/>
+      	<result column="board_menu"         property="boardMenu"/>
+      	<result column="board_title"       	property="boardTitle"/>
+     	<result column="board_writer_id"    property="boardWriterId"/>
+     	<result column="board_reg_date"		property="boardRegDate"/>     	
+      	<result column="board_contents"     property="boardContents"/>
+     	<result column="board_picture"      property="boardPicture"/>
+      	<result column="board_file"   		property="boardFile"/>
+      	<result column="board_lec"    		property="boardLec"/>
+      	<result column="board_grade"   		property="boardGrade"/>
+      	<result column="mr_name"			property="boardWriterName"/>
+	</resultMap>
+	
+	<!-- 공지사항 조회 쿼리  -->
+	<select id="getNotice" resultType="Board" parameterType="Board" resultMap="boardResultMap">
+		SELECT
+			b.board_num,
+			b.board_title,
+			b.board_writer_id,
+			m.mr_name,
+			b.board_reg_date
+		FROM 
+			wt_board AS b
+			INNER JOIN
+			wt_member_registration AS m
+			ON
+			m.mr_id = b.board_writer_id
+		WHERE
+			board_menu = '공지사항';
+	</select>
+	
+	<!-- 자료게시판 조회 쿼리  -->
+	<select id="getDataLibrary" resultType="Board" parameterType="Board" resultMap="boardResultMap">
+		SELECT
+			b.board_num,
+			b.board_title,
+			b.board_writer_id,
+			m.mr_name,
+			b.board_reg_date
+		FROM 
+			wt_board AS b
+			INNER JOIN
+			wt_member_registration AS m
+			ON
+			m.mr_id = b.board_writer_id
+		WHERE
+			board_menu = '자료게시판';
+	</select>
+
+
+
+
+
+</mapper>
+    
