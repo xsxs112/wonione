@@ -49,16 +49,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <tr th:each = "l: ${holidayList}">
+                                                <td th:text = "${l.reDate}"></td>
+                                                <td>이름</td>
+                                                <td th:text = "${l.reStartDate}"></td>
+                                                <td th:text = "${l.reEndDate}"></td>
+                                                <td th:text = "${l.reReason}"></td>
+                                                <td th:text = "${l.sortation}"></td>
+                                                <td th:text = "${l.reSupervisor}"></td>
+                                                <td th:text = "${l.reProcessingDate}" ></td>
+                                                <td th:text = "${l.reState}"></td>
                                             </tr>
                                         </tbody>
                                     </table>
