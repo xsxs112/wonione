@@ -6,12 +6,14 @@ public class Board {
 	public String boardMenu;
 	public String boardTitle;
 	public String boardWriterId;
+	public String boardWriterName;
 	public String boardRegDate;
 	public String boardContents;
 	public String boardPicture;
 	public String boardFile;
 	public String boardLec;
 	public int boardGrade;
+	
 	public String getBoardNum() {
 		return boardNum;
 	}
@@ -35,6 +37,12 @@ public class Board {
 	}
 	public void setBoardWriterId(String boardWriterId) {
 		this.boardWriterId = boardWriterId;
+	}
+	public String getBoardWriterName() {
+		return boardWriterName;
+	}
+	public void setBoardWriterName(String boardWriterName) {
+		this.boardWriterName = boardWriterName;
 	}
 	public String getBoardRegDate() {
 		return boardRegDate;
@@ -83,6 +91,8 @@ public class Board {
 		builder.append(boardTitle);
 		builder.append(", boardWriterId=");
 		builder.append(boardWriterId);
+		builder.append(", boardWriterName=");
+		builder.append(boardWriterName);
 		builder.append(", boardRegDate=");
 		builder.append(boardRegDate);
 		builder.append(", boardContents=");

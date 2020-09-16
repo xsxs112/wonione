@@ -13,10 +13,14 @@ public class BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
-	//게시판 조회
-	public List<Board> getBoardList(Board board){
-		List<Board> result = boardMapper.getBoardList(board);
-		return result;
+	//공지사항 조회
+	public List<Board> getNotice(Board board){
+		System.out.println(board + " <-- board");
+		List<Board> noticeList = boardMapper.getNotice(board);
+		return noticeList;
 	}
 	
+	//자료게시판 조회
+	
+
 }

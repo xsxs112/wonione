@@ -9,7 +9,10 @@ import cafe24.wio.bean.Board;
 @Mapper
 public interface BoardMapper {
 	
-	//게시판 목록 조회
-	public List<Board> getBoardList(Board board);
+	//공지사항 목록 조회
+	public List<Board> getNotice(Board board);
 	
+	//자료게시판 목록 조회
+	
+
 }
