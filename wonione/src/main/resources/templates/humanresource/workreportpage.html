@@ -7,11 +7,9 @@
 		<title></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-	
-	
 	<form action="/getReportList" class="container-fluid" >
 		<table class="table table-striped" style="text-align:center">
-			<tr class="info">
+			<tr class="info" >
 				<th>업무계획코드</th>
 				<th>작성일자</th>
 			<tr th:each="r : ${Report}">	
@@ -20,25 +18,23 @@
 			</tr>	
 			<tr class="info">	
 				<th>강의예정코드</th>
-				<th>수강료</th>
+				<th>작성자</th>
 			</tr>
 			<tr th:each="r : ${Report}">	
-				<td th:text=${r.lecOpenCode}></td>
-				<td th:text=${r.lecTuition}></td>
-			</tr>
-			<tr class="info">
-				 <th>업무목표</th>
-				 <th>작성자</th>
-			</tr>
-			<tr th:each="r : ${Report}">	
-				<td th:text=${r.lecTarget}></td>
+				<td th:text=${r.lecName}></td>
 				<td th:text=${r.mrName}></td>
 			</tr>
+			<tr class="info">
+				 <th colspan="6">업무목표</th>
+			</tr>
+			<tr th:each="r : ${Report}" >	
+				<td colspan="6" th:text=${r.lecTarget}></td>
+			</tr>
 			<tr class="info">	
-				<th>업무계획</th>
+				<th colspan="6">업무계획</th>
 			</tr>
 			<tr th:each="r : ${Report}">
-			<td th:text=${r.lecPlan}></td>
+			<td  colspan="6" th:text=${r.lecPlan}></td>
 			</tr>
 		</table>
 		<button type="submit" class="btn btn-default btn-info">리스트로 돌아가기</button>

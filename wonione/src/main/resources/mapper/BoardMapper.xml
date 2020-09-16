@@ -11,13 +11,13 @@
       	<result column="board_menu"         property="boardMenu"/>
       	<result column="board_title"       	property="boardTitle"/>
      	<result column="board_writer_id"    property="boardWriterId"/>
+      	<result column="mr_name"			property="boardWriterName"/>
      	<result column="board_reg_date"		property="boardRegDate"/>     	
       	<result column="board_contents"     property="boardContents"/>
      	<result column="board_picture"      property="boardPicture"/>
       	<result column="board_file"   		property="boardFile"/>
       	<result column="board_lec"    		property="boardLec"/>
       	<result column="board_grade"   		property="boardGrade"/>
-      	<result column="mr_name"			property="boardWriterName"/>
 	</resultMap>
 	
 	<!-- 공지사항 조회 쿼리  -->

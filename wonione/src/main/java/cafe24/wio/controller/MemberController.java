@@ -16,6 +16,15 @@ public class MemberController {
 @Autowired
 	private MemberService memberService;
 
+	//1-2. 상세 보기 page
+	@GetMapping("/getMemberInfo")
+	public String getMemberInfo(Model model) {
+		
+		model.addAttribute("title", "상세 정보 보기");		
+		
+		return "member/MemberInfo";
+	}
+
 	//1. 리스트 가져오기
 	@GetMapping("/getWIOMemberList")
 	public String getWIOMemberList(Model model) {

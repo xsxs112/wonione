@@ -5,6 +5,11 @@
     
 <mapper namespace="cafe24.wio.mapper.MemberMapper">
 
+	<!-- 2. 로그인 -->
+	
+
+	<!-- 1-2. 구성원 정보 보기 -->
+
 
 	<!-- 1. 구성원 리스트 가져오기 -->
 	<select id="getWIOMemberList" resultType="Member">

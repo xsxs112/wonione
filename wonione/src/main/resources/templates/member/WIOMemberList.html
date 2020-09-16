@@ -8,17 +8,34 @@
   </th:block>
   
   <th:block layout:fragment="customContent">
-  	<table>
+  		<h2>구성원 목록</h2>
+  	<table class="table table-striped table-bordered">
   		<thead>
   			<tr>
-  				<th></th>
+  				<th>아이디</th>
+  				<th>이름</th>
+  				<th>권한</th>
+  				<th>정보 보기</th>
+  				<th>정보 수정</th>
+  				<th>삭제</th>
   			</tr>
   		</thead>
+  		
+  		<tbody>
+  			<tr th:each="m : ${WIOMemberList}">
+  				<td th:text="${m.mrId}"></td>
+  				<td th:text="${m.mrName}"></td>
+  				<td th:text="${m.levelName}"></td>
+  				<td>
+  					<a href="/getMemberInfo">정보 보기</a>
+  				</td>
+  				<td>수정</td>
+  				<td>삭제</td>
+  			</tr>
+  		</tbody>
   	</table>
   
   </th:block>
-  
-  
   
 	<th:block layout:fragment="customJsScript">
 			 

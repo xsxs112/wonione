@@ -30,12 +30,19 @@ private MemberMapper memberMapper;
 				if(memberLevel > 0) {
 					if(memberLevel == 1) {
 						WIOMemberList.get(n).setLevelName("관리자");
+					}else if(memberLevel == 2) {
+						WIOMemberList.get(n).setLevelName("시간 강사");
+					}else if(memberLevel == 3) {
+						WIOMemberList.get(n).setLevelName("일반 직원");
+					}else if(memberLevel == 4){
+						WIOMemberList.get(n).setLevelName("학원생");
+					}else {
+						WIOMemberList.get(n).setLevelName("비회원");
 					}
 				}
 			}
 		}
 		
-		
-		return null;
+		return WIOMemberList;
 	}
 }
