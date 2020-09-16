@@ -32,26 +32,34 @@ public class WorkController {
 
 	//휴가 신청 하려는데 아직 로그인 기능이 없어 세션 아이디 비밀번호를 쓸 수가 없어서
 	//여기서만 쓸수있게 임시로 만들게요
+	@GetMapping("/LoginForHoliday")
+	public String LoginForHoliday(Model model) {
+
+
+		return "workmanagment/holidayLogin";
+	}
 	
-	
-	@PostMapping("/logincheck")
-	public String login(Model model, @RequestParam(value = "mrId", required = false) String mrId,
-									@RequestParam(value = "mrPw", required = false) String mrPw,HttpSession session) {
+	@PostMapping("/LoginForHoliday")
+	public String LoginForHoliday(Model model, @RequestParam(value = "mrId", required = false) String mrId,
+												@RequestParam(value = "mrPw", required = false) String mrPw, HttpSession session) {
 		Member member = apprMapper.getMemberById(mrId);
 		if (member != null) {
 			if (member.getMrPw().equals(mrPw)) {
 				session.setAttribute("SNAME", member.getMrName());
-				System.out.println("로그인 성공");
 				return "workmanagment/holidayApproval";
 			}
 		}
 
-		return "workmanagment/holidayApproval";
+		return "workmanagment/holidayLogin";
 
 	}
 
+
+	
+	
+	
 	//휴가요청 리스트
-	@GetMapping("/holidayApproval")
+	@PostMapping("/holidayApproval")
 	public String getHolidayList(Model model) {
 
 		List<ApprovalRequest> holidayList = apprRequestService.getHolidayList();
@@ -60,6 +68,8 @@ public class WorkController {
 		return "workmanagment/holidayApproval";
 	}
 
+	
+	//아직 사용X
 	@GetMapping("/workAttendance")
 	public String workAttendance(WorkAttendance workAttendance) {
 
