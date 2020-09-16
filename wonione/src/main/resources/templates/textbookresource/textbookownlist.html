@@ -7,9 +7,44 @@
 		<title th:text="title"></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-
 	<h2 th:text="${mainTitle}"></h2>
-
+		<table class="table table-bordered table-hover table-striped">
+			<thead>
+				<tr>
+				  <th>교재입고코드</th>
+				  <th>교재코드</th>
+				  <th>교재명</th>
+				  <th>출판사</th>
+				  <th>저자</th>
+				  <th>입고수량</th>
+				  <th>입고일자</th>
+				  <th>재고수량</th>
+				  <th>작성자아이디</th>
+				  <th>비고</th>				  
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="tol : ${textbookOwnList}">
+					<th:block th:each="til : ${tol.textbookBasicInfo}">
+						<tr>
+						  <td th:text="${tol.whTxbCode}"></td>
+						  <td th:text="${til.txbCode}"></td>
+						  <td th:text="${til.txbName}"></td>
+						  <td th:text="${til.txbPublisher}"></td>
+						  <td th:text="${til.txbAuthor}"></td>
+						  <td th:text="${tol.whTxbQuantity}"></td>
+						  <td th:text="${tol.whTxbDate}"></td>
+						  <td th:text="${tol.stockTxbQuantity}"></td>
+						  <td th:text="${tol.whTxbWriter}"></td>
+						  <td th:text="${tol.whTxbRemark}"></td>
+						</tr>
+					</th:block>
+				</th:block>
+			</tbody>
+		</table>
+		<div class="container-fluid" style="margin: 10px;">
+			<a href="/textbookmanage" class="btn btn-primary" role="button">이전 페이지로</a>
+		</div>
 	</th:block>
 	<th:block layout:fragment="customJsScript">
 	 

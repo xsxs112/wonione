@@ -95,6 +95,11 @@
         easingType: 'linear',
         scrollSpeed: 900,
         animation: 'fade'
-    }); 	   
+    });
+	$('#addconsultingbtn').click(function(){
+		var addconsulting = $('#addconsulting');
+		addconsulting.submit();
+		
+	});
  
 })(jQuery); 

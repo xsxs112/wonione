@@ -7,35 +7,39 @@
 		<title></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-	
-		<table class ="table table-striped">
+		
+		
+		
+		<table border="1">
 		<thead>
-			<tr class="info">
+			<tr  class="info">
 				<th>업무계획코드</th>
 				<th>강의예정코드</th>
+				<th>작성자</th>
+				<th>업무목표</th>
 				<th>업무계획</th>
 				<th>기타사항</th>
-				<th>작성자</th>
-				<th>작성일자</th>
 				<th>상세보기</th>
+				
 			</tr>
 		</thead>	
 		<tbody>
 			<tr th:each="r : ${reportList}">
 			<td th:text=${r.lecOpenCode}></td>
 			<td th:text=${r.lecOpenScheCode}></td>
+			<td th:text=${r.lecTuition}></td>
+			<td th:text=${r.mrId}></td>
+			<td th:text=${r.lecTarget}></td>
 			<td th:text=${r.lecPlan}></td>
 			<td th:text=${r.lecEtc}></td>
-			<td th:text=${r.mrName}></td>
-			<td th:text=${r.openLecRegDate}></td>
-			
+			<td th:text=${r.lecEtc}></td>
 			<td>
-				<a th:href="@{/workreportpage(lecOpenCode=${r.lecOpenCode})}">상세보기</a>
+				<a th:href="@{/updateMember(lsyId=${l.lsyId})}">수정</a>
 			</td>	
 			</tr>
 		</tbody>	
 		</table>
-	
+		
 	</th:block>
 	<th:block layout:fragment="customJsScript">
 	</th:block>

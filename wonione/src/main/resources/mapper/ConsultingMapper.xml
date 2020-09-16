@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cafe24.wio.mapper.ConsultingMapper">
+	<resultMap type="Consulting" id="ConsultingMap">
+		<result column="cs_date" 		property="ConsultingTitle"/>
+		<result column="mr_o_id" 		property="ConsultingTeacher"/>
+		<result column="cs_date" 		property="ConsultingDate"/>
+		<result column="cs_lec_name" 	property="ConsultingClass"/>
+		<result column="cs_s_name" 		property="ConsultingStudent"/>
+		<result column="cs_data" 		property="ConsultingData"/>
+	</resultMap>
+	<select id="SelectTeacher" resultType="hashMap" parameterType="String">
+		SELECT 
+			mr_name
+		FROM 
+			wt_member_registration
+		WHERE
+	 		level_num = 1 OR level_num = 2 OR level_num = 3;
+	</select>
+	<select id="SelectLecName" resultType="hashMap" parameterType="String">
+		SELECT 
+			lec_name
+		FROM 
+			wt_lecture_open_schedule
+	</select>
+</mapper>
