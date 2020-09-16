@@ -43,6 +43,7 @@ develop branch잡고 merge
 
 Commit Message 양식
 [WonIOne] 개인이 무엇을작성했는지
+author: 작성자이름
 file: 파일이름
 detail: 변경내용
 		추가 내용
