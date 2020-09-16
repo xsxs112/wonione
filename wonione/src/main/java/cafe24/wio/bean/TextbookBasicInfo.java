@@ -1,5 +1,7 @@
 package cafe24.wio.bean;
 
+import java.util.List;
+
 public class TextbookBasicInfo {
 
 	private String txbCode;			//교재코드
@@ -8,7 +10,7 @@ public class TextbookBasicInfo {
 	private String txbAuthor;		//저자
 	private String txbWriter;		//작성자아이디
 	private String txbRegDate;		//등록일자
-	
+	private List<WhTextbook> whTextbook;// 교재정보
 	
 	public String getTxbCode() {
 		return txbCode;
@@ -46,6 +48,12 @@ public class TextbookBasicInfo {
 	public void setTxbRegDate(String txbRegDate) {
 		this.txbRegDate = txbRegDate;
 	}
+	public List<WhTextbook> getWhTextbook() {
+		return whTextbook;
+	}
+	public void setWhTextbook(List<WhTextbook> whTextbook) {
+		this.whTextbook = whTextbook;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -61,8 +69,13 @@ public class TextbookBasicInfo {
 		builder.append(txbWriter);
 		builder.append(", txbRegDate=");
 		builder.append(txbRegDate);
+		builder.append(", whTextbook=");
+		builder.append(whTextbook);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
+	
 	
 }
