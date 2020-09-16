@@ -4,7 +4,7 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
-		<title th:text="title"></title> 
+		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<h2 th:text="${mainTitle}"></h2>
@@ -24,8 +24,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<th:block th:each="tol : ${textbookOwnList}">
-					<th:block th:each="til : ${tol.textbookBasicInfo}">
+				<th:block th:each="til : ${textbookOwnList}">
+					<th:block th:each="tol : ${til.whTextbook}">
 						<tr>
 						  <td th:text="${tol.whTxbCode}"></td>
 						  <td th:text="${til.txbCode}"></td>
@@ -43,7 +43,7 @@
 			</tbody>
 		</table>
 		<div class="container-fluid" style="margin: 10px;">
-			<a href="/textbookmanage" class="btn btn-primary" role="button">이전 페이지로</a>
+			<a href="/textbookManage" class="btn btn-primary" role="button">이전 페이지로</a>
 		</div>
 	</th:block>
 	<th:block layout:fragment="customJsScript">

@@ -4,7 +4,7 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
-		<title th:text="title"></title> 
+		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<h2 th:text="${mainTitle}"></h2>
@@ -19,7 +19,7 @@
 				  <th>등록일자</th>
 				</tr>
 			</thead>
-			<tbody th:each="til : ${textbookinfolist}">
+			<tbody th:each="til : ${textbookInfoList}">
 				<tr>
 				  <td th:text="${til.txbCode}"></td>
 				  <td th:text="${til.txbName}"></td>
@@ -31,7 +31,7 @@
 			</tbody>
 		</table>
 		<div class="container-fluid" style="margin: 10px;">
-			<a href="/textbookmanage" class="btn btn-primary" role="button">이전 페이지로</a>
+			<a href="/textbookManage" class="btn btn-primary" role="button">이전 페이지로</a>
 		</div>
 	</th:block>
 	<th:block layout:fragment="customJsScript">

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cafe24.wio.mapper.ApprMapper">
+	<select id="getHolidayList"
+		resultType="ApprovalRequest">
+		
+		SELECT request_date as reDate
+				, r.mr_name as mrId
+				, left(request_start_date,10) as reStartDate
+				, left(request_end_date,10) as reEndDate
+				, request_reason as reReason
+				, sortation as sortation
+				, request_supervisor as reSupervisor 
+				, request_processing_date as reProcessingDate
+				, request_state as reState
+		FROM wt_approval_request AS a 
+			LEFT JOIN wt_member_registration AS r
+			ON a.mr_id = r.mr_id
+		WHERE request_sortation = 'holiday';
+
+	</select>
+
+</mapper>
+    

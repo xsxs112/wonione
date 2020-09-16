@@ -42,7 +42,7 @@
 /*----------------------------------------*/
 /*  1. Common
 /*----------------------------------------*/
-html, body {height: 100%; font-family: 'Roboto', sans-serif;font-weight:400;background:#F6F8FA;}
+html, body {height: 100%; font-family: 'Roboto', sans-serif;font-weight:400;background: rgb(246, 248, 250);}
 .floatleft {float:left}
 .floatright {float:right}
 .alignleft {float:left;margin-right:15px;margin-bottom: 15px}
@@ -823,7 +823,7 @@ ul.setting-panel-list li{
 .breadcome-list {
     padding-top: 20px;
     padding-bottom: 20px;
-    background: #fff;
+    background: #d8d8d894;
     padding-left: 20px;
     padding-right: 20px;
     margin-bottom: 30px;
@@ -3652,16 +3652,16 @@ div#sparklinehome canvas {
     width: 100% !important;
 }
 .header-top-area {
-    background: #006DF0;
+    background: #848484;
 }
 .sidebar-nav .metismenu{
-	background: #fff;
+	background-color: black;
 }
 .sidebar-nav {
     background: #fff;
 }
 .sidebar-nav ul{
-	background: #fff;
+	background-color: black;
 }
 #sidebar.active .sidebar-nav ul.metismenu li ul.submenu-angle{
 	position: absolute;
@@ -3683,7 +3683,8 @@ div#sparklinehome canvas {
 	overflow:unset;
 }
 .sidebar-nav .metismenu a{
-	color:#8d9498;
+	color:white;
+	font-weight: bolder;
 }
 .sidebar-nav .metismenu a:hover, .sidebar-nav .metismenu a:focus, .sidebar-nav .metismenu a:active {
     background: #F6F6F6;
@@ -3704,7 +3705,7 @@ div#sparklinehome canvas {
     background: #fff;
 }
 #sidebar .sidebar-header {
-    background: #fff;
+    background-color: black;
 }
 #sidebar.active .sidebar-header {
     padding-top:10px;
@@ -3725,7 +3726,7 @@ div#sparklinehome canvas {
     background-color: #86bc42;
 }
 .footer-copyright-area {
-    background: #006DF0;
+    background: #848484;
 	padding: 20px 0px;
     text-align: center;
 }
@@ -4720,4 +4721,7 @@ div#sparklinehome canvas {
 .footer-copy-right a{
 	color:#fff;
 	text-decoration:none;
+}
+.menu-font{
+	text-align: end;
 }

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title>휴가신청</title> 
+	</th:block>
+	
+	
+	<!-- css---------------------------------------- -->
+	<th:block layout:fragment="customCss">
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript">
+		
+		
+		</script>
+
+	</th:block>
+	
+	<!-- 본문----------------------------------------- -->
+	<th:block layout:fragment="customContent">
+	
+		<div class="static-table-area">
+            <div class="container-fluid">
+                <div class="sparkline8-list">
+                	<form action=""></form>
+                		<table>
+                			<tr>
+                				<td>아이디</td>
+                				<td><input type="text"></td>
+                			</tr>
+                			<tr>
+                				<td>비밀번호</td>
+                				<td><input type="text"></td>
+                			</tr>
+                			<tr>
+                				<td>휴가 신청</td>
+                				<td><input type="date" id = "hollyStart"> ~ <input type="date" id = "hollyEnd"></td>
+                			</tr>
+                			<tr>
+                				<td colspan="2"><button type="button">신청</button></td>
+                			</tr>
+                		</table>
+						
+						
+						
+						
+						
+                            <div class="sparkline8-hd">
+                                <div class="main-sparkline8-hd">
+                                    <h1>휴가신청 목록</h1>
+                                </div>
+                            </div>
+                            <div class="sparkline8-graph">
+                                <div class="static-table-list">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>신청 날짜</th>
+                                                <th>이름</th>
+                                                <th>휴가 시작 날짜</th>
+                                                <th>휴가 끝나는 날짜</th>
+                                                <th>사유</th>
+                                                <th>구분</th>
+                                                <th>상태</th>
+                                                <th>승인자</th>
+                                                <th>승인날짜</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each = "l: ${holidayList}">
+                                                <td th:text = "${l.reDate}"></td>
+                                                <td th:text = "${l.mrId}"></td>
+                                                <td th:text = "${l.reStartDate}"></td>
+                                                <td th:text = "${l.reEndDate}"></td>
+                                                <td th:text = "${l.reReason}"></td>
+                                                <td th:text = "${l.sortation}"></td>
+                                                <td th:text = "${l.reState}"></td>
+                                                <td th:text = "${l.reSupervisor}"></td>
+                                                <td th:text = "${l.reProcessingDate}" ></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+	</th:block>
+	
+	
+	
+	<!-- 스크립트 -------------------------------------------->
+	<th:block layout:fragment="customJsScript">
+	 	<div th:replace="fragments/js :: jsFragment"></div>
+	 	
+	</th:block>
+		
+	<!-- js	 ------------------------------------------------>
+	<th:block layout:fragment="customJs">
+
+	</th:block>
+</html>
