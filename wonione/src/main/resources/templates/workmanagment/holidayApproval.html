@@ -10,7 +10,12 @@
 	
 	<!-- css---------------------------------------- -->
 	<th:block layout:fragment="customCss">
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript">
 		
+		
+		</script>
 
 	</th:block>
 	
@@ -21,7 +26,23 @@
             <div class="container-fluid">
                 <div class="sparkline8-list">
                 	<form action=""></form>
-						<input type="date" id = "hollyStart"> ~ <input type="date" id = "hollyEnd">
+                		<table>
+                			<tr>
+                				<td>아이디</td>
+                				<td><input type="text"></td>
+                			</tr>
+                			<tr>
+                				<td>비밀번호</td>
+                				<td><input type="text"></td>
+                			</tr>
+                			<tr>
+                				<td>휴가 신청</td>
+                				<td><input type="date" id = "hollyStart"> ~ <input type="date" id = "hollyEnd"></td>
+                			</tr>
+                			<tr>
+                				<td colspan="2"><button type="button">신청</button></td>
+                			</tr>
+                		</table>
 						
 						
 						
@@ -29,7 +50,7 @@
 						
                             <div class="sparkline8-hd">
                                 <div class="main-sparkline8-hd">
-                                    <h1>휴가신청</h1>
+                                    <h1>휴가신청 목록</h1>
                                 </div>
                             </div>
                             <div class="sparkline8-graph">
@@ -51,14 +72,14 @@
                                         <tbody>
                                             <tr th:each = "l: ${holidayList}">
                                                 <td th:text = "${l.reDate}"></td>
-                                                <td>이름</td>
+                                                <td th:text = "${l.mrId}"></td>
                                                 <td th:text = "${l.reStartDate}"></td>
                                                 <td th:text = "${l.reEndDate}"></td>
                                                 <td th:text = "${l.reReason}"></td>
                                                 <td th:text = "${l.sortation}"></td>
+                                                <td th:text = "${l.reState}"></td>
                                                 <td th:text = "${l.reSupervisor}"></td>
                                                 <td th:text = "${l.reProcessingDate}" ></td>
-                                                <td th:text = "${l.reState}"></td>
                                             </tr>
                                         </tbody>
                                     </table>
