@@ -18,16 +18,16 @@
 	  			</tr>
 	  		</thead>	  	
 	  		<tbody>
-	  				<tr th:each="c : ${consultingList}">
+  				<tr th:each="c : ${consultingList}">
 	  				<td style="text-align:center;" th:text="${#numbers.formatInteger(c.rowNum,0,'POINT')}"></td>
-	  				<td th:text="${c.ConsultingTitle}"></td>
+	  				<td><input type="hidden" th:value="${c.ConsultingCode}" name="consultingCode"><a class="consultingTitle">[[${c.ConsultingTitle}]]</a></td>
 	  				<td th:text="${c.ConsultingTeacher}"></td>
 	  				<td th:text="${c.ConsultingStudent}"></td>
 	  				<td th:text="${c.ConsultingDate}"></td>
-	  			
 	  			</tr>
 	  		</tbody>	
   		</table>
+  		
   		<a th:href="@{/consultingList}">처음</a>
 		    
 		    <span th:if="${currentPage > 1}"><a th:href="@{/consultingList(currentPage=(${currentPage}-1))}">이전</a></span>

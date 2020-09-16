@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafe24.wio.bean.Consulting;
 import cafe24.wio.service.ConsultingService;
@@ -55,5 +56,11 @@ public class ConsultingController {
 	         
 	         return "/consulting/consultingList";
 	   } 
+	@PostMapping(value = "/consultingInformation",produces = "application/json")
+	@ResponseBody
+	public int consultingInformation(int csCode) {
+		System.out.println(csCode);
+		return 0;
+	}
 	
 }
