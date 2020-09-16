@@ -12,6 +12,33 @@ public class MemberService {
 	
 @Autowired
 private MemberMapper memberMapper;
+		// 2. 구성원 정보 조회
+		public Member getMemberInfo(String mrId) {
+		Member member = memberMapper.getMemberInfo(mrId);
+		System.out.println(member + "<-- member 정보 조회 / memberService");
+		
+		if(member != null) {
+			int levelNum = 0;
+			levelNum = member.getLevelNum();
+			
+			if(levelNum > 0) {
+				if(levelNum == 1) {
+					member.setLevelName("관리자");
+				}else if(levelNum == 2) {
+					member.setLevelName("시간 강사");
+				}else if(levelNum == 3) {
+					member.setLevelName("일반 직원");
+				}else if(levelNum == 4) {
+					member.setLevelName("학원생");
+				}else {
+					member.setLevelName("비회원");
+				}
+			}
+		}
+		
+		return member;
+		}
+
 
 		// 1. 구성원 리스트 가져오기.
 	public List<Member> getWIOMemberList(){
