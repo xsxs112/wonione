@@ -78,8 +78,8 @@
          		LPAD(COUNT(*)+1,5,'0')
        		FROM
        			wt_open_lecture as wt))
-         , #{lecOpenScheCode}
-         , #{mrId}
+         , #{lecName}
+         , #{mrName}
          , #{lecTarget}
          , #{lecPlan}
          , #{lecEtc}
@@ -92,13 +92,14 @@
 <select id="classCode" resultType="hashMap"  parameterType="String">
 
 	SELECT
-		wt_lecture_open_schedule.lec_name
+		os.lec_name,
+		os.lec_os_code
 	FROM
-		wt_lecture_open_schedule
+		wt_lecture_open_schedule AS os
 		INNER join
-		wt_lecture_open
+		wt_lecture_open AS od
 		on
-		wt_lecture_open.lec_os_code = wt_lecture_open_schedule.lec_os_code;	
+		od.lec_os_code = os.lec_os_code;	
 
 </select>
 
@@ -106,7 +107,9 @@
 <select id="writeName" resultType="hashMap"  parameterType="String">
 
 	SELECT
-			wt_member_registration.mr_name
+			wt_member_registration.mr_name,
+			wt_member_registration.mr_id
+			
 	FROM
 			wt_member_registration
 			INNER join
