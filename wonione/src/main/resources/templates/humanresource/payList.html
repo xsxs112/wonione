@@ -30,7 +30,7 @@
 	  				<td th:text="${l.opRegDate}"></td>
 	  				<td th:text="${l.opWriter}"></td>
 	  				<!-- get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음) -->
-	  				<td><a th:href="@{#}">급여명세서</a></td>
+	  				<td><a th:href="@{/getOfficersPay(mrId=${l.mrId})}">급여명세서</a></td>
 	  				<!-- <td><a th:href="@{/미정(memberId=${l.memberId},memberPw=${l.memberPw})}">수정</a></td> -->
 	  			</tr>
 	  		</tbody>	
