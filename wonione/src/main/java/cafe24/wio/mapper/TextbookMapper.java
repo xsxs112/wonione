@@ -13,4 +13,6 @@ public interface TextbookMapper {
 	public List<TextbookBasicInfo> getTextbookInfoList(TextbookBasicInfo txbBasicInfo);
 
 	public List<TextbookBasicInfo> getTextbookOwnList(WhTextbook whTextbook);
+	
+	public int addWhTextbook(WhTextbook whTextbook);
 }

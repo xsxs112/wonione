@@ -25,4 +25,9 @@ public class TextbookService {
 		List<TextbookBasicInfo> textbookOwnList = textbookMapper.getTextbookOwnList(whTextbook);
 		return textbookOwnList;
 	}
+	public int addWhTextbook(WhTextbook whTextbook) {
+		
+		int addWhTxbResult = textbookMapper.addWhTextbook(whTextbook);
+		return addWhTxbResult;
+	}
 }
