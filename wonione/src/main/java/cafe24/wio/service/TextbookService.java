@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cafe24.wio.bean.TextbookBasicInfo;
+import cafe24.wio.bean.WhTextbook;
 import cafe24.wio.mapper.TextbookMapper;
 
 @Service
@@ -17,11 +18,11 @@ public class TextbookService {
 	public List<TextbookBasicInfo> getTextbookInfoList(TextbookBasicInfo txbBasicInfo){
 		List<TextbookBasicInfo> textbookinfolist = textbookMapper.getTextbookInfoList(txbBasicInfo);
 		
-		
 		return textbookinfolist;
 	}
-	public List<TextbookBasicInfo> getTextbookOwnList(TextbookBasicInfo txbBasicInfo){
-		List<TextbookBasicInfo> textbookOwnList = textbookMapper.getTextbookOwnList(txbBasicInfo);
+	
+	public List<TextbookBasicInfo> getTextbookOwnList(WhTextbook whTextbook){
+		List<TextbookBasicInfo> textbookOwnList = textbookMapper.getTextbookOwnList(whTextbook);
 		return textbookOwnList;
 	}
 }

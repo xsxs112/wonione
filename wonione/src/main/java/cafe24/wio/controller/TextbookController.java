@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import cafe24.wio.bean.TextbookBasicInfo;
+import cafe24.wio.bean.WhTextbook;
 import cafe24.wio.service.TextbookService;
 
 
@@ -17,38 +18,47 @@ public class TextbookController {
 	@Autowired
 	private TextbookService textbookService;
 	
-	@GetMapping("/textbookownlist")
-	public String getTextbookOwnList(Model model
-									,TextbookBasicInfo txbBasicInfo ) {
+	@GetMapping("/textbookRegister")
+	public String textbookRegister(Model model) {
 		
-		List<TextbookBasicInfo> textbookOwnList = textbookService.getTextbookOwnList(txbBasicInfo);
+		model.addAttribute("title", "교재등록 선택 페이지");
+		model.addAttribute("mainTitle", "교재등록 선택 페이지");
+		
+		return "textbookresource/textbookRegister";
+	}
+	
+	@GetMapping("/textbookOwnList")
+	public String getTextbookOwnList(Model model
+									, WhTextbook whTextbook) {
+		
+		List<TextbookBasicInfo> textbookOwnList = textbookService.getTextbookOwnList(whTextbook);
 		System.out.println(textbookOwnList);
 		model.addAttribute("textbookOwnList", textbookOwnList);
 		model.addAttribute("title", "교재보유현황 페이지");
 		model.addAttribute("mainTitle", "교재보유현황 페이지");
 		
-		return "textbookresource/textbookownlist";
+		return "textbookresource/textbookOwnlist";
 	}
 	
-	@GetMapping("/textbookmanage")
+	@GetMapping("/textbookManage")
 	public String textbookManage(Model model) {
 		model.addAttribute("title", "교재관리페이지");
 		model.addAttribute("mainTitle", "교재관리페이지");
 		
-		return "textbookresource/textbookmanage";
+		return "textbookresource/textbookManage";
 		}
 	
-	@GetMapping("/textbookinfolist")
+	@GetMapping("/textbookInfoList")
 	public String getTextbookInfoList(Model model
 									,TextbookBasicInfo txbBasicInfo ) {
 		
 			List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList(txbBasicInfo);
-			model.addAttribute("textbookinfolist", textbookinfolist);
+			model.addAttribute("textbookInfoList", textbookinfolist);
 			System.out.println(textbookinfolist);
 			model.addAttribute("title", "교재목록페이지");
 			model.addAttribute("mainTitle", "교재목록페이지");
 			
-		return "textbookresource/textbookinfolist";
+		return "textbookresource/textbookInfoList";
 	}
 	
 }
