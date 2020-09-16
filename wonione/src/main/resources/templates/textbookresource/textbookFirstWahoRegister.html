@@ -8,12 +8,9 @@
 	<th:block layout:fragment="customContent">
 
 	<h2 th:text="${mainTitle}"></h2>
-	<form action="/textbookWahoRegister" method="post" id="addForm" >
+	<form action="/textbookFirstWahoRegister" method="post" id="addForm" >
 		<div class="container-fluid">
-		<a href="/textbookFirstWahoRegister" class="btn btn-warning btn-lg" role="button">최초등록</a>
 			<table class="table table-block" border="1" style="text-align: center;" >
-			<!-- 입고목록 조회해서 해당교재의 입고내역이 없으면(ajax)
-				 팝업창띄워서 최초입고등록으로 이동시켜주기 -->
 				<tr>
 					<td>교재명</td>
 					<td>
@@ -31,11 +28,9 @@
 					</td>
 				</tr>
 				<tr>
-				<th:block th:each="wtl : ${whTextbookList}"></th:block>
 					<td>재고수량</td>
 					<td>
-						<input class="form-control"  type="text" >
-						<!-- th:value="${wtl.stockTxbQuantity}" -->
+						<input class="form-control"  type="text" placeholder="재고수량이 없습니다.">
 					</td>
 				</tr>
 				<tr>
