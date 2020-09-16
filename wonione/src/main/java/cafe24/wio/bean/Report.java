@@ -11,6 +11,7 @@ public class Report {
 	private String lecEtc;
 	private String openLecRegDate;
 	private String mrName;
+	private String lecName;
 	
 	@Override
 	public String toString() {
@@ -33,6 +34,8 @@ public class Report {
 		builder.append(openLecRegDate);
 		builder.append(", mrName=");
 		builder.append(mrName);
+		builder.append(", lecName=");
+		builder.append(lecName);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -89,5 +92,11 @@ public class Report {
 	}
 	public void setMrName(String mrName) {
 		this.mrName = mrName;
+	}
+	public String getLecName() {
+		return lecName;
+	}
+	public void setLecName(String lecName) {
+		this.lecName = lecName;
 	}
 }
