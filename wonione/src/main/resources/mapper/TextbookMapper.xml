@@ -28,6 +28,7 @@
 	<result column="wh_txb_remark" 			property="whTxbRemark"/>
 </resultMap>
 
+<!-- 교재정보조회 -->
 <select id="getTextbookInfoList" resultType="TextbookBasicInfo" resultMap="resultTxbBasicInfo">
 	SELECT 
 			txb_code
@@ -40,6 +41,23 @@
 		wt_textbook_basic_information
 </select>
 
+<!-- 입고테이블조회 -->
+<select id="getWhTextbookList" resultMap="resultWhTextbook">
+	SELECT
+		 wh_txb_code
+		 , txb_code
+		 , wh_txb_quantity
+		 , wh_txb_date
+		 , stock_txb_quantity
+		 , wh_txb_writer
+		 , wh_txb_reg_date
+		 , wh_txb_remark
+	FROM wt_warehousing_textbook
+
+</select>
+
+
+<!-- 보유교재리스트 조회 -->
 <select id="getTextbookOwnList" resultMap="resultTxbBasicInfo">
 SELECT
 		wt.wh_txb_code
@@ -65,9 +83,39 @@ FROM
 	=
 	wt.txb_code
 
-	
-
 </select>
+
+<!-- 교재입고등록 -->
+<insert id="addWhTextbook" parameterType="WhTextbook">
+INSERT INTO wt_warehousing_textbook
+	(wh_txb_code
+	, txb_code
+	, wh_txb_quantity
+	, wh_txb_date
+	, stock_txb_quantity
+	, wh_txb_writer
+	, wh_txb_reg_date
+	, wh_txb_remark)VALUES (
+		CONCAT('wh_txb_code',
+			(SELECT LPAD(COUNT(*)+1,5,'0')
+		 FROM
+		 wt_warehousing_textbook AS wt))
+	, #{txbCode}
+	, ${whTxbQuantity}
+	, CURRENT_TIME()
+	, (SELECT 
+			stock_txb_quantity
+		FROM wt_warehousing_textbook AS wt
+		WHERE
+			txb_code = #{txbCode}
+		GROUP BY
+			wt.wh_txb_date
+		ORDER BY wt.wh_txb_date DESC LIMIT 1)+${whTxbQuantity}
+	, 'oid002'
+	, CURRENT_TIME()	
+	, '');	
+
+</insert>
 
 </mapper>
     

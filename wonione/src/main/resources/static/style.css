@@ -142,6 +142,7 @@ body {}
 .all-content-wrapper {
     margin-left: 200px;
     transition: all 0.3s;
+    text-align: -webkit-center;
 }
 .left-sidebar-pro {
     z-index: 9999;
