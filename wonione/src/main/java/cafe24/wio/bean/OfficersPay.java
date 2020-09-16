@@ -6,7 +6,8 @@ public class OfficersPay {
 	private String mrId;			//아이디
 	private String mrName;			//구성원 이름
 	private int hourlyWageCode;		//시급
-	private float attendanceTime;	//근무시간
+	private int opcTotalHour;		//근무시간
+	private int opcBasePay;			//기본급 
 	private int opcHourlyWage;		//직원급여 기본급(시급*근무시간)
 	private int opcFoodExpenses;	//직원급여 식비
 	private int opcTransportation;	//직원급여 교통비
@@ -36,6 +37,8 @@ public class OfficersPay {
 	private String opRegDate;					//직원급여지급 작성일자
 	private String opWriter;					//직원급여지급 작성자
 	
+	
+	
 	public String getOpcCode() {
 		return opcCode;
 	}
@@ -60,11 +63,17 @@ public class OfficersPay {
 	public void setHourlyWageCode(int hourlyWageCode) {
 		this.hourlyWageCode = hourlyWageCode;
 	}
-	public float getAttendanceTime() {
-		return attendanceTime;
+	public int getOpcTotalHour() {
+		return opcTotalHour;
 	}
-	public void setAttendanceTime(float attendanceTime) {
-		this.attendanceTime = attendanceTime;
+	public void setOpcTotalHour(int opcTotalHour) {
+		this.opcTotalHour = opcTotalHour;
+	}
+	public int getOpcBasePay() {
+		return opcBasePay;
+	}
+	public void setOpcBasePay(int opcBasePay) {
+		this.opcBasePay = opcBasePay;
 	}
 	public int getOpcHourlyWage() {
 		return opcHourlyWage;
@@ -222,6 +231,8 @@ public class OfficersPay {
 	public void setOpWriter(String opWriter) {
 		this.opWriter = opWriter;
 	}
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -234,9 +245,11 @@ public class OfficersPay {
 		builder.append(mrName);
 		builder.append(", hourlyWageCode=");
 		builder.append(hourlyWageCode);
-		builder.append(", attendanceTime=");
-		builder.append(attendanceTime);
+		builder.append(", opcTotalHour=");
+		builder.append(opcTotalHour);
 		builder.append(", opcHourlyWage=");
+		builder.append(", opcBasePay=");
+		builder.append(opcBasePay);
 		builder.append(opcHourlyWage);
 		builder.append(", opcFoodExpenses=");
 		builder.append(opcFoodExpenses);

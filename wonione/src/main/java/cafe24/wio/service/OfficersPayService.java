@@ -22,4 +22,11 @@ public class OfficersPayService {
 		return officersPayList;
 	}
 
+	public List<OfficersPayController> getOfficersPay() {
+		//직원들의 정보가 담긴 list객체
+		List<OfficersPayController> officersPay = officersPayMapper.getOfficersPay();
+		
+		return officersPay;
+	}
+
 }

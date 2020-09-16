@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/headLogin :: headFragment"></head>
+<body>
+	<div class="all-content-wrapper">
+		<!-- 사용자 지정 content start -->
+		<th:block layout:fragment="customContent">
+
+		</th:block>
+		<!-- 사용자 지정 content end -->
+	</div>
+	<!-- 사용자 지정 js스크립트 파일  start-->
+	<th:block layout:fragment="customJsScript">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		 <!-- jquery
+		============================================ -->
+	    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+	    <!-- bootstrap JS
+			============================================ -->
+	    <script src="js/bootstrap.min.js"></script>
+	    <!-- wow JS
+			============================================ -->
+	    <script src="js/wow.min.js"></script>
+	    <!-- price-slider JS
+			============================================ -->
+	    <script src="js/jquery-price-slider.js"></script>
+	    <!-- meanmenu JS
+			============================================ -->
+	    <script src="js/jquery.meanmenu.js"></script>
+	    <!-- owl.carousel JS
+		============================================ -->
+    	<script src="js/owl.carousel.min.js"></script>
+	     <!-- sticky JS
+		============================================ -->
+    	<script src="js/jquery.sticky.js"></script>
+	    <!-- scrollUp JS
+			============================================ -->
+	    <script src="js/jquery.scrollUp.min.js"></script>
+	    <!-- mCustomScrollbar JS
+			============================================ -->
+	    <script src="js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+	    <script src="js/scrollbar/mCustomScrollbar-active.js"></script>
+	    <!-- metisMenu JS
+			============================================ -->
+	    <script src="js/metisMenu/metisMenu.min.js"></script>
+	    <script src="js/metisMenu/metisMenu-active.js"></script>
+	    <!-- main JS
+			============================================ -->
+		<script src="js/main.js?ver=1"></script>
+	</th:block>
+	<!-- 사용자 지정 js스크립트 파일  end-->
+</body>
+</html>
