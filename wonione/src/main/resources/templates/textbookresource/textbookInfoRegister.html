@@ -9,11 +9,32 @@
 	<th:block layout:fragment="customContent">
 
 	<h2 th:text="${mainTitle}"></h2>
-	
-	<div><a href="/textbookWahoRegister" class="btn btn-info btn-lg"role="button">교재입고등록</a></div>
-	<div><a href="/textbookInfoRegister" class="btn btn-info btn-lg"role="button">교재정보등록</a></div>
+	<form action="/textbookInfoRegister" method="post" id="addForm" >
+		<div class="container-fluid">
+			<table class="table table-block" border="1" style="text-align: center;" >
+				<tr>
+					<td>교재명</td>
+					<td>
+						<input class="form-control"  type="text" name="txbName" placeholder="교재명 입력해주세요"/>
+					</td>
+				</tr>
+				<tr>
+					<td>출판사</td>
+					<td>
+						<input class="form-control"  type="text" name="txbPublisher" placeholder="출판사를 입력해주세요"/>
+					</td>
+				</tr>
+				<tr>
+					<td>저자</td>
+					<td>
+						<input class="form-control"  type="text" name="txbAuthor" placeholder="저자를 입력해주세요"/>
+					</td>
+				</tr>
+			</table>
+		</div>		
+		<input type="submit" class="btn btn-danger btn-block" id="addBtn" value="등록버튼">	
+	</form>
 	</th:block>
-	
 	<div class="container-fluid" style="margin: 10px;">
 		<a href="/textbookManage" class="btn btn-primary" role="button">이전 페이지로</a>
 	</div>	

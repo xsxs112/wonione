@@ -56,7 +56,6 @@
 
 </select>
 
-
 <!-- 보유교재리스트 조회 -->
 <select id="getTextbookOwnList" resultMap="resultTxbBasicInfo">
 SELECT
@@ -84,6 +83,51 @@ FROM
 	wt.txb_code
 
 </select>
+
+<!-- 최초등록인지 체크 -->
+<select id="wahoTextbookCheck" resultMap="resultTxbBasicInfo">
+
+SELECT
+		wt.txb_code
+	,	wt.stock_txb_quantity
+	,	tbi.txb_code
+	,	tbi.txb_name
+FROM
+	wt_textbook_basic_information AS tbi
+	LEFT JOIN
+	wt_warehousing_textbook AS wt
+	on
+	tbi.txb_code
+	=
+	wt.txb_code
+WHERE
+	wt.txb_code IS NULL;
+</select>
+
+<!-- 교재최초입고등록 -->
+<insert id="addFirstWhTextbook" parameterType="WhTextbook">
+INSERT INTO wt_warehousing_textbook
+	(wh_txb_code
+	, txb_code
+	, wh_txb_quantity
+	, wh_txb_date
+	, stock_txb_quantity
+	, wh_txb_writer
+	, wh_txb_reg_date
+	, wh_txb_remark)VALUES (
+		CONCAT('wh_txb_code',
+			(SELECT LPAD(COUNT(*)+1,5,'0')
+		 FROM
+		 wt_warehousing_textbook AS wt))
+	, #{txbCode}
+	, ${whTxbQuantity}
+	, CURRENT_TIME()
+	, ${whTxbQuantity}
+	, 'oid002'
+	, CURRENT_TIME()	
+	, '');	
+
+</insert>
 
 <!-- 교재입고등록 -->
 <insert id="addWhTextbook" parameterType="WhTextbook">
@@ -114,6 +158,27 @@ INSERT INTO wt_warehousing_textbook
 	, 'oid002'
 	, CURRENT_TIME()	
 	, '');	
+
+</insert>
+
+<!-- 교재기초정보등록 -->
+<insert id="addTextbookInfo" parameterType="TextbookBasicInfo">
+INSERT INTO wt_textbook_basic_information
+	( txb_code
+	, txb_name
+	, txb_publisher
+	, txb_author
+	, txb_writer
+	, txb_reg_date)VALUES (
+		CONCAT('txb_',
+			(SELECT LPAD(COUNT(*)+1,5,'0')
+		 FROM
+		 wt_textbook_basic_information AS tbi))
+	,  #{txbName}
+	,  #{txbPublisher}
+	,  #{txbAuthor}
+	,  'oid002'
+	,  CURRENT_TIME())
 
 </insert>
 
