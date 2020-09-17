@@ -28,26 +28,35 @@ public class TextbookController {
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 
 	
-	 //입고내역유무 체크
-	  
-	 @PostMapping(value="/whTxbCheck", produces="application/json") 
-	 @ResponseBody 
-	 public int wahoTextbookCheck(Model model
-			 			,@RequestParam(value="txbCode", required = false)String txbCode	) { 
-		 logger.info("==============================");
-		 logger.info("교재지급내역페이지 getTextbookSuppList 포스트매핑!!!!");
-		 logger.info("==============================");
-		 TextbookBasicInfo whTxbCodeCheck = textbookService.wahoTextbookCheck(txbCode); 
-		 
-		 int result = 1;
-		 if(whTxbCodeCheck == null) {
+	//교재 입고내역 검색
+	@PostMapping("/getWhTxbSearch")
+	public String getWhTxbSearch(Model model
+							,@RequestParam(value="whTxbSk", required=false) String whTxbSk
+							,@RequestParam(value="whTxbSv", required=false) String whTxbSv) {
+		List<TextbookBasicInfo> whTxbSearchResult= textbookService.getWhTxbSearch(whTxbSk, whTxbSv);
+		logger.info(whTxbSearchResult.toString());
+		model.addAttribute("textbookOwnList", whTxbSearchResult);
+		return "textbookresource/textbookOwnlist";
+	}
+	
+	//입고내역유무 체크
+	@PostMapping(value="/whTxbCheck", produces="application/json") 
+	@ResponseBody 
+	public int wahoTextbookCheck(Model model
+					,@RequestParam(value="txbCode", required = false)String txbCode	) { 
+		logger.info("==============================");
+		logger.info("교재지급내역페이지 getTextbookSuppList 포스트매핑!!!!");
+		logger.info("==============================");
+		TextbookBasicInfo whTxbCodeCheck = textbookService.wahoTextbookCheck(txbCode); 
+		
+		int result = 1;
+		if(whTxbCodeCheck == null) {
 			result = 0;
-		 }else {
+		}else {
 			logger.info(whTxbCodeCheck.toString());
-		 }
-		 return result;
+		}
+		return result;
 	 }
-	 
 	
 	//입고내역유무 체크
 	@GetMapping("/whTxbCheck")
@@ -56,19 +65,6 @@ public class TextbookController {
 		return "/whTxbCheck";
 	}
 
-	/*
-	 * @GetMapping(value="/whTxbCheck", produces="application/json") public int
-	 * wahoTextbookCheck(WhTextbook whTextbook) { List<TextbookBasicInfo>
-	 * wahoTextbookCheck = textbookService.wahoTextbookCheck(whTextbook);
-	 * System.out.println(wahoTextbookCheck.size() + " < -- size"); int result = 0;
-	 * if(wahoTextbookCheck != null) { String txbCode = null; for(int i=0;
-	 * i<wahoTextbookCheck.size(); i++) {
-	 * logger.info(wahoTextbookCheck.get(i).toString());
-	 * logger.info(wahoTextbookCheck.get(i).getTxbCode()); txbCode =
-	 * wahoTextbookCheck.get(i).getTxbCode(); if(txbCode !=null &&
-	 * txbCode.equals("")) { result = 1; } } } return result; }
-	 */	
-	
 	//교재 지급내역 조회
 	@GetMapping("/textbookSupplyList")
 	public String getTextbookSuppList(Model model

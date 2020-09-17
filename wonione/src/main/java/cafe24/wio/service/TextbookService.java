@@ -22,8 +22,44 @@ public class TextbookService {
 	private TextbookMapper textbookMapper;
 	
 	/**
+	 * 교재 지급내역 검색
+	 * @param suppSk
+	 * @param suppTxbSv
+	 * @return List SupplyTextbook suppTxbSearchResult
+	 */
+	public List<SupplyTextbook> getSuppTxbSearch(String suppSk, String suppTxbSv){
+		
+		List<SupplyTextbook> suppTxbSearchResult = textbookMapper.getSuppTxbSearch(suppSk, suppTxbSv);
+		return suppTxbSearchResult;
+	}
+	
+	/**
+	 * 교재 정보 검색
+	 * @param infoTxbSk
+	 * @param infoTxbSv
+	 * @return List TextbookBasicInfo txbInfoSearchResult
+	 */
+	public List<TextbookBasicInfo> getTxbInfoSearch(String infoTxbSk, String infoTxbSv){
+		
+		List<TextbookBasicInfo> txbInfoSearchResult = textbookMapper.getTxbInfoSearch(infoTxbSk, infoTxbSv);
+		return txbInfoSearchResult;
+	}
+	
+	
+	/**
+	 * 교재 입고내역 검색
+	 * @param whTxbSk
+	 * @param whTxbSv
+	 * @return List WhTextbook whTxbSearchResult
+	 */
+	public List<TextbookBasicInfo> getWhTxbSearch(String whTxbSk, String whTxbSv){
+		List<TextbookBasicInfo> whTxbSearchResult = textbookMapper.getWhTxbSearch(whTxbSk, whTxbSv);
+		return whTxbSearchResult;
+	}
+	
+	/**
 	 * 교재 지급내역 조회
-	 * @return List<SupplyTextbook> getTextbookSuppList
+	 * @return List SupplyTextbook getTextbookSuppList
 	 */
 	public List<SupplyTextbook> getTextbookSuppList(){
 		List<SupplyTextbook> getTextbookSuppList = textbookMapper.getTextbookSuppList();
@@ -77,7 +113,7 @@ public class TextbookService {
 	/**
 	 * 교재입고내역 존재유무 체크
 	 * @param whTextbook
-	 * @return List<TextbookBasicInfo> wahoTextbookCheck
+	 * @return TextbookBasicInfo wahoTextbookCheck
 	 */
 	public TextbookBasicInfo wahoTextbookCheck(String txbCode){
 		
