@@ -24,13 +24,12 @@
 			<tbody>
 				<tr th:each="n : ${noticeList}">
 					<td th:text=${n.boardNum}></td>
-					<td th:text=${n.boardTitle}></td>
+					<td><a th:text=${n.boardTitle} th:href="@{/readNotice(boardNum=${n.boardNum})}"></a></td>
 					<td th:text=${n.boardWriterId}></td>
 					<td th:text=${n.boardWriterName}></td>
-					<td th:text=${n.boardRegDate}></td>		
-								
+					<td th:text=${n.boardRegDate}></td>										
 					<td>
-						<a href="@{/readNotice(boardNum=${n.boardNum})}">읽기</a>
+						<a th:href="@{/readNotice(boardNum=${n.boardNum})}">읽기</a>
 					</td>
 				</tr>
 			</tbody>			
