@@ -26,6 +26,10 @@
 			request.done(function(data) {
 				console.log(data);
 				$('#mrId').val(data.mrId);
+				$('#mrName').val(data.mrName);
+				$('#mrJoinDate').val(data.mrJoinDate);
+				$('#pMRTitle').val(data.pMRTitle);
+				$('#mrAccountNum').val(data.mrAccountNum);
 				
 			});
 			request.fail(function( jqXHR, textStatus ) {
