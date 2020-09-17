@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafe24.wio.bean.ApprovalRequest;
 import cafe24.wio.bean.Member;
@@ -30,6 +31,18 @@ public class WorkController {
 	private ApprMapper apprMapper;
 
 
+	
+	
+	@ResponseBody
+	@GetMapping("/startDayCk")
+	public int startDayCk(@RequestParam(value = "startDate", required = false) String startDate) {
+		System.out.println(startDate+"workCotroller");
+		int getStartDate = apprRequestService.getStartDayCk(startDate);
+
+	
+		return getStartDate;
+		
+	}
 	
 	
 	@PostMapping("/holidayRequest")
@@ -75,7 +88,6 @@ public class WorkController {
 	 * return "workmanagment/workAttendance"; }
 	 */
 	
-	
 
 	/*
 	 * //휴가 신청 하려는데 아직 로그인 기능이 없어 세션 아이디 비밀번호를 쓸 수가 없어서 //여기서만 쓸수있게 임시로 만들게요
@@ -102,8 +114,6 @@ public class WorkController {
 	 * 
 	 * }
 	 */
-	
-	
 	
 	
 

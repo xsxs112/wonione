@@ -17,6 +17,21 @@ public class ApprRequestService {
 	@Autowired
 	private ApprMapper apprMapper;
 	
+	
+	
+	
+	public int getStartDayCk(String startDate) {
+		
+		int getStartDate = apprMapper.getStartDayCk(startDate);
+		
+		
+		return getStartDate;
+	}
+	
+	
+	
+	
+	
 	public List<ApprovalRequest> getHolidayList() {
 		
 		List<ApprovalRequest> holliday = apprMapper.getHolidayList();
