@@ -58,9 +58,10 @@ public class ConsultingController {
 	   } 
 	@PostMapping(value = "/consultingInformation",produces = "application/json")
 	@ResponseBody
-	public int consultingInformation(int csCode) {
-		System.out.println(csCode);
-		return 0;
+	public Map<String, Object> consultingInformation(int csCode) {
+		Map<String ,Object> consultingInformationMap = consultingService.consultingInformation(csCode);
+		System.out.println(consultingInformationMap);
+		return consultingInformationMap;
 	}
 	
 }
