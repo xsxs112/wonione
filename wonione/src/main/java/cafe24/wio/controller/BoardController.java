@@ -26,8 +26,8 @@ public class BoardController {
 		List<Board> noticeList = boardService.getNotice(board);
 		System.out.println(noticeList + "noticeList");
 
-		model.addAttribute("title", "공지사항");
 		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("title", "공지사항");
 
 		return "board/notice";
 	}
@@ -39,8 +39,8 @@ public class BoardController {
 			  						@RequestParam(value="boardNum", required = false) String boardNum) {
 		  Board board = boardService.readNotice(boardNum);
 		  System.out.println(board + "board");
-		  model.addAttribute("Board", board);
-		  model.addAttribute("title", "공지사항 읽기");
+		  model.addAttribute("Board", board);		  
+		  model.addAttribute("readNotice", "공지사항 읽기");
 		  
 		  return "board/noticeRead";
 		  
