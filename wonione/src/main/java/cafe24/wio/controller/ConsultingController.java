@@ -58,9 +58,26 @@ public class ConsultingController {
 	   } 
 	@PostMapping(value = "/consultingInformation",produces = "application/json")
 	@ResponseBody
-	public int consultingInformation(int csCode) {
-		System.out.println(csCode);
-		return 0;
+	public Map<String, Object> consultingInformation(int csCode) {
+		Map<String ,Object> consultingInformationMap = consultingService.consultingInformation(csCode);
+		System.out.println(consultingInformationMap);
+		return consultingInformationMap;
 	}
-	
+	@PostMapping("/consultingList")
+	public String upConsultingList(Consulting cosulting
+								  ,@RequestParam(value="consultingCode", required = false) String consultingCode
+								  ,@RequestParam(value="consultingTitle", required = false) String consultingTitle
+								  ,@RequestParam(value="consultingTeacher", required = false) String consultingTeacher
+								  ,@RequestParam(value="consultingClass", required = false) String consultingClass
+								  ,@RequestParam(value="consultingStudent", required = false) String consultingStudent
+								  ,@RequestParam(value="consultingData", required = false) String consultingData) {
+		System.out.println(consultingCode);
+		System.out.println(consultingTitle);
+		System.out.println(consultingTeacher);
+		System.out.println(consultingClass);
+		System.out.println(consultingStudent);
+		System.out.println(consultingData);
+		consultingService.upconsultingList(cosulting);
+		return "redirect:/consultingList";
+	}
 }

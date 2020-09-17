@@ -23,10 +23,24 @@ public class OfficersPayService {
 	}
 
 	public List<OfficersPayController> getOfficersPay(String mrId) {
-		//직원들의 정보가 담긴 list객체
+		//직원의 id 정보가 담긴 list객체
 		List<OfficersPayController> officersPay = officersPayMapper.getOfficersPay(mrId);
 		
 		return officersPay;
+	}
+
+	public List<OfficersPayController> getOfficersList() {
+		//직원의 급여 정보가 담긴 list객체
+		List<OfficersPayController> OfficersList = officersPayMapper.getOfficersList();
+		
+		return OfficersList;
+	}
+
+	public List<OfficersPayController> callOfficersInfo(String mrId) {
+		//직원의 정보가 담긴 list객체
+		List<OfficersPayController> OfficersInfo = officersPayMapper.callOfficersInfo(mrId);
+		
+		return OfficersInfo;
 	}
 
 }

@@ -20,11 +20,25 @@ public class BoardService {
 		return noticeList;
 	}
 	
+	//공지사항 읽기
+	public Board readNotice(String boardNum) {
+		Board board = boardMapper.readBoard(boardNum);
+		return board;
+	}
+	
 	//자료게시판 조회
 	public List<Board> getDataLibrary(Board board){
 		System.out.println(board + " <-- board");
 		List<Board> dataList = boardMapper.getDataLibrary(board);
 		return dataList;
 	}
+
+	//자료게시판 읽기
+	public Board readDataLibrary(String boardNum) {
+		Board board = boardMapper.readBoard(boardNum);
+		return board;
+	}
+
+
 
 }

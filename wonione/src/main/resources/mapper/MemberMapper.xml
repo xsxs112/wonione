@@ -6,6 +6,24 @@
 <mapper namespace="cafe24.wio.mapper.MemberMapper">
 
 	<!-- 2. 로그인 -->
+	<select id="login" resultType="Member" parameterType="String">
+		SELECT
+				mr_id				AS mrId
+			, 	mr_pw				AS mrPw
+			, 	mr_name				AS mrName
+			, 	level_num			AS levelNum
+			, 	mr_phone			AS mrPhone
+			, 	mr_addr				AS mrAddr
+			, 	mr_join_date		AS mrJoinDate
+			, 	mr_reg_date 		AS mrRegDate
+
+		FROM
+			wt_member_registration AS m
+		WHERE
+			m.mr_id = #{mrId}
+		AND
+			m.mr_pw = #{mrPw};
+	</select>
 	
 
 	<!-- 1-2. 구성원 정보 보기 -->
@@ -24,10 +42,13 @@
 		FROM
 			wt_member_registration 	AS m
 		WHERE
-			m.mr_id = #{mrId};
+			m.mr_id = #{mrId}
+		AND
+			m.mr_pw = #{mrPw};
+
 	</select>
 	
-	<!-- 추가 정보 입력 시, select 태그 열고 쿼리를 하나 더 작성 -->
+	<!-- 1-2. 구성원 추가 정보 입력 시, select 태그 열고 쿼리를 하나 더 작성 -->
 	
 
 	<!-- 1. 구성원 리스트 가져오기 -->

@@ -77,5 +77,14 @@ public class ConsultingService {
 	      
 	      return resultMap;     
 	}
+	public Map<String, Object> consultingInformation(int csCode) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map = consultingMapper.consultingInformation(csCode);
+		return map;
+	}
+	public int upconsultingList(Consulting cosulting) {
+		int result = consultingMapper.upconsultingList(cosulting);
+		return result;
+	}
 
 }

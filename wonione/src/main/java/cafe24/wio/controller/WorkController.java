@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafe24.wio.bean.ApprovalRequest;
 import cafe24.wio.bean.Member;
@@ -31,56 +32,57 @@ public class WorkController {
 
 
 	
+	@ResponseBody
+	@GetMapping("/holidayCk")
+	public int holidayCk(@RequestParam(value = "startDate", required = false) String startDate,
+							@RequestParam(value = "endDate", required = false) String endDate) {
+		
+		int getStartDate = apprRequestService.getStartDayCk(startDate);
+
+	
+		return getStartDate;
+		
+	}
+	
+	
+	
+	
+	@ResponseBody
+	@GetMapping("/startDayCk")
+	public int startDayCk(@RequestParam(value = "startDate", required = false) String startDate) {
+		System.out.println(startDate+"workCotroller");
+		int getStartDate = apprRequestService.getStartDayCk(startDate);
+
+	
+		return getStartDate;
+		
+	}
+	
 	
 	@PostMapping("/holidayRequest")
-	public String holidayRequest(ApprovalRequest approvalRequest,	@RequestParam(value = "startDate", required = false) String startDate,
-												@RequestParam(value = "endDate", required = false) String endDate,
+	public String holidayRequest(ApprovalRequest approvalRequest,	@RequestParam(value = "reStartDate", required = false) String reStartDate,
+												@RequestParam(value = "reEndDate", required = false) String reEndDate,
 												@RequestParam(value = "mrId", required = false) String mrId,
-												@RequestParam(value ="mrName", required = false) String mrName) {
-			System.out.println("휴가 시작날짜 " + startDate);
-			System.out.println("휴가 끝 날짜 -> " + endDate);
-			System.out.println("신청아이디 -> " + mrId);
-			System.out.println("신청한사람 " + mrName);
-			
+												@RequestParam(value = "mrName", required = false) String mrName,
+												@RequestParam(value = "reReason", required = false) String reReason,
+												@RequestParam(value ="holidaySt", required = false) String holidaySt) {
+			System.out.println("mrId--------------"+mrId);
+			approvalRequest.setMrId(mrId);
+			approvalRequest.setReStartDate(reStartDate);
+			approvalRequest.setReEndDate(reEndDate);
+			approvalRequest.setSortation(holidaySt);
+			approvalRequest.setReReason(reReason);
 			apprRequestService.addholidayApproval(approvalRequest);
 			
 			
-		return "redirect:/getGoodsList";
+		return "redirect:/holidayApproval";
 
 
 	}
 	
-	
-	
-	//휴가 신청 하려는데 아직 로그인 기능이 없어 세션 아이디 비밀번호를 쓸 수가 없어서
-	//여기서만 쓸수있게 임시로 만들게요
-	@GetMapping("/LoginForHoliday")
-	public String LoginForHoliday(Model model) {
-
-
-		return "workmanagment/holidayLogin";
-	}
-	
-	
-	
-	@PostMapping("/LoginForHoliday")
-	public String LoginForHoliday(Model model, @RequestParam(value = "mrId", required = false) String mrId,
-												@RequestParam(value = "mrPw", required = false) String mrPw, HttpSession session) {
-		Member member = apprMapper.getMemberById(mrId);
-		if (member != null) {
-			if (member.getMrPw().equals(mrPw)) {
-				session.setAttribute("SID", member.getMrId());
-				session.setAttribute("SNAME", member.getMrName());
-				return "workmanagment/holidayApproval";
-			}
-		}
-
-		return "workmanagment/holidayLogin";
-
-	}
-
 	
 	//휴가요청 리스트
+	@GetMapping("/holidayApproval")
 	@PostMapping("/holidayApproval")
 	public String getHolidayList(Model model) {
 
@@ -91,11 +93,42 @@ public class WorkController {
 	}
 
 	
-	//아직 사용X
-	@GetMapping("/workAttendance")
-	public String workAttendance(WorkAttendance workAttendance) {
+	/*
+	 * //아직 사용X
+	 * 
+	 * @GetMapping("/workAttendance") public String workAttendance(WorkAttendance
+	 * workAttendance) {
+	 * 
+	 * return "workmanagment/workAttendance"; }
+	 */
+	
 
-		return "workmanagment/workAttendance";
-	}
+	/*
+	 * //휴가 신청 하려는데 아직 로그인 기능이 없어 세션 아이디 비밀번호를 쓸 수가 없어서 //여기서만 쓸수있게 임시로 만들게요
+	 * 
+	 * @GetMapping("/LoginForHoliday") public String LoginForHoliday(Model model) {
+	 * 
+	 * 
+	 * return "workmanagment/holidayLogin"; }
+	 */
+	
+	
+	
+	/*
+	 * @PostMapping("/LoginForHoliday") public String LoginForHoliday(Model
+	 * model, @RequestParam(value = "mrId", required = false) String mrId,
+	 * 
+	 * @RequestParam(value = "mrPw", required = false) String mrPw, HttpSession
+	 * session) { Member member = apprMapper.getMemberById(mrId); if (member !=
+	 * null) { if (member.getMrPw().equals(mrPw)) { session.setAttribute("SID",
+	 * member.getMrId()); session.setAttribute("SNAME", member.getMrName()); return
+	 * "workmanagment/holidayApproval"; } }
+	 * 
+	 * return "workmanagment/holidayLogin";
+	 * 
+	 * }
+	 */
+	
+	
 
 }

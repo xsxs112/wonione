@@ -27,7 +27,7 @@
   				<td th:text="${m.mrName}"></td>
   				<td th:text="${m.levelName}"></td>
   				<td>
-  					<a href="/getMemberInfo">정보 보기</a>
+  					<a th:href="@{/getMemberInfo(mrId=${m.mrId},mrPw=${m.mrPw})}">정보 보기</a>
   				</td>
   				<td>수정</td>
   				<td>삭제</td>
