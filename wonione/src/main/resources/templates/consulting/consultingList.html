@@ -48,11 +48,11 @@
 				<h4>상담정보</h4>
 				<table border="1" class="table">
 		  			<tr>
-						<td><input type="hidden" id="consultingCode" name="consultingCode"></td>
+						<td hidden=""><input type="hidden" id="consultingCode" name="consultingCode"></td>
 		  				<td><label>제목</label></td>
 		  				<td  colspan="2"><input type="text" id="consultingTitle" class="inputbox" name="consultingTitle"></td>
 		  				<td><label>일자</label></td>
-		  				<td  colspan="3"><input type="text" id="consultingDate" class="inputbox" name="consultingDate"></td>
+		  				<td  colspan="3"><input type="text" id="consultingDate" class="inputbox" name="consultingDate" readonly="readonly"></td>
 		  			</tr>
 		  			<tr>
 		  				<td><label>상담자</label></td>
@@ -60,7 +60,7 @@
 		  				<td><label>내담자</label></td>
 		  				<td><input type="text" id="consultingStudent" class="inputbox" name="consultingStudent"></td>
 		  				<td><label>강의반</label></td>
-		  				<td><input type="text" id="consultingLecName" class="inputbox" name="consultingLecName"></td>
+		  				<td><input type="text" id="consultingClass" class="inputbox" name="consultingClass"></td>
 		  			</tr>
 		  			<tr>
 		  				<td><label>상담내용</label></td>
@@ -68,7 +68,8 @@
 		  			</tr>
 		  		</table>
 	 		</div>
-				<button type="button" id="upConsulting">수정</button>
+				<button type="button" id="upConsulting" class="btn btn-default">수정</button>
+				<button type="button" id="deleteConsulting" class="btn btn-default">삭제</button>
 		</form>
 	</th:block>
 </html>

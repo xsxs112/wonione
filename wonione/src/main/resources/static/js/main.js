@@ -96,6 +96,13 @@
         scrollSpeed: 900,
         animation: 'fade'
     });
+	
+	
+	
+	
+	
+	
+	/*=========================================================================================조원준 js start*/
 	//상담등록
 	$('#addconsultingbtn').click(function(){
 		var addconsulting = $('#addconsulting');
@@ -106,6 +113,12 @@
 	$('#upConsulting').click(function(){
 		var upconsulting = $('#upConsultingList');
 		upconsulting.submit();
+		
+	});
+	//상담삭제
+	$('#deleteConsulting').click(function(){
+		var deleteConsulting = $('#deleteConsulting');
+		deleteConsulting.submit();
 		
 	});
 	$('.consultingTitle').click(function(){
@@ -123,7 +136,7 @@
 				$('#consultingDate').attr('value',data.cs_date);
 				$('#consultingTeacher').attr('value',data.mr_o_id);
 				$('#consultingStudent').attr('value',data.cs_lec_name);
-				$('#consultingLecName').attr('value',data.cs_s_name);
+				$('#consultingClass').attr('value',data.cs_s_name);
 				$('#consultingData').attr('value',data.cs_data);
 				textareaVal.text(data.cs_data);
 				
@@ -166,5 +179,6 @@
 		        }
 			});
 	});
+	/*=========================================================================================조원준 js end*/
  
 })(jQuery); 
