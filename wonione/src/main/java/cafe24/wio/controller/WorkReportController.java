@@ -60,7 +60,7 @@ public class WorkReportController {
 	                        ,@RequestParam(value="lecEtc", required = false) String lecEtc
 	                        ,@RequestParam(value="openLecRegDate", required = false) String openLecRegDate
 	                        ) {
-	      System.out.println("lecOpenCode -> " + lecOpenCode);
+		  System.out.println("lecOpenCode->" + lecOpenCode);
 	      System.out.println("lecOpenScheCode->" + lecOpenScheCode);
 	      System.out.println("lecName->" + lecName);
 	      System.out.println("lecTarget->" + lecTarget);
@@ -78,6 +78,9 @@ public class WorkReportController {
 	   public String getReportwrite(Model model) {
 		  List<Map<String, Object>> clCode = reportService.classCode();
 		  List<Map<String, Object>> wName = reportService.writeName();
+	      String codeResult =  reportService.getReCode();
+	      System.out.println(codeResult + " < -- codeResult");
+	      model.addAttribute("codeResult", codeResult);
 	      model.addAttribute("classCode", clCode);
 	      model.addAttribute("writeName", wName);
 	      return "humanresource/workreportwrite";
@@ -93,24 +96,36 @@ public class WorkReportController {
 		   return "redirect:/getReportList";
 	   }
 	   
+	   //보고서수정
+	   @PostMapping("/updateCode")
+	   public String updateCode(Report report, Model model
+				               ) {
+		   
+		   reportService.updateCode(report);
+		   model.addAttribute("Report", report);
+		   return "redirect:/getReportList";
+	   }
+	   
 	   //보고서 수정
 	   @GetMapping("/updateCode")
 	   public String updateCode(
-			   					@RequestParam(value="lecOpenCode", required = false) String lecOpenCode,
-			   					Model model ) {
+			   					@RequestParam(value="lecOpenCode", required = false) String lecOpenCode
+			   					,Model model ) {
 		   Report report = reportService.getReportDetailList(lecOpenCode);
+		   System.out.println(report+"<--report");
 		   model.addAttribute("Report", report);
 		   return "humanresource/updateworkreport";
 	   }
 	   
-	   @PostMapping("/updateCode")
-	   public String updateCode(Report report, Model model
-				               ) {
-		   reportService.updateCode(report);
-		   model.addAttribute("Report", report);
-		   return "redirect:/getReportList";
-			   
-	   }
 	   
-	   
+	   //검색조건
+		@PostMapping("/workreport")
+		public String memberList(Model model
+								,@RequestParam(value="lecSk", required = false) String lecSk
+								,@RequestParam(value="lecSv", required = false) String lecSv) {
+			List<Report> reportList = reportService.getSearchList(lecSk, lecSv);
+			System.out.println(reportList +"reportList");
+			model.addAttribute("reportList", reportList);
+			return "humanresource/workreport";
+}
 }
