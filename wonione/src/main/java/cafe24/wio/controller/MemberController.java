@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import cafe24.wio.bean.Member;
 import cafe24.wio.service.MemberService;
 
@@ -13,14 +15,21 @@ import cafe24.wio.service.MemberService;
 @Controller
 public class MemberController {
 	
-@Autowired
+	@Autowired
 	private MemberService memberService;
 
 	//1-2. 상세 보기 page
 	@GetMapping("/getMemberInfo")
-	public String getMemberInfo(Model model) {
+	public String getMemberInfo(Model model
+							,	@RequestParam(value = "mrId",required = false)String mrId) {
 		
-		model.addAttribute("title", "상세 정보 보기");		
+		Member WIOMemberInfo = memberService.getMemberInfo(mrId);
+		System.out.println(WIOMemberInfo + "<-- 상세 보기 / controller");
+		
+		model.addAttribute("title", "상세 정보 보기");
+		model.addAttribute("WIOMemberInfo", WIOMemberInfo);
+		
+		//상세 보기 정보 더 보여지게 하려면 새로 만드는 테이블 위 작업 똑같이
 		
 		return "member/MemberInfo";
 	}

@@ -9,7 +9,26 @@
 	
 
 	<!-- 1-2. 구성원 정보 보기 -->
-
+	<select id="getMemberInfo" resultType="Member" parameterType="String">
+		SELECT
+				mr_id 				AS mrId
+			,	mr_pw 				AS mrPw
+			,	mr_name				AS mrName
+			,	mr_phone			AS mrPhone
+			,	mr_addr 			AS mrAddr
+			,	mr_target_score	 	AS mrTargetScore
+			,	pm_r_code 			AS pmRCode
+			,	mr_account_num	 	AS mrAccountNum
+			, mr_join_date 			AS mrJoinDate
+			, mr_reg_date 			AS mrRegDate
+		FROM
+			wt_member_registration 	AS m
+		WHERE
+			m.mr_id = #{mrId};
+	</select>
+	
+	<!-- 추가 정보 입력 시, select 태그 열고 쿼리를 하나 더 작성 -->
+	
 
 	<!-- 1. 구성원 리스트 가져오기 -->
 	<select id="getWIOMemberList" resultType="Member">

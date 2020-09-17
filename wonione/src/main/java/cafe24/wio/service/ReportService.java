@@ -41,12 +41,26 @@ public class ReportService {
 		System.out.println(clCode);
 		return clCode;
 	}	
-	
+	//강의자조회
 	public List<Map<String, Object>> writeName(){
 		List<Map<String, Object>> wName = reportMapper.writeName();
 		System.out.println(wName);
 		return wName;
 		
 	}
+	
+	//보고서 삭제
+	public int deleteCode(String lecOpenCode){
+		int deleteCd = reportMapper.deleteCode(lecOpenCode);
+		return deleteCd;
+	}
+	
+	//보고서 수정
+	public int updateCode(Report report) {
+		int updateUc = reportMapper.updateCode(report);
+		return updateUc;
+		
+	}
+	
 	
 }

@@ -83,4 +83,34 @@ public class WorkReportController {
 	      return "humanresource/workreportwrite";
 	   }
 	   
+	   
+	   //보고서 삭제
+	   @GetMapping("/deleteCode")
+	   public String deleteCode(Model model  
+			   					,@RequestParam(value="lecOpenCode", required = false) String lecOpenCode) {
+		  reportService.deleteCode(lecOpenCode);
+		  System.out.println(lecOpenCode + "lecOpenCode");
+		   return "redirect:/getReportList";
+	   }
+	   
+	   //보고서 수정
+	   @GetMapping("/updateCode")
+	   public String updateCode(
+			   					@RequestParam(value="lecOpenCode", required = false) String lecOpenCode,
+			   					Model model ) {
+		   Report report = reportService.getReportDetailList(lecOpenCode);
+		   model.addAttribute("Report", report);
+		   return "humanresource/updateworkreport";
+	   }
+	   
+	   @PostMapping("/updateCode")
+	   public String updateCode(Report report, Model model
+				               ) {
+		   reportService.updateCode(report);
+		   model.addAttribute("Report", report);
+		   return "redirect:/getReportList";
+			   
+	   }
+	   
+	   
 }

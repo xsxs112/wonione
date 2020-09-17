@@ -25,4 +25,11 @@ public interface ReportMapper {
 	//작성자이름 불러오기
 	public List<Map<String, Object>> writeName();
 	
+	//삭제처리
+	public int deleteCode(String lecOpenCode);
+	
+	//수정처리
+	public int updateCode(Report report);
+	
+	
 }
