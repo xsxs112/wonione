@@ -12,6 +12,18 @@
 		<result column="cs_s_name" 		property="ConsultingStudent"/>
 		<result column="cs_data" 		property="ConsultingData"/>
 	</resultMap>
+	<update id="upconsultingList" parameterType="Consulting">
+		UPDATE 
+			wt_consulting
+		SET
+			cs_title=#{ConsultingTitle},
+			mr_o_id=#{ConsultingTeacher},
+			cs_lec_name=#{ConsultingClass},
+			cs_s_name=#{ConsultingStudent},
+			cs_data=#{ConsultingData}
+		WHERE 
+			cs_code=#{ConsultingCode};
+	</update>
 	<select id="consultingInformation" resultType="hashMap" parameterType="map">
 		SELECT 
 			 cs_code

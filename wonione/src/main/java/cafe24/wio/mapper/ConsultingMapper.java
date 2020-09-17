@@ -23,5 +23,7 @@ public interface ConsultingMapper {
 	public List<Map<String, Object>> consultingList(Map<String, Object> parameterMap);
 	//상담상세보기
 	public Map<String, Object> consultingInformation(int csCode);
+	//상담내용수정
+	public int upconsultingList(Consulting cosulting);
 
 }

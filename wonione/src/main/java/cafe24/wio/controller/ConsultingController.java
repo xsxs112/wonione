@@ -64,7 +64,8 @@ public class ConsultingController {
 		return consultingInformationMap;
 	}
 	@PostMapping("/consultingList")
-	public String upConsultingList(@RequestParam(value="consultingCode", required = false) String consultingCode
+	public String upConsultingList(Consulting cosulting
+								  ,@RequestParam(value="consultingCode", required = false) String consultingCode
 								  ,@RequestParam(value="consultingTitle", required = false) String consultingTitle
 								  ,@RequestParam(value="consultingTeacher", required = false) String consultingTeacher
 								  ,@RequestParam(value="consultingClass", required = false) String consultingClass
@@ -76,6 +77,7 @@ public class ConsultingController {
 		System.out.println(consultingClass);
 		System.out.println(consultingStudent);
 		System.out.println(consultingData);
+		consultingService.upconsultingList(cosulting);
 		return "redirect:/consultingList";
 	}
 }

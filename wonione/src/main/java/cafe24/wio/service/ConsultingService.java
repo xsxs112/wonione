@@ -82,5 +82,9 @@ public class ConsultingService {
 		map = consultingMapper.consultingInformation(csCode);
 		return map;
 	}
+	public int upconsultingList(Consulting cosulting) {
+		int result = consultingMapper.upconsultingList(cosulting);
+		return result;
+	}
 
 }
