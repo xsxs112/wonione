@@ -42,10 +42,13 @@
 		FROM
 			wt_member_registration 	AS m
 		WHERE
-			m.mr_id = #{mrId};
+			m.mr_id = #{mrId}
+		AND
+			m.mr_pw = #{mrPw};
+
 	</select>
 	
-	<!-- 추가 정보 입력 시, select 태그 열고 쿼리를 하나 더 작성 -->
+	<!-- 1-2. 구성원 추가 정보 입력 시, select 태그 열고 쿼리를 하나 더 작성 -->
 	
 
 	<!-- 1. 구성원 리스트 가져오기 -->
