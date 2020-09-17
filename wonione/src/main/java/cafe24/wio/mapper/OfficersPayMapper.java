@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import cafe24.wio.bean.OfficersPay;
 import cafe24.wio.controller.OfficersPayController;
 
 @Mapper
@@ -19,6 +20,6 @@ public interface OfficersPayMapper {
 	public List<OfficersPayController> getOfficersList();
 
 	//직원 정보 조회
-	public List<OfficersPayController> callOfficersInfo(String mrId);
+	public OfficersPay callOfficersInfo(String mrId);
 
 }

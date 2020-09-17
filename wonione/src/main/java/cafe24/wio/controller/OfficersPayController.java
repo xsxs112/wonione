@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import cafe24.wio.bean.OfficersPay;
 import cafe24.wio.service.OfficersPayService;
 
 @Controller
@@ -25,16 +28,13 @@ public class OfficersPayController {
 	private final static Logger logger = LoggerFactory.getLogger(OfficersPayController.class);
 
 	//직원 정보 불러오기
-	@RequestMapping(value = "/callOfficersInfo", method = RequestMethod.GET)
-	public String callOfficersInfo(Model model
-							  ,@RequestParam(value = "mrId", required = false) String mrId) {
+	@PostMapping(value = "/callOfficersInfo",produces = "application/json")
+	@ResponseBody
+	public OfficersPay callOfficersInfo(String mrId) {
 		System.out.println(mrId +" <-mrId");
-		List<OfficersPayController> OfficersInfo = officersPayService.callOfficersInfo(mrId);
-		
-		model.addAttribute("OfficersInfo", OfficersInfo);
-		model.addAttribute("title", "직원정보조회");
-		
-		return "humanresource/officersPayIndex";
+		OfficersPay OfficersInfo = officersPayService.callOfficersInfo(mrId);
+
+		return OfficersInfo;
 	}
 	
 	//직원리스트조회
@@ -81,12 +81,8 @@ public class OfficersPayController {
 		List<OfficersPayController> officersPayList = officersPayService.getOfficersPayList();
 
 		model.addAttribute("officersPayList", officersPayList);
-		model.addAttribute("title", "직원급여목록조회");
-		
-		List<OfficersPayController> officersPay = officersPayService.getOfficersPay(mrId);
-		
-		model.addAttribute("officersPay", officersPay);
-		model.addAttribute("title", "직원급여목록조회");
+		model.addAttribute("title", "직원급여목록조회");		
+
 		
 		return "humanresource/officersPay"; 	
 	}

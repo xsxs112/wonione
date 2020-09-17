@@ -5,21 +5,88 @@
 	
 	<th:block layout:fragment="customTitle">
 		<title></title> 
+		<script type="text/javascript">
+	 	
+		// HYJ
+	$(function(){	
+ 		$('.callOfficersInfo').click(function(){
+ 		console.log('6666666666');
+ 		var tr = $(this).parent().parent();
+ 		var td = tr.children();
+ 		var mrId = td.eq(0).text(); 	
+ 		
+		//var mrId = $('#tb').children('input[name=mrId]').val();
+		console.log(mrId + ' < -- mrId');
+		var request = $.ajax({
+			  url: "/callOfficersInfo",
+			  method: "POST",
+			  data: { mrId : mrId },
+			  dataType: "json"
+			});
+			request.done(function(data) {
+				console.log(data);
+				$('#mrId').val(data.mrId);
+				
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				if (jqXHR.status === 0) {
+		            alert('Not connect.\n Verify Network.');
+		        } 
+		        else if (jqXHR.status == 400) {
+		            alert('Server understood the request, but request content was invalid. [400]');
+		        } 
+		        else if (jqXHR.status == 401) {
+		            alert('Unauthorized access. [401]');
+		        } 
+		        else if (jqXHR.status == 403) {
+		            alert('Forbidden resource can not be accessed. [403]');
+		        } 
+		        else if (jqXHR.status == 404) {
+		            alert('Requested page not found. [404]');
+		        } 
+		        else if (jqXHR.status == 500) {
+		            alert('Internal server error. [500]');
+		        } 
+		        else if (jqXHR.status == 503) {
+		            alert('Service unavailable. [503]');
+		        } 
+		        else if (exception == 'parsererror') {
+		            alert('Requested JSON parse failed. [Failed]');
+		        } 
+		        else if (exception == 'timeout') {
+		            alert('Time out error. [Timeout]');
+		        } 
+		        else if (exception == 'abort') {
+		            alert('Ajax request aborted. [Aborted]');
+		        } 
+		        else {
+		            alert('Uncaught Error.n' + jqXHR.responseText);
+		        }
+			});
+		});
+	});
+		</script>
+		
+		
+		
 	</th:block>
 	<th:block layout:fragment="customContent" >	
 	<!--===================직원목록불러오기시작===================-->
 	
-	<div style="width:40%; float:left" class="container-fluid">
-		<table id="tb" class ="table table-striped">
-			<tr>
-				<td colspan="3" style="text-align: center; vertical-align:middle;"> 직원목록 </td>
-			</tr>
-			<tr th:each="l : ${officersPayList}">
-				<td style="text-align: center;" th:text="${l.mrId}"></td>
-				<td style="text-align: center;" th:text="${l.mrName}"></td>
-				<td style="text-align: center;"><a th:href="@{/callOfficersInfo(mrId=${l.mrId})}">정보보기</a></td>
-			</tr>
-		</table>
+	<div style="width:40%; float:left" class="container-fluid">		
+			<table id="tb" class ="table table-striped">
+				<tr>
+					<td colspan="3" style="text-align: center; vertical-align:middle;"> 직원목록 </td>
+				</tr>
+				<tr th:each="l : ${officersPayList}">
+					<td style="text-align: center;" th:text="${l.mrId}"><input type="hidden" name="mrId" th:value="${l.mrId}"></td>
+					<td style="text-align: center;" th:text="${l.mrName}"></td>
+					<td style="text-align: center;">					
+						<button type="button" class="callOfficersInfo">정보보기</button>
+					</td>
+				</tr>
+			</table>		
+		
 	</div>
 	<div style="width:60%; float:right" class="container-fluid">
 		<table id="tb2" class ="table table-striped">
@@ -29,31 +96,31 @@
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">아이디</td>
 				<td colspan="3" style="text-align: left;">
-				<input type="text" class="form-control" readonly>
+				<input type="text" class="form-control" id="mrId"  readonly>
 				</td>
 			</tr>
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">이름</td>
 				<td colspan="3" style="text-align: left;">
-				<input type="text" class="form-control"  readonly>
+				<input type="text" class="form-control" id="mrName"  readonly>
 				</td>			
 			</tr>
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">입사일</td>
 				<td colspan="3" style="text-align: left;">
-				<input type="text" class="form-control"  readonly>
+				<input type="text" class="form-control" id="mrJoinDate"  readonly>
 				</td>			
 			</tr>
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">은행</td>
 				<td colspan="3" style="text-align: left;">
-				<input type="text" class="form-control" readonly>
+				<input type="text" class="form-control" id="pMRTitle" readonly>
 				</td>		
 			</tr>
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">계좌</td>
 				<td colspan="3" style="text-align: left;">
-				<input type="text" class="form-control" readonly>
+				<input type="text" class="form-control" id="mrAccountNum" readonly>
 				</td>		
 			</tr>
 		</table>	
@@ -123,155 +190,9 @@
 	</form>
 	<!--===================지급계산끝===================-->
 	
-	<!--===================지급내역시작===================-->
-		<div class="container-fluid">
-  	 		<table class ="table table-striped">
-		  		<thead>
-		  			<tr class="info">
-		  				<th style="text-align: center;">직원급여지급코드</th>
-		  				<th style="text-align: center;">아이디</th>
-		  				<th style="text-align: center;">이름</th>
-		  				<th style="text-align: center;">직원급여지급일자</th>
-		  				<th style="text-align: center;">직원급여실지급액</th>
-		  				<th style="text-align: center;">작성일자</th>
-		  				<th style="text-align: center;">작성자</th>
-		  				<th style="text-align: center;">급여명세서</th>
-		  			</tr>
-		  		</thead>	  	
-		  		<tbody>
-		  			<tr th:each="l : ${officersPayList}">
-		  				<td style="text-align: center;" th:text="${l.opCode}"></td>
-		  				<td style="text-align: center;" th:text="${l.mrId}"></td>
-		  				<td style="text-align: center;" th:text="${l.mrName}"></td>
-		  				<td style="text-align: center;" th:text="${l.opDate}"></td>
-		  				<td style="text-align: center;" th:text="${#numbers.formatInteger(l.opPay, 0, 'COMMA')}+'원'" ></td>
-		  				<td style="text-align: center;" th:text="${l.opRegDate}"></td>
-		  				<td style="text-align: center;" th:text="${l.opWriter}"></td>
-		  				<!-- get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음) -->
-		  				<td style="text-align: center;"><a th:href="@{/officersPayIndex(mrId=${l.mrId})}">상세보기</a></td>
-		  				<!-- <td><a th:href="@{/미정(memberId=${l.memberId},memberPw=${l.memberPw})}">수정</a></td> -->
-		  			</tr>
-		  		</tbody>	
-		  	</table>					
-		</div>
-	<!--===================지급내역시작===================-->
+
 	
-	<!--===================급여명세서내역시작===================-->
-	<br>
- 	<div class="container-fluid" style="border: 3px solid #939284; margin:10px;">
- 	<br>
-		<table class="table table-striped" style="font-size: 15px;" th:each="l : ${officersPay}" >		 
-			<tr>				
-				<td colspan="6" style="text-align: center; font-size: 25px; font-weight:bold;" 
-					th:text="${l.iyCode +'년'+'&nbsp;&nbsp;&nbsp;'+#numbers.formatInteger(l.pRTitle, 0, 'COMMA')+'월'+'&nbsp;&nbsp;&nbsp;'+'급여명세서'}">
-				</td>				
-			</tr>
-			<tr>
-				<td style="text-align: right;">아이디</td>
-				<td th:text="${l.mrId}"></td>
-				<td style="text-align: right;">시급</td>
-				<td th:text="${l.opcHourlyWage}"></td>
-				<td style="text-align: right;">이름</td>
-				<td th:text="${l.mrName}"></td>
-			</tr>
-			<tr>
-				<td style="text-align: right;">입사일자</td>
-				<td colspan="5"></td> <!-- 추가필요 -->
-			</tr>
-			<tr>
-				<td rowspan="5" style="text-align: center; vertical-align:middle;">지급내역</td>
-			</tr>
-			<tr class="info" style="text-align: center;">	
-				<td>기본급</td>
-				<td>식비</td>
-				<td>교통비</td>
-				<td>복지후생</td>
-				<td>상여금</td>
-			</tr>
-			<tr style="text-align: center;">
-				<td th:text="${#numbers.formatInteger(l.opcBasePay, 0, 'COMMA')}"></td>
-				<td th:text="${#numbers.formatInteger(l.opcFoodExpenses, 0, 'COMMA')}"></td>
-				<td th:text="${#numbers.formatInteger(l.opcTransportation, 0, 'COMMA')}"></td>
-				<td th:text="${#numbers.formatInteger(l.opcWelfare, 0, 'COMMA')}"></td>
-				<td th:text="${#numbers.formatInteger(l.opcBonus, 0, 'COMMA')}"></td>
-			</tr>
-			<tr class="info" style="text-align: center;">
-				<td>기타</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>급여계총액</td>
-			</tr>
-			<tr style="text-align: center;">
-				<td th:text="${#numbers.formatInteger(l.opcEct, 0, 'COMMA')}"></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td th:text="${#numbers.formatInteger(l.opcTotal, 0, 'COMMA')}+'원'"></td>
-			</tr>
-			<tr>
-				<td rowspan="5" style="text-align: center; vertical-align:middle;">공제내역</td>
-			</tr>
-			<tr class="info" style="text-align: center;">
-				<td>소득세</td>
-				<td>주민소득세</td>
-				<td>고용보험료</td>
-				<td>국민연금</td>
-				<td>건강보험료</td>
-			</tr>
-			<tr style="text-align: center;">
-				<td th:text="${#numbers.formatInteger(l.opdIncomeTax, 0, 'COMMA')}"></td>
-				<td th:text="${#numbers.formatInteger(l.opdResidentIncomTax, 0, 'COMMA')}"></td>
-				<td th:text="${#numbers.formatInteger(l.opdEmploymentInsurance, 0, 'COMMA')}"></td>
-				<td th:text="${#numbers.formatInteger(l.opdNationalPension, 0, 'COMMA')}"></td>
-				<td th:text="${#numbers.formatInteger(l.opdHealthInsurance, 0, 'COMMA')}"></td>				
-			</tr>
-			<tr class="info"  style="text-align: center;">
-				<td>장기요양보험료</td>
-				<td></td>
-				<td></td>
-				<td>공제총액</td>
-				<td>실지급금</td>
-			</tr>
-			<tr style="text-align: center;">
-				<td th:text="${#numbers.formatInteger(l.opdLongtermNursingInsurance, 0, 'COMMA')}"></td>
-				<td></td>
-				<td></td>
-				<td th:text="${#numbers.formatInteger(l.opdTotal, 0, 'COMMA')}+'원'"></td>
-				<td th:text="${#numbers.formatInteger(l.opPay, 0, 'COMMA')}+'원'"></td>
-			</tr>
-			<tr>
-				<td rowspan="3" style="text-align: center; vertical-align:middle;">근태내역</td>
-			</tr>
-			<tr class="info" style="text-align: center;">
-				<td>정상근무</td>
-				<td>결근</td>
-				<td></td>
-				<td></td>
-				<td>총근무시간</td>
-			</tr>
-			<tr style="text-align: center;">
-				<td th:text="${l.opcTotalHour}"></td> <!-- 수정필요 -->
-				<td></td> <!-- 수정필요 -->
-				<td></td>
-				<td></td>
-				<td th:text="${l.opcTotalHour+'시간'}"></td> <!-- 수정필요 -->
-			</tr>
-			<tr>
-				<td style="text-align: right;">사업장</td>
-				<td colspan="2"></td>
-				<td></td>
-				<td style="text-align: center; font-size: 15px; font-weight:bold;">수정</td>
-				<td style="text-align: center; font-size: 15px; font-weight:bold;">삭제</td>
-			</tr>
-			<tr>					
-				<td colspan="6" style="text-align: center; font-size: 20px; font-weight:bold;">
-					<a th:href="@{/officersPayIndex}">닫기</a>
-				</td>
-			</tr>
-		</table>		
-	</div>
-	<!--===================급여명세서내역끝===================-->
+
 	<br>
 	</th:block>
 	<th:block layout:fragment="customJsScript">

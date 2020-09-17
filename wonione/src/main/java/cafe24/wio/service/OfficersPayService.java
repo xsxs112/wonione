@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cafe24.wio.bean.OfficersPay;
 import cafe24.wio.controller.OfficersPayController;
 import cafe24.wio.mapper.OfficersPayMapper;
 
@@ -36,9 +37,9 @@ public class OfficersPayService {
 		return OfficersList;
 	}
 
-	public List<OfficersPayController> callOfficersInfo(String mrId) {
+	public OfficersPay callOfficersInfo(String mrId) {
 		//직원의 정보가 담긴 list객체
-		List<OfficersPayController> OfficersInfo = officersPayMapper.callOfficersInfo(mrId);
+		OfficersPay OfficersInfo = officersPayMapper.callOfficersInfo(mrId);
 		
 		return OfficersInfo;
 	}
