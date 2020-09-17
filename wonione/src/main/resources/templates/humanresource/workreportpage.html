@@ -32,17 +32,17 @@
 	</style>
 	
 	<form action="/getReportList" class="container-fluid" style="text-align:center">
-	<h3 style="color: grey;" >개설예정 강의 업무계획서 상세보기</h3>
+	<h3 style="color: grey;" >개설예정 강의 업무계획서 상세보기</h3><br>
 		<table class="table table-striped" style="text-align:center">
 			<tr>
-				<th style="text-align:center">업무계획코드</th>
+				<th style="text-align:center">개설예정 강의 업무보고서 코드</th>
 				<th style="text-align:center">작성일자</th>
 			<tr th:each="r : ${Report}">	
 				<td th:text=${r.lecOpenCode}></td>
 				<td th:text=${r.openLecRegDate}></td>
 			</tr>	
 			<tr>	
-				<th>강의예정코드</th>
+				<th>개설예정 강의</th>
 				<th>작성자</th>
 			</tr>
 			<tr th:each="r : ${Report}">	

@@ -31,21 +31,24 @@
 	</style>
 	
 	<form action="/updateCode" class="container-fluid" method="post">
-	<h3 style="color: grey;" >개설예정 강의 계획보고서 수정하기</h3>
+	<h3 style="color: grey;" >개설예정 강의 계획보고서 수정하기</h3><br>
 		<table class="table table-striped" >
 			<tr>
-				<th colspan="6">강의개설계정코드</th>
+				<th colspan="6">개설예정 강의 업무보고서 코드</th>
 			</tr>
 			<tr>
-			<td th:text=${Report.lecOpenCode}></td>
+			<td colspan="6"><input type="text" class="form-control" name="lecOpenCode" th:value=${Report.lecOpenCode} readonly="readonly">
+			</td>
 			</tr>	
 			<tr>	
-				<th>강의개설예정과목</th>
+				<th>개설예정 강의</th>
 				<th>작성자</th>
 			</tr>
 			<tr>
-			<td th:text=${Report.lecOpenScheCode}></td>
-			<td th:text=${Report.mrName}></td>
+			<td><input type="text" class="form-control" name="lecOpenScheCode" th:value=${Report.lecOpenScheCode} readonly="readonly">
+			</td>
+			<td><input type="text" class="form-control" name="mrName" th:value=${Report.mrName} readonly="readonly">
+			</td>
 			</tr>
 			<tr>
 				 <th colspan="6">업무목표</th>

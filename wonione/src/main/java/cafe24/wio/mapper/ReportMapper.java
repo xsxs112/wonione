@@ -31,5 +31,9 @@ public interface ReportMapper {
 	//수정처리
 	public int updateCode(Report report);
 	
+	//검색조건
+	public List<Report> getSearchList(String lecSk, String lecSv);
 	
+	//자동증가
+	public Map<String, Object> getReCode();
 }
