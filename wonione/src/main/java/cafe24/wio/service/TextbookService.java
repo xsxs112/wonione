@@ -16,20 +16,30 @@ public class TextbookService {
 	@Autowired
 	private TextbookMapper textbookMapper;
 	
-	//교재 지급내역 조회
+	/**
+	 * 교재 지급내역 조회
+	 * @return List<SupplyTextbook> getTextbookSuppList
+	 */
 	public List<SupplyTextbook> getTextbookSuppList(){
 		List<SupplyTextbook> getTextbookSuppList = textbookMapper.getTextbookSuppList();
 		return getTextbookSuppList;
 	}
 	
-	//교재코드로 교재정보 가져오기 
+	/**
+	 * 교재코드로 교재정보 가져오기 
+	 * @param txbInfoCode
+	 * @return TextbookBasicInfo textbookBasicInfo
+	 */
 	public TextbookBasicInfo getOnlyTxbInfo(String txbInfoCode) {
 		TextbookBasicInfo textbookBasicInfo = textbookMapper.getOnlyTxbInfo(txbInfoCode);
 		
 		return textbookBasicInfo;
 	}
 	
-	//교재정보등록시 삽입될 코드(PK) 가져오기 
+	/**
+	 * 교재정보등록시 삽입될 코드(PK) 가져오기 
+	 * @return String txbInfoCode
+	 */
 	public String getAddTxbInfoCode() {
 		
 		String txbInfoCode = textbookMapper.getAddTxbInfoCode();
@@ -37,26 +47,56 @@ public class TextbookService {
 		return txbInfoCode;
 	}
 	
-	//교재 기초정보 등록
+	/**
+	 * 교재 기초정보 등록
+	 * @param txbBasicInfo
+	 * @return int addTxbInfoResult
+	 */
 	public int addTextbookInfo(TextbookBasicInfo txbBasicInfo) {
 			int addTxbInfoResult = textbookMapper.addTextbookInfo(txbBasicInfo);
 		return addTxbInfoResult;
 	}
 	
-	//교재 최초입고등록
+	/**
+	 * 교재 최초입고등록
+	 * @param whTextbook
+	 * @return int addFirstWhTxbResult
+	 */
 	public int addFirstWhTextbook(WhTextbook whTextbook) {
+		
 		int addFirstWhTxbResult = textbookMapper.addFirstWhTextbook(whTextbook);
+		
 		return addFirstWhTxbResult;
 	}
 	
-	//교재 입고등록
+	/**
+	 * 교재입고내역 존재유무 체크
+	 * @param whTextbook
+	 * @return List<TextbookBasicInfo> wahoTextbookCheck
+	 */
+	public List<TextbookBasicInfo> wahoTextbookCheck(WhTextbook whTextbook){
+		
+		List<TextbookBasicInfo> wahoTextbookCheck = textbookMapper.wahoTextbookCheck(whTextbook);
+		
+		return wahoTextbookCheck;
+	}
+	
+	/**
+	 * 교재 입고등록
+	 * @param whTextbook
+	 * @return int addWhTxbResult
+	 */
 	public int addWhTextbook(WhTextbook whTextbook) {
 		
 		int addWhTxbResult = textbookMapper.addWhTextbook(whTextbook);
+		
 		return addWhTxbResult;
 	}
 	
-	//교재 입고 테이블 조회
+	/**
+	 * 교재 입고 테이블 조회
+	 * @return List<WhTextbook> whTextbookList
+	 */
 	public List<WhTextbook> getWhTextbookList(){
 		
 		List<WhTextbook> whTextbookList = textbookMapper.getWhTextbookList();
@@ -64,14 +104,22 @@ public class TextbookService {
 		return whTextbookList;
 	}
 	
-	//교재 기초정보 조회
+	/**
+	 * 교재 기초정보 조회
+	 * @param txbBasicInfo
+	 * @return List<TextbookBasicInfo> textbookinfolist
+	 */
 	public List<TextbookBasicInfo> getTextbookInfoList(TextbookBasicInfo txbBasicInfo){
 		List<TextbookBasicInfo> textbookinfolist = textbookMapper.getTextbookInfoList(txbBasicInfo);
 		
 		return textbookinfolist;
 	}
 	
-	//보유 교재리스트 조회
+	/**
+	 * 보유 교재리스트 조회
+	 * @param whTextbook
+	 * @return List<TextbookBasicInfo> textbookOwnList
+	 */
 	public List<TextbookBasicInfo> getTextbookOwnList(WhTextbook whTextbook){
 		List<TextbookBasicInfo> textbookOwnList = textbookMapper.getTextbookOwnList(whTextbook);
 		return textbookOwnList;
