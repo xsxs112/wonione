@@ -13,11 +13,12 @@ public class MemberService {
 @Autowired
 private MemberMapper memberMapper;
 
-
+		
 		// 2. 구성원 정보 조회
-		public Member getMemberInfo(String mrId) {
-		Member member = memberMapper.getMemberInfo(mrId);
+		public Member getMemberInfo(String mrId, String mrPw) {
+		Member member = memberMapper.getMemberInfo(mrId, mrPw);
 		System.out.println(member + "<-- member 정보 조회 / memberService");
+		
 		
 		if(member != null) {
 			int levelNum = 0;
