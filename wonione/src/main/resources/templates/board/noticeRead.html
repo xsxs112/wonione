@@ -12,10 +12,31 @@
 		<table class="table table-striped" style="text-align:center">
 			<tr class="info">
 				<th>글번호</th>
-				<th>작성일자</th>
+				<th>작성날짜</th>
+			</tr>
 			<tr th:each="n : ${noticeList}">	
 				<td th:text=${n.boardNum}></td>
 				<td th:text=${n.boardRegDate}></td>
+			</tr>
+			<tr class="info">
+				<th>제목</th>
+			</tr>
+			<tr th:each="n : ${noticeList}">	
+				<td th:text=${n.boardTitle}></td>
+			</tr>
+			<tr class="info">
+				<th>작성자 ID</th>
+				<th>작성자</th>
+			</tr>
+			<tr th:each="n : ${noticeList}">	
+				<td th:text=${n.boardWriterId}></td>
+				<td th:text=${n.boardWriterName}></td>
+			</tr>
+			<tr class="info">
+				<th>내용</th>
+			</tr>
+			<tr th:each="n : ${noticeList}">	
+				<td th:text=${n.boardContents}></td>
 			</tr>
 									
 		</table>

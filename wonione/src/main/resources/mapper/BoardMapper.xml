@@ -39,7 +39,7 @@
 	</select>
 	
 	<!-- 공지사항 읽기 쿼리 -->
-	<select id="readNotice" resultType="Board" parameterType="Board" resultMap="boardResultMap">
+	<select id="readNotice" resultType="Board" parameterType="String" resultMap="boardResultMap">
 		SELECT
 			b.board_num,
 			b.board_title,
