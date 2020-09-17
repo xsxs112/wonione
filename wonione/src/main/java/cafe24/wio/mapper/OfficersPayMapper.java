@@ -17,6 +17,9 @@ public interface OfficersPayMapper {
 
 	//직원 목록 조회
 	public List<OfficersPay> getOfficersList();
+	
+	//자원테이블 호출
+	public List<OfficersPay> standardSheet();
 
 	//직원 정보 조회
 	public OfficersPay callOfficersInfo(String mrId);
