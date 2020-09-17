@@ -6,8 +6,10 @@
 	<th:block layout:fragment="customTitle">
 		<title>자료게시판</title> 
 	</th:block>
-	<th:block layout:fragment="customContent">
-		<h1>자료게시판 목록</h1>
+	
+	<th:block layout:fragment="customContent">	
+	<form action="#" class="container-fluid">
+		<h2>자료게시판 목록</h2>
 		<table class ="table table-striped">
 			<thead>
 				<tr class="info">
@@ -28,6 +30,7 @@
 				</tr>
 			</tbody>			
 		</table>
+	</form>
 	</th:block>
 	
 	<th:block layout:fragment="customJsScript">
