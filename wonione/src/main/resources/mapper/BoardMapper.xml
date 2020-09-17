@@ -55,6 +55,8 @@
 			wt_member_registration AS m
 		ON
 			m.mr_id = b.board_writer_id
+		WHERE
+			b.board_num = #{boardNum};
 	</select>
 	
 	<!-- 자료게시판 리스트 조회 쿼리  -->
