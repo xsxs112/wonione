@@ -7,7 +7,32 @@
 		<title></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-	<form action="/workreportwrite" class="container-fluid" method="post" style="text-align:center">
+
+<style>
+
+table {
+		  width:100%;
+		}
+		table, th{
+		  border: 1px solid grey ;
+		  border-collapse: collapse;
+		  font-size: 17px;
+		}
+		th{
+		  padding: 1px;
+		  text-align: center;
+		  background-color: lightgrey;
+		}
+		td {
+		  padding: 3px;
+		  border: 1px solid grey ;
+		   text-align: center;
+		  border-collapse: collapse;
+		  font-size: 15px;
+
+</style>
+	
+	<form action="/workreportwrite" class="container-fluid" method="post" >
 	<h3 style="color: grey;" >개설예정 강의 계획보고서 작성</h3>
 		<table class="table table-striped">
 			<tr class="info">	
@@ -32,28 +57,28 @@
 					</select>
 				</td>
 			</tr>
-			<tr class="info">
+			<tr>
 				 <th colspan="6">업무목표</th>
 			</tr>
 			<tr>	
 				<td colspan="6"><input type="text" class="form-control" name="lecTarget"></td>
 			</tr>
-			<tr class="info">	
+			<tr>	
 				<th colspan="6">업무계획</th>
 			</tr>
-			<tr class="info">
+			<tr>
 			<td colspan="6"><textarea class="form-control" rows="6" name="lecPlan"></textarea></td>
 			</tr>
-			<tr class="info">	
+			<tr>	
 				<th colspan="6">기타사항</th>
 			</tr>
-			<tr class="info">
+			<tr>
 			<td colspan="3"><textarea class="form-control" rows="6" name="lecEtc"></textarea></td>
 			</tr>
 			
 		</table>
 		<div style="margin-bottom:10px"> 
-			<button type="button" class="btn btn-default btn-info">저장하기</button>
+			<button type="submit" class="btn btn-default btn-info">저장하기</button>
 		</div>
 	</form>	
 	</th:block>

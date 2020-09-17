@@ -93,23 +93,25 @@ public class WorkReportController {
 		   return "redirect:/getReportList";
 	   }
 	   
-	   //보고서 수정
-	   @GetMapping("/updateCode")
-	   public String updateCode(
-			   					@RequestParam(value="lecOpenCode", required = false) String lecOpenCode,
-			   					Model model ) {
-		   Report report = reportService.getReportDetailList(lecOpenCode);
-		   model.addAttribute("Report", report);
-		   return "humanresource/updateworkreport";
-	   }
-	   
+	   //보고서수정
 	   @PostMapping("/updateCode")
 	   public String updateCode(Report report, Model model
 				               ) {
+		   
 		   reportService.updateCode(report);
 		   model.addAttribute("Report", report);
 		   return "redirect:/getReportList";
-			   
+	   }
+	   
+	   //보고서 수정
+	   @GetMapping("/updateCode")
+	   public String updateCode(
+			   					@RequestParam(value="lecOpenCode", required = false) String lecOpenCode
+			   					,Model model ) {
+		   Report report = reportService.getReportDetailList(lecOpenCode);
+		   System.out.println(report+"<--report");
+		   model.addAttribute("Report", report);
+		   return "humanresource/updateworkreport";
 	   }
 	   
 	   

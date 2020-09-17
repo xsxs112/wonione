@@ -7,15 +7,39 @@
 		<title th:text="title"></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
+	<style>
+		table {
+		  width:100%;
+		}
+		table, th{
+		  border: 1px solid grey ;
+		  border-collapse: collapse;
+		  font-size: 17px;
+		}
+		th{
+		  padding: 1px;
+		  text-align: center;
+		  background-color: lightgrey;
+		}
+		td {
+		  padding: 3px;
+		  border: 1px solid grey ;
+		   text-align: center;
+		  border-collapse: collapse;
+		  font-size: 15px;
+		
+	</style>
+			
 	
 		<form action="/workreportwrite" class="container-fluid" style="text-align:center">
 			<div style="margin-bottom:10px">
-				<button type="submit" class="btn btn-default btn-info">보고서작성하기</button>
+			
+				<button type="submit" class="btn btn-default btn-lg btn-block">보고서 작성하기</button>
 			</div>
 			<h3 style="color: grey;">개설예정 강의 계획보고서</h3>
 		<table class ="table table-striped">
 		<thead>
-			<tr class="info">
+			<tr>
 				<th>업무계획서</th>
 				<th>강의개설예정코드</th>
 				<th>업무목표</th>
