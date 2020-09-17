@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cafe24.wio.bean.SupplyTextbook;
 import cafe24.wio.bean.TextbookBasicInfo;
 import cafe24.wio.bean.WhTextbook;
 import cafe24.wio.service.TextbookService;
@@ -25,6 +26,20 @@ public class TextbookController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 
+	//교재 지급내역 조회
+	@GetMapping("/textbookSupplyList")
+	public String getTextbookSuppList(Model model
+								,SupplyTextbook supplyTextbook) {
+		logger.info("==============================");
+		logger.info("교재지급내역페이지 getTextbookSuppList 포스트매핑!!!!");
+		logger.info("==============================");
+		
+		model.addAttribute("title", "교재지급내역 페이지");
+		model.addAttribute("mainTitle", "교재지급내역 페이지");
+		List<SupplyTextbook> getTextbookSuppList = textbookService.getTextbookSuppList();
+		model.addAttribute("getTextbookSuppList", getTextbookSuppList);
+		return "textbookresource/textbookSupplyList";
+	}
 	
 	//교재 기초정보 등록
 	@PostMapping("/textbookInfoRegister")

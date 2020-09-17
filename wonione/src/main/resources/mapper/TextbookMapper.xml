@@ -28,6 +28,29 @@
 	<result column="wh_txb_remark" 			property="whTxbRemark"/>
 </resultMap>
 
+<resultMap type="SupplyTextbook" id="resultSupplyTextbook">
+	<result column="sup_txb_code" 			property="supTxbCode"/>
+	<result column="txb_code" 				property="txbCode"/>
+	<result column="sup_txb_quantity" 		property="supTxbQuantity"/>
+	<result column="txb_receiver_id" 			property="txbReceiverId"/>
+	<result column="sup_txb_date"		property="supTxbDate"/>
+	<result column="sup_txb_writer" 			property="supTxbWriter"/>
+	<result column="sup_txb_reg_date" 		property="supTxbRegDate"/>
+</resultMap>
+
+<!-- 교재지급내역조회 -->
+<select id="getTextbookSuppList" resultMap="resultSupplyTextbook">
+	SELECT 
+			sup_txb_code
+		,  txb_code
+		,  sup_txb_quantity
+		,  txb_receiver_id
+		,  sup_txb_date
+		,  sup_txb_writer
+		,  sup_txb_reg_date
+	FROM wt_supply_textbook
+</select>
+
 <!-- 교재정보조회 -->
 <select id="getTextbookInfoList" resultType="TextbookBasicInfo" resultMap="resultTxbBasicInfo">
 	SELECT 
