@@ -20,6 +20,18 @@ public class TextbookController {
 	@Autowired
 	private TextbookService textbookService;
 	
+	
+	//교재 기초정보 등록
+	@PostMapping("/textbookInfoRegister")
+	public String textbookInfoRegister(Model model
+									,TextbookBasicInfo txbBasicInfo) {
+		
+		textbookService.addTextbookInfo(txbBasicInfo);
+		
+		return "redirect:/textbookManage";
+	}
+	
+	//교재 기초정보 등록
 	@GetMapping("/textbookInfoRegister")
 	public String textbookInfoRegister(Model model) {
 		
@@ -28,6 +40,36 @@ public class TextbookController {
 		
 		return "textbookresource/textbookInfoRegister";
 	}	
+	//교재 최초입고등록
+	@PostMapping("/textbookFirstWahoRegister")
+	public String textbookFirstWahoRegister(Model model
+			 					, WhTextbook whTextbook
+			 					,@RequestParam(value="txbCode", required = false)String txbCode
+			 					,@RequestParam(value="whTxbQuantity", required = false)String whTxbQuantity
+			 					,@RequestParam(value="whTxbRemark", required = false)String whTxbRemark) {
+	System.out.println(txbCode + "  < -- txbCode");
+	System.out.println(whTxbQuantity + "  < -- whTxbQuantity");
+	System.out.println(whTxbRemark + "  < -- whTxbRemark");
+
+	textbookService.addFirstWhTextbook(whTextbook);
+	
+	return "redirect:/textbookManage";
+	} 
+	
+	//교재 최초입고등록 
+	@GetMapping("/textbookFirstWahoRegister")
+	public String textbookFirstWahoRegister(Model model
+									 , TextbookBasicInfo txbBasicInfo) {
+		
+		model.addAttribute("title", "교재최초입고등록  페이지");
+		model.addAttribute("mainTitle", "교재최초입고등록 페이지");
+		//교재 기본정보조회
+		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList(txbBasicInfo);
+		model.addAttribute("textbookInfoList", textbookinfolist);
+		
+		return "textbookresource/textbookFirstWahoRegister";
+	}
+	
 	
 	//교재 입고등록
 	@PostMapping("/textbookWahoRegister")

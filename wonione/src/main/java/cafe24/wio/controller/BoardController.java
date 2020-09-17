@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import cafe24.wio.bean.Board;
 import cafe24.wio.service.BoardService;
 
@@ -30,18 +32,20 @@ public class BoardController {
 		return "board/notice";
 	}
 
-	/*
-	 * //공지사항 상세보기
-	 * 
-	 * @GetMapping("/noticePage") public String getNoticeDetailList(Model model) {
-	 * Report report = boardService.getNoticeDetailList(model);
-	 * System.out.println(board + "board"); model.addAttribute("Board", board);
-	 * model.addAttribute("title", "공지사항 상세목록조회");
-	 * 
-	 * return "board/noticePage";
-	 * 
-	 * }
-	 */
+	
+	  //공지사항 읽기
+	  @GetMapping("/readNotice")
+	  public String readNotice(Model model,
+			  						@RequestParam(value="boardNum", required = false) String boardNum) {
+		  Board board = boardService.readNotice(boardNum);
+		  System.out.println(board + "board");
+		  model.addAttribute("Board", board);
+		  model.addAttribute("title", "공지사항 읽기");
+		  
+		  return "board/noticeRead";
+		  
+	  }
+	
 
 	// 자료게시판 조회
 	@RequestMapping(value = "/getDataLibrary", method = RequestMethod.GET)

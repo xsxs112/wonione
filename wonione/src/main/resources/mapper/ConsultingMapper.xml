@@ -12,6 +12,21 @@
 		<result column="cs_s_name" 		property="ConsultingStudent"/>
 		<result column="cs_data" 		property="ConsultingData"/>
 	</resultMap>
+	<select id="consultingInformation" resultType="hashMap" parameterType="map">
+		SELECT 
+			 cs_code
+			,cs_title
+			,mr_o_id
+			,cs_date
+			,cs_lec_name
+			,cs_s_name
+			,cs_data
+		FROM 
+			wt_consulting
+		WHERE 
+			cs_code = #{ConsultingCode};
+	
+	</select>
 	<select id="consultingList" resultType="hashMap" parameterType="map">
 		 SELECT 
 		 	cs.rowNum   AS rowNum

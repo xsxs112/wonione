@@ -15,6 +15,25 @@ public class TextbookService {
 	@Autowired
 	private TextbookMapper textbookMapper;
 	
+	//교재 기초정보 등록
+	public int addTextbookInfo(TextbookBasicInfo txbBasicInfo) {
+			int addTxbInfoResult = textbookMapper.addTextbookInfo(txbBasicInfo);
+		return addTxbInfoResult;
+	}
+	
+	//교재 최초입고등록
+	public int addFirstWhTextbook(WhTextbook whTextbook) {
+		int addFirstWhTxbResult = textbookMapper.addFirstWhTextbook(whTextbook);
+		return addFirstWhTxbResult;
+	}
+	
+	//교재 입고등록
+	public int addWhTextbook(WhTextbook whTextbook) {
+		
+		int addWhTxbResult = textbookMapper.addWhTextbook(whTextbook);
+		return addWhTxbResult;
+	}
+	
 	//교재 입고 테이블 조회
 	public List<WhTextbook> getWhTextbookList(){
 		
@@ -36,10 +55,5 @@ public class TextbookService {
 		return textbookOwnList;
 	}
 	
-	//교재 입고등록
-	public int addWhTextbook(WhTextbook whTextbook) {
-		
-		int addWhTxbResult = textbookMapper.addWhTextbook(whTextbook);
-		return addWhTxbResult;
-	}
+
 }

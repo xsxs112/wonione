@@ -48,11 +48,22 @@ public class OfficersPayController {
 
 	}
 
-	//직원급여 초기페이지
-	/*
+	//직원급여 초기페이지	
 	@GetMapping("/officersPayIndex") 
-	public String officersPay() { 
+	public String officersPay(Model model
+							 ,@RequestParam(value = "mrId", required = false) String mrId) { 
+		
+		List<OfficersPayController> officersPayList = officersPayService.getOfficersPayList();
+
+		model.addAttribute("officersPayList", officersPayList);
+		model.addAttribute("title", "직원급여목록조회");
+		
+		List<OfficersPayController> officersPay = officersPayService.getOfficersPay(mrId);
+		
+		model.addAttribute("officersPay", officersPay);
+		model.addAttribute("title", "직원급여목록조회");
+		
 		return "humanresource/officersPay"; 	
-	}*/
+	}
 
 }

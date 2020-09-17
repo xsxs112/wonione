@@ -9,7 +9,6 @@
 		<result column="mr_id"							property="mrId"/>
 		<result column="mr_name"						property="mrName"/>
 		<result column="p_r_title"						property="monthCode"/>	
-		<result column="pm_r_title"						property="hourlyWageCode"/> <!-- 정리필요 -->
 		<result column="opc_hourly_wage"				property="opcHourlyWage"/>
 		<result column="opc_total_hour"					property="opcTotalHour"/>
 		<result column="opc_base_pay"					property="opcBasePay"/>
