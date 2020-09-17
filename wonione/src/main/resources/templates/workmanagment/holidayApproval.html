@@ -13,6 +13,7 @@
 	<script type="text/javascript">
 		$(function() {
 			$('#requestBtn').click(function() {
+				var stdayResult = 0;
 				var startDate = $('input[name=reStartDate]').val();
 				var endDate = $('input[name=reEndDate]').val();
 				var holidaySt = $('#holidaySt').val();
@@ -32,16 +33,16 @@
 					$('input[name=reReason]').focus();
 					return;
 				}else{
-					var request = $.ajax({
+					var startCk = $.ajax({
 					url : "/startDayCk",
 					method : "GET",
 					data : {startDate : startDate},
 					dataType: "text"
 					})
 				}
-				request.done(function(data) {
-					console.log(data);
+				startCk.done(function(data) {
 					if(data==0){
+						stdayResult = 1;
 						$('#requestForm').submit();
 					}else{
 						alert("당일,지나간 날짜는 신청하실 수 없습니다.");
@@ -49,6 +50,14 @@
 					
 				});
 				
+				if(stdayResult == 1){
+					var holidayCk = $.ajax({
+						url : "/holidayCk",
+						method : "GET",
+						data : {startDate : startDate ,endDate : endDate},
+						dataType: "text"
+						})
+				}
 			})
 				
 			
@@ -85,6 +94,7 @@
 					</td>	
 					<td>
 						<select name="holidaySt" id = "holidaySt">
+						  <option value="정기휴가">정기휴가</option>
 						  <option value="연차">연차</option>
 						  <option value="월차">월차</option>
 						  <option value="경조사">경조사</option>

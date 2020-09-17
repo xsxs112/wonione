@@ -32,6 +32,20 @@ public class WorkController {
 
 
 	
+	@ResponseBody
+	@GetMapping("/holidayCk")
+	public int holidayCk(@RequestParam(value = "startDate", required = false) String startDate,
+							@RequestParam(value = "endDate", required = false) String endDate) {
+		
+		int getStartDate = apprRequestService.getStartDayCk(startDate);
+
+	
+		return getStartDate;
+		
+	}
+	
+	
+	
 	
 	@ResponseBody
 	@GetMapping("/startDayCk")
