@@ -15,4 +15,10 @@ public interface OfficersPayMapper {
 	//직원급여명세서 조회
 	public List<OfficersPayController> getOfficersPay(String mrId);
 
+	//직원 목록 조회
+	public List<OfficersPayController> getOfficersList();
+
+	//직원 정보 조회
+	public List<OfficersPayController> callOfficersInfo(String mrId);
+
 }

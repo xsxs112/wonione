@@ -24,6 +24,31 @@ public class OfficersPayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(OfficersPayController.class);
 
+	//직원 정보 불러오기
+	@RequestMapping(value = "/callOfficersInfo", method = RequestMethod.GET)
+	public String callOfficersInfo(Model model
+							  ,@RequestParam(value = "mrId", required = false) String mrId) {
+		System.out.println(mrId +" <-mrId");
+		List<OfficersPayController> OfficersInfo = officersPayService.callOfficersInfo(mrId);
+		
+		model.addAttribute("OfficersInfo", OfficersInfo);
+		model.addAttribute("title", "직원정보조회");
+		
+		return "humanresource/officersPayIndex";
+	}
+	
+	//직원리스트조회
+	@RequestMapping(value = "/getOfficersList", method = RequestMethod.POST)
+	public String getOfficersList(Model model) {
+		List<OfficersPayController> OfficersList = officersPayService.getOfficersList();
+		
+		model.addAttribute("OfficersList", OfficersList);
+		model.addAttribute("title", "직원목록조회");
+		
+		return "humanresource/officersPay";		
+	}
+	
+	
 	// 직원급여명세서조회
 	@RequestMapping(value = "/getOfficersPay", method = RequestMethod.GET)
 	public String getOfficersPay(Model model

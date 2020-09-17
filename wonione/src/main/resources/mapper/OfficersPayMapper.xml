@@ -8,7 +8,8 @@
 		<result column="opc_code"						property="opcCode"/>
 		<result column="mr_id"							property="mrId"/>
 		<result column="mr_name"						property="mrName"/>
-		<result column="p_r_title"						property="monthCode"/>	
+		<result column="p_r_title"						property="pRTitle"/>
+		<result column="pm_r_title"						property="pMRTitle"/>	
 		<result column="opc_hourly_wage"				property="opcHourlyWage"/>
 		<result column="opc_total_hour"					property="opcTotalHour"/>
 		<result column="opc_base_pay"					property="opcBasePay"/>
@@ -35,12 +36,42 @@
 		<result column="op_date"						property="opDate"/>	
 		<result column="op_pay"							property="opPay"/>	
 		<result column="op_reg_date"					property="opRegDate"/>	
-		<result column="op_writer"						property="opWriter"/>	
+		<result column="op_writer"						property="opWriter"/>
+		<result column="mr_join_date"					property="mrJoinDate"/>
+		<result column="mr_account_num"					property="mrAccountNum"/>	
 	</resultMap>
+	<!-- 직원정보조회 -->
+	<select id ="callOfficersInfo" resultType="OfficersPay">
+		SELECT
+			m.mr_id				AS mrId
+			,m.mr_name			AS mrName
+			,m.mr_join_date		AS mrJoinDate
+			,r.pm_r_title		AS pMRTitle
+			,m.mr_account_num	AS mrAccountNum
+		FROM
+			wt_member_registration AS m
+			INNER JOIN 
+			wt_payment_resource AS r
+			on
+			m.pm_r_code = r.pm_r_code
+		WHERE 
+			m.mr_id = #{mrId};	
+	</select>
+	
+	<!-- 직원목록조회 -->
+	<select id = "getOfficersList" resultType="OfficersPay">
+		SELECT
+			 m.mr_id
+			,m.mr_name
+		FROM
+			wt_member_registration AS m
+		WHERE 
+			m.level_num = 3;	
+	</select>
 		<!-- 직원급여명세서조회-->
 	<select id = "getOfficersPay" resultType="OfficersPay">
 		SELECT
-			c.mr_id								AS mrId
+			 c.mr_id							AS mrId
 			,c.opc_hourly_wage					AS opcHourlyWage
 			,m.mr_name							AS mrName
 			,c.opc_base_pay						AS opcBasePay
@@ -60,8 +91,10 @@
 			,p.op_pay							AS opPay
 			,c.opc_total_hour					AS opcTotalHour
 			,d.iy_code							AS iyCode
-			,pr.p_r_title						AS monthCode
-			
+			,pr.p_r_title						AS pRTitle
+			,m.mr_join_date						AS mrJoinDate
+			,r.pm_r_title						AS pmRTitle
+			,m.mr_account_num					AS mrAccountNum
 		FROM
 			wt_officers_pay AS p
 			INNER JOIN 
@@ -76,6 +109,10 @@
 			wt_member_registration AS m
 			ON 
 			p.mr_id = m.mr_id 
+			LEFT JOIN 
+			wt_payment_resource AS r
+			ON 
+			m.pm_r_code = r.pm_r_code
 			LEFT JOIN 
 			wt_pay_resource AS pr
 			ON 

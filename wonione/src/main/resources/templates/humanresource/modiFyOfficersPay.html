@@ -12,7 +12,7 @@
 			<table class="table table-striped" style="font-size: 15px;" th:each="l : ${officersPay}" >
 				<tr>				
 					<td colspan="6" style="text-align: center; font-size: 25px; font-weight:bold;" 
-						th:text="${l.iyCode +'년'+'&nbsp;&nbsp;&nbsp;'+#numbers.formatInteger(l.pRTitle, 0, 'COMMA')+'월'+'&nbsp;&nbsp;&nbsp;'+'급여명세서'}">
+						th:text="${l.iyCode +'년'+'&nbsp;&nbsp;&nbsp;'+#numbers.formatInteger(l.monthCode, 0, 'COMMA')+'월'+'&nbsp;&nbsp;&nbsp;'+'급여명세서'}">
 					</td>				
 				</tr>
 				<tr>
