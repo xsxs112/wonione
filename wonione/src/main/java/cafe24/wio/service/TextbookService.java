@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cafe24.wio.bean.SupplyTextbook;
 import cafe24.wio.bean.TextbookBasicInfo;
 import cafe24.wio.bean.WhTextbook;
 import cafe24.wio.mapper.TextbookMapper;
@@ -14,6 +15,12 @@ public class TextbookService {
 	
 	@Autowired
 	private TextbookMapper textbookMapper;
+	
+	//교재 지급내역 조회
+	public List<SupplyTextbook> getTextbookSuppList(){
+		List<SupplyTextbook> getTextbookSuppList = textbookMapper.getTextbookSuppList();
+		return getTextbookSuppList;
+	}
 	
 	//교재코드로 교재정보 가져오기 
 	public TextbookBasicInfo getOnlyTxbInfo(String txbInfoCode) {
