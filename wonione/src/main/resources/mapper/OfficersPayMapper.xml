@@ -41,7 +41,7 @@
 		<result column="mr_account_num"					property="mrAccountNum"/>	
 	</resultMap>
 	<!-- 직원정보조회 -->
-	<select id ="callOfficersInfo" resultType="OfficersPay">
+	<select id ="callOfficersInfo" resultType="OfficersPay" parameterType="String">
 		SELECT
 			m.mr_id				AS mrId
 			,m.mr_name			AS mrName
