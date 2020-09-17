@@ -77,5 +77,10 @@ public class ConsultingService {
 	      
 	      return resultMap;     
 	}
+	public Map<String, Object> consultingInformation(int csCode) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map = consultingMapper.consultingInformation(csCode);
+		return map;
+	}
 
 }

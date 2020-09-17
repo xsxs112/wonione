@@ -17,9 +17,11 @@ public interface ConsultingMapper {
 	public List<Map<String, Object>> SelectLecName();
 	//상담입력
 	public int addConsultingWrite(Consulting consulting);
-	
+	//페이징
 	public int consultingListCount();
-	
+	//상담리스트
 	public List<Map<String, Object>> consultingList(Map<String, Object> parameterMap);
+	//상담상세보기
+	public Map<String, Object> consultingInformation(int csCode);
 
 }

@@ -102,9 +102,7 @@
 		
 	});
 	$('.consultingTitle').click(function(){
-		var csCode = $('input[name=consultingCode]').val();
-			
-		/*
+		var csCode = $(this).parent().children('input[name=consultingCode]').val(); 
 		var request = $.ajax({
 			  url: "/consultingInformation",
 			  method: "POST",
@@ -112,7 +110,6 @@
 			  dataType: "json"
 			});
 			request.done(function(data) {
-				
 				
 			});
 			request.fail(function( jqXHR, textStatus ) {
@@ -149,7 +146,7 @@
 		        else {
 		            alert('Uncaught Error.n' + jqXHR.responseText);
 		        }
-			});*/
+			});
 	});
  
 })(jQuery); 
