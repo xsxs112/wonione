@@ -110,6 +110,11 @@
 			  dataType: "json"
 			});
 			request.done(function(data) {
+				$('#consultingView').append('<tr>'),
+				$('#consultingView').append('<td>'+data.cs_date+'</td>'),
+				$('#consultingView').append('<td>'+data.cs_title+'</td>'),
+				$('#consultingView').append('</tr>');
+				
 				
 			});
 			request.fail(function( jqXHR, textStatus ) {
