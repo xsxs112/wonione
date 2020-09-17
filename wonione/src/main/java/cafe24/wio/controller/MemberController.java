@@ -1,10 +1,14 @@
 package cafe24.wio.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cafe24.wio.bean.Member;
@@ -17,6 +21,41 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+
+	/*
+	 * //2. 로그인 처리
+	 * 
+	 * @GetMapping("/login") 
+	 * public String login(Model model) {
+	 * 
+	 * model.addAttribute("title", "로그인");
+	 * 
+	 * return "member/login"; 
+	 * }
+	 * 
+	 */
+	@PostMapping("/login")
+	public String login(Model model
+					   ,@RequestParam(value = "mrId",required = false)String mrId
+					   ,@RequestParam(value = "mrPw",required = false)String mrPw
+					   ,HttpSession session) {
+		System.out.println(mrId + "<--mrId MemberController 변수");
+		System.out.println(mrPw + "<--mrPw MemberController 변수");
+		
+		Member member = memberService.getMemberInfo(mrId);
+		System.out.println(mrId + "<--member");
+		if(member != null) {
+			if(member.getMrPw().equals(mrPw)) {
+				session.setAttribute("SID", member.getMrId());
+				session.setAttribute("SNAME", member.getMrName());
+				session.setAttribute("SLEVELNAME", member.getLevelName());
+				
+				return "redirect:/";
+			}
+		}
+		
+		return "redirect:/login";
+	}
 
 	//1-2. 상세 보기 page
 	@GetMapping("/getMemberInfo")
@@ -46,5 +85,7 @@ public class MemberController {
 		
 		return "member/WIOMemberList";
 	}
+	
+	
 	
 }
