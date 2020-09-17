@@ -63,5 +63,8 @@ public class ConsultingController {
 		System.out.println(consultingInformationMap);
 		return consultingInformationMap;
 	}
-	
+	@GetMapping("/consultingPopup")
+	public String consultiongPopup() {
+		return "/consulting/consultingPopup";
+	}
 }

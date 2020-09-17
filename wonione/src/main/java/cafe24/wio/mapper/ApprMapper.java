@@ -11,6 +11,10 @@ import cafe24.wio.bean.Member;
 @Mapper
 public interface ApprMapper {
 	
+	
+	public int getStartDayCk(String startDate);
+	
+	
 	public Map<String, Object> getReCode();
 	
 	//휴가신청 추가

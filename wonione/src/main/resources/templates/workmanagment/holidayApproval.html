@@ -18,8 +18,6 @@
 				var holidaySt = $('#holidaySt').val();
 				var reReason = $('input[name=reReason]').val();
 				
-				alert(reReason);
-				
 				if (startDate == null || startDate == '') {
 					alert('휴가 시작 날짜를 입력해주세요');
 					return;
@@ -33,10 +31,27 @@
 					alert('사유를 입력해주세요');
 					$('input[name=reReason]').focus();
 					return;
+				}else{
+					var request = $.ajax({
+					url : "/startDayCk",
+					method : "GET",
+					data : {startDate : startDate},
+					dataType: "text"
+					})
 				}
+				request.done(function(data) {
+					console.log(data);
+					if(data==0){
+						$('#requestForm').submit();
+					}else{
+						alert("당일,지나간 날짜는 신청하실 수 없습니다.");
+					} 
+					
+				});
 				
-				$('#requestForm').submit();
 			})
+				
+			
 		})
 	</script>
 

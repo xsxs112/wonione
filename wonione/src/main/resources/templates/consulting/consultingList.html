@@ -7,7 +7,9 @@
 		<title>상담작성</title> 
 	</th:block>
 	<th:block layout:fragment="customContent" style="text-align: center;">
-		<table border="1">
+	<div style="border: 1px;">
+		<h4>상담리스트</h4>
+		<table border="1" class="table">
 	  		<thead>
 	  			<tr>
 	  				<th>순번</th>
@@ -27,7 +29,6 @@
 	  			</tr>
 	  		</tbody>	
   		</table>
-  		
   		<a th:href="@{/consultingList}">처음</a>
 		    
 		    <span th:if="${currentPage > 1}"><a th:href="@{/consultingList(currentPage=(${currentPage}-1))}">이전</a></span>
@@ -41,6 +42,29 @@
 		    <span th:if="${currentPage != lastPage}"><a th:href="@{/consultingList(currentPage=(${currentPage}+1))}">다음</a></span>
 		    <span th:unless="${currentPage != lastPage}" th:text="다음"></span>
 		    <a th:href="@{/consultingList(currentPage=${lastPage})}">마지막</a>
+  	</div>
+  		
+	<div style="border: 1px; margin: 10px;" class="container-fluid">
+		<h4>상담정보</h4>
+		<table border="1" class="table">
+  			<tr>
+  				<td><label>제목</label></td>
+  				<td><input type="text"></td>
+  				<td><label>일자</label></td>
+  				<td><input type="text"></td>
+  			</tr>
+  			<tr>
+  				<td><label>상담자</label></td>
+  				<td><input type="text"></td>
+  				<td><label>내담자</label></td>
+  				<td><input type="text"></td>
+  			</tr>
+  			<tr>
+  				<td><label>상담내용</label></td>
+  				<td colspan="3"><textarea rows="5" cols="50" style="overflow-x:hidden;overflow-y:auto; resize:none;"></textarea></td>
+  			</tr>
+  		</table>
+ 		</div>
+		<button type="button" id="upConsulting">수정</button>
 	</th:block>
-	
 </html>
