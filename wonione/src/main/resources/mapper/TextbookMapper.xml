@@ -161,6 +161,32 @@ INSERT INTO wt_warehousing_textbook
 
 </insert>
 
+<!-- 교재코드로 교재정보 가져오기 -->
+<select id="getOnlyTxbInfo" resultMap="resultTxbBasicInfo">
+	SELECT 
+			txb_code
+		,   txb_name
+		,   txb_publisher
+		,   txb_author
+		,   txb_writer
+		,   txb_reg_date
+	FROM 
+		wt_textbook_basic_information AS tbi
+	WHERE
+		tbi.txb_code = #{txbInfoCode};
+
+</select>
+
+<!-- 교재정보등록시 마지막으로 등록된 코드 가져오기 -->
+<select id="getAddTxbInfoCode" resultType="String">
+SELECT 
+	tbi.txb_code 
+FROM 
+	wt_textbook_basic_information AS tbi
+ORDER BY 
+	tbi.txb_code DESC LIMIT 1;
+</select>
+
 <!-- 교재기초정보등록 -->
 <insert id="addTextbookInfo" parameterType="TextbookBasicInfo">
 INSERT INTO wt_textbook_basic_information

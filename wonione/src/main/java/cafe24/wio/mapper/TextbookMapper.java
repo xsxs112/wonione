@@ -10,6 +10,12 @@ import cafe24.wio.bean.WhTextbook;
 @Mapper
 public interface TextbookMapper {
 	
+	//교재코드로 교재정보 가져오기 
+	public TextbookBasicInfo getOnlyTxbInfo(String txbInfoCode);
+	
+	//교재정보등록시 삽입될 코드(PK) 가져오기 
+	public String getAddTxbInfoCode();
+	
 	//교재기초정보리스트
 	public List<TextbookBasicInfo> getTextbookInfoList(TextbookBasicInfo txbBasicInfo);
 

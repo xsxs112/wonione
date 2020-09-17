@@ -10,7 +10,7 @@ public class TextbookBasicInfo {
 	private String txbAuthor;		//저자
 	private String txbWriter;		//작성자아이디
 	private String txbRegDate;		//등록일자
-	private List<WhTextbook> whTextbook;// 교재정보
+	private List<WhTextbook> whTextbook;// 교재입고정보
 	
 	public String getTxbCode() {
 		return txbCode;
