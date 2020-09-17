@@ -30,7 +30,7 @@ public interface TextbookMapper {
 	public int addFirstWhTextbook(WhTextbook whTextbook);
 	
 	//교재입고내역 존재유무 체크
-	public List<TextbookBasicInfo> wahoTextbookCheck(WhTextbook whTextbook);
+	public TextbookBasicInfo wahoTextbookCheck(String txbCode);
 	
 	//교재입고등록
 	public int addWhTextbook(WhTextbook whTextbook);
