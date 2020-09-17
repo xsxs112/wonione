@@ -28,8 +28,8 @@
 						return ;
 					}else{
 						var request = $.ajax({
-							  url: "/getMemberInfo",
-							  method:"get",
+							  url: "/WIOMemberIdCheck",
+							  method:"post",
 							  data: { mrId : mrId, mrPw : mrPw},
 							  dataType: "text"
 						});
@@ -72,10 +72,10 @@
 				<fieldset class='text-center'>
 					<legend>Login</legend>
 				<div class='form-group'>
-					<input class='form-control' placeholder='아이디를 입력해주세요' type='text'name="mrId">
+					<input class='form-control' placeholder='oid001' type='text'name="mrId">
 				</div>
 				<div class='form-group'>
-					<input class='form-control' placeholder='비밀번호를 입력해주세요' type='password' name="mrPw">
+					<input class='form-control' placeholder='opw001' type='password' name="mrPw">
 				</div>
 				<div class='text-center'>
 					<button type="button" id="loginBtn" class="btn btn-default">로그인</button>

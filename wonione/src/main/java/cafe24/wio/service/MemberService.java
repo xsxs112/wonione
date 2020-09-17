@@ -13,10 +13,24 @@ public class MemberService {
 @Autowired
 private MemberMapper memberMapper;
 
+		//3. 아이디 중복 검사, 로그인 처리시 사용
+		public String WIOMemberIdCheck(String mrId, String mrPw) {
+			
+			String WIOIdcheck = memberMapper.WIOMemberIdCheck(mrId, mrPw);
+			
+			System.out.println(WIOIdcheck + "<-- WIOIdcheck memberService");
+			
+			if(WIOIdcheck != null && !"".equals(WIOIdcheck)) {
+				
+			}
+			
+			return WIOIdcheck;
+		}
+
 		
 		// 2. 구성원 정보 조회
-		public Member getMemberInfo(String mrId, String mrPw) {
-		Member member = memberMapper.getMemberInfo(mrId, mrPw);
+		public Member getMemberInfo(String mrId) {
+		Member member = memberMapper.getMemberInfo(mrId);
 		System.out.println(member + "<-- member 정보 조회 / memberService");
 		
 		

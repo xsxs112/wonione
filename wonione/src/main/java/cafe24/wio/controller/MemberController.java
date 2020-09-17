@@ -34,30 +34,19 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	/*
-	 * //2. 로그인 처리
-	 * 
-	 * @GetMapping("/login") 
-	 * public String login(Model model) {
-	 * 
-	 * model.addAttribute("title", "로그인");
-	 * 
-	 * return "member/login"; 
-	 * }
-	 * 
-	 */
+	
 	// 2. 로그인 처리
 	@PostMapping("/login")
 	public String login(Model model
 					   ,@RequestParam(value = "mrId",required = false)String mrId
 					   ,@RequestParam(value = "mrPw",required = false)String mrPw
 					   ,HttpSession session) {
+		
 		System.out.println(mrId + "<--mrId MemberController 변수");
 		System.out.println(mrPw + "<--mrPw MemberController 변수");
 		
-		Member member = memberService.getMemberInfo(mrId, mrPw);
+		Member member = memberService.getMemberInfo(mrId);
 		System.out.println(mrId + "<-- 2. 로그인memberController");
-		System.out.println(mrPw + "<-- 2. 로그인memberController");
 		
 		if(member != null) {
 			if(member.getMrPw().equals(mrPw)) {
@@ -77,15 +66,29 @@ public class MemberController {
 		return "login/login";
 	}
 	
+	//1-3. 아이디 중복 검사
+	@ResponseBody
+	@RequestMapping("/WIOMemberIdCheck")
+	public String WIOMemberIdCheck(@RequestParam(value = "mrId",required = false)String mrId
+								 , @RequestParam(value = "mrPw",required = false)String mrPw) {
+		
+		System.out.println(mrId +"<-- mrId WIOMemberIdCheck");
+		System.out.println(mrPw + "<-- mrPw WIOMemberIdCheck");
+		
+		String WIOIdCheck = memberService.WIOMemberIdCheck(mrId, mrPw);
+		
+		System.out.println(WIOIdCheck +"<-- memberController");
+		
+		return WIOIdCheck;
+	}
+	
 
 	//1-2. 상세 보기 page
-	@ResponseBody
 	@RequestMapping("/getMemberInfo")
 	public String getMemberInfo(Model model
-							,	@RequestParam(value = "mrId",required = false)String mrId
-							,	@RequestParam(value = "mrPw",required = false)String mrPw) {
+							,	@RequestParam(value = "mrId",required = false)String mrId) {
 		
-		Member WIOMemberInfo = memberService.getMemberInfo(mrId, mrPw);
+		Member WIOMemberInfo = memberService.getMemberInfo(mrId);
 		System.out.println(WIOMemberInfo + "<-- 상세 보기 / controller");
 		System.out.println(mrId + "<-- mrId 상세보기 controller");
 		

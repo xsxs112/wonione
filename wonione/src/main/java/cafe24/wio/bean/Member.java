@@ -12,6 +12,7 @@ public class Member {
 	private String  mrAddr;			// 주소
 	private int 	mrTargetScore;	// 목표 점수
 	private String  pmRCode;		// 은행 코드
+	private String  pmRTitle;		// 결제 수단, 은행명
 	private String  mrAccountNum;	// 계좌 번호
 	private String  shuttleNum;		// 셔틀 번호
 	private String  mrJoinDate;		// 일반 직원 입사일
@@ -72,6 +73,12 @@ public class Member {
 	public void setPmRCode(String pmRCode) {
 		this.pmRCode = pmRCode;
 	}
+	public String getPmRTitle() {
+		return pmRTitle;
+	}
+	public void setPmRTitle(String pmRTitle) {
+		this.pmRTitle = pmRTitle;
+	}
 	public String getMrAccountNum() {
 		return mrAccountNum;
 	}
@@ -117,6 +124,8 @@ public class Member {
 		builder.append(mrTargetScore);
 		builder.append(", pmRCode=");
 		builder.append(pmRCode);
+		builder.append(", pmRTitle=");
+		builder.append(pmRTitle);
 		builder.append(", mrAccountNum=");
 		builder.append(mrAccountNum);
 		builder.append(", shuttleNum=");
