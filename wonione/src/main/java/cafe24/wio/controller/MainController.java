@@ -12,10 +12,7 @@ public class MainController {
 	@GetMapping("/")
 	public String main(Model model) {
 		model.addAttribute("title", "로그인");
-		return "login/login";
+		return "redirect:/login";
 	}
-	@GetMapping("/login")
-	public String index() {
-		return "index";
-	}
+
 }

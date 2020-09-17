@@ -65,11 +65,16 @@ public class MemberController {
 				session.setAttribute("SNAME", member.getMrName());
 				session.setAttribute("SLEVELNAME", member.getLevelName());
 				
-				return "redirect:/";
+				return "index";
 			}
 		}
 		
 		return "redirect:/login";
+	}
+	
+	@GetMapping("/login")
+	public String index() {
+		return "login/login";
 	}
 	
 

@@ -83,7 +83,7 @@
 				</fieldset>
 			</form>
 			<h3 th:if="${session.SID ne null}"><span th:text="${session.SNAME + '님 환영합니다.'}"></span></h3>
-			<button type="button" th:if="${session.SID ne null}" onclick= "location.href='/getWIOMemberList'">
+			<button type="button" th:if="${session.SID ne null}" onclick= "location.href='/index'">
 				HOME
 			</button>
 		</div>
