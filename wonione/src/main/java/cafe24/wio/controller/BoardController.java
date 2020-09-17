@@ -43,17 +43,6 @@ public class BoardController {
 		  
 		  return "board/noticeRead";		  
 	  }
-	  //자료게시판 읽기
-	  @GetMapping("/readDataLibrary")
-	  public String readDataLibrary(Model model,
-			  						@RequestParam(value="boardNum", required = false) String boardNum) {
-		  Board board = boardService.readDataLibrary(boardNum);
-		  System.out.println(board + "board");
-		  model.addAttribute("Board", board);		  
-		  model.addAttribute("readDataLibrary", "자료게시판 읽기");
-		  
-		  return "board/dataLibraryRead";		  
-	  }
 	
 	// 자료게시판 조회
 	@RequestMapping(value = "/getDataLibrary", method = RequestMethod.GET)
@@ -68,6 +57,17 @@ public class BoardController {
 		return "board/dataLibrary";
 	}
 
+	//자료게시판 읽기
+	@GetMapping("/readDataLibrary")
+	public String readDataLibrary(Model model,
+			@RequestParam(value="boardNum", required = false) String boardNum) {
+		Board board = boardService.readDataLibrary(boardNum);
+		System.out.println(board + "board");
+		model.addAttribute("Board", board);		  
+		model.addAttribute("readDataLibrary", "자료게시판 읽기");
+		
+		return "board/dataLibraryRead";		  
+	}
 	
 	// 수강후기 조회
 	@GetMapping("/getReview")

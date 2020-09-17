@@ -21,7 +21,7 @@ public class BoardService {
 	}
 	
 	//공지사항 읽기
-	public Board readDataLibrary(String boardNum) {
+	public Board readNotice(String boardNum) {
 		Board board = boardMapper.readBoard(boardNum);
 		return board;
 	}
@@ -34,7 +34,7 @@ public class BoardService {
 	}
 
 	//자료게시판 읽기
-	public Board readNotice(String boardNum) {
+	public Board readDataLibrary(String boardNum) {
 		Board board = boardMapper.readBoard(boardNum);
 		return board;
 	}
