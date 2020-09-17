@@ -48,11 +48,10 @@ public class OfficersPayController {
 
 	}
 
-	//직원급여 초기페이지
-	/*
+	//직원급여 초기페이지	
 	@GetMapping("/officersPayIndex") 
 	public String officersPay() { 
 		return "humanresource/officersPay"; 	
-	}*/
+	}
 
 }

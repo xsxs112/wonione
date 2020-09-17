@@ -5,10 +5,9 @@ public class OfficersPay {
 	private String opcCode;			//직원 급여계산번호
 	private String mrId;			//아이디
 	private String mrName;			//구성원 이름
-	private int hourlyWageCode;		//시급
+	private int opcHourlyWage;		//시급
 	private int opcTotalHour;		//근무시간
-	private int opcBasePay;			//기본급 
-	private int opcHourlyWage;		//직원급여 기본급(시급*근무시간)
+	private int opcBasePay;			//직원급여 기본급(시급*근무시간)
 	private int opcFoodExpenses;	//직원급여 식비
 	private int opcTransportation;	//직원급여 교통비
 	private int opcWelfare;			//직원급여 복지후생
@@ -37,8 +36,6 @@ public class OfficersPay {
 	private String opRegDate;					//직원급여지급 작성일자
 	private String opWriter;					//직원급여지급 작성자
 	
-	
-	
 	public String getOpcCode() {
 		return opcCode;
 	}
@@ -57,11 +54,11 @@ public class OfficersPay {
 	public void setMrName(String mrName) {
 		this.mrName = mrName;
 	}
-	public int getHourlyWageCode() {
-		return hourlyWageCode;
+	public int getOpcHourlyWage() {
+		return opcHourlyWage;
 	}
-	public void setHourlyWageCode(int hourlyWageCode) {
-		this.hourlyWageCode = hourlyWageCode;
+	public void setOpcHourlyWage(int opcHourlyWage) {
+		this.opcHourlyWage = opcHourlyWage;
 	}
 	public int getOpcTotalHour() {
 		return opcTotalHour;
@@ -74,12 +71,6 @@ public class OfficersPay {
 	}
 	public void setOpcBasePay(int opcBasePay) {
 		this.opcBasePay = opcBasePay;
-	}
-	public int getOpcHourlyWage() {
-		return opcHourlyWage;
-	}
-	public void setOpcHourlyWage(int opcHourlyWage) {
-		this.opcHourlyWage = opcHourlyWage;
 	}
 	public int getOpcFoodExpenses() {
 		return opcFoodExpenses;
@@ -232,7 +223,6 @@ public class OfficersPay {
 		this.opWriter = opWriter;
 	}
 
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -243,8 +233,6 @@ public class OfficersPay {
 		builder.append(mrId);
 		builder.append(", mrName=");
 		builder.append(mrName);
-		builder.append(", hourlyWageCode=");
-		builder.append(hourlyWageCode);
 		builder.append(", opcTotalHour=");
 		builder.append(opcTotalHour);
 		builder.append(", opcHourlyWage=");
