@@ -39,6 +39,8 @@
 		<result column="op_writer"						property="opWriter"/>
 		<result column="mr_join_date"					property="mrJoinDate"/>
 		<result column="mr_account_num"					property="mrAccountNum"/>	
+		<result column="p_r_ect"						property="pREct"/>	
+		
 	</resultMap>
 	<!-- 직원정보조회 -->
 	<select id ="callOfficersInfo" resultType="OfficersPay" parameterType="String">
@@ -58,17 +60,28 @@
 			m.mr_id = #{mrId};	
 	</select>
 	
-	<!-- 직원목록조회 -->
-	<select id = "getOfficersList" resultType="OfficersPay">
+	<!-- 시급기준표 -->
+	<select id="standardSheet" resultType="OfficersPay">
 		SELECT
-			 m.mr_id
-			,m.mr_name
+			SUBSTRING_INDEX(pr.p_r_ect,'or',-1) AS pREct
+			,pr.p_r_title AS pRTitle
+		FROM 
+			wt_pay_resource AS pr
+		WHERE
+			pr.p_r_group_id= 'hourly_wage_code';
+	</select>
+	
+	<!-- 직원목록조회 -->
+	<select id = "getOfficersList" resultType="OfficersPay" >
+		SELECT
+			 m.mr_id 		AS mrId
+			,m.mr_name 		AS mrName
 		FROM
 			wt_member_registration AS m
 		WHERE 
 			m.level_num = 3;	
 	</select>
-		<!-- 직원급여명세서조회-->
+	<!-- 직원급여명세서조회-->
 	<select id = "getOfficersPay" resultType="OfficersPay">
 		SELECT
 			 c.mr_id							AS mrId
