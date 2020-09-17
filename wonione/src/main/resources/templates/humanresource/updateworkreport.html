@@ -7,40 +7,82 @@
 		<title></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-		
-		
-		
-		<table border="1">
-		<thead>
-			<tr  class="info">
-				<th>업무계획코드</th>
-				<th>강의예정코드</th>
+	
+	<style>
+	table {
+		  width:100%;
+		}
+		table, th{
+		  border: 1px solid grey ;
+		  border-collapse: collapse;
+		  font-size: 17px;
+		}
+		th{
+		  padding: 1px;
+		  text-align: center;
+		  background-color: lightgrey;
+		}
+		td {
+		  padding: 3px;
+		  border: 1px solid grey ;
+		   text-align: center;
+		  border-collapse: collapse;
+		  font-size: 15px;
+	</style>
+	
+	<form action="/updateCode" class="container-fluid" method="post">
+	<h3 style="color: grey;" >개설예정 강의 계획보고서 수정하기</h3><br>
+		<table class="table table-striped" >
+			<tr>
+				<th colspan="6">개설예정 강의 업무보고서 코드</th>
+			</tr>
+			<tr>
+			<td colspan="6"><input type="text" class="form-control" name="lecOpenCode" th:value=${Report.lecOpenCode} readonly="readonly">
+			</td>
+			</tr>	
+			<tr>	
+				<th>개설예정 강의</th>
 				<th>작성자</th>
-				<th>업무목표</th>
-				<th>업무계획</th>
-				<th>기타사항</th>
-				<th>상세보기</th>
-				
 			</tr>
-		</thead>	
-		<tbody>
-			<tr th:each="r : ${reportList}">
-			<td th:text=${r.lecOpenCode}></td>
-			<td th:text=${r.lecOpenScheCode}></td>
-			<td th:text=${r.lecTuition}></td>
-			<td th:text=${r.mrId}></td>
-			<td th:text=${r.lecTarget}></td>
-			<td th:text=${r.lecPlan}></td>
-			<td th:text=${r.lecEtc}></td>
-			<td th:text=${r.lecEtc}></td>
-			<td>
-				<a th:href="@{/updateMember(lsyId=${l.lsyId})}">수정</a>
-			</td>	
+			<tr>
+			<td><input type="text" class="form-control" name="lecOpenScheCode" th:value=${Report.lecOpenScheCode} readonly="readonly">
+			</td>
+			<td><input type="text" class="form-control" name="mrName" th:value=${Report.mrName} readonly="readonly">
+			</td>
 			</tr>
-		</tbody>	
+			<tr>
+				 <th colspan="6">업무목표</th>
+			</tr>
+			<tr>	
+				<td colspan="6">
+					<input type="text" class="form-control" name="lecTarget" th:value=${Report.lecTarget}>
+				</td>
+			</tr>
+			<tr>	
+				<th colspan="6" >업무계획</th>
+			</tr>
+			<tr>
+				<td colspan="6">
+					<textarea class="form-control" rows="6" name="lecPlan"  th:text=${Report.lecPlan}>
+					</textarea>
+				</td>
+			</tr>
+			<tr>	
+				<th colspan="6">기타사항</th>
+			</tr>
+			<tr>
+				<td colspan="6">
+					<textarea class="form-control" rows="6" name="lecEtc" th:text=${Report.lecEtc} >
+					</textarea>
+				</td>
+			</tr>
 		</table>
-		
+		<div style="margin-bottom:10px"> 
+			<button type="submit" class="btn btn-default btn-lg btn-block">저장하기</button>
+		</div>
+	</form>	
 	</th:block>
 	<th:block layout:fragment="customJsScript">
 	</th:block>
 </html>
+

@@ -7,7 +7,7 @@
 		<title>상담작성</title> 
 	</th:block>
 	<th:block layout:fragment="customContent" style="text-align: center;">
-	<div style="border: 1px;">
+	<div style="border: 1px; padding-left: 350px; padding-right: 350px;" class="container-fluid">
 		<h4>상담리스트</h4>
 		<table border="1" class="table">
 	  		<thead>
@@ -43,28 +43,33 @@
 		    <span th:unless="${currentPage != lastPage}" th:text="다음"></span>
 		    <a th:href="@{/consultingList(currentPage=${lastPage})}">마지막</a>
   	</div>
-  		
-	<div style="border: 1px; margin: 10px;" class="container-fluid">
-		<h4>상담정보</h4>
-		<table border="1" class="table">
-  			<tr>
-  				<td><label>제목</label></td>
-  				<td><input type="text"></td>
-  				<td><label>일자</label></td>
-  				<td><input type="text"></td>
-  			</tr>
-  			<tr>
-  				<td><label>상담자</label></td>
-  				<td><input type="text"></td>
-  				<td><label>내담자</label></td>
-  				<td><input type="text"></td>
-  			</tr>
-  			<tr>
-  				<td><label>상담내용</label></td>
-  				<td colspan="3"><textarea rows="5" cols="50" style="overflow-x:hidden;overflow-y:auto; resize:none;"></textarea></td>
-  			</tr>
-  		</table>
- 		</div>
-		<button type="button" id="upConsulting">수정</button>
+  		<form action="/consultingList" method="POST" id="upConsultingList">
+			<div style="border: 1px; margin: 20px; ">
+				<h4>상담정보</h4>
+				<table border="1" class="table">
+		  			<tr>
+						<td hidden=""><input type="hidden" id="consultingCode" name="consultingCode"></td>
+		  				<td><label>제목</label></td>
+		  				<td  colspan="2"><input type="text" id="consultingTitle" class="inputbox" name="consultingTitle"></td>
+		  				<td><label>일자</label></td>
+		  				<td  colspan="3"><input type="text" id="consultingDate" class="inputbox" name="consultingDate" readonly="readonly"></td>
+		  			</tr>
+		  			<tr>
+		  				<td><label>상담자</label></td>
+		  				<td  colspan="2"><input type="text" id="consultingTeacher" class="inputbox" name="consultingTeacher"></td>
+		  				<td><label>내담자</label></td>
+		  				<td><input type="text" id="consultingStudent" class="inputbox" name="consultingStudent"></td>
+		  				<td><label>강의반</label></td>
+		  				<td><input type="text" id="consultingClass" class="inputbox" name="consultingClass"></td>
+		  			</tr>
+		  			<tr>
+		  				<td><label>상담내용</label></td>
+		  				<td colspan="6"><textarea id="consultingData" name="consultingData"></textarea></td>
+		  			</tr>
+		  		</table>
+	 		</div>
+				<button type="button" id="upConsulting" class="btn btn-default">수정</button>
+				<button type="button" id="deleteConsulting" class="btn btn-default">삭제</button>
+		</form>
 	</th:block>
 </html>

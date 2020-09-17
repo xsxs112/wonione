@@ -4747,3 +4747,14 @@ div#sparklinehome canvas {
   -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
   box-shadow:         1px 1px 5px rgba(0,0,0,0.5);
 }
+/* inputboxCss  */
+.inputbox{
+	width:250px;
+}
+#consultingData{
+	overflow-x:hidden;
+	overflow-y:auto; 
+	width:1300px; 
+	height:100px;
+	resize: none;
+}

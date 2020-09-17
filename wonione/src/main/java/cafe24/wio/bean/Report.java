@@ -4,7 +4,6 @@ public class Report {
 	
 	private String lecOpenCode;
 	private String lecOpenScheCode;
-	private String lecTuition;
 	private String mrId;
 	private String lecTarget;
 	private String lecPlan;
@@ -20,8 +19,6 @@ public class Report {
 		builder.append(lecOpenCode);
 		builder.append(", lecOpenScheCode=");
 		builder.append(lecOpenScheCode);
-		builder.append(", lecTuition=");
-		builder.append(lecTuition);
 		builder.append(", mrId=");
 		builder.append(mrId);
 		builder.append(", lecTarget=");
@@ -50,12 +47,6 @@ public class Report {
 	}
 	public void setLecOpenScheCode(String lecOpenScheCode) {
 		this.lecOpenScheCode = lecOpenScheCode;
-	}
-	public String getLecTuition() {
-		return lecTuition;
-	}
-	public void setLecTuition(String lecTuition) {
-		this.lecTuition = lecTuition;
 	}
 	public String getMrId() {
 		return mrId;
@@ -99,4 +90,7 @@ public class Report {
 	public void setLecName(String lecName) {
 		this.lecName = lecName;
 	}
+	
+
+	
 }

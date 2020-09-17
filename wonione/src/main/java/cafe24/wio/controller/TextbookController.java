@@ -1,6 +1,7 @@
 package cafe24.wio.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafe24.wio.bean.SupplyTextbook;
 import cafe24.wio.bean.TextbookBasicInfo;
@@ -26,6 +28,25 @@ public class TextbookController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 
+	@PostMapping(value="/whTxbCheck", produces="application/json")
+	@ResponseBody
+	public List<TextbookBasicInfo> wahoTextbookCheck(Model model
+					,@RequestParam(value="txbCode", required = false) String txbCode
+					,WhTextbook whTextbook) {
+		logger.info("==============================");
+		logger.info("교재지급내역페이지 getTextbookSuppList 포스트매핑!!!!");
+		logger.info("==============================");
+		List<TextbookBasicInfo> wahoTextbookCheck = 
+					textbookService.wahoTextbookCheck(whTextbook);
+	return wahoTextbookCheck;
+	}
+	
+	@GetMapping("/whTxbCheck")
+	public String wahoTextbookCheck() {
+		
+		return "/whTxbCheck";
+	}
+	
 	//교재 지급내역 조회
 	@GetMapping("/textbookSupplyList")
 	public String getTextbookSuppList(Model model

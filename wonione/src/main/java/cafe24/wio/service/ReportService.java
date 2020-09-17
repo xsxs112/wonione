@@ -22,12 +22,32 @@ public class ReportService {
 		
 	}
 	
+	//자동증가
+	 public String getReCode() {
+		 
+	      Map<String, Object> reCodeMax =  reportMapper.getReCode();
+	      
+	      System.out.println("reCodeMax ------------> " + reCodeMax);
+	      String tempCode = "work_num000";
+	      
+	      int getMax = Integer.parseInt(reCodeMax.get("max").toString());
+
+	      if(getMax<10) {
+	         tempCode = "work_num0000";
+	      }
+	      String reCode = tempCode + String.valueOf(reCodeMax.get("max"));
+	      
+	      
+	      System.out.println("reCode ------------> " + reCode);
+	      
+	      return reCode;
+	   }
+	
 	//보고서작성
 	   public int getReportWrite(Report report) {
 	      int wrtite = reportMapper.getReportWrite(report);
 	      return wrtite;
 	   }
-	
 	
 	//코드로 조회
 		public Report getReportDetailList(String lecOpenCode) {
@@ -41,12 +61,33 @@ public class ReportService {
 		System.out.println(clCode);
 		return clCode;
 	}	
-	
+	//강의자 조회
 	public List<Map<String, Object>> writeName(){
 		List<Map<String, Object>> wName = reportMapper.writeName();
 		System.out.println(wName);
 		return wName;
 		
 	}
+	
+	//보고서 삭제
+	public int deleteCode(String lecOpenCode){
+		int deleteCd = reportMapper.deleteCode(lecOpenCode);
+		return deleteCd;
+	}
+	
+	//보고서 수정
+	public int updateCode(Report report) {
+		int updateUc = reportMapper.updateCode(report);
+		return updateUc;
+		
+	}
+	
+	//검색조건
+	public List<Report> getSearchList(String lecSk, String lecSv){
+		List<Report> reportList = reportMapper.getSearchList(lecSk, lecSv);
+		return reportList;
+		
+	}
+	
 	
 }

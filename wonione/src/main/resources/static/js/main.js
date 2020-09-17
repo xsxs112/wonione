@@ -96,9 +96,29 @@
         scrollSpeed: 900,
         animation: 'fade'
     });
+	
+	
+	
+	
+	
+	
+	/*=========================================================================================조원준 js start*/
+	//상담등록
 	$('#addconsultingbtn').click(function(){
 		var addconsulting = $('#addconsulting');
 		addconsulting.submit();
+		
+	});
+	//상담수정
+	$('#upConsulting').click(function(){
+		var upconsulting = $('#upConsultingList');
+		upconsulting.submit();
+		
+	});
+	//상담삭제
+	$('#deleteConsulting').click(function(){
+		var deleteConsulting = $('#deleteConsulting');
+		deleteConsulting.submit();
 		
 	});
 	$('.consultingTitle').click(function(){
@@ -110,11 +130,17 @@
 			  dataType: "json"
 			});
 			request.done(function(data) {
-				$('#consultingView').append('<tr>'),
-				$('#consultingView').append('<td>'+data.cs_date+'</td>'),
-				$('#consultingView').append('<td>'+data.cs_title+'</td>'),
-				$('#consultingView').append('</tr>');
+				var textareaVal = $("#consultingData");
+				$('#consultingCode').attr('value',data.cs_code);
+				$('#consultingTitle').attr('value',data.cs_title);
+				$('#consultingDate').attr('value',data.cs_date);
+				$('#consultingTeacher').attr('value',data.mr_o_id);
+				$('#consultingStudent').attr('value',data.cs_lec_name);
+				$('#consultingClass').attr('value',data.cs_s_name);
+				$('#consultingData').attr('value',data.cs_data);
+				textareaVal.text(data.cs_data);
 				
+			
 				
 			});
 			request.fail(function( jqXHR, textStatus ) {
@@ -153,5 +179,6 @@
 		        }
 			});
 	});
+	/*=========================================================================================조원준 js end*/
  
 })(jQuery); 

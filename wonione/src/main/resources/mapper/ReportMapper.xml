@@ -61,6 +61,10 @@
 
 </select>
 
+<select id="getReCode" resultType="hashMap">
+      SELECT (max(CAST(substring(lec_open_code,12) AS DECIMAL))+1)as max FROM wt_open_lecture
+</select>
+
 <!--보고서작성쿼리문  -->
 <insert id="getReportWrite" parameterType="Report">
    
@@ -73,13 +77,9 @@
          , lec_etc
          , open_lec_reg_date)
    VALUES(
-         CONCAT('work_num',
-         (SELECT 
-         		LPAD(COUNT(*)+1,5,'0')
-       		FROM
-       			wt_open_lecture as wt))
-         , #{lecOpenScheCode}
-         , #{mrId}
+          #{lecOpenCode}
+         , #{lecName}
+         , #{mrName}
          , #{lecTarget}
          , #{lecPlan}
          , #{lecEtc}
@@ -92,13 +92,14 @@
 <select id="classCode" resultType="hashMap"  parameterType="String">
 
 	SELECT
-		wt_lecture_open_schedule.lec_name
+		os.lec_name,
+		os.lec_os_code
 	FROM
-		wt_lecture_open_schedule
+		wt_lecture_open_schedule AS os
 		INNER join
-		wt_lecture_open
+		wt_lecture_open AS od
 		on
-		wt_lecture_open.lec_os_code = wt_lecture_open_schedule.lec_os_code;	
+		od.lec_os_code = os.lec_os_code;	
 
 </select>
 
@@ -106,13 +107,61 @@
 <select id="writeName" resultType="hashMap"  parameterType="String">
 
 	SELECT
-			wt_member_registration.mr_name
+			wt_member_registration.mr_name,
+			wt_member_registration.mr_id
+			
 	FROM
 			wt_member_registration
 			INNER join
 			wt_open_lecture
 			on
 			wt_member_registration.mr_id = wt_open_lecture.mr_id;
+
+</select>
+
+<!-- 삭제처리  -->
+<delete id="deleteCode" parameterType="String">
+	DELETE 
+	FROM 
+		wt_open_lecture
+	WHERE 
+		lec_open_code= #{lecOpenCode};
+</delete>
+
+<!--보고서수정쿼리  -->
+<update id="updateCode" parameterType="Report">
+	UPDATE 
+		wt_open_lecture
+	SET 
+		  lec_target= #{lecTarget}
+		, lec_plan= #{lecPlan}
+		, lec_etc= #{lecEtc}
+		, open_lec_reg_date= NOW()
+	WHERE 
+		lec_open_code= #{lecOpenCode};
+
+</update>
+
+<!-- 검색조건  -->
+
+<select id="getSearchList" resultType="Report"  resultMap="reportResultMap">
+	
+	SELECT 
+		  lec_open_code
+		, lec_open_sche_code
+		, mr_name
+		, lec_target
+		, lec_plan
+		, lec_etc
+		, open_lec_reg_date
+	FROM 
+		wt_open_lecture
+		INNER JOIN
+		wt_member_registration 
+	ON
+		wt_member_registration.mr_id = wt_open_lecture.mr_id
+	WHERE
+		${lecSk} LIKE CONCAT('%',#{lecSv},'%');	
 
 </select>
 

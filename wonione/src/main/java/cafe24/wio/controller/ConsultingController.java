@@ -63,8 +63,21 @@ public class ConsultingController {
 		System.out.println(consultingInformationMap);
 		return consultingInformationMap;
 	}
-	@GetMapping("/consultingPopup")
-	public String consultiongPopup() {
-		return "/consulting/consultingPopup";
+	@PostMapping("/consultingList")
+	public String upConsultingList(Consulting cosulting
+								  ,@RequestParam(value="consultingCode", required = false) String consultingCode
+								  ,@RequestParam(value="consultingTitle", required = false) String consultingTitle
+								  ,@RequestParam(value="consultingTeacher", required = false) String consultingTeacher
+								  ,@RequestParam(value="consultingClass", required = false) String consultingClass
+								  ,@RequestParam(value="consultingStudent", required = false) String consultingStudent
+								  ,@RequestParam(value="consultingData", required = false) String consultingData) {
+		System.out.println(consultingCode);
+		System.out.println(consultingTitle);
+		System.out.println(consultingTeacher);
+		System.out.println(consultingClass);
+		System.out.println(consultingStudent);
+		System.out.println(consultingData);
+		consultingService.upconsultingList(cosulting);
+		return "redirect:/consultingList";
 	}
 }

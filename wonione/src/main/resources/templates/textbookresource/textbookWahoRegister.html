@@ -10,7 +10,7 @@
 	<h2 th:text="${mainTitle}"></h2>
 	<form action="/textbookWahoRegister" method="post" id="addForm" >
 		<div class="container-fluid">
-		<a href="/textbookFirstWahoRegister" class="btn btn-warning btn-lg" role="button">최초등록</a>
+		<!-- <a href="/textbookFirstWahoRegister" class="btn btn-warning btn-lg" role="button" >최초등록</a> -->
 			<table class="table table-block" border="1" style="text-align: center;" >
 			<!-- 입고목록 조회해서 해당교재의 입고내역이 없으면(ajax)
 				 팝업창띄워서 최초입고등록으로 이동시켜주기 -->
@@ -18,10 +18,12 @@
 					<td>교재명</td>
 					<td>
 					<select id="txbCode" name = "txbCode" class="form-control">
+						<option disabled="disabled">::교재를 선택해주세요::</option>
 						<th:block th:each=" til : ${textbookInfoList} ">
 							<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
 						</th:block>
 					</select>
+					<button type="button" id="whTxbCheckBtn" class="btn btn-block">입고내역체크</button>
 					</td>
 				</tr>
 				<tr>
@@ -48,13 +50,47 @@
 		</div>		
 		<input type="submit" class="btn btn-danger btn-block" id="addBtn" value="등록버튼">	
 	</form>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	$('#whTxbCheckBtn').click(function(){
+		console.log('입고내역체크');
+		
+		var txbCode = $('#txbCode').val();
+		var request = $.ajax({
+		  url: "/whTxbCheck",
+		  method: "POST",
+		  data: { txbCode : txbCode },
+		  dataType: "json"
+		});
+		request.done(function( data ) {
+			console.log(data);
+			console.log(data.length);
+			if(data != undefined &&  data != null){
+				for(var i=0; i<data.length; i++){
+					if(data[i].txbCode==null){
+						alert('교재입고내역이 없습니다.');
+						 if(confirm('최초입고등록을 하시겠습니까?')){
+							 location.href = '/textbookFirstWahoRegister';
+						}
+					}
+				}
+			}
+			
+		});
+		request.fail(function( jqXHR, textStatus ) {
+		  alert( "Request failed: " + textStatus );
+		});
+		
+	});
+	
+	</script>
+	
 	<div class="container-fluid" style="margin: 10px;">
 		<a href="/textbookRegister" class="btn btn-primary" role="button">교재등록 메인페이지로</a>	
 		<a href="/textbookManage" class="btn btn-primary" role="button">교재관리 메인페이지로</a>
 	</div>	
 	</th:block>
-	
 	<th:block layout:fragment="customJsScript">
-	 
 	</th:block>
 </html>
