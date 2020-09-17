@@ -2,6 +2,8 @@ package cafe24.wio.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,19 +23,39 @@ public class TextbookController {
 	private TextbookService textbookService;
 	
 	
+	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
+
+	
 	//교재 기초정보 등록
 	@PostMapping("/textbookInfoRegister")
 	public String textbookInfoRegister(Model model
 									,TextbookBasicInfo txbBasicInfo) {
+		logger.info("==============================");
+		logger.info("교재정보등록페이지 textbookInfoRegister 포스트매핑!!!!");
+		logger.info("==============================");
 		
 		textbookService.addTextbookInfo(txbBasicInfo);
-		
-		return "redirect:/textbookManage";
+		String txbInfoCode = textbookService.getAddTxbInfoCode();
+		TextbookBasicInfo textbookBasicInfo = textbookService.getOnlyTxbInfo(txbInfoCode);
+		logger.info("==============================");
+		logger.info(txbInfoCode);
+		logger.info(textbookBasicInfo.toString());
+		logger.info("==============================");
+		model.addAttribute("title", "교재등록 완료  페이지");
+		model.addAttribute("mainTitle", "교재등록 완료 페이지");
+		model.addAttribute("regResult", "다음과 같은 정보로 등록되었습니다");
+		model.addAttribute("txbInfoCode", txbInfoCode);
+		model.addAttribute("textbookBasicInfo", textbookBasicInfo);
+		return "textbookresource/textbookRegResult";
 	}
 	
 	//교재 기초정보 등록
 	@GetMapping("/textbookInfoRegister")
 	public String textbookInfoRegister(Model model) {
+		
+		logger.info("==============================");
+		logger.info("교재정보등록페이지 textbookInfoRegister 겟매핑!!!!");
+		logger.info("==============================");
 		
 		model.addAttribute("title", "교재기본정보등록  페이지");
 		model.addAttribute("mainTitle", "교재기본정보등록 페이지");
@@ -134,6 +156,10 @@ public class TextbookController {
 	public String textbookManage(Model model) {
 		model.addAttribute("title", "교재관리페이지");
 		model.addAttribute("mainTitle", "교재관리페이지");
+		logger.info("==============================");
+		logger.info("교재관리페이지 textbookManage 겟매핑!!!!");
+		logger.info("==============================");
+		
 		
 		return "textbookresource/textbookManage";
 		}

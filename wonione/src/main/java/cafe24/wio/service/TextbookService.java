@@ -15,6 +15,21 @@ public class TextbookService {
 	@Autowired
 	private TextbookMapper textbookMapper;
 	
+	//교재코드로 교재정보 가져오기 
+	public TextbookBasicInfo getOnlyTxbInfo(String txbInfoCode) {
+		TextbookBasicInfo textbookBasicInfo = textbookMapper.getOnlyTxbInfo(txbInfoCode);
+		
+		return textbookBasicInfo;
+	}
+	
+	//교재정보등록시 삽입될 코드(PK) 가져오기 
+	public String getAddTxbInfoCode() {
+		
+		String txbInfoCode = textbookMapper.getAddTxbInfoCode();
+		
+		return txbInfoCode;
+	}
+	
 	//교재 기초정보 등록
 	public int addTextbookInfo(TextbookBasicInfo txbBasicInfo) {
 			int addTxbInfoResult = textbookMapper.addTextbookInfo(txbBasicInfo);
