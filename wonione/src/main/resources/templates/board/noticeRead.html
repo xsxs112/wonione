@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title></title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+	
+	
+	<form action="/noticeRead" class="container-fluid" >
+		<table class="table table-striped" style="text-align:center">
+			<tr class="info">
+				<th>글번호</th>
+				<th>작성일자</th>
+			<tr th:each="n : ${noticeList}">	
+				<td th:text=${n.boardNum}></td>
+				<td th:text=${n.boardRegDate}></td>
+			</tr>
+									
+		</table>
+		<button type="submit" class="btn btn-default btn-info">리스트로 돌아가기</button>
+	</form>	
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	</th:block>
+</html>
+
+
