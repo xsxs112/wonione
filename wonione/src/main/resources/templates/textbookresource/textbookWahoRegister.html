@@ -55,27 +55,21 @@
 	<script type="text/javascript">
 	$('#whTxbCheckBtn').click(function(){
 		console.log('입고내역체크');
-		
-		var txbCode = $('#txbCode').val();
 		var request = $.ajax({
 		  url: "/whTxbCheck",
-		  method: "POST",
-		  data: { txbCode : txbCode },
+		  method:"GET",
 		  dataType: "json"
 		});
 		request.done(function( data ) {
 			console.log(data);
-			console.log(data.length);
-			if(data != undefined &&  data != null){
-				for(var i=0; i<data.length; i++){
-					if(data[i].txbCode==null){
-						alert('교재입고내역이 없습니다.');
-						 if(confirm('최초입고등록을 하시겠습니까?')){
-							 location.href = '/textbookFirstWahoRegister';
-						}
-					}
+			if(data != undefined){
+				if(data==1){
+					alert('해당 교재의 입고내역이 조회되지 않습니다.');
 				}
 			}
+			 /* if(confirm('최초입고등록을 하시겠습니까?')){
+				 location.href = '/textbookFirstWahoRegister';
+			} */
 			
 		});
 		request.fail(function( jqXHR, textStatus ) {

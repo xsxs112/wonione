@@ -123,8 +123,6 @@ FROM
 	tbi.txb_code
 	=
 	wt.txb_code
-WHERE
-	wt.txb_code IS NULL;
 </select>
 
 <!-- 교재최초입고등록 -->

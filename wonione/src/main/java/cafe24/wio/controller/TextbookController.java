@@ -28,23 +28,35 @@ public class TextbookController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 
-	@PostMapping(value="/whTxbCheck", produces="application/json")
-	@ResponseBody
-	public List<TextbookBasicInfo> wahoTextbookCheck(Model model
-					,@RequestParam(value="txbCode", required = false) String txbCode
-					,WhTextbook whTextbook) {
-		logger.info("==============================");
-		logger.info("교재지급내역페이지 getTextbookSuppList 포스트매핑!!!!");
-		logger.info("==============================");
-		List<TextbookBasicInfo> wahoTextbookCheck = 
-					textbookService.wahoTextbookCheck(whTextbook);
-	return wahoTextbookCheck;
-	}
-	
-	@GetMapping("/whTxbCheck")
-	public String wahoTextbookCheck() {
-		
-		return "/whTxbCheck";
+	/*
+	 * //입고내역유무 체크
+	 * 
+	 * @PostMapping(value="/whTxbCheck", produces="application/json")
+	 * 
+	 * @ResponseBody public int wahoTextbookCheck(Model model, WhTextbook
+	 * whTextbook) { logger.info("==============================");
+	 * logger.info("교재지급내역페이지 getTextbookSuppList 포스트매핑!!!!");
+	 * logger.info("=============================="); int result =
+	 * textbookService.wahoTextbookCheck(whTextbook); return result; }
+	 */
+	//입고내역유무 체크
+	@GetMapping(value="/whTxbCheck", produces="application/json")
+	public int wahoTextbookCheck(WhTextbook whTextbook) {
+		List<TextbookBasicInfo> wahoTextbookCheck = textbookService.wahoTextbookCheck(whTextbook);
+		System.out.println(wahoTextbookCheck.size() + " < -- size");
+		int result = 0;
+		if(wahoTextbookCheck != null) {
+			String txbCode = null;
+			for(int i=0; i<wahoTextbookCheck.size(); i++) {
+				logger.info(wahoTextbookCheck.get(i).toString());
+				logger.info(wahoTextbookCheck.get(i).getTxbCode());
+				txbCode = wahoTextbookCheck.get(i).getTxbCode();
+				if(txbCode !=null && txbCode.equals("")) {
+					result = 1;
+				}
+			}
+		}
+		return result;
 	}
 	
 	//교재 지급내역 조회
