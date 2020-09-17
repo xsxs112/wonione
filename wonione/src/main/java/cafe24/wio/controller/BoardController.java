@@ -1,7 +1,6 @@
 package cafe24.wio.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +17,8 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	
 
 	// 공지사항 조회
 	@RequestMapping(value = "/getNotice", method = RequestMethod.GET)
@@ -44,6 +45,15 @@ public class BoardController {
 		  return "board/noticeRead";		  
 	  }
 	
+	  //공지사항 작성 PostMapping 필요
+	  
+	  //공지사항 작성 
+	   @GetMapping("/addNotice")
+	   public String getNoticeadd(Model model) {
+		  
+	      return "board/noticeAdd";
+	   }
+	  
 	// 자료게시판 조회
 	@RequestMapping(value = "/getDataLibrary", method = RequestMethod.GET)
 	public String getDataLibrary(Model model, Board board) {
