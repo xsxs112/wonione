@@ -20,6 +20,15 @@ public class ApprRequestService {
 	
 	
 	
+	public List<Map<String, Object>> getHolidayListTest() {
+		
+		List<Map<String, Object>> holliday = apprMapper.getHolidayListTest();
+		
+		
+		return holliday;
+	}
+
+	
 	public int getStartDayCk(String startDate) {
 		
 		int getStartDate = apprMapper.getStartDayCk(startDate);
@@ -44,7 +53,6 @@ public class ApprRequestService {
 	public String getReCode() {
 		Map<String, Object> reCodeMax =  apprMapper.getReCode();
 		
-		System.out.println("reCodeMax ------------> " + reCodeMax);
 		String tempCode = "request_";
 		
 		int getMax = Integer.parseInt(reCodeMax.get("max").toString());

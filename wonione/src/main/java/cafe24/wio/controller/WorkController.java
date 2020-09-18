@@ -1,8 +1,7 @@
 package cafe24.wio.controller;
 
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafe24.wio.bean.ApprovalRequest;
-import cafe24.wio.bean.Member;
-import cafe24.wio.bean.WorkAttendance;
-import cafe24.wio.mapper.ApprMapper;
 import cafe24.wio.service.ApprRequestService;
 
 //황미현 - 출퇴근 컨트롤러
@@ -27,61 +23,74 @@ public class WorkController {
 
 	@Autowired
 	private ApprRequestService apprRequestService;
-	@Autowired
-	private ApprMapper apprMapper;
 
 
-	
 	@ResponseBody
 	@GetMapping("/holidayCk")
 	public int holidayCk(@RequestParam(value = "startDate", required = false) String startDate,
 							@RequestParam(value = "endDate", required = false) String endDate) {
+		System.out.println("여기까지 오나");
 		
-		int getStartDate = apprRequestService.getStartDayCk(startDate);
+		System.out.println(startDate +"왜 뭐가 문제야");
+		// 쿼리에서 불러온 List
+		List<Map<String, Object>> listMap = apprRequestService.getHolidayListTest();
+		 
+		String reStartDate = listMap.get(0).get("reStartDate").toString();
+		String reEndDate = listMap.get(0).get("reEndDate").toString();
+		
+		int numStDate = Integer.parseInt(startDate.replace("-", ""));
+		int numEndDate = Integer.parseInt(endDate.replace("-", ""));
+		int resultDate = 1;
+		
+		for(int i = 0; i<listMap.size();i++) {
+			reStartDate = listMap.get(i).get("reStartDate").toString().replace("-", "");
+			reEndDate = listMap.get(i).get("reEndDate").toString().replace("-", "");
+			System.out.println(reStartDate);
+			System.out.println(reEndDate);
+			int numListStDate = Integer.parseInt(reStartDate);
+			int numListEndDate = Integer.parseInt(reEndDate);
+			
+			if((numStDate >= numListStDate && numStDate <= numListEndDate) || (numEndDate >= numListStDate && numEndDate <= numListEndDate)) {
+				resultDate = 0;
+			}
+			
+			 
+		}
+		System.out.println(resultDate +"resultDate");
+		return resultDate;
 
-	
-		return getStartDate;
-		
 	}
-	
-	
-	
-	
+
 	@ResponseBody
 	@GetMapping("/startDayCk")
 	public int startDayCk(@RequestParam(value = "startDate", required = false) String startDate) {
-		System.out.println(startDate+"workCotroller");
 		int getStartDate = apprRequestService.getStartDayCk(startDate);
 
-	
 		return getStartDate;
-		
+
 	}
-	
-	
+
 	@PostMapping("/holidayRequest")
-	public String holidayRequest(ApprovalRequest approvalRequest,	@RequestParam(value = "reStartDate", required = false) String reStartDate,
-												@RequestParam(value = "reEndDate", required = false) String reEndDate,
-												@RequestParam(value = "mrId", required = false) String mrId,
-												@RequestParam(value = "mrName", required = false) String mrName,
-												@RequestParam(value = "reReason", required = false) String reReason,
-												@RequestParam(value ="holidaySt", required = false) String holidaySt) {
-			System.out.println("mrId--------------"+mrId);
-			approvalRequest.setMrId(mrId);
-			approvalRequest.setReStartDate(reStartDate);
-			approvalRequest.setReEndDate(reEndDate);
-			approvalRequest.setSortation(holidaySt);
-			approvalRequest.setReReason(reReason);
-			apprRequestService.addholidayApproval(approvalRequest);
-			
-			
+	public String holidayRequest(ApprovalRequest approvalRequest,
+			@RequestParam(value = "reStartDate", required = false) String reStartDate,
+			@RequestParam(value = "reEndDate", required = false) String reEndDate,
+			@RequestParam(value = "mrId", required = false) String mrId,
+			@RequestParam(value = "mrName", required = false) String mrName,
+			@RequestParam(value = "reReason", required = false) String reReason,
+			@RequestParam(value = "holidaySt", required = false) String holidaySt) {
+		System.out.println("mrId--------------" + mrId);
+		approvalRequest.setMrId(mrId);
+		approvalRequest.setReStartDate(reStartDate);
+		approvalRequest.setReEndDate(reEndDate);
+		approvalRequest.setSortation(holidaySt);
+		approvalRequest.setReReason(reReason);
+		apprRequestService.addholidayApproval(approvalRequest);
+
 		return "redirect:/holidayApproval";
 
-
 	}
-	
-	
-	//휴가요청 리스트
+
+	// 휴가요청 리스트
 	@GetMapping("/holidayApproval")
 	@PostMapping("/holidayApproval")
 	public String getHolidayList(Model model) {
@@ -91,44 +100,5 @@ public class WorkController {
 
 		return "workmanagment/holidayApproval";
 	}
-
-	
-	/*
-	 * //아직 사용X
-	 * 
-	 * @GetMapping("/workAttendance") public String workAttendance(WorkAttendance
-	 * workAttendance) {
-	 * 
-	 * return "workmanagment/workAttendance"; }
-	 */
-	
-
-	/*
-	 * //휴가 신청 하려는데 아직 로그인 기능이 없어 세션 아이디 비밀번호를 쓸 수가 없어서 //여기서만 쓸수있게 임시로 만들게요
-	 * 
-	 * @GetMapping("/LoginForHoliday") public String LoginForHoliday(Model model) {
-	 * 
-	 * 
-	 * return "workmanagment/holidayLogin"; }
-	 */
-	
-	
-	
-	/*
-	 * @PostMapping("/LoginForHoliday") public String LoginForHoliday(Model
-	 * model, @RequestParam(value = "mrId", required = false) String mrId,
-	 * 
-	 * @RequestParam(value = "mrPw", required = false) String mrPw, HttpSession
-	 * session) { Member member = apprMapper.getMemberById(mrId); if (member !=
-	 * null) { if (member.getMrPw().equals(mrPw)) { session.setAttribute("SID",
-	 * member.getMrId()); session.setAttribute("SNAME", member.getMrName()); return
-	 * "workmanagment/holidayApproval"; } }
-	 * 
-	 * return "workmanagment/holidayLogin";
-	 * 
-	 * }
-	 */
-	
-	
 
 }
