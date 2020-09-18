@@ -23,7 +23,7 @@
 				<td align="left" th:text=${b.boardWriterName}></td>
 				<td align="left" th:text=${b.boardRegDate}></td>
 			</tr>
-			<tr class="info">
+			<tr class="info" th:each="b : ${Board}">
 				<th colspan="6">제목</th>
 			</tr>
 			<tr th:each="b : ${Board}">	
