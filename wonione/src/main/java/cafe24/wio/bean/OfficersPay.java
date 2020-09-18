@@ -32,11 +32,11 @@ public class OfficersPay {
 	private String opCode;						//직원급여지급번호
 	private float pRTitle;						//급여자원테이블(title)	
 	private String opDate;						//지급일자
-	private int opPay;							//직원급여여실지급액
+	private int opPay;							//직원급여실지급액
 	private String opRegDate;					//직원급여지급 작성일자
 	private String opWriter;					//직원급여지급 작성자
 	
-	private String pMRTitle;					//결제자원테이블
+	private String pmRTitle;					//결제자원테이블
 	private String mrJoinDate;					//직원입사일
 	private String mrAccountNum;				//직원계좌번호
 	
@@ -229,11 +229,11 @@ public class OfficersPay {
 	public void setOpWriter(String opWriter) {
 		this.opWriter = opWriter;
 	}
-	public String getpMRTitle() {
-		return pMRTitle;
+	public String getPmRTitle() {
+		return pmRTitle;
 	}
-	public void setpMRTitle(String pMRTitle) {
-		this.pMRTitle = pMRTitle;
+	public void setPmRTitle(String pmRTitle) {
+		this.pmRTitle = pmRTitle;
 	}
 	public String getMrJoinDate() {
 		return mrJoinDate;
@@ -253,8 +253,6 @@ public class OfficersPay {
 	public void setpREct(String pREct) {
 		this.pREct = pREct;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -332,8 +330,8 @@ public class OfficersPay {
 		builder.append(mrJoinDate);
 		builder.append(", mrAccountNum=");
 		builder.append(mrAccountNum);
-		builder.append(", pMRTitle=");
-		builder.append(pMRTitle);
+		builder.append(", pmRTitle=");
+		builder.append(pmRTitle);
 		builder.append("]");
 		builder.append("===========급여지급테이블 end===========");
 		
