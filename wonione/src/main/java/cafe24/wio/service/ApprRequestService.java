@@ -22,17 +22,21 @@ public class ApprRequestService {
 	
 	public List<Map<String, Object>> getHolidayListTest() {
 		
+		//List<Map<String, Object>> 데이터 타입으로 holliday 선언하고
+		//ApprMapper 클래스의 getHolidayListTest 메소드를 통해 입력 받은 값을 담는다
 		List<Map<String, Object>> holliday = apprMapper.getHolidayListTest();
 		
-		
+		//리턴받은 holliday을 리턴한다
 		return holliday;
 	}
 
 	
 	public int getStartDayCk(String startDate) {
-		
+		//int형 getStartDate를 선언하고 
+		//ApprMapper 클래스의 getStartDayCk 메소드에 입력값 startDate을 입력하여 리턴받은 값을 담는다
 		int getStartDate = apprMapper.getStartDayCk(startDate);
 		
+		//호출한곳에 getStartDate를 리턴한다
 		
 		return getStartDate;
 	}

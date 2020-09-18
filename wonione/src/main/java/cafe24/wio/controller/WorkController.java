@@ -29,10 +29,13 @@ public class WorkController {
 	//휴가 중복 체크
 	@ResponseBody
 	@GetMapping("/holidayCk")
+	//holidayApproval.html에서 startDate,endDate 값을 받는다
 	public int holidayCk(@RequestParam(value = "startDate", required = false) String startDate,
 							@RequestParam(value = "endDate", required = false) String endDate) {
 		
-		// 쿼리에서 불러온 List
+
+		
+		// DB에서 불러온 List
 		List<Map<String, Object>> listMap = apprRequestService.getHolidayListTest();
 		
 		
@@ -66,15 +69,22 @@ public class WorkController {
 
 	}
 
+	
+	//holidayApproval.html에서 startDate값을 받는다
 	@ResponseBody
 	@GetMapping("/startDayCk")
 	public int startDayCk(@RequestParam(value = "startDate", required = false) String startDate) {
+		//변수 getStartDate를 선언하고
+		//apprRequestService의 getStartDayCk에 startDate 를 입력하여 리턴 받은 값을 담아서 
+		//getStartDate 를 리턴한다
 		int getStartDate = apprRequestService.getStartDayCk(startDate);
 
 		return getStartDate;
 
 	}
-
+	
+	
+	//holidayApproval.html에서 데이터들을 받는다
 	@PostMapping("/holidayRequest")
 	public String holidayRequest(ApprovalRequest approvalRequest,
 			@RequestParam(value = "reStartDate", required = false) String reStartDate,
@@ -83,14 +93,17 @@ public class WorkController {
 			@RequestParam(value = "mrName", required = false) String mrName,
 			@RequestParam(value = "reReason", required = false) String reReason,
 			@RequestParam(value = "holidaySt", required = false) String holidaySt) {
-		System.out.println("mrId--------------" + mrId);
+		
+		//approvalRequest에 입력받은 값들을 셋팅한다
 		approvalRequest.setMrId(mrId);
 		approvalRequest.setReStartDate(reStartDate);
 		approvalRequest.setReEndDate(reEndDate);
 		approvalRequest.setSortation(holidaySt);
 		approvalRequest.setReReason(reReason);
 		apprRequestService.addholidayApproval(approvalRequest);
-
+		
+		
+		// holidayApproval 으로 리다이렉트 한다
 		return "redirect:/holidayApproval";
 
 	}
