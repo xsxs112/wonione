@@ -3,6 +3,8 @@ package cafe24.wio.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafe24.wio.bean.Report;
 import cafe24.wio.service.ReportService;
@@ -20,9 +23,16 @@ public class WorkReportController {
 	@Autowired
 	private ReportService reportService;
 	
+	private static final Logger logger = LoggerFactory.getLogger(WorkReportController.class);
+
+	
 	//보고서목록조회
 	@RequestMapping(value="/getReportList", method= RequestMethod.GET)
 	public String getReportList(Report report, Model model) {
+		
+		logger.info("===============================");
+		logger.info("@GetMapping getReportList");
+		logger.info("===============================");
 		
 		List<Report> reportList = reportService.getReportList(report);
 		System.out.println(reportList + "reportList");
@@ -117,15 +127,30 @@ public class WorkReportController {
 		   return "humanresource/updateworkreport";
 	   }
 	   
-	   
 	   //검색조건
-		@PostMapping("/workreport")
-		public String memberList(Model model
+		@GetMapping(value="/workreport", produces="application/json")
+		@ResponseBody
+		public List<Report> memberList(Model model
 								,@RequestParam(value="lecSk", required = false) String lecSk
 								,@RequestParam(value="lecSv", required = false) String lecSv) {
 			List<Report> reportList = reportService.getSearchList(lecSk, lecSv);
 			System.out.println(reportList +"reportList");
 			model.addAttribute("reportList", reportList);
-			return "humanresource/workreport";
+			return reportList;
 }
+		//조건검색
+		@PostMapping("/searchList")
+		public String searchList(Model model
+										,@RequestParam(value="lecSk", required = false) String lecSk
+										,@RequestParam(value="lecSv", required = false) String lecSv) {
+			logger.info("===============================");
+			logger.info("@PostMapping searchList");
+			logger.info("===============================");
+			List<Report> reportList = reportService.getSearchList(lecSk, lecSv);
+			System.out.println(reportList +"reportList");
+			model.addAttribute("reportList", reportList);
+			return "humanresource/workreport";
+		}
+		
+	
 }
