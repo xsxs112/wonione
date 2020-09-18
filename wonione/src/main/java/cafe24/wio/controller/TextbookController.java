@@ -202,7 +202,7 @@ public class TextbookController {
 		model.addAttribute("title", "교재보유현황 페이지");
 		model.addAttribute("mainTitle", "교재보유현황 페이지");
 		
-		return "textbookresource/textbookOwnlist";
+		return "/textbookresource/textbookOwnlist";
 	}
 	
 	//교재관리메인페이지
