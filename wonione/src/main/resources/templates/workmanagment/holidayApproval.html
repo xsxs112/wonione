@@ -13,11 +13,12 @@
 	<script type="text/javascript">
 		$(function() {
 			$('#requestBtn').click(function() {
-				var stdayResult = 0;
 				var startDate = $('input[name=reStartDate]').val();
 				var endDate = $('input[name=reEndDate]').val();
 				var holidaySt = $('#holidaySt').val();
 				var reReason = $('input[name=reReason]').val();
+				
+				
 				
 				if (startDate == null || startDate == '') {
 					alert('휴가 시작 날짜를 입력해주세요');
@@ -26,6 +27,10 @@
 				if (endDate == null || endDate == '') {
 					alert('휴가 끝나는 날짜를 입력해주세요');
 					$('input[name=endDate]').focus();
+					return;
+				}
+				if(endDate < startDate){
+					alert('끝나는 날짜가 시작날짜보다 이릅니다');
 					return;
 				}
 				if (reReason == null || reReason == '') {
@@ -42,26 +47,30 @@
 				}
 				startCk.done(function(data) {
 					if(data==0){
-						stdayResult = 1;
-						$('#requestForm').submit();
+						var holidayCk = $.ajax({
+							url : "/holidayCk",
+							method : "GET",
+							data : {startDate : startDate ,endDate : endDate},
+							dataType: "text"
+							})
+						
+						holidayCk.done(function(data) {
+							//ajax를 통해서 받은 데이터가 1이면 submit()실행
+							if(data==1){
+								$('#requestForm').submit();
+							}else{
+								alert("휴가 기간 중복 신청 불가");
+							}
+						})
+					
 					}else{
 						alert("당일,지나간 날짜는 신청하실 수 없습니다.");
 					} 
 					
-				});
-				
-				if(stdayResult == 1){
-					var holidayCk = $.ajax({
-						url : "/holidayCk",
-						method : "GET",
-						data : {startDate : startDate ,endDate : endDate},
-						dataType: "text"
-						})
-				}
-			})
-				
-			
+				})
+			});
 		})
+		
 	</script>
 
 </th:block>
@@ -71,45 +80,43 @@
 
 	<div class="static-table-area">
 		<div class="container-fluid">
-		
-		
-		
-		<form action="/holidayRequest" method="POST" id ="requestForm">
-			<input type="hidden" name="mrName" th:value="${session.SNAME}">
-			<input type="hidden" name="mrId" th:value="${session.SID}">
-			<table style="text-align: center;" >
-				<tr>
-					<td colspan="3"><h3>휴가신청</h3></td>
-				</tr>
-			
-				<tr>
-					<td colspan="3">
-						<input type="date" name="reStartDate"> ~ 
-						<input type="date" name="reEndDate">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						사유 <input type="text" name = "reReason">
-					</td>	
-					<td>
-						<select name="holidaySt" id = "holidaySt">
-						  <option value="정기휴가">정기휴가</option>
-						  <option value="연차">연차</option>
-						  <option value="월차">월차</option>
-						  <option value="경조사">경조사</option>
-						</select>
-					</td>
-					<td>
-						<button type="button" id = "requestBtn">신청</button>
-					</td>
-				</tr>
-				
-			</table>
-		</form>	   
-		
-		<br>
-		
+
+			<p style="color: gray;">
+			당일,지나간 날짜는 신청 불가 (ajax)<br>
+			휴가 리스트에서 중복된 날짜가 있으면 신청 불가(ajax)<br>
+			휴가 시작 날짜보다 끝나는 날자가 이르면 신청 불가 (script)<br>
+			<p>
+			<form action="/holidayRequest" method="POST" id="requestForm">
+				<input type="hidden" name="mrName" th:value="${session.SNAME}">
+				<input type="hidden" name="mrId" th:value="${session.SID}">
+				<table style="text-align: center;">
+					<tr>
+						<td colspan="3"><h3>휴가신청</h3></td>
+					</tr>
+
+					<tr>
+						<td colspan="3"><input type="date" name="reStartDate">
+							~ <input type="date" name="reEndDate"></td>
+					</tr>
+					<tr>
+						<td>사유 <input type="text" name="reReason">
+						</td>
+						<td><select name="holidaySt" id="holidaySt">
+								<option value="정기휴가">정기휴가</option>
+								<option value="연차">연차</option>
+								<option value="월차">월차</option>
+								<option value="경조사">경조사</option>
+						</select></td>
+						<td>
+							<button type="button" id="requestBtn">신청</button>
+						</td>
+					</tr>
+
+				</table>
+			</form>
+
+			<br>
+
 			<div class="sparkline8-list">
 				<div class="sparkline8-hd">
 					<div class="main-sparkline8-hd">

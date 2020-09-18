@@ -30,425 +30,229 @@ public class OfficersPay {
 	private String opdWriter;					//직원공제계산 작성자
 	
 	private String opCode;						//직원급여지급번호
-	private float pRTitle;						//급여자원테이블	
+	private float pRTitle;						//급여자원테이블(title)	
 	private String opDate;						//지급일자
-	private int opPay;							//직원급여여실지급액
+	private int opPay;							//직원급여실지급액
 	private String opRegDate;					//직원급여지급 작성일자
 	private String opWriter;					//직원급여지급 작성자
 	
-	private String pMRTitle;					//결제자원테이블
+	private String pmRTitle;					//결제자원테이블
 	private String mrJoinDate;					//직원입사일
 	private String mrAccountNum;				//직원계좌번호
 	
+	private String pREct;						//급여자원테이블(비고)	
 	
 
 	public String getOpcCode() {
 		return opcCode;
 	}
-
-
-
 	public void setOpcCode(String opcCode) {
 		this.opcCode = opcCode;
 	}
-
-
-
 	public String getMrId() {
 		return mrId;
 	}
-
-
-
 	public void setMrId(String mrId) {
 		this.mrId = mrId;
 	}
-
-
-
 	public String getMrName() {
 		return mrName;
 	}
-
-
-
 	public void setMrName(String mrName) {
 		this.mrName = mrName;
 	}
-
-
-
 	public int getOpcHourlyWage() {
 		return opcHourlyWage;
 	}
-
-
-
 	public void setOpcHourlyWage(int opcHourlyWage) {
 		this.opcHourlyWage = opcHourlyWage;
 	}
-
-
-
 	public int getOpcTotalHour() {
 		return opcTotalHour;
 	}
-
-
-
 	public void setOpcTotalHour(int opcTotalHour) {
 		this.opcTotalHour = opcTotalHour;
 	}
-
-
-
 	public int getOpcBasePay() {
 		return opcBasePay;
 	}
-
-
-
 	public void setOpcBasePay(int opcBasePay) {
 		this.opcBasePay = opcBasePay;
 	}
-
-
-
 	public int getOpcFoodExpenses() {
 		return opcFoodExpenses;
 	}
-
-
-
 	public void setOpcFoodExpenses(int opcFoodExpenses) {
 		this.opcFoodExpenses = opcFoodExpenses;
 	}
-
-
-
 	public int getOpcTransportation() {
 		return opcTransportation;
 	}
-
-
-
 	public void setOpcTransportation(int opcTransportation) {
 		this.opcTransportation = opcTransportation;
 	}
-
-
-
 	public int getOpcWelfare() {
 		return opcWelfare;
 	}
-
-
-
 	public void setOpcWelfare(int opcWelfare) {
 		this.opcWelfare = opcWelfare;
 	}
-
-
-
 	public int getOpcBonus() {
 		return opcBonus;
 	}
-
-
-
 	public void setOpcBonus(int opcBonus) {
 		this.opcBonus = opcBonus;
 	}
-
-
-
 	public int getOpcEct() {
 		return opcEct;
 	}
-
-
-
 	public void setOpcEct(int opcEct) {
 		this.opcEct = opcEct;
 	}
-
-
-
 	public int getOpcTotal() {
 		return opcTotal;
 	}
-
-
-
 	public void setOpcTotal(int opcTotal) {
 		this.opcTotal = opcTotal;
 	}
-
-
-
 	public String getOpcRegDate() {
 		return opcRegDate;
 	}
-
-
-
 	public void setOpcRegDate(String opcRegDate) {
 		this.opcRegDate = opcRegDate;
 	}
-
-
-
 	public String getOpcWriter() {
 		return opcWriter;
 	}
-
-
-
 	public void setOpcWriter(String opcWriter) {
 		this.opcWriter = opcWriter;
 	}
-
-
-
 	public String getOpdCode() {
 		return opdCode;
 	}
-
-
-
 	public void setOpdCode(String opdCode) {
 		this.opdCode = opdCode;
 	}
-
-
-
 	public int getIyCode() {
 		return iyCode;
 	}
-
-
-
 	public void setIyCode(int iyCode) {
 		this.iyCode = iyCode;
 	}
-
-
-
 	public int getOpdIncomeTax() {
 		return opdIncomeTax;
 	}
-
-
-
 	public void setOpdIncomeTax(int opdIncomeTax) {
 		this.opdIncomeTax = opdIncomeTax;
 	}
-
-
-
 	public int getOpdResidentIncomTax() {
 		return opdResidentIncomTax;
 	}
-
-
-
 	public void setOpdResidentIncomTax(int opdResidentIncomTax) {
 		this.opdResidentIncomTax = opdResidentIncomTax;
 	}
-
-
-
 	public int getOpdEmploymentInsurance() {
 		return opdEmploymentInsurance;
 	}
-
-
-
 	public void setOpdEmploymentInsurance(int opdEmploymentInsurance) {
 		this.opdEmploymentInsurance = opdEmploymentInsurance;
 	}
-
-
-
 	public int getOpdNationalPension() {
 		return opdNationalPension;
 	}
-
-
-
 	public void setOpdNationalPension(int opdNationalPension) {
 		this.opdNationalPension = opdNationalPension;
 	}
-
-
-
 	public int getOpdHealthInsurance() {
 		return opdHealthInsurance;
 	}
-
-
-
 	public void setOpdHealthInsurance(int opdHealthInsurance) {
 		this.opdHealthInsurance = opdHealthInsurance;
 	}
-
-
-
 	public int getOpdLongtermNursingInsurance() {
 		return opdLongtermNursingInsurance;
 	}
-
-
-
 	public void setOpdLongtermNursingInsurance(int opdLongtermNursingInsurance) {
 		this.opdLongtermNursingInsurance = opdLongtermNursingInsurance;
 	}
-
-
-
 	public int getOpdTotal() {
 		return opdTotal;
 	}
-
-
-
 	public void setOpdTotal(int opdTotal) {
 		this.opdTotal = opdTotal;
 	}
-
-
-
 	public String getOpdRegDate() {
 		return opdRegDate;
 	}
-
-
-
 	public void setOpdRegDate(String opdRegDate) {
 		this.opdRegDate = opdRegDate;
 	}
-
-
-
 	public String getOpdWriter() {
 		return opdWriter;
 	}
-
-
-
 	public void setOpdWriter(String opdWriter) {
 		this.opdWriter = opdWriter;
 	}
-
-
-
 	public String getOpCode() {
 		return opCode;
 	}
-
-
-
 	public void setOpCode(String opCode) {
 		this.opCode = opCode;
 	}
-
-
-
 	public float getpRTitle() {
 		return pRTitle;
 	}
-
-
-
 	public void setpRTitle(float pRTitle) {
 		this.pRTitle = pRTitle;
 	}
-
-
-
 	public String getOpDate() {
 		return opDate;
 	}
-
-
-
 	public void setOpDate(String opDate) {
 		this.opDate = opDate;
 	}
-
-
-
 	public int getOpPay() {
 		return opPay;
 	}
-
-
-
 	public void setOpPay(int opPay) {
 		this.opPay = opPay;
 	}
-
-
-
 	public String getOpRegDate() {
 		return opRegDate;
 	}
-
-
-
 	public void setOpRegDate(String opRegDate) {
 		this.opRegDate = opRegDate;
 	}
-
-
-
 	public String getOpWriter() {
 		return opWriter;
 	}
-
-
-
 	public void setOpWriter(String opWriter) {
 		this.opWriter = opWriter;
 	}
-
-
-
-	public String getpMRTitle() {
-		return pMRTitle;
+	public String getPmRTitle() {
+		return pmRTitle;
 	}
-
-
-
-	public void setpMRTitle(String pMRTitle) {
-		this.pMRTitle = pMRTitle;
+	public void setPmRTitle(String pmRTitle) {
+		this.pmRTitle = pmRTitle;
 	}
-
-
-
 	public String getMrJoinDate() {
 		return mrJoinDate;
 	}
-
-
-
 	public void setMrJoinDate(String mrJoinDate) {
 		this.mrJoinDate = mrJoinDate;
 	}
-
-
-
 	public String getMrAccountNum() {
 		return mrAccountNum;
 	}
-
-
-
 	public void setMrAccountNum(String mrAccountNum) {
 		this.mrAccountNum = mrAccountNum;
 	}
-
-
+	public String getpREct() {
+		return pREct;
+	}
+	public void setpREct(String pREct) {
+		this.pREct = pREct;
+	}
 
 	@Override
 	public String toString() {
@@ -526,11 +330,18 @@ public class OfficersPay {
 		builder.append(mrJoinDate);
 		builder.append(", mrAccountNum=");
 		builder.append(mrAccountNum);
-		builder.append(", pMRTitle=");
-		builder.append(pMRTitle);
+		builder.append(", pmRTitle=");
+		builder.append(pmRTitle);
 		builder.append("]");
 		builder.append("===========급여지급테이블 end===========");
+		
+		builder.append("===========자원관리비고 시작===========");
+		builder.append(", pREct=");
+		builder.append(pREct);
+		builder.append("]");
+		builder.append("===========자원관리비고 끝===========");
 		return builder.toString();
-	}	
+	}
+	
 	
 }

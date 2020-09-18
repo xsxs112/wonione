@@ -23,6 +23,8 @@ public class ConsultingController {
 	@Autowired
 	private ConsultingService consultingService;
 	
+	//상담작성페이지
+	//상담작성 페이지 안에 상담자와 강의반을 database에서 데이터를 가져오기위해 코드작업
 	@GetMapping("/consultingWrite")
 	public String consultingWrite(Model model) {
 		List<Map<String, Object>> consultingTeacherMap = consultingService.SelectTeacher();
@@ -31,6 +33,8 @@ public class ConsultingController {
 		model.addAttribute("LecName",consultingLecNameMap);
 		return "/consulting/consultingWrite";
 	}
+	//상담작성페이지
+	//상담후 상담한 내용을 작성하여 database에 올리위한 코드작업
 	@PostMapping("/consultingWrite")
 	public String addConsultingWrite(Consulting consulting
 									,@RequestParam(value="consultingTitle", required = false) String consultingTitle
@@ -41,7 +45,8 @@ public class ConsultingController {
 		consultingService.addConsultingWrite(consulting);
 		return "redirect:/consultingList";
 	}
-	
+	//상담내역리스트
+	//상담작성후 database에서 데이터를 가져와 그데이터를 바탕으로 페이징처리한 코드작업
 	@RequestMapping(value="/consultingList", method=RequestMethod.GET)
 	   public String consultingList(Model model
 	               ,@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
@@ -56,13 +61,18 @@ public class ConsultingController {
 	         
 	         return "/consulting/consultingList";
 	   } 
+	//상담내역리스트
+	//상담내역리스트에서 제목을 클릭하여 하단에 해당정보가 나오게 ajax를 이용
+	//ajax에서 controller를 들려 database에 데이터를 가져오기위한 코드작업
 	@PostMapping(value = "/consultingInformation",produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> consultingInformation(int csCode) {
 		Map<String ,Object> consultingInformationMap = consultingService.consultingInformation(csCode);
-		System.out.println(consultingInformationMap);
 		return consultingInformationMap;
 	}
+	//상담내역리스트
+	//상담내역리스트에서 ajax통하여 화면출력된 데이터를 가져와 
+	//database에 update를 하여 상담내역수정처리코드작업
 	@PostMapping("/consultingList")
 	public String upConsultingList(Consulting cosulting
 								  ,@RequestParam(value="consultingCode", required = false) String consultingCode
@@ -71,12 +81,7 @@ public class ConsultingController {
 								  ,@RequestParam(value="consultingClass", required = false) String consultingClass
 								  ,@RequestParam(value="consultingStudent", required = false) String consultingStudent
 								  ,@RequestParam(value="consultingData", required = false) String consultingData) {
-		System.out.println(consultingCode);
-		System.out.println(consultingTitle);
-		System.out.println(consultingTeacher);
-		System.out.println(consultingClass);
-		System.out.println(consultingStudent);
-		System.out.println(consultingData);
+		
 		consultingService.upconsultingList(cosulting);
 		return "redirect:/consultingList";
 	}

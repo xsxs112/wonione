@@ -17,8 +17,8 @@
 				<tr>
 					<td>교재명</td>
 					<td>
-					<select id="txbCode" name = "txbCode" class="form-control">
-						<option disabled="disabled">::교재를 선택해주세요::</option>
+					<select id="txbCode" name ="txbCode" class="form-control">
+						<option disabled="disabled" selected="selected">::교재를 선택해주세요::</option>
 						<th:block th:each=" til : ${textbookInfoList} ">
 							<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
 						</th:block>
@@ -29,10 +29,10 @@
 				<tr>
 					<td>입고수량</td>
 					<td>
-						<input class="form-control"  type="text" name="whTxbQuantity" id="whTxbQuantity" placeholder="수량을 입력해주세요"/>
+						<input class="form-control"  type="number" name="whTxbQuantity" id="whTxbQuantity" onFocus="this.value=0; return true;" placeholder="수량을 입력해주세요"/>
 					</td>
 				</tr>
-				<tr>
+				<tr hidden="hidden">
 				<th:block th:each="wtl : ${whTextbookList}"></th:block>
 					<td>재고수량</td>
 					<td>
@@ -48,47 +48,69 @@
 				</tr>
 			</table>
 		</div>		
-		<input type="submit" class="btn btn-danger btn-block" id="addBtn" value="등록버튼">	
+		<button type="button" class="btn btn-default btn-block" id="addBtn">등록버튼</button>
 	</form>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
+	$('#addBtn').click(function(){
+		console.log('addBtn');
+		var txbCode = $('#txbCode').val();
+		var whTxbQuantity = $('#whTxbQuantity').val();
+		console.log(whTxbQuantity);
+		if(txbCode == null || txbCode == undefined){
+			alert('교재를 선택해주세요');
+			return ;
+		}else if(whTxbQuantity == undefined || whTxbQuantity == ''){
+			alert('입고수량을 입력해주세요');
+			$('#whTxbQuantity').focus();
+		}else if(whTxbQuantity<1){
+			alert('0보다 큰 값을 입력해주세요');
+			$('#whTxbQuantity').focus();
+			return; 
+		}
+		addForm.submit();
+	});
+	
 	$('#whTxbCheckBtn').click(function(){
 		console.log('입고내역체크');
-		
 		var txbCode = $('#txbCode').val();
-		var request = $.ajax({
+		console.log(txbCode);
+		if(txbCode == null || txbCode == undefined){
+			alert('교재를 선택해주세요');
+			return ;
+		}
+  		var request = $.ajax({
 		  url: "/whTxbCheck",
-		  method: "POST",
-		  data: { txbCode : txbCode },
+		  method:"POST",
+		  data : { txbCode : txbCode },
 		  dataType: "json"
 		});
 		request.done(function( data ) {
 			console.log(data);
-			console.log(data.length);
-			if(data != undefined &&  data != null){
-				for(var i=0; i<data.length; i++){
-					if(data[i].txbCode==null){
-						alert('교재입고내역이 없습니다.');
-						 if(confirm('최초입고등록을 하시겠습니까?')){
-							 location.href = '/textbookFirstWahoRegister';
-						}
+			if(data != undefined){
+				if(data == 0){
+					alert('해당교재의 입고내역이 존재하지 않습니다.');
+					 if(confirm('최초입고등록을 하시겠습니까?')){
+						 location.href = '/textbookFirstWahoRegister';
 					}
+				}else{
+					alert('해당교재의 입고내역이 있습니다.');
 				}
 			}
 			
 		});
 		request.fail(function( jqXHR, textStatus ) {
 		  alert( "Request failed: " + textStatus );
-		});
+		});   
 		
 	});
 	
 	</script>
 	
 	<div class="container-fluid" style="margin: 10px;">
-		<a href="/textbookRegister" class="btn btn-primary" role="button">교재등록 메인페이지로</a>	
-		<a href="/textbookManage" class="btn btn-primary" role="button">교재관리 메인페이지로</a>
+		<a href="/textbookRegister" class="btn btn-default" role="button">교재등록 메인페이지로</a>	
+		<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 	</div>	
 	</th:block>
 	<th:block layout:fragment="customJsScript">

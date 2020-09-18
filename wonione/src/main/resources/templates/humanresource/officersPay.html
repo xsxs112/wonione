@@ -7,15 +7,13 @@
 		<title></title> 
 		<script type="text/javascript">
 	 	
-		// HYJ
+	// 직원 아이디값 받아 넘기기
 	$(function(){	
  		$('.callOfficersInfo').click(function(){
- 		console.log('6666666666');
  		var tr = $(this).parent().parent();
  		var td = tr.children();
  		var mrId = td.eq(0).text(); 	
  		
-		//var mrId = $('#tb').children('input[name=mrId]').val();
 		console.log(mrId + ' < -- mrId');
 		var request = $.ajax({
 			  url: "/callOfficersInfo",
@@ -76,21 +74,20 @@
 	</th:block>
 	<th:block layout:fragment="customContent" >	
 	<!--===================직원목록불러오기시작===================-->
-	
+
 	<div style="width:40%; float:left" class="container-fluid">		
-			<table id="tb" class ="table table-striped">
-				<tr>
-					<td colspan="3" style="text-align: center; vertical-align:middle;"> 직원목록 </td>
-				</tr>
-				<tr th:each="l : ${officersPayList}">
-					<td style="text-align: center;" th:text="${l.mrId}"><input type="hidden" name="mrId" th:value="${l.mrId}"></td>
-					<td style="text-align: center;" th:text="${l.mrName}"></td>
-					<td style="text-align: center;">					
-						<button type="button" class="callOfficersInfo">정보보기</button>
-					</td>
-				</tr>
-			</table>		
-		
+		<table id="tb" class ="table table-striped">			
+			<tr>
+				<td colspan="3" style="text-align: center; vertical-align:middle;"> 직원목록 </td>
+			</tr>
+			<tr th:each="o : ${OfficersList}">
+				<td style="text-align: center;" th:text="${o.mrId}"><input type="hidden" name="mrId" th:value="${l.mrId}"></td>
+				<td style="text-align: center;" th:text="${o.mrName}"></td>
+				<td style="text-align: center;">					
+					<button type="button" class="callOfficersInfo">정보보기</button>
+				</td>
+			</tr>
+		</table>			
 	</div>
 	<div style="width:60%; float:right" class="container-fluid">
 		<table id="tb2" class ="table table-striped">
@@ -130,6 +127,24 @@
 		</table>	
 	</div>
 	<!--===================직원목록불러오기끝===================-->
+	<!--===================시급지급기준 시작===================-->
+	<label>
+		<div class="container-fluid">		
+			<table class ="table table-striped" >
+				<tr>
+					<td colspan="3" style="text-align: center; vertical-align:middle;">지급기준표</td>
+				</tr>
+				<tr>
+					<td rowspan="5" style="text-align: center; vertical-align:middle;">시급기준</td>
+				</tr>
+				<tr th:each="s : ${standardSheetHour}" style="text-align: center;">
+					<td th:text="${s.pREct}"></td>
+					<td th:text="${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}"></td>
+				</tr>
+			</table>			
+		</div>
+	</label>
+	<!--===================시급지급기준 끝===================-->		
 	<!--===================지급계산시작===================-->
 	<form>	
 		<div class="container-fluid">
@@ -192,10 +207,7 @@
 			</table>
 		</div>
 	</form>
-	<!--===================지급계산끝===================-->
-	
-
-	
+	<!--===================지급계산끝===================-->	
 
 	<br>
 	</th:block>

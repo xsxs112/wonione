@@ -46,6 +46,30 @@ public class BoardController {
 	  }
 	
 	  //공지사항 작성 PostMapping 필요
+	  public String getNoticeAdd(Board board
+			  					,Model model
+			  					,@RequestParam(value="boardNum", required = false) String boardNum
+			  					,@RequestParam(value="boardMenu", required = false) String boardMenu
+			  					,@RequestParam(value="boardTitle", required = false) String boardTitle
+			  					,@RequestParam(value="boardWriterId", required = false) String boardWriterId
+			  					,@RequestParam(value="boardRegDate", required = false) String boardRegDate
+			  					,@RequestParam(value="boardContents", required = false) String boardContents
+			  					,@RequestParam(value="boardPicture", required = false) String boardPicture
+			  					,@RequestParam(value="boardFile", required = false) String boardFile	  					
+			  					) {
+		  System.out.println("boardNum -> " + boardNum);
+		  System.out.println("boardNum -> " + boardMenu);
+		  System.out.println("boardNum -> " + boardTitle);
+		  System.out.println("boardNum -> " + boardWriterId);
+		  System.out.println("boardNum -> " + boardRegDate);
+		  System.out.println("boardNum -> " + boardContents);
+		  System.out.println("boardNum -> " + boardPicture);
+		  System.out.println("boardNum -> " + boardFile);
+		  boardService.insertNotice(board);
+		  model.addAttribute("Board", board);
+		/* model.addAttribute("BoardUpload", "/searchNotice"); */
+		  return "redirect:/getNotice";  
+	  }
 	  
 	  //공지사항 작성 
 	   @GetMapping("/addNotice")

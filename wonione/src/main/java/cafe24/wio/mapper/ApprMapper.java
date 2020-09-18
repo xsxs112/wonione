@@ -11,6 +11,7 @@ import cafe24.wio.bean.Member;
 @Mapper
 public interface ApprMapper {
 	
+	public List<Map<String, Object>> getHolidayListTest();
 	
 	public int getStartDayCk(String startDate);
 	

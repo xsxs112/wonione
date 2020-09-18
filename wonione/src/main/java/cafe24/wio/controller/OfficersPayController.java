@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +25,25 @@ public class OfficersPayController {
 	// log4j로 로그 찍기 위한 객체 삽입
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(OfficersPayController.class);
+	
+	
+	
+	@RequestMapping(value = "/officersPayIndex", method = RequestMethod.GET)
+	public String getOfficersList(Model model) {
+		//직원리스트조회
+		List<OfficersPay> OfficersList = officersPayService.getOfficersList();
+		model.addAttribute("OfficersList", OfficersList);
+		model.addAttribute("title", "직원목록조회");
+		
+		//자원관리 테이블 통해 기준표 출력
+		List<OfficersPay> standardSheetHour = officersPayService.standardSheet();		
+		model.addAttribute("standardSheetHour",standardSheetHour);
+		model.addAttribute("title", "시급기준표");
+		
+		return "humanresource/officersPay";		
+	}
 
+	
 	//직원 정보 불러오기
 	@PostMapping(value = "/callOfficersInfo",produces = "application/json")
 	@ResponseBody
@@ -36,18 +53,18 @@ public class OfficersPayController {
 
 		return OfficersInfo;
 	}
+
 	
-	//직원리스트조회
-	@RequestMapping(value = "/getOfficersList", method = RequestMethod.POST)
-	public String getOfficersList(Model model) {
-		List<OfficersPay> OfficersList = officersPayService.getOfficersList();
+	// 직원급여목록조회
+	@RequestMapping(value = "/getOfficersPayList", method = RequestMethod.GET)
+	public String getOfficersPayList(Model model) {
+		List<OfficersPay> officersPayList = officersPayService.getOfficersPayList();
 		
-		model.addAttribute("OfficersList", OfficersList);
-		model.addAttribute("title", "직원목록조회");
+		model.addAttribute("officersPayList", officersPayList);
+		model.addAttribute("title", "직원급여목록조회");
+		return "humanresource/payList";
 		
-		return "humanresource/officersPay";		
 	}
-	
 	
 	// 직원급여명세서조회
 	@RequestMapping(value = "/getOfficersPay", method = RequestMethod.GET)
@@ -60,31 +77,6 @@ public class OfficersPayController {
 		model.addAttribute("title", "직원급여목록조회");
 		return "humanresource/officersPayDocumet";
 
-	}
-
-	// 직원급여목록조회
-	@RequestMapping(value = "/getOfficersPayList", method = RequestMethod.GET)
-	public String getOfficersPayList(Model model) {
-		List<OfficersPay> officersPayList = officersPayService.getOfficersPayList();
-
-		model.addAttribute("officersPayList", officersPayList);
-		model.addAttribute("title", "직원급여목록조회");
-		return "humanresource/payList";
-
-	}
-
-	//직원급여 초기페이지	
-	@GetMapping("/officersPayIndex") 
-	public String officersPay(Model model
-							 ,@RequestParam(value = "mrId", required = false) String mrId) { 
-		
-		List<OfficersPay> officersPayList = officersPayService.getOfficersPayList();
-
-		model.addAttribute("officersPayList", officersPayList);
-		model.addAttribute("title", "직원급여목록조회");		
-
-		
-		return "humanresource/officersPay"; 	
 	}
 
 }
