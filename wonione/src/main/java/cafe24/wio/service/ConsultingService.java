@@ -94,4 +94,12 @@ public class ConsultingService {
 		return result;
 	}
 
+	
+
+	public int deleteConsulting(int csCode) {
+		int result = consultingMapper.deleteConsulting(csCode);
+		return result;
+		
+	}
+
 }

@@ -25,7 +25,7 @@
 			  		</select>
 		  		</div>
 				<div class="form-group">
-			  		<select name ="consultingClass" class="form-control">
+			  		<select name ="consultingClass" class="form-control" id="consultingClass">
 			  			<option>::강의반목록::</option>
 			  			<th:block th:each="l :${LecName}">
 				  			<option th:value="${l.lec_name}">[[${l.lec_name}]]</option>
@@ -38,7 +38,7 @@
 				<label class="col-sm-2 control-label">상담내용</label>
 				<textarea  class="form-control" name="consultingData" style="width:1200px; height:150px;"></textarea>
 			</div>
-				<button type="button" class="btn btn-default" id="addconsultingbtn">작성완료</button>
+				<button type="submit" class="btn btn-default" id="addconsultingbtn">작성완료</button>
 		</form>
 	</th:block>
 	

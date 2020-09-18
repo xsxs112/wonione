@@ -25,5 +25,7 @@ public interface ConsultingMapper {
 	public Map<String, Object> consultingInformation(int csCode);
 	//상담내용수정
 	public int upconsultingList(Consulting cosulting);
+	//상담내용삭제
+	public int deleteConsulting(int csCode);
 
 }
