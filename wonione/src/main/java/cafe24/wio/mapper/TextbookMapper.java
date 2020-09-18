@@ -12,7 +12,7 @@ import cafe24.wio.bean.WhTextbook;
 public interface TextbookMapper {
 	
 	//교재 지급내역 검색
-	public List<SupplyTextbook> getSuppTxbSearch(String suppSk, String suppTxbSv);
+	public List<SupplyTextbook> getSuppTxbSearch(String suppTxbSk, String suppTxbSv);
 	
 	//교재 정보 검색
 	public List<TextbookBasicInfo> getTxbInfoSearch(String infoTxbSk, String infoTxbSv);
@@ -30,7 +30,7 @@ public interface TextbookMapper {
 	public String getAddTxbInfoCode();
 	
 	//교재기초정보리스트
-	public List<TextbookBasicInfo> getTextbookInfoList(TextbookBasicInfo txbBasicInfo);
+	public List<TextbookBasicInfo> getTextbookInfoList();
 
 	//교재보유리스트(입고/재고)
 	public List<TextbookBasicInfo> getTextbookOwnList(WhTextbook whTextbook);

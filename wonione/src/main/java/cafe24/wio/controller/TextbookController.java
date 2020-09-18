@@ -28,6 +28,29 @@ public class TextbookController {
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 
 	
+	
+	//교재 지급내역 검색
+	@PostMapping("/getSuppTxbSearch")
+	public String getSuppTxbSearch(Model model
+			,@RequestParam(value="suppSk", required=false) String suppTxbSk
+			,@RequestParam(value="suppTxbSv", required=false) String suppTxbSv) {
+		List<SupplyTextbook> suppTxbSearchResult = textbookService.getSuppTxbSearch(suppTxbSk, suppTxbSv);
+		logger.info(suppTxbSearchResult.toString());
+		model.addAttribute("getTextbookSuppList", suppTxbSearchResult);
+		return "textbookresource/textbookSupplyList";
+	}
+	
+	//교재 정보 검색
+	@PostMapping("/getTxbInfoSearch")
+	public String getTxbInfoSearch(Model model
+			,@RequestParam(value="infoTxbSk", required=false) String infoTxbSk
+			,@RequestParam(value="infoTxbSv", required=false) String infoTxbSv) {
+		List<TextbookBasicInfo> txbInfoSearchResult = textbookService.getTxbInfoSearch(infoTxbSk, infoTxbSv);
+		logger.info(txbInfoSearchResult.toString());
+		model.addAttribute("textbookInfoList", txbInfoSearchResult);
+		return "textbookresource/textbookInfoList";
+	}
+	
 	//교재 입고내역 검색
 	@PostMapping("/getWhTxbSearch")
 	public String getWhTxbSearch(Model model
@@ -45,7 +68,7 @@ public class TextbookController {
 	public int wahoTextbookCheck(Model model
 					,@RequestParam(value="txbCode", required = false)String txbCode	) { 
 		logger.info("==============================");
-		logger.info("교재지급내역페이지 getTextbookSuppList 포스트매핑!!!!");
+		logger.info("입고내역체크 wahoTextbookCheck 포스트매핑!!!!");
 		logger.info("==============================");
 		TextbookBasicInfo whTxbCodeCheck = textbookService.wahoTextbookCheck(txbCode); 
 		
@@ -134,13 +157,12 @@ public class TextbookController {
 	
 	//교재 최초입고등록 
 	@GetMapping("/textbookFirstWahoRegister")
-	public String textbookFirstWahoRegister(Model model
-									 , TextbookBasicInfo txbBasicInfo) {
+	public String textbookFirstWahoRegister(Model model) {
 		
 		model.addAttribute("title", "교재최초입고등록  페이지");
 		model.addAttribute("mainTitle", "교재최초입고등록 페이지");
 		//교재 기본정보조회
-		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList(txbBasicInfo);
+		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList();
 		model.addAttribute("textbookInfoList", textbookinfolist);
 		
 		return "textbookresource/textbookFirstWahoRegister";
@@ -166,13 +188,12 @@ public class TextbookController {
 	
 	//교재입고등록 
 	@GetMapping("/textbookWahoRegister")
-	public String textbookWahoRegister(Model model
-									 , TextbookBasicInfo txbBasicInfo) {
+	public String textbookWahoRegister(Model model) {
 		
 		model.addAttribute("title", "교재입고등록  페이지");
 		model.addAttribute("mainTitle", "교재입고등록 페이지");
 		//교재 기본정보조회
-		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList(txbBasicInfo);
+		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList();
 		model.addAttribute("textbookInfoList", textbookinfolist);
 		//교재입고목록 조회
 		List<WhTextbook> whTextbookList = textbookService.getWhTextbookList();
@@ -220,10 +241,8 @@ public class TextbookController {
 	
 	//교재기본정보 리스트
 	@GetMapping("/textbookInfoList")
-	public String getTextbookInfoList(Model model
-									,TextbookBasicInfo txbBasicInfo ) {
-		
-			List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList(txbBasicInfo);
+	public String getTextbookInfoList(Model model) {
+			List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList();
 			model.addAttribute("textbookInfoList", textbookinfolist);
 			System.out.println(textbookinfolist);
 			model.addAttribute("title", "교재목록페이지");

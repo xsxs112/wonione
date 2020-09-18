@@ -43,15 +43,15 @@
 
 	SELECT 
 			sup_txb_code
-		,  txb_code
-		,  sup_txb_quantity
-		,  txb_receiver_id
-		,  sup_txb_date
-		,  sup_txb_writer
-		,  sup_txb_reg_date
+		,   txb_code
+		,   sup_txb_quantity
+		,   txb_receiver_id
+		,   sup_txb_date
+		,   sup_txb_writer
+		,   sup_txb_reg_date
 	FROM wt_supply_textbook
 	WHERE
-		${suppSk} LIKE (CONCAT ('%',#{suppTxbSv},'%'));
+		${suppTxbSk} LIKE (CONCAT ('%',#{suppTxbSv},'%'));
 
 </select>
 
