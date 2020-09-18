@@ -8,6 +8,7 @@
 	</th:block>
 	<th:block layout:fragment="customContent" style="text-align: center;">
 	<div style="border: 1px; padding-left: 350px; padding-right: 350px;" class="container-fluid">
+	<!-- 상담리스트페이지 -->
 		<h4>상담리스트</h4>
 		<table border="1" class="table">
 	  		<thead>
@@ -18,7 +19,8 @@
 	  				<th>내담자</th>
 	  				<th>일자</th>
 	  			</tr>
-	  		</thead>	  	
+	  		</thead>	  
+	  		<!-- 상담내역출력 -->	
 	  		<tbody>
   				<tr th:each="c : ${consultingList}">
 	  				<td style="text-align:center;" th:text="${#numbers.formatInteger(c.rowNum,0,'POINT')}"></td>
@@ -29,6 +31,7 @@
 	  			</tr>
 	  		</tbody>	
   		</table>
+  		<!-- 상담리스트의 페이징처리 -->
   		<a th:href="@{/consultingList}">처음</a>
 		    
 		    <span th:if="${currentPage > 1}"><a th:href="@{/consultingList(currentPage=(${currentPage}-1))}">이전</a></span>
@@ -43,6 +46,8 @@
 		    <span th:unless="${currentPage != lastPage}" th:text="다음"></span>
 		    <a th:href="@{/consultingList(currentPage=${lastPage})}">마지막</a>
   	</div>
+  		<!-- ajax를 이용한 상세내용 화면출력  -->
+  		<!-- ajax를 사용한 js는 /static/js/main.js -->
   		<form action="/consultingList" method="POST" id="upConsultingList">
 			<div style="border: 1px; margin: 20px; ">
 				<h4>상담정보</h4>
@@ -68,7 +73,9 @@
 		  			</tr>
 		  		</table>
 	 		</div>
+	 			<!-- 상세내용을 화면출력시 그데이터를 바탕으로 수정과삭제처리 -->
 				<button type="button" id="upConsulting" class="btn btn-default">수정</button>
+				<!-- 삭제처리는 미완성 -->
 				<button type="button" id="deleteConsulting" class="btn btn-default">삭제</button>
 		</form>
 	</th:block>

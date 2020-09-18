@@ -17,22 +17,25 @@ public class ConsultingService {
 	@Autowired
 	private ConsultingMapper consultingMapper;
 	
-	
+	//상담자의 데이터를 가져오기위한 코드
 	public List<Map<String, Object>> SelectTeacher() {
 		List<Map<String, Object>> TeacherName = consultingMapper.SelectTeacher();
-		System.out.println(TeacherName);
 		return TeacherName;
 	}
+	
+	//개설한 강의반의 데이터를 가져오기위한 코드
 	public List<Map<String, Object>> SelectLecName() {
 		List<Map<String, Object>> SelectLecName = consultingMapper.SelectLecName();
-		System.out.println(SelectLecName);
 		return SelectLecName;
 	}
+	
+	//상담내용을 database에 insert하기위한 코드
 	public int addConsultingWrite(Consulting consulting) {
 		int result = consultingMapper.addConsultingWrite(consulting);
 		return result;
-		
 	}
+	
+	//상담리스트를 가져오기위한 코드 및 페이징처리
 	public Map<String, Object> consultingList(int currentPage) {
 		   
 	      //보여줄 행의 갯수
@@ -77,11 +80,15 @@ public class ConsultingService {
 	      
 	      return resultMap;     
 	}
+	
+	//상담관련의 상세내용을 가져오기위한 코드
 	public Map<String, Object> consultingInformation(int csCode) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map = consultingMapper.consultingInformation(csCode);
 		return map;
 	}
+	
+	//상담리스트의 상세내용의 데이터를 바탕으로 수정처리
 	public int upconsultingList(Consulting cosulting) {
 		int result = consultingMapper.upconsultingList(cosulting);
 		return result;

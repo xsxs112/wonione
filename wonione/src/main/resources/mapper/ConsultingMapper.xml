@@ -12,6 +12,7 @@
 		<result column="cs_s_name" 		property="ConsultingStudent"/>
 		<result column="cs_data" 		property="ConsultingData"/>
 	</resultMap>
+	<!-- 상담내역 수정처리 쿼리문 -->
 	<update id="upconsultingList" parameterType="Consulting">
 		UPDATE 
 			wt_consulting
@@ -24,6 +25,7 @@
 		WHERE 
 			cs_code=#{ConsultingCode};
 	</update>
+	<!-- ajax를 통하여 데이터를 가져오는 쿼리문 -->
 	<select id="consultingInformation" resultType="hashMap" parameterType="map">
 		SELECT 
 			 cs_code
@@ -39,6 +41,7 @@
 			cs_code = #{ConsultingCode};
 	
 	</select>
+	<!-- 상담내역 데이터를 가져와 리스트에페이징처리하는 쿼리문 -->
 	<select id="consultingList" resultType="hashMap" parameterType="map">
 		 SELECT 
 		 	cs.rowNum   AS rowNum
@@ -66,12 +69,14 @@
         	ORDER BY c.cs_code ASC) AS cs
      		LIMIT #{startRow},#{rowPerPage};  
 	</select>
+	<!-- 페이징처리시 몇개의 데이터가 있는지 확인하는 쿼리문 -->
 	<select id="consultingListCount" resultType="int">
       SELECT
          COUNT(*)
       FROM
          wt_consulting;
     </select>
+    <!-- 상담작성페이지에서 선생님부터 관리자까지 누가있는지 확인하는 쿼리문 -->
 	<select id="SelectTeacher" resultType="hashMap" parameterType="String">
 		SELECT 
 			mr_id
@@ -81,12 +86,14 @@
 		WHERE
 	 		level_num = 1 OR level_num = 2 OR level_num = 3;
 	</select>
+	<!-- 상담작성페이지에서 개설한강의반의 이름을 확인하는 쿼리문 -->
 	<select id="SelectLecName" resultType="hashMap" parameterType="String">
 		SELECT 
 			lec_name
 		FROM 
 			wt_lecture_open_schedule;
 	</select>
+	<!-- 상담작성페이지에서 상담내용을 database에 insert하는 쿼리문 -->
 	<insert id="addConsultingWrite">
 		INSERT INTO 
 			wt_consulting

@@ -7,29 +7,31 @@
 		<title>상담작성</title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
+	<!-- 상담작성페이지 -->
 	 <h1>상담작성</h1>
 	  	<form action="/consultingWrite" method="POST" id="addconsulting">
 	 	 	<div class="form-group form-inline">
 				<label  class="col-sm-2 control-label">제목</label>
 				<input type="text" class="form-control" name="consultingTitle">
 			</div>
+			<!-- database안의 데이터를 가져와 상담자와 강의반을 출력 -->
 			<div class="form-group form-inline">
 				<div class="form-group">
-				  		<select name ="consultingTeacher" class="form-control" >
-				  			<option>::상담진행선생님::</option>
-				  			<th:block th:each="t :${Teacher}">
-					  			<option th:value="${t.mr_id}">[[${t.mr_name}]]</option>
-				  			</th:block>
-				  		</select>
-			  		</div>
-					<div class="form-group">
-				  		<select name ="consultingClass" class="form-control">
-				  			<option>::강의반목록::</option>
-				  			<th:block th:each="l :${LecName}">
-					  			<option th:value="${l.lec_name}">[[${l.lec_name}]]</option>
-				  			</th:block>
-				  		</select>
-			  		</div>
+			  		<select name ="consultingTeacher" class="form-control" >
+			  			<option>::상담진행선생님::</option>
+			  			<th:block th:each="t :${Teacher}">
+				  			<option th:value="${t.mr_id}">[[${t.mr_name}]]</option>
+			  			</th:block>
+			  		</select>
+		  		</div>
+				<div class="form-group">
+			  		<select name ="consultingClass" class="form-control">
+			  			<option>::강의반목록::</option>
+			  			<th:block th:each="l :${LecName}">
+				  			<option th:value="${l.lec_name}">[[${l.lec_name}]]</option>
+			  			</th:block>
+			  		</select>
+		  		</div>
 				<input type="text" class="form-control" name="consultingStudent"  placeholder="상담받는학생">
 			</div>
 			<div class="form-group">
