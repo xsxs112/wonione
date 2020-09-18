@@ -36,4 +36,5 @@ public interface ReportMapper {
 	
 	//자동증가
 	public Map<String, Object> getReCode();
+
 }

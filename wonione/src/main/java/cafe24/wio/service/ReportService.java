@@ -1,5 +1,6 @@
 package cafe24.wio.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,6 @@ public class ReportService {
 		System.out.println(report +"<--report");
 		List<Report> reportList = reportMapper.getReportList(report);
 		return reportList;
-		
 	}
 	
 	//자동증가
@@ -87,7 +87,6 @@ public class ReportService {
 		List<Report> reportList = reportMapper.getSearchList(lecSk, lecSv);
 		return reportList;
 		
-	}
-	
+	}	
 	
 }
