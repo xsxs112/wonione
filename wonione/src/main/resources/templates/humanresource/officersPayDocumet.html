@@ -24,7 +24,9 @@
 				</tr>
 				<tr>
 					<td style="text-align: right;">입사일자</td>
-					<td colspan="5"></td> <!-- 추가필요 -->
+					<td th:text="${l.mrJoinDate}"></td> <!-- 추가필요 -->
+					<td style="text-align: right;">계좌정보</td>
+					<td colspan="3" th:text="${l.pmRTitle}+'&nbsp;&nbsp;&nbsp;'+${l.mrAccountNum}"></td>
 				</tr>
 				<tr>
 					<td rowspan="5" style="text-align: center; vertical-align:middle;">지급내역</td>
