@@ -55,6 +55,7 @@
 							})
 						
 						holidayCk.done(function(data) {
+							//ajax를 통해서 받은 데이터가 1이면 submit()실행
 							if(data==1){
 								$('#requestForm').submit();
 							}else{
@@ -80,8 +81,11 @@
 	<div class="static-table-area">
 		<div class="container-fluid">
 
-
-
+			<p style="color: gray;">
+			당일,지나간 날짜는 신청 불가 (ajax)<br>
+			휴가 리스트에서 중복된 날짜가 있으면 신청 불가(ajax)<br>
+			휴가 시작 날짜보다 끝나는 날자가 이르면 신청 불가 (script)<br>
+			<p>
 			<form action="/holidayRequest" method="POST" id="requestForm">
 				<input type="hidden" name="mrName" th:value="${session.SNAME}">
 				<input type="hidden" name="mrId" th:value="${session.SID}">
