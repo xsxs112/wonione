@@ -87,18 +87,14 @@
 			board_picture,
 			board_file
 		)VALUES(
-			CONCAT('board_num',
-	         (SELECT 
-	         		LPAD(COUNT(*)+1,5,'0')
-	       		FROM
-	       			wt_board))
+			#{boardNum}
 			, '공지사항'
 			, #{boardTitle}
 			, #{boardWriterId}
 			, NOW()
 			, #{boardContents}
 			, #{boardPicture}
-			, #{boardFile})
+			, #{boardFile});
 	</insert>
 
 
