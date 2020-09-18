@@ -46,12 +46,13 @@ public class MemberController {
 		System.out.println(mrPw + "<--mrPw MemberController 변수");
 		
 		Member member = memberService.getMemberInfo(mrId);
-		System.out.println(mrId + "<-- 2. 로그인memberController");
+		System.out.println(mrId + "<-- 로그인memberController");
 		
 		if(member != null) {
 			if(member.getMrPw().equals(mrPw)) {
 				session.setAttribute("SID", member.getMrId());
 				session.setAttribute("SNAME", member.getMrName());
+				session.setAttribute("SLEVEL", member.getLevelNum());
 				session.setAttribute("SLEVELNAME", member.getLevelName());
 				
 				return "index";
@@ -77,7 +78,7 @@ public class MemberController {
 		
 		String WIOIdCheck = memberService.WIOMemberIdCheck(mrId, mrPw);
 		
-		System.out.println(WIOIdCheck +"<-- memberController");
+		System.out.println(WIOIdCheck +"<-- id 체크 / memberController");
 		
 		return WIOIdCheck;
 	}
@@ -112,7 +113,5 @@ public class MemberController {
 		
 		return "member/WIOMemberList";
 	}
-	
-	
 	
 }

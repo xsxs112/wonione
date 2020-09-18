@@ -64,6 +64,7 @@
 				m.mr_id				AS mrId
 			,	m.mr_pw				AS mrPw
 			,	m.mr_name			AS mrName
+			,	m.level_num			AS levelNum
 			,	m.mr_phone			AS mrPhone
 			,	m.mr_addr			AS mrAddr
 			,	m.mr_target_score	AS mrTargetScore

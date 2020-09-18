@@ -23,7 +23,6 @@ private MemberMapper memberMapper;
 			if(WIOIdcheck != null && !"".equals(WIOIdcheck)) {
 				
 			}
-			
 			return WIOIdcheck;
 		}
 
@@ -32,7 +31,6 @@ private MemberMapper memberMapper;
 		public Member getMemberInfo(String mrId) {
 		Member member = memberMapper.getMemberInfo(mrId);
 		System.out.println(member + "<-- member 정보 조회 / memberService");
-		
 		
 		if(member != null) {
 			int levelNum = 0;
