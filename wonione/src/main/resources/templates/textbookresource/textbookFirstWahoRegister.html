@@ -15,6 +15,7 @@
 					<td>교재명</td>
 					<td>
 					<select id="txbCode" name = "txbCode" class="form-control">
+					<option disabled="disabled" selected="selected">::교재 선택::</option>
 						<th:block th:each=" til : ${textbookInfoList} ">
 							<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
 						</th:block>
@@ -44,8 +45,8 @@
 		<input type="submit" class="btn btn-danger btn-block" id="addBtn" value="등록버튼">	
 	</form>
 	<div class="container-fluid" style="margin: 10px;">
-		<a href="/textbookRegister" class="btn btn-primary" role="button">교재등록 메인페이지로</a>
-		<a href="/textbookManage" class="btn btn-primary" role="button">교재관리 메인페이지로</a>
+		<a href="/textbookRegister" class="btn btn-default" role="button">교재등록 메인페이지로</a>
+		<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 	</div>	
 	</th:block>
 	

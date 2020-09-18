@@ -1,7 +1,6 @@
 package cafe24.wio.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,25 +27,44 @@ public class TextbookController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 
-	@PostMapping(value="/whTxbCheck", produces="application/json")
-	@ResponseBody
-	public List<TextbookBasicInfo> wahoTextbookCheck(Model model
-					,@RequestParam(value="txbCode", required = false) String txbCode
-					,WhTextbook whTextbook) {
+	
+	//교재 입고내역 검색
+	@PostMapping("/getWhTxbSearch")
+	public String getWhTxbSearch(Model model
+							,@RequestParam(value="whTxbSk", required=false) String whTxbSk
+							,@RequestParam(value="whTxbSv", required=false) String whTxbSv) {
+		List<TextbookBasicInfo> whTxbSearchResult= textbookService.getWhTxbSearch(whTxbSk, whTxbSv);
+		logger.info(whTxbSearchResult.toString());
+		model.addAttribute("textbookOwnList", whTxbSearchResult);
+		return "textbookresource/textbookOwnlist";
+	}
+	
+	//입고내역유무 체크
+	@PostMapping(value="/whTxbCheck", produces="application/json") 
+	@ResponseBody 
+	public int wahoTextbookCheck(Model model
+					,@RequestParam(value="txbCode", required = false)String txbCode	) { 
 		logger.info("==============================");
 		logger.info("교재지급내역페이지 getTextbookSuppList 포스트매핑!!!!");
 		logger.info("==============================");
-		List<TextbookBasicInfo> wahoTextbookCheck = 
-					textbookService.wahoTextbookCheck(whTextbook);
-	return wahoTextbookCheck;
-	}
+		TextbookBasicInfo whTxbCodeCheck = textbookService.wahoTextbookCheck(txbCode); 
+		
+		int result = 1;
+		if(whTxbCodeCheck == null) {
+			result = 0;
+		}else {
+			logger.info(whTxbCodeCheck.toString());
+		}
+		return result;
+	 }
 	
+	//입고내역유무 체크
 	@GetMapping("/whTxbCheck")
 	public String wahoTextbookCheck() {
-		
+	
 		return "/whTxbCheck";
 	}
-	
+
 	//교재 지급내역 조회
 	@GetMapping("/textbookSupplyList")
 	public String getTextbookSuppList(Model model
