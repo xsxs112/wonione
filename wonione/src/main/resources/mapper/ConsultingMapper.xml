@@ -12,6 +12,13 @@
 		<result column="cs_s_name" 		property="ConsultingStudent"/>
 		<result column="cs_data" 		property="ConsultingData"/>
 	</resultMap>
+	<delete id="deleteConsulting" parameterType="int">
+		DELETE 
+		FROM 
+			wt_consulting 
+		WHERE 
+			cs_code=#{ConsultingCode};
+	</delete>
 	<!-- 상담내역 수정처리 쿼리문 -->
 	<update id="upconsultingList" parameterType="Consulting">
 		UPDATE 
@@ -28,22 +35,26 @@
 	<!-- ajax를 통하여 데이터를 가져오는 쿼리문 -->
 	<select id="consultingInformation" resultType="hashMap" parameterType="map">
 		SELECT 
-			 cs_code
-			,cs_title
-			,mr_o_id
-			,cs_date
-			,cs_lec_name
-			,cs_s_name
-			,cs_data
+		cs.cs_code
+		, cs.cs_title
+		, cs.mr_o_id
+		, cs.cs_date
+		, cs.cs_lec_name
+		, cs.cs_s_name
+		, cs.cs_data
+		, mr.mr_name
 		FROM 
-			wt_consulting
-		WHERE 
-			cs_code = #{ConsultingCode};
-	
+			wt_consulting AS cs
+			INNER join
+			wt_member_registration AS mr
+			on
+			cs.mr_o_id = mr.mr_id
+		where
+			cs.cs_code= #{ConsultingCode};
 	</select>
 	<!-- 상담내역 데이터를 가져와 리스트에페이징처리하는 쿼리문 -->
 	<select id="consultingList" resultType="hashMap" parameterType="map">
-		 SELECT 
+		  SELECT 
 		 	cs.rowNum   AS rowNum
 		 	, cs_code		AS ConsultingCode
          	, cs_title		AS ConsultingTitle
@@ -52,6 +63,7 @@
 			, cs_lec_name	AS ConsultingClass
 			, cs_s_name		AS ConsultingStudent
 			, cs_data		AS ConsultingData
+			, mr_name
       FROM 
          (SELECT
             (@rowNum := @rowNum+1) AS rowNum
@@ -62,8 +74,13 @@
 			, cs_lec_name
 			, cs_s_name
 			, cs_data
+			, m.mr_name
          FROM   
             wt_consulting AS c
+            INNER join
+            wt_member_registration AS m
+            on
+            c.mr_o_id = m.mr_id
             JOIN
             (SELECT @rowNum :=0 ) AS r   
         	ORDER BY c.cs_code ASC) AS cs

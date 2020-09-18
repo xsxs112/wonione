@@ -4,6 +4,7 @@ package cafe24.wio.controller;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,8 +43,13 @@ public class ConsultingController {
 									,@RequestParam(value="consultingClass", required = false) String consultingClass
 									,@RequestParam(value="consultingStudent", required = false) String consultingStudent
 									,@RequestParam(value="consultingData", required = false) String consultingData) {
-		consultingService.addConsultingWrite(consulting);
-		return "redirect:/consultingList";
+		
+		if(consulting != null) {
+			consultingService.addConsultingWrite(consulting);
+			return "redirect:/consultingList";
+		}else {
+			return "consulting/consultingWrite";
+		}
 	}
 	//상담내역리스트
 	//상담작성후 database에서 데이터를 가져와 그데이터를 바탕으로 페이징처리한 코드작업
@@ -69,6 +75,15 @@ public class ConsultingController {
 	public Map<String, Object> consultingInformation(int csCode) {
 		Map<String ,Object> consultingInformationMap = consultingService.consultingInformation(csCode);
 		return consultingInformationMap;
+	}
+	//상담내역리스트
+	//상담내역리스트에서 제목을 클릭후 해당정보를 삭제하는 ajax사용
+	@PostMapping(value = "/deleteConsulting",produces = "application/json")
+	@ResponseBody
+	public int deleteConsulting(int csCode){
+		int result = consultingService.deleteConsulting(csCode);
+		System.out.println(result);
+		return result;
 	}
 	//상담내역리스트
 	//상담내역리스트에서 ajax통하여 화면출력된 데이터를 가져와 
