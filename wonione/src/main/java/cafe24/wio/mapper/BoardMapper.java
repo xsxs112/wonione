@@ -17,5 +17,7 @@ public interface BoardMapper {
 
 	//글 읽기 (글번호로 조회)
 	public Board readBoard(String boardNum);
+	
+	public int insertNotice(Board board);
 
 }

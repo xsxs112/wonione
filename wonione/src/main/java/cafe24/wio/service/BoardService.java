@@ -38,6 +38,12 @@ public class BoardService {
 		Board board = boardMapper.readBoard(boardNum);
 		return board;
 	}
+	
+	//공지사항 작성
+	public int insertNotice(Board board) {
+		int write = boardMapper.insertNotice(board);
+		return write;		
+	}
 
 
 
