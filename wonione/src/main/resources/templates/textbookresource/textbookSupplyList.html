@@ -8,7 +8,21 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<h2 th:text="${mainTitle}"></h2>
-	
+			<form class="form-inline" id="searchForm" action="/getSuppTxbSearch" method="POST" >  
+			<select class="form-control" name="suppSk" id="selectStSk">
+				<option disabled="disabled" selected="selected">::검색조건::</option>
+				<option value="sup_txb_code">교재지급코드</option>
+				<option value="txb_code">교재명</option>
+				<option value="txb_receiver_id">지급대상</option>
+				<option value="sup_txb_writer">작성자아이디</option>
+			</select> 
+			<div class="form-group">
+			<input type="text" id="suppTxbSv" class="form-control" name="suppTxbSv" placeholder="검색어를 입력해주세요"/>
+				<div class="input-group-btn pull-right">
+					<button class="btn btn-default form-group" id="searchStBtn" type="button">검색</button>
+				</div>
+			</div>
+		</form>
 			<table class="table table-bordered table-hover table-striped">
 			<thead>
 				<tr>
@@ -35,10 +49,35 @@
 				</th:block>
 			</tbody>
 		</table>
+		
+	<div class="container-fluid" style="margin: 10px;">
+		<a href="/textbookSupplyList" class="btn btn-default" role="button">전체리스트보기</a>
+	</div>	
 	
 	<div class="container-fluid" style="margin: 10px;">
 		<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 	</div>
+	
+		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$('#searchStBtn').click(function(){
+			var searchForm = $('#searchForm');
+			var selectStSk = $('#selectStSk').val();
+			var suppTxbSv = $('#suppTxbSv').val();
+			console.log(selectStSk + ' < -- selectStSk');
+			console.log(suppTxbSv + ' < -- suppTxbSv');
+			if(selectStSk == null || selectStSk == undefined){
+				alert('검색조건을 선택해주세요');
+				return;
+			}else if(suppTxbSv == null || suppTxbSv == ''){
+				alert('검색어를 입력해주세요');
+				$('#suppTxbSv').focus();
+				return;
+			}
+			searchForm.submit();
+		});
+	</script>
 	</th:block>
 	
 	<th:block layout:fragment="customJsScript">

@@ -27,9 +27,9 @@ public class TextbookService {
 	 * @param suppTxbSv
 	 * @return List SupplyTextbook suppTxbSearchResult
 	 */
-	public List<SupplyTextbook> getSuppTxbSearch(String suppSk, String suppTxbSv){
+	public List<SupplyTextbook> getSuppTxbSearch(String suppTxbSk, String suppTxbSv){
 		
-		List<SupplyTextbook> suppTxbSearchResult = textbookMapper.getSuppTxbSearch(suppSk, suppTxbSv);
+		List<SupplyTextbook> suppTxbSearchResult = textbookMapper.getSuppTxbSearch(suppTxbSk, suppTxbSv);
 		return suppTxbSearchResult;
 	}
 	
@@ -150,8 +150,8 @@ public class TextbookService {
 	 * @param txbBasicInfo
 	 * @return List<TextbookBasicInfo> textbookinfolist
 	 */
-	public List<TextbookBasicInfo> getTextbookInfoList(TextbookBasicInfo txbBasicInfo){
-		List<TextbookBasicInfo> textbookinfolist = textbookMapper.getTextbookInfoList(txbBasicInfo);
+	public List<TextbookBasicInfo> getTextbookInfoList(){
+		List<TextbookBasicInfo> textbookinfolist = textbookMapper.getTextbookInfoList();
 		
 		return textbookinfolist;
 	}
