@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,8 +46,9 @@ public class BoardController {
 		  return "board/noticeRead";		  
 	  }
 	
-	  //공지사항 작성 PostMapping 필요
-	  public String getNoticeAdd(Board board
+	  //공지사항 작성 @Post
+	  @PostMapping("/addNotice")
+	  public String insertNotice(Board board
 			  					,Model model
 			  					,@RequestParam(value="boardNum", required = false) String boardNum
 			  					,@RequestParam(value="boardMenu", required = false) String boardMenu
@@ -58,20 +60,20 @@ public class BoardController {
 			  					,@RequestParam(value="boardFile", required = false) String boardFile	  					
 			  					) {
 		  System.out.println("boardNum -> " + boardNum);
-		  System.out.println("boardNum -> " + boardMenu);
-		  System.out.println("boardNum -> " + boardTitle);
-		  System.out.println("boardNum -> " + boardWriterId);
-		  System.out.println("boardNum -> " + boardRegDate);
-		  System.out.println("boardNum -> " + boardContents);
-		  System.out.println("boardNum -> " + boardPicture);
-		  System.out.println("boardNum -> " + boardFile);
+		  System.out.println("boardMenu -> " + boardMenu);
+		  System.out.println("boardTitle -> " + boardTitle);
+		  System.out.println("boardWriterId -> " + boardWriterId);
+		  System.out.println("boardRegDate -> " + boardRegDate);
+		  System.out.println("boardContents -> " + boardContents);
+		  System.out.println("boardPicture -> " + boardPicture);
+		  System.out.println("boardFile -> " + boardFile);
 		  boardService.insertNotice(board);
 		  model.addAttribute("Board", board);
-		/* model.addAttribute("BoardUpload", "/searchNotice"); */
-		  return "redirect:/getNotice";  
+		/* model.addAttribute("BoardUpload", "/searchNotice");*/
+		  return "redirect:/getNotice";
 	  }
 	  
-	  //공지사항 작성 
+	  //공지사항 작성 @Get
 	   @GetMapping("/addNotice")
 	   public String getNoticeadd(Model model) {
 		  

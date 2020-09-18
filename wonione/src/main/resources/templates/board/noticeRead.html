@@ -23,7 +23,7 @@
 				<td align="left" th:text=${b.boardWriterName}></td>
 				<td align="left" th:text=${b.boardRegDate}></td>
 			</tr>
-			<tr class="info" th:each="b : ${Board}">
+			<tr class="info">
 				<th colspan="6">제목</th>
 			</tr>
 			<tr th:each="b : ${Board}">	
@@ -35,6 +35,18 @@
 			<tr th:each="b : ${Board}">	
 				<td colspan="6" align="left" th:text=${b.boardContents}></td>
 			</tr>								
+			<tr class="info">
+				<th colspan="6">사진</th>
+			</tr>
+			<tr th:each="b : ${Board}">	
+				<td colspan="6" align="left" th:text=${b.boardPicture}></td>
+			</tr>
+			<tr class="info">
+				<th colspan="6">파일</th>
+			</tr>
+			<tr th:each="b : ${Board}">	
+				<td colspan="6" align="left" th:text=${b.boardFile}></td>
+			</tr>
 		</table>
 		<button type="submit" class="btn btn-default btn-info">리스트로 돌아가기</button>
 	</form>	
@@ -43,5 +55,3 @@
 	<th:block layout:fragment="customJsScript">
 	</th:block>
 </html>
-
-
