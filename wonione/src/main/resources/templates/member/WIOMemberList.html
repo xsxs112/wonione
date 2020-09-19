@@ -27,7 +27,7 @@
   				<td th:text="${m.mrName}"></td>
   				<td th:text="${m.levelName}"></td>
   				<td>
-  					<a th:href="@{/getMemberInfo(mrId=${m.mrId},mrPw=${m.mrPw})}">
+  					<a th:href="@{/getMemberInfo(mrId=${m.mrId},mrPw=${m.mrPw})}" th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 2 || session.SLEVEL eq 3}">
   						정보 보기
   					</a>
   				</td>
