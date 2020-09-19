@@ -4,7 +4,7 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
-		<title th:text="${title}">직원급여목록</title> 
+		<title th:text="${title}">급여목록</title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<div class="container-fluid">
@@ -35,6 +35,39 @@
 	  				<td style="text-align: center;"><a th:href="@{/getOfficersPay(mrId=${l.mrId})}">상세보기</a></td>
 	  				<!-- ajax로 모달창 띄우기 -->
 	  				<td style="text-align: center;"><a th:href="@{/getOfficersPay(mrId=${l.mrId})}">출력</a></td>
+	  				<!-- <td><a th:href="@{/미정(memberId=${l.memberId},memberPw=${l.memberPw})}">수정</a></td> -->
+	  			</tr>
+	  		</tbody>	
+	  	</table>
+	</div>
+	<div class="container-fluid">
+	  	<table class ="table table-striped">
+	  		<thead>
+	  			<tr class="info">
+	  				<th style="text-align: center;">강사급여지급코드</th>
+	  				<th style="text-align: center;">아이디</th>
+	  				<th style="text-align: center;">이름</th>
+	  				<th style="text-align: center;">강사급여지급일자</th>
+	  				<th style="text-align: center;">강사급여여실지급액</th>
+	  				<th style="text-align: center;">작성일자</th>
+	  				<th style="text-align: center;">작성자</th>
+	  				<th style="text-align: center;">상세보기</th>
+	  				<th style="text-align: center;">인쇄</th>
+	  			</tr>
+	  		</thead>	  	
+	  		<tbody>
+	  			<tr th:each="s : ${staffPayList}">
+	  				<td style="text-align: center;" th:text="${s.spCode}"></td>
+	  				<td style="text-align: center;" th:text="${s.mrId}"></td>
+	  				<td style="text-align: center;" th:text="${s.mrName}"></td>
+	  				<td style="text-align: center;" th:text="${s.spDate}"></td>
+	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(s.spPay, 0, 'COMMA')}+'원'" ></td>
+	  				<td style="text-align: center;" th:text="${s.spRegDate}"></td>
+	  				<td style="text-align: center;" th:text="${s.spWriter}"></td>
+	  				<!-- get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음) -->
+	  				<td style="text-align: center;"><a th:href="@{/getStaffPay(mrId=${s.mrId})}">상세보기</a></td>
+	  				<!-- ajax로 모달창 띄우기 -->
+	  				<td style="text-align: center;"><a th:href="@{/getStaffPay(mrId=${s.mrId})}">출력</a></td>
 	  				<!-- <td><a th:href="@{/미정(memberId=${l.memberId},memberPw=${l.memberPw})}">수정</a></td> -->
 	  			</tr>
 	  		</tbody>	

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cafe24.wio.mapper.StaffPayMapper">
+	<resultMap type="StaffPay" id="StaffPayResultMap">
+		<result column="spc_code"						property="spcCode"/>
+		<result column="mr_id"							property="mrId"/>
+		<result column="mr_name"						property="mrName"/>
+		<result column="p_r_title"						property="pRTitle"/>
+		<result column="pm_r_title"						property="pmRTitle"/>	
+		<result column="spc_hourly_wage"				property="spcHourlyWage"/>
+		<result column="spc_total_hour"					property="spcTotalHour"/>
+		<result column="spc_incentive"					property="spcIncentive"/>
+		<result column="spc_base_pay"					property="spcBasePay"/>
+		<result column="spc_total"						property="spcTotal"/>
+		<result column="spc_reg_date"					property="spcRegDate"/>
+		<result column="spc_writer"						property="spcWriter"/>
+		<result column="spd_code"						property="spdCode"/>
+		<result column="iy_code"						property="iyCode"/>
+		<result column="spd_the_business_tax"			property="spdTheBusinessTax"/>
+		<result column="spd_total"						property="spdTotal"/>
+		<result column="spd_reg_date"					property="spdRegDate"/>
+		<result column="spd_writer"						property="spdWriter"/>
+		<result column="sp_code"						property="spCode"/>
+		<result column="sp_date"						property="spDate"/>	
+		<result column="sp_pay"							property="spPay"/>	
+		<result column="sp_reg_date"					property="spRegDate"/>	
+		<result column="sp_writer"						property="spWriter"/>
+		<result column="mr_account_num"					property="mrAccountNum"/>	
+		<result column="p_r_ect"						property="pREct"/>	
+		
+	</resultMap>
+	<!-- 강사목록조회 -->
+	<select id = "getStaffList" resultType="StaffPay" >
+		SELECT
+			 m.mr_id 		AS mrId
+			,m.mr_name 		AS mrName
+		FROM
+			wt_member_registration AS m
+		WHERE 
+			m.level_num = 2;	
+	</select>
+	
+	<!-- 강사정보조회 -->
+	<select id ="callStaffInfo" resultType="StaffPay" parameterType="String">
+		SELECT
+			m.mr_id				AS mrId
+			,m.mr_name			AS mrName
+			,r.pm_r_title		AS pMRTitle
+			,m.mr_account_num	AS mrAccountNum
+		FROM
+			wt_member_registration AS m
+			INNER JOIN 
+			wt_payment_resource AS r
+			on
+			m.pm_r_code = r.pm_r_code
+		WHERE 
+			m.mr_id = #{mrId};	
+	</select>
+	
+	<!-- 시급& 인센티브 기준표 -->
+ 	<select id="standardSheet" resultType="StaffPay">
+		SELECT
+			(case when p_r_group_name = '시급' then substr(pr.p_r_ect,1,(INSTR(pr.p_r_ect,'or')-1))
+					when p_r_group_name = '인센티브' then pr.p_r_ect
+				 
+				end) AS pREct
+			,pr.p_r_title AS pRTitle
+		FROM 
+			wt_pay_resource AS pr
+		WHERE 
+			p_r_code >= 'PR_013';
+	</select>	
+	
+	<!-- 강사급여명세서조회 -->
+	<select id = "getStaffPay" resultType="StaffPay">
+		SELECT
+			 c.mr_id							AS mrId
+			,c.spc_hourly_wage					AS spcHourlyWage
+			,m.mr_name							AS mrName
+			,c.spc_base_pay						AS spcBasePay
+			,c.spc_incentive					AS spcIncentive
+			,c.spc_total						AS spcTotal
+			,d.spd_the_business_tax				AS spdTheBusinessTax
+			,d.spd_total						AS spdTotal
+			,p.sp_pay							AS spPay
+			,c.spc_total_hour					AS spcTotalHour
+			,d.iy_code							AS iyCode
+			,pr.p_r_title						AS pRTitle
+			,r.pm_r_title						AS pmRTitle
+			,m.mr_account_num					AS mrAccountNum
+		FROM
+			wt_staff_pay AS p
+			INNER JOIN 
+			wt_staff_pay_calculate AS c
+			ON 
+			p.mr_id=c.mr_id
+			LEFT join
+			wt_staff_pay_deduction AS d
+			ON 
+			p.mr_id = d.mr_id
+			LEFT JOIN 
+			wt_member_registration AS m
+			ON 
+			p.mr_id = m.mr_id 
+			LEFT JOIN 
+			wt_payment_resource AS r
+			ON 
+			m.pm_r_code = r.pm_r_code
+			LEFT JOIN 
+			wt_pay_resource AS pr
+			ON 
+			p.p_r_code = pr.p_r_code 
+		WHERE 
+			p.mr_id = #{mrId};	
+	</select>
+</mapper>

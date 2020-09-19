@@ -34,15 +34,8 @@ public class OfficersPayService {
 		OfficersPay OfficersInfo = officersPayMapper.callOfficersInfo(mrId);
 		
 		return OfficersInfo;
-	}
-	
-	//직원 급여목록 조회
-	public List<OfficersPay> getOfficersPayList() {		
-		
-		List<OfficersPay> officersPayList = officersPayMapper.getOfficersPayList();	
-		return officersPayList;
-	}
-	
+	}	
+
 	//직원 급여명세 조회
 	public List<OfficersPay> getOfficersPay(String mrId) {
 		

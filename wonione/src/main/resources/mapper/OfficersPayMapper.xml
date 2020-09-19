@@ -134,37 +134,4 @@
 			p.mr_id = #{mrId};	
 			<!-- p.mr_id = '수정하기'; -->	
 	</select>
-		<!-- 직원급여목록조회  [최근것만 받아오게 쿼리문 수정완]-->
-	<select id = "getOfficersPayList" resultType="OfficersPay" >
-		SELECT 
-			opCode
-			,mrId
-			,mrName
-			,opDate
-			,opPay
-			,opRegDate
-			,opWriter	
-		FROM(
-				SELECT
-					op.op_code 			AS opCode
-					,op.mr_id 			AS mrId
-					,mr.mr_name			AS mrName
-					,op.op_date			AS opDate
-					,op.op_pay			AS opPay
-					,op.op_reg_date	AS opRegDate
-					,op.op_writer	  	AS opWriter	
-					,mr.level_num     AS levelNum
-				FROM
-					wt_officers_pay 	AS op
-					INNER JOIN 
-					wt_member_registration AS mr
-					on
-					op.mr_id = mr.mr_id	
-		  ORDER BY opDate DESC
-		) AS A
-		WHERE 
-		 levelNum = 3
-		GROUP BY mrId;
-		
-	</select>
 </mapper>
