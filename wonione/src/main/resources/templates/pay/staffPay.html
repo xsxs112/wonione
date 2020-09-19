@@ -79,7 +79,7 @@
 			<tr>
 				<td colspan="3" style="text-align: center; vertical-align:middle;"> 강사목록 </td>
 			</tr>
-			<tr th:each="s : ${StaffList}">
+			<tr th:each="s : ${staffList}">
 				<td style="text-align: center;" th:text="${s.mrId}"><input type="hidden" name="mrId" th:value="${s.mrId}"></td>
 				<td style="text-align: center;" th:text="${s.mrName}"></td>
 				<td style="text-align: center;">					
