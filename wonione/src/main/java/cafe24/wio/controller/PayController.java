@@ -40,7 +40,7 @@ public class PayController {
 		model.addAttribute("staffPayList", staffPayList);
 		model.addAttribute("title", "강사급여목록조회");
 		
-		return "humanresource/payList";
+		return "pay/payList";
 	}
 	
 }

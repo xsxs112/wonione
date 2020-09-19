@@ -38,7 +38,7 @@ public class OfficersPayController {
 		model.addAttribute("standardSheetHour",standardSheetHour);
 		model.addAttribute("title", "시급기준표");
 		
-		return "humanresource/officersPay";		
+		return "pay/officersPay";		
 	}
 
 	
@@ -61,7 +61,7 @@ public class OfficersPayController {
 
 		model.addAttribute("officersPay", officersPay);
 		model.addAttribute("title", "직원급여목록조회");
-		return "humanresource/officersPayDocumet";
+		return "pay/officersPayDocumet";
 
 	}
 

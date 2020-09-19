@@ -38,7 +38,7 @@ public class StaffPayController {
 		model.addAttribute("standardSheetHour",standardSheetHour);
 		model.addAttribute("title", "시급기준표");
 		
-		return "humanresource/staffPay";		
+		return "pay/staffPay";		
 	}
 
 	
@@ -61,7 +61,7 @@ public class StaffPayController {
 
 		model.addAttribute("staffPay", staffPay);
 		model.addAttribute("title", "강사급여목록조회");
-		return "humanresource/staffPayDocumet";
+		return "pay/staffPayDocumet";
 
 	}
 

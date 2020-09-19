@@ -7,16 +7,16 @@
 		<title></title> 
 		<script type="text/javascript">
 	 	
-	// 직원 아이디값 받아 넘기기
+	// 강사 아이디값 받아 넘기기
 	$(function(){	
- 		$('.callOfficersInfo').click(function(){
+ 		$('.callStaffInfo').click(function(){
  		var tr = $(this).parent().parent();
  		var td = tr.children();
  		var mrId = td.eq(0).text(); 	
  		
 		console.log(mrId + ' < -- mrId');
 		var request = $.ajax({
-			  url: "/callOfficersInfo",
+			  url: "/callStaffInfo",
 			  method: "POST",
 			  data: { mrId : mrId },
 			  dataType: "json"
@@ -25,7 +25,6 @@
 				console.log(data);
 				$('#mrId').val(data.mrId);
 				$('#mrName').val(data.mrName);
-				$('#mrJoinDate').val(data.mrJoinDate);
 				$('#pmRTitle').val(data.pmRTitle);
 				$('#mrAccountNum').val(data.mrAccountNum);
 				
@@ -73,18 +72,18 @@
 		
 	</th:block>
 	<th:block layout:fragment="customContent" >	
-	<!--===================직원목록불러오기시작===================-->
+	<!--===================강사목록불러오기시작===================-->
 
 	<div style="width:40%; float:left" class="container-fluid">		
 		<table id="tb" class ="table table-striped">			
 			<tr>
-				<td colspan="3" style="text-align: center; vertical-align:middle;"> 직원목록 </td>
+				<td colspan="3" style="text-align: center; vertical-align:middle;"> 강사목록 </td>
 			</tr>
-			<tr th:each="o : ${OfficersList}">
-				<td style="text-align: center;" th:text="${o.mrId}"><input type="hidden" name="mrId" th:value="${l.mrId}"></td>
-				<td style="text-align: center;" th:text="${o.mrName}"></td>
+			<tr th:each="s : ${StaffList}">
+				<td style="text-align: center;" th:text="${s.mrId}"><input type="hidden" name="mrId" th:value="${s.mrId}"></td>
+				<td style="text-align: center;" th:text="${s.mrName}"></td>
 				<td style="text-align: center;">					
-					<button type="button" class="callOfficersInfo">정보보기</button>
+					<button type="button" class="callStaffInfo">정보보기</button>
 				</td>
 			</tr>
 		</table>			
@@ -92,7 +91,7 @@
 	<div style="width:60%; float:right" class="container-fluid">
 		<table id="tb2" class ="table table-striped">
 			<tr>
-				<td colspan="4" style="text-align: center; vertical-align:middle;"> 직원정보 </td>
+				<td colspan="4" style="text-align: center; vertical-align:middle;"> 강사정보 </td>
 			</tr>
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">아이디</td>
@@ -104,12 +103,6 @@
 				<td style="text-align: center; vertical-align:middle;">이름</td>
 				<td colspan="3" style="text-align: left;">
 				<input type="text" class="form-control" id="mrName"  readonly>
-				</td>			
-			</tr>
-			<tr>
-				<td style="text-align: center; vertical-align:middle;">입사일</td>
-				<td colspan="3" style="text-align: left;">
-				<input type="text" class="form-control" id="mrJoinDate"  readonly>
 				</td>			
 			</tr>
 			<tr>
@@ -126,7 +119,7 @@
 			</tr>
 		</table>	
 	</div>
-	<!--===================직원목록불러오기끝===================-->
+	<!--===================강사목록불러오기끝===================-->
 	<!--===================시급지급기준 시작===================-->
 	<label>
 		<div class="container-fluid">		
@@ -135,12 +128,14 @@
 					<td colspan="3" style="text-align: center; vertical-align:middle;">지급기준표</td>
 				</tr>
 				<tr>
-					<td rowspan="5" style="text-align: center; vertical-align:middle;">시급기준</td>
+					<td rowspan="8" style="text-align: center; vertical-align:middle;">시급 인센티브 기준</td>
 				</tr>
 				<tr th:each="s : ${standardSheetHour}" style="text-align: center;">
 					<td th:text="${s.pREct}"></td>
-					<td th:text="${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}"></td>
-				</tr>
+					<td th:if="${s.pRTitle} > 1" th:text="${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}"></td>
+					<td th:unless="${s.pRTitle} > 1" th:text="${#numbers.formatInteger(s.pRTitle*100, 0, 'COMMA') +'%'}"></td>
+
+				</tr> 
 			</table>			
 		</div>
 	</label>
@@ -164,7 +159,7 @@
 					<td></td>
 					<td>
 					<select size="1">
-						<option>::직원아이디::</option>
+						<option>::강사아이디::</option>
 					</select>
 					</td>
 					<td>불러오기</td>
@@ -174,33 +169,29 @@
 					</select>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="opcTotalHour" name="opcTotalHour" placeholder="근무시간">
+					<input type="text" class="form-control" id="spcTotalHour" name="spcTotalHour" placeholder="근무시간">
 					</td>
 					<td>계산하기</td>
 				</tr>
 				<tr class="info" style="text-align: center;">
-					<td>식비</td>
-					<td>교통비</td>
-					<td>복지후생</td>
-					<td>상여금</td>
-					<td>기타</td>				
+					<td>인센티브</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>				
 					<td>급여계총액</td>
 				</tr>
 				<tr style="text-align: center;">
 					<td>
-					<input type="text" class="form-control" id="opcFoodExpenses" name="opcFoodExpenses" placeholder="식비">
+					<input type="text" class="form-control" id="spcIncentive" name="spcIncentive" placeholder="인센티브">
 					</td>
 					<td>
-					<input type="text" class="form-control" id="opcTransportation" name="opcTransportation" placeholder="교통비">
 					</td>
 					<td>
-					<input type="text" class="form-control" id="opcWelfare" name="opcWelfare" placeholder="복지후생">
 					</td>
 					<td>
-					<input type="text" class="form-control" id="opcBonus" name="opcBonus" placeholder="상여금">
 					</td>
 					<td>
-					<input type="text" class="form-control" id="opcEct" name="opcEct" placeholder="기타">
 					</td>
 					<td>계산</td>
 				</tr>
