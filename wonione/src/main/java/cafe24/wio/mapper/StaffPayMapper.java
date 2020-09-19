@@ -4,24 +4,21 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import cafe24.wio.bean.OfficersPay;
+import cafe24.wio.bean.StaffPay;
 
 @Mapper
 public interface StaffPayMapper {
-	
-	//직원 급여 목록 조회
-	public List<OfficersPay> getOfficersPayList();
 
-	//직원급여명세서 조회
-	public List<OfficersPay> getOfficersPay(String mrId);
+	//강사급여명세서 조회
+	public List<StaffPay> getStaffPay(String mrId);
 
-	//직원 목록 조회
-	public List<OfficersPay> getOfficersList();
+	//강사 목록 조회
+	public List<StaffPay> getStaffList();
 	
 	//자원테이블 호출
-	public List<OfficersPay> standardSheet();
+	public List<StaffPay> standardSheet();
 
-	//직원 정보 조회
-	public OfficersPay callOfficersInfo(String mrId);
+	//강사 정보 조회
+	public StaffPay callStaffInfo(String mrId);
 
 }

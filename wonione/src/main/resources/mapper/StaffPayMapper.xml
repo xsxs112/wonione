@@ -61,7 +61,7 @@
 	</select>
 	
 	<!-- 시급& 인센티브 기준표 -->
-<!-- 	<select id="standardSheet" resultType="StaffPay">
+ 	<select id="standardSheet" resultType="StaffPay">
 		SELECT
 			(case when p_r_group_name = '시급' then substr(pr.p_r_ect,1,(INSTR(pr.p_r_ect,'or')-1))
 					when p_r_group_name = '인센티브' then pr.p_r_ect
@@ -74,7 +74,7 @@
 			p_r_code >= 'PR_013';
 	</select>	
 	
-	강사급여명세서조회
+	<!-- 강사급여명세서조회 -->
 	<select id = "getStaffPay" resultType="StaffPay">
 		SELECT
 			 c.mr_id							AS mrId
@@ -116,38 +116,4 @@
 		WHERE 
 			p.mr_id = #{mrId};	
 	</select>
-	
-		강사급여목록조회  [최근것만 받아오게 쿼리문 수정완]
-	<select id = "getStaffPayList" resultType="StaffPay" >
-		SELECT 
-			spCode
-			,mrId
-			,mrName
-			,spDate
-			,spPay
-			,spRegDate
-			,spWriter	
-		FROM(
-				SELECT
-					sp.sp_code 			AS spCode
-					,sp.mr_id 			AS mrId
-					,mr.mr_name			AS mrName
-					,sp.sp_date			AS spDate
-					,sp.sp_pay			AS spPay
-					,sp.sp_reg_date		AS spRegDate
-					,sp.sp_writer	  	AS spWriter	
-					,mr.level_num    	AS levelNum
-				FROM
-					wt_staff_pay 	AS sp
-					INNER JOIN 
-					wt_member_registration AS mr
-					on
-					sp.mr_id = mr.mr_id	
-		  ORDER BY spDate DESC
-		) AS A
-		WHERE 
-		 levelNum = 2
-		GROUP BY mrId;  
-		
-	</select> -->
 </mapper>

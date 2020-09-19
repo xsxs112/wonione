@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cafe24.wio.mapper.PayMapper">
+	<resultMap type="StaffPay" id="StaffPayResultMap">
+		<result column="spc_code"						property="spcCode"/>
+		<result column="mr_id"							property="mrId"/>
+		<result column="mr_name"						property="mrName"/>
+		<result column="p_r_title"						property="pRTitle"/>
+		<result column="pm_r_title"						property="pmRTitle"/>	
+		<result column="spc_hourly_wage"				property="spcHourlyWage"/>
+		<result column="spc_total_hour"					property="spcTotalHour"/>
+		<result column="spc_incentive"					property="spcIncentive"/>
+		<result column="spc_base_pay"					property="spcBasePay"/>
+		<result column="spc_total"						property="spcTotal"/>
+		<result column="spc_reg_date"					property="spcRegDate"/>
+		<result column="spc_writer"						property="spcWriter"/>
+		<result column="spd_code"						property="spdCode"/>
+		<result column="iy_code"						property="iyCode"/>
+		<result column="spd_the_business_tax"			property="spdTheBusinessTax"/>
+		<result column="spd_total"						property="spdTotal"/>
+		<result column="spd_reg_date"					property="spdRegDate"/>
+		<result column="spd_writer"						property="spdWriter"/>
+		<result column="sp_code"						property="spCode"/>
+		<result column="sp_date"						property="spDate"/>	
+		<result column="sp_pay"							property="spPay"/>	
+		<result column="sp_reg_date"					property="spRegDate"/>	
+		<result column="sp_writer"						property="spWriter"/>
+		<result column="mr_account_num"					property="mrAccountNum"/>	
+		<result column="p_r_ect"						property="pREct"/>		
+	</resultMap>
+	<resultMap type="OfficersPay" id="officersPayResultMap">
+		<result column="opc_code"						property="opcCode"/>
+		<result column="mr_id"							property="mrId"/>
+		<result column="mr_name"						property="mrName"/>
+		<result column="p_r_title"						property="pRTitle"/>
+		<result column="pm_r_title"						property="pmRTitle"/>	
+		<result column="opc_hourly_wage"				property="opcHourlyWage"/>
+		<result column="opc_total_hour"					property="opcTotalHour"/>
+		<result column="opc_base_pay"					property="opcBasePay"/>
+		<result column="opc_food expenses"				property="opcFoodExpenses"/>
+		<result column="opc_transportation"				property="opcTransportation"/>
+		<result column="opc_welfare"					property="opcWelfare"/>
+		<result column="opc_bonus"						property="opcBonus"/>
+		<result column="opc_ect"						property="opcEct"/>
+		<result column="opc_total"						property="opcTotal"/>
+		<result column="opc_reg_date"					property="opcRegDate"/>
+		<result column="opc_writer"						property="opcWriter"/>
+		<result column="opd_code"						property="opdCode"/>
+		<result column="iy_code"						property="iyCode"/>
+		<result column="opd_income_tax"					property="opdIncomeTax"/>
+		<result column="opd_resident_income_tax"		property="opdResidentIncomTax"/>
+		<result column="opd_employment_insurance"		property="opdEmploymentInsurance"/>
+		<result column="opd_national_pension"			property="opdNationalPension"/>
+		<result column="opd_health_insurance"			property="opdHealthInsurance"/>
+		<result column="opd_longterm_nursing_insurance"	property="opdLongtermNursingInsurance"/>
+		<result column="opd_total"						property="opdTotal"/>
+		<result column="opd_reg_date"					property="opdRegDate"/>
+		<result column="opd_writer"						property="opdWriter"/>
+		<result column="op_code"						property="opCode"/>
+		<result column="op_date"						property="opDate"/>	
+		<result column="op_pay"							property="opPay"/>	
+		<result column="op_reg_date"					property="opRegDate"/>	
+		<result column="op_writer"						property="opWriter"/>
+		<result column="mr_join_date"					property="mrJoinDate"/>
+		<result column="mr_account_num"					property="mrAccountNum"/>	
+		<result column="p_r_ect"						property="pREct"/>	
+		
+	</resultMap>	
+
+	<!-- 강사급여목록조회  [최근것만 받아오게 쿼리문 수정완] -->
+	<select id = "getStaffPayList" resultType="StaffPay" >
+		SELECT 
+			spCode
+			,mrId
+			,mrName
+			,spDate
+			,spPay
+			,spRegDate
+			,spWriter	
+		FROM(
+				SELECT
+					sp.sp_code 			AS spCode
+					,sp.mr_id 			AS mrId
+					,mr.mr_name			AS mrName
+					,sp.sp_date			AS spDate
+					,sp.sp_pay			AS spPay
+					,sp.sp_reg_date		AS spRegDate
+					,sp.sp_writer	  	AS spWriter	
+					,mr.level_num    	AS levelNum
+				FROM
+					wt_staff_pay 	AS sp
+					INNER JOIN 
+					wt_member_registration AS mr
+					on
+					sp.mr_id = mr.mr_id	
+		  ORDER BY spDate DESC
+		) AS A
+		WHERE 
+		 levelNum = 2
+		GROUP BY mrId;  		
+	</select> 
+	
+	<!-- 직원급여목록조회  [최근것만 받아오게 쿼리문 수정완]-->
+	<select id = "getOfficersPayList" resultType="OfficersPay" >
+		SELECT 
+			opCode
+			,mrId
+			,mrName
+			,opDate
+			,opPay
+			,opRegDate
+			,opWriter	
+		FROM(
+				SELECT
+					op.op_code 			AS opCode
+					,op.mr_id 			AS mrId
+					,mr.mr_name			AS mrName
+					,op.op_date			AS opDate
+					,op.op_pay			AS opPay
+					,op.op_reg_date	AS opRegDate
+					,op.op_writer	  	AS opWriter	
+					,mr.level_num     AS levelNum
+				FROM
+					wt_officers_pay 	AS op
+					INNER JOIN 
+					wt_member_registration AS mr
+					on
+					op.mr_id = mr.mr_id	
+		  ORDER BY opDate DESC
+		) AS A
+		WHERE 
+		 levelNum = 3
+		GROUP BY mrId;		
+	</select>
+</mapper>

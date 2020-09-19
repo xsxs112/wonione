@@ -25,9 +25,7 @@ public class OfficersPayController {
 	// log4j로 로그 찍기 위한 객체 삽입
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(OfficersPayController.class);
-	
-	
-	
+		
 	@RequestMapping(value = "/officersPayIndex", method = RequestMethod.GET)
 	public String getOfficersList(Model model) {
 		//직원리스트조회
@@ -52,18 +50,6 @@ public class OfficersPayController {
 		OfficersPay OfficersInfo = officersPayService.callOfficersInfo(mrId);
 
 		return OfficersInfo;
-	}
-
-	
-	// 직원급여목록조회
-	@RequestMapping(value = "/getOfficersPayList", method = RequestMethod.GET)
-	public String getOfficersPayList(Model model) {
-		List<OfficersPay> officersPayList = officersPayService.getOfficersPayList();
-		
-		model.addAttribute("officersPayList", officersPayList);
-		model.addAttribute("title", "직원급여목록조회");
-		return "humanresource/payList";
-		
 	}
 	
 	// 직원급여명세서조회
