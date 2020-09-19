@@ -13,7 +13,13 @@ public class MemberService {
 @Autowired
 private MemberMapper memberMapper;
 
-		//3. 아이디 중복 검사, 로그인 처리시 사용
+
+		/**
+		 * 3. 아이디 중복 검사, 로그인 처리시 사용
+		 * @param mrId
+		 * @param mrPw
+		 * @return
+		 */
 		public String WIOMemberIdCheck(String mrId, String mrPw) {
 			
 			String WIOIdcheck = memberMapper.WIOMemberIdCheck(mrId, mrPw);
@@ -27,7 +33,11 @@ private MemberMapper memberMapper;
 		}
 
 		
-		// 2. 구성원 정보 조회
+		/**
+		 * 2. 구성원 정보 조회
+		 * @param mrId
+		 * @return
+		 */
 		public Member getMemberInfo(String mrId) {
 		Member member = memberMapper.getMemberInfo(mrId);
 		System.out.println(member + "<-- member 정보 조회 / memberService");
@@ -55,7 +65,10 @@ private MemberMapper memberMapper;
 		}
 
 
-		// 1. 구성원 리스트 가져오기.
+		/**
+		 * 구성원 리스트 가져오기.
+		 * @return
+		 */
 	public List<Member> getWIOMemberList(){
 		
 		// 회원 정보가 담긴 WIOMemberList 객체 생성
