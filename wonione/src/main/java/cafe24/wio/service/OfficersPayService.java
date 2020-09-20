@@ -42,5 +42,12 @@ public class OfficersPayService {
 		List<OfficersPay> officersPay = officersPayMapper.getOfficersPay(mrId);		
 		return officersPay;
 	}
+	
+	//직원정보 급여계 넘기기
+	public OfficersPay officersFoinForm(String mrId) {
+		
+		OfficersPay officersFoin = officersPayMapper.officersFoinForm(mrId);
+		return officersFoin;		
+	}
 
 }

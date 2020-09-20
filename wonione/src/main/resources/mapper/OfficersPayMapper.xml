@@ -42,6 +42,17 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>
+	<!-- 직원정보급여계 넘기기 -->
+	<select id ="officersFoinForm" resultType="OfficersPay" parameterType="String">
+		SELECT
+			m.mr_id				AS mrId
+			,m.mr_name			AS mrName
+		FROM
+			wt_member_registration AS m
+		WHERE 
+			m.mr_id = #{mrId};	
+	</select>
+	
 	<!-- 직원정보조회 -->
 	<select id ="callOfficersInfo" resultType="OfficersPay" parameterType="String">
 		SELECT
@@ -66,9 +77,7 @@
 			SUBSTRING_INDEX(pr.p_r_ect,'or',-1) AS pREct
 			,pr.p_r_title AS pRTitle
 		FROM 
-			wt_pay_resource AS pr
-		WHERE
-			pr.p_r_group_id= 'hourly_wage_code';
+			wt_pay_resource AS pr;
 	</select>
 	
 	<!-- 직원목록조회 -->

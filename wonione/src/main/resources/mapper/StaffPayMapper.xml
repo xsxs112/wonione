@@ -64,14 +64,11 @@
  	<select id="standardSheet" resultType="StaffPay">
 		SELECT
 			(case when p_r_group_name = '시급' then substr(pr.p_r_ect,1,(INSTR(pr.p_r_ect,'or')-1))
-					when p_r_group_name = '인센티브' then pr.p_r_ect
-				 
+				when p_r_group_name = '인센티브' then pr.p_r_ect				 
 				end) AS pREct
 			,pr.p_r_title AS pRTitle
 		FROM 
-			wt_pay_resource AS pr
-		WHERE 
-			p_r_code >= 'PR_013';
+			wt_pay_resource AS pr;
 	</select>	
 	
 	<!-- 강사급여명세서조회 -->

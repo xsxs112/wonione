@@ -75,7 +75,7 @@
 	<!--===================강사목록불러오기시작===================-->
 
 	<div style="width:40%; float:left" class="container-fluid">		
-		<table id="tb" class ="table table-striped">			
+		<table id="tb1" class ="table table-striped">			
 			<tr>
 				<td colspan="3" style="text-align: center; vertical-align:middle;"> 강사목록 </td>
 			</tr>
@@ -120,26 +120,71 @@
 		</table>	
 	</div>
 	<!--===================강사목록불러오기끝===================-->
+	
 	<!--===================시급지급기준 시작===================-->
-	<label>
-		<div class="container-fluid">		
-			<table class ="table table-striped" >
-				<tr>
-					<td colspan="3" style="text-align: center; vertical-align:middle;">지급기준표</td>
-				</tr>
-				<tr>
-					<td rowspan="8" style="text-align: center; vertical-align:middle;">시급 인센티브 기준</td>
-				</tr>
-				<tr th:each="s : ${standardSheetHour}" style="text-align: center;">
-					<td th:text="${s.pREct}"></td>
-					<td th:if="${s.pRTitle} > 1" th:text="${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}"></td>
-					<td th:unless="${s.pRTitle} > 1" th:text="${#numbers.formatInteger(s.pRTitle*100, 0, 'COMMA') +'%'}"></td>
-
-				</tr> 
-			</table>			
-		</div>
-	</label>
-	<!--===================시급지급기준 끝===================-->		
+	<div  style="width:60%; float:left" class="container-fluid">		
+		<table id="tb3" class ="table table-striped" >
+			<tr>
+				<td colspan="3" style="text-align: center; vertical-align:middle;">지급기준표</td>
+			</tr>
+			<tr>
+				<td rowspan="5" style="text-align: center; vertical-align:middle;">시급 기준</td>
+			</tr>
+			<tr th:if="${s.pRTitle} > 1000" th:each="s : ${standardSheetHour}" style="text-align: center;">
+				<td th:text="${s.pREct}"></td>
+				<td th:text="${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}"></td>
+			</tr> 
+			<tr>
+				<td rowspan="4" style="text-align: center; vertical-align:middle;">인센티브 기준</td>
+			</tr>
+			<tr th:if="${s.pRTitle} < 1" th:each="s : ${standardSheetHour}" style="text-align: center;">
+				<td th:text="${s.pREct}"></td>
+				<td th:text="${#numbers.formatInteger(s.pRTitle*100, 0, 'COMMA') +'%'}"></td>
+			</tr> 
+		</table>			
+	</div>
+	<div id="tb4" style="width:40%; float:left" class="container-fluid">		
+		<table class ="table table-striped" >
+			<tr>
+				<td colspan="4" style="text-align: center; vertical-align:middle;"> 지급기준 입력 </td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">지 급 월</td>
+				<td colspan="3" style="text-align: left;">
+					<select name ="payMonth" class="form-control" >
+			  			<option>::지급월::</option>
+			  			<th:block th:if="${s.pRTitle} >=1 and ${s.pRTitle} <=12" th:each="s : ${standardSheetHour}">
+				  			<option th:value="${s.pRTitle}">[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
+			  			</th:block>
+			  		</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">시 급</td>
+				<td colspan="3" style="text-align: left;">
+					<select name ="payMonth" class="form-control" >
+			  			<option>::시  급::</option>
+			  			<th:block th:if="${s.pRTitle} > 1000" th:each="s : ${standardSheetHour}">
+				  			<option th:value="${s.pRTitle}">[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}]]</option>
+			  			</th:block>
+			  		</select>
+				</td>			
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">인센티브</td>
+				<td colspan="3" style="text-align: left;">
+					<select name ="payMonth" class="form-control" >
+			  			<option>::인센티브::</option>
+			  			<th:block th:if="${s.pRTitle} < 1" th:each="s : ${standardSheetHour}">
+				  			<option th:value="${s.pRTitle}">[[${#numbers.formatInteger(s.pRTitle*100, 0, 'COMMA') +'%'}]]</option>
+			  			</th:block>
+			  		</select>
+				</td>		
+			</tr>
+		</table>			
+	</div>
+	<!--===================시급지급기준 끝===================-->	
+		
 	<!--===================지급계산시작===================-->
 	<form>	
 		<div class="container-fluid">
@@ -157,16 +202,9 @@
 				</tr>
 				<tr style="text-align: center;">
 					<td></td>
-					<td>
-					<select size="1">
-						<option>::강사아이디::</option>
-					</select>
-					</td>
+					<td></td>
 					<td>불러오기</td>
 					<td>
-					<select size="1">
-						<option>::시급책정::</option>
-					</select>
 					</td>
 					<td>
 					<input type="text" class="form-control" id="spcTotalHour" name="spcTotalHour" placeholder="근무시간">
