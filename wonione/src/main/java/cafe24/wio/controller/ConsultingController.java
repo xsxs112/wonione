@@ -78,25 +78,23 @@ public class ConsultingController {
 	}
 	//상담내역리스트
 	//상담내역리스트에서 제목을 클릭후 해당정보를 삭제하는 ajax사용
-	@PostMapping(value = "/deleteConsulting",produces = "application/json")
-	@ResponseBody
-	public int deleteConsulting(int csCode){
-		int result = consultingService.deleteConsulting(csCode);
-		System.out.println(result);
-		return result;
-	}
+	
+	 @PostMapping(value = "/deleteConsulting",produces = "application/json")
+	 @ResponseBody public int deleteConsulting(int csCode){ 
+		 int result = consultingService.deleteConsulting(csCode); 
+	 	return result; 
+	 }
+	 
 	//상담내역리스트
-	//상담내역리스트에서 ajax통하여 화면출력된 데이터를 가져와 
 	//database에 update를 하여 상담내역수정처리코드작업
-	@PostMapping("/consultingList")
+	@RequestMapping(value="/upConsultingList", method=RequestMethod.POST)
 	public String upConsultingList(Consulting cosulting
 								  ,@RequestParam(value="consultingCode", required = false) String consultingCode
 								  ,@RequestParam(value="consultingTitle", required = false) String consultingTitle
-								  ,@RequestParam(value="consultingTeacher", required = false) String consultingTeacher
+								  ,@RequestParam(value="consultingTeacher", required = false) String consultingTeacherCode
 								  ,@RequestParam(value="consultingClass", required = false) String consultingClass
 								  ,@RequestParam(value="consultingStudent", required = false) String consultingStudent
 								  ,@RequestParam(value="consultingData", required = false) String consultingData) {
-		
 		consultingService.upconsultingList(cosulting);
 		return "redirect:/consultingList";
 	}
