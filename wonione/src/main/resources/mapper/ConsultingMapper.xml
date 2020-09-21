@@ -12,7 +12,7 @@
 		<result column="cs_s_name" 		property="ConsultingStudent"/>
 		<result column="cs_data" 		property="ConsultingData"/>
 	</resultMap>
-	<delete id="deleteConsulting" parameterType="int">
+	<delete id="deleteConsulting">
 		DELETE 
 		FROM 
 			wt_consulting 

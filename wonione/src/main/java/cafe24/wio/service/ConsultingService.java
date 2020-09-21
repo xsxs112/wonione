@@ -90,15 +90,16 @@ public class ConsultingService {
 	
 	//상담리스트의 상세내용의 데이터를 바탕으로 수정처리
 	public int upconsultingList(Consulting cosulting) {
-		int result = consultingMapper.upconsultingList(cosulting);
-		return result;
+		int upResult = consultingMapper.upconsultingList(cosulting);
+		return upResult;
 	}
 
 	
-
+	
+	//상담리스트의 상세내용의 데이터를 바탕으로 삭제처리
 	public int deleteConsulting(int csCode) {
-		int result = consultingMapper.deleteConsulting(csCode);
-		return result;
+		int deResult = consultingMapper.deleteConsulting(csCode);
+		return deResult;
 		
 	}
 
