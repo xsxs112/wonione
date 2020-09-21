@@ -66,8 +66,85 @@
 		            alert('Uncaught Error.n' + jqXHR.responseText);
 		        }
 			});
-		});  		
-	});
+		});  	
+		
+ 		$('#OfficersCalformBtn').click(function(){
+			
+			var mrId = $('input[name=tb2MrId]').val();
+			console.log(mrId);
+			var mrName = $('input[name=tb2MrName]').val();
+			console.log(mrName);
+			var pRTitle = $('select[name=pRTitle] option:selected').val();
+			console.log(pRTitle);
+			var HourlyWage = $('select[name=HourlyWage] option:selected').val();
+			console.log(HourlyWage);
+					if(mrId == ''){
+						alert('회원정보 선택해주세요.');
+						return;
+					}
+					if(pRTitle == '::지급월::'){
+						alert('지급월을 선택해주세요.');
+						return;
+					}
+					if(HourlyWage == '::시급::'){
+						alert('시급을 선택해주세요.');
+						return;
+					}
+				var request = $.ajax({
+					  url: "/callOfficersInfo",
+					  method: "POST",
+					  data: { mrId : mrId, mrName : mrName, pRTitle : pRTitle, HourlyWage : HourlyWage },
+					  dataType: "json"
+					});
+			request.done(function(data) {
+				console.log(data);
+				$('#cMrId').val(data.mrId);
+				$('#cMrName').val(data.mrName);
+				$('#cpRTitle').val(data.pRTitle);
+				$('#opcHourlyWage').val(data.HourlyWage);
+				
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				if (jqXHR.status === 0) {
+		            alert('Not connect.\n Verify Network.');
+		        } 
+		        else if (jqXHR.status == 400) {
+		            alert('Server understood the request, but request content was invalid. [400]');
+		        } 
+		        else if (jqXHR.status == 401) {
+		            alert('Unauthorized access. [401]');
+		        } 
+		        else if (jqXHR.status == 403) {
+		            alert('Forbidden resource can not be accessed. [403]');
+		        } 
+		        else if (jqXHR.status == 404) {
+		            alert('Requested page not found. [404]');
+		        } 
+		        else if (jqXHR.status == 500) {
+		            alert('Internal server error. [500]');
+		        } 
+		        else if (jqXHR.status == 503) {
+		            alert('Service unavailable. [503]');
+		        } 
+		        else if (exception == 'parsererror') {
+		            alert('Requested JSON parse failed. [Failed]');
+		        } 
+		        else if (exception == 'timeout') {
+		            alert('Time out error. [Timeout]');
+		        } 
+		        else if (exception == 'abort') {
+		            alert('Ajax request aborted. [Aborted]');
+		        } 
+		        else {
+		            alert('Uncaught Error.n' + jqXHR.responseText);
+		        }
+			});
+		});  	
+		
+	}); 
+		
+		
+	
 </script>		
 		
 	</th:block>
@@ -87,8 +164,6 @@
 			</tr>
 		</table>			
 	</div>
-	
-	<form action=/officersFoinForm id="officersFoinForm" method="get">
 	<div style="width:60%; float:right" class="container-fluid">
 		<table id="tb2" class ="table table-striped">
 			<tr>
@@ -156,7 +231,7 @@
 					<select name ="pRTitle" class="form-control" >
 			  			<option>::지급월::</option>
 			  			<th:block th:if="${s.pRTitle} >=1 and ${s.pRTitle} <=12" th:each="s : ${standardSheetHour}">
-				  			<option th:value="${s.pRTitle}" id ="pRTitle">[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
+				  			<option id ="pRTitle" th:value="${s.pRTitle}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
 			  			</th:block>
 			  		</select>
 				</td>
@@ -164,23 +239,22 @@
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">시     급</td>
 				<td colspan="3" style="text-align: left;">
-					<select name ="opcHourlyWage" class="form-control" >
-			  			<option>::시  급::</option>
-			  			<th:block th:if="${s.pRTitle} > 1000" th:each="s : ${standardSheetHour}">
-				  			<option th:value="${#numbers.formatInteger(s.pRTitle, 0)}" id="opcHourlyWage">[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}]]</option>
+					<select name ="HourlyWage" class="form-control" >
+			  			<option>::시급::</option>
+			  			<th:block  th:if="${s.pRTitle} > 1000" th:each="s : ${standardSheetHour}">
+				  			<option id="HourlyWage" th:value="${#numbers.formatInteger(s.pRTitle, 0)}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}]]</option>
 			  			</th:block>
 			  		</select>
 				</td>			
 			</tr>
 			<tr>
 				<td colspan="3">
-	 			<!-- <button type="submit" id="officersFoinFormBtn" class="btn btn-primary btn-md btn-block">입력<a th:each="l : ${OfficersList}" th:href="@{/officersFoinForm(mrId=${l.mrId})}"></a></button> -->		
+	 			<button type="button" id="OfficersCalformBtn" class="btn btn-primary btn-md btn-block">입력<a th:each="l : ${OfficersList}" th:href="@{/officersFoinForm(mrId=${l.mrId})}"></a></button>		
 				
 				</td>
 			</tr>		
 		</table>
-	</div>	
-	</form>				
+	</div>			
 	<!--===================시급지급기준 끝===================-->	
 		
 	<!--===================지급계산시작===================-->
@@ -192,6 +266,7 @@
 				</tr>
 				<tr class="info" style="text-align: center;">	
 					<td>계산번호</td>
+					<td>지급월</td>
 					<td>아이디</td>
 					<td>이름</td>
 					<td>시급</td>
@@ -200,6 +275,9 @@
 				</tr>
 				<tr style="text-align: center;">
 					<td></td>
+					<td>
+					<input type="text" class="form-control" id="cpRTitle" readonly>
+					</td>
 					<td>
 					<input type="text" class="form-control" id="cMrId" readonly>
 					</td>

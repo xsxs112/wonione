@@ -32,7 +32,7 @@ public class OfficersPayService {
 	//직원 한명 정보 조회
 	public OfficersPay callOfficersInfo(String mrId) {
 		OfficersPay OfficersInfo = officersPayMapper.callOfficersInfo(mrId);
-		
+				
 		return OfficersInfo;
 	}	
 
@@ -43,11 +43,5 @@ public class OfficersPayService {
 		return officersPay;
 	}
 	
-	//직원정보 급여계 넘기기
-	public OfficersPay officersFoinForm(String mrId) {
-		
-		OfficersPay officersFoin = officersPayMapper.officersFoinForm(mrId);
-		return officersFoin;		
-	}
 
 }
