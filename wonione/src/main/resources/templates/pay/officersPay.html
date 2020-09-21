@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title></title> 
+<script type="text/javascript">
+	 	
+	// 직원 아이디값 받아 넘기기
+	$(function(){
+		
+ 		$('.callOfficersInfo').click(function(){
+ 		var tr = $(this).parent().parent();
+ 		var td = tr.children();
+ 		var mrId = td.eq(0).text(); 	
+ 		
+		console.log(mrId + ' < -- mrId');
+		var request = $.ajax({
+			  url: "/callOfficersInfo",
+			  method: "POST",
+			  data: { mrId : mrId },
+			  dataType: "json"
+			});
+			request.done(function(data) {
+				console.log(data);
+				$('#mrId').val(data.mrId);
+				$('#mrName').val(data.mrName);
+				$('#mrJoinDate').val(data.mrJoinDate);
+				$('#pmRTitle').val(data.pmRTitle);
+				$('#mrAccountNum').val(data.mrAccountNum);
+				
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				if (jqXHR.status === 0) {
+		            alert('Not connect.\n Verify Network.');
+		        } 
+		        else if (jqXHR.status == 400) {
+		            alert('Server understood the request, but request content was invalid. [400]');
+		        } 
+		        else if (jqXHR.status == 401) {
+		            alert('Unauthorized access. [401]');
+		        } 
+		        else if (jqXHR.status == 403) {
+		            alert('Forbidden resource can not be accessed. [403]');
+		        } 
+		        else if (jqXHR.status == 404) {
+		            alert('Requested page not found. [404]');
+		        } 
+		        else if (jqXHR.status == 500) {
+		            alert('Internal server error. [500]');
+		        } 
+		        else if (jqXHR.status == 503) {
+		            alert('Service unavailable. [503]');
+		        } 
+		        else if (exception == 'parsererror') {
+		            alert('Requested JSON parse failed. [Failed]');
+		        } 
+		        else if (exception == 'timeout') {
+		            alert('Time out error. [Timeout]');
+		        } 
+		        else if (exception == 'abort') {
+		            alert('Ajax request aborted. [Aborted]');
+		        } 
+		        else {
+		            alert('Uncaught Error.n' + jqXHR.responseText);
+		        }
+			});
+		});  	
+		
+ 		$('#OfficersCalformBtn').click(function(){
+			
+			var mrId = $('input[name=tb2MrId]').val();
+			console.log(mrId);
+			var mrName = $('input[name=tb2MrName]').val();
+			console.log(mrName);
+			var pRTitle = $('select[name=pRTitle] option:selected').val();
+			console.log(pRTitle);
+			var HourlyWage = $('select[name=HourlyWage] option:selected').val();
+			console.log(HourlyWage);
+					if(mrId == ''){
+						alert('회원정보 선택해주세요.');
+						return;
+					}
+					if(pRTitle == '::지급월::'){
+						alert('지급월을 선택해주세요.');
+						return;
+					}
+					if(HourlyWage == '::시급::'){
+						alert('시급을 선택해주세요.');
+						return;
+					}
+				var request = $.ajax({
+					  url: "/callOfficersInfo",
+					  method: "POST",
+					  data: { mrId : mrId, mrName : mrName, pRTitle : pRTitle, HourlyWage : HourlyWage },
+					  dataType: "json"
+					});
+			request.done(function(data) {
+				console.log(data);
+				$('#cMrId').val(data.mrId);
+				$('#cMrName').val(data.mrName);
+				$('#cpRTitle').val(data.pRTitle);
+				$('#opcHourlyWage').val(data.HourlyWage);
+				
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				if (jqXHR.status === 0) {
+		            alert('Not connect.\n Verify Network.');
+		        } 
+		        else if (jqXHR.status == 400) {
+		            alert('Server understood the request, but request content was invalid. [400]');
+		        } 
+		        else if (jqXHR.status == 401) {
+		            alert('Unauthorized access. [401]');
+		        } 
+		        else if (jqXHR.status == 403) {
+		            alert('Forbidden resource can not be accessed. [403]');
+		        } 
+		        else if (jqXHR.status == 404) {
+		            alert('Requested page not found. [404]');
+		        } 
+		        else if (jqXHR.status == 500) {
+		            alert('Internal server error. [500]');
+		        } 
+		        else if (jqXHR.status == 503) {
+		            alert('Service unavailable. [503]');
+		        } 
+		        else if (exception == 'parsererror') {
+		            alert('Requested JSON parse failed. [Failed]');
+		        } 
+		        else if (exception == 'timeout') {
+		            alert('Time out error. [Timeout]');
+		        } 
+		        else if (exception == 'abort') {
+		            alert('Ajax request aborted. [Aborted]');
+		        } 
+		        else {
+		            alert('Uncaught Error.n' + jqXHR.responseText);
+		        }
+			});
+		});  	
+		
+	}); 
+		
+		
+	
+</script>		
+		
+	</th:block>
+	<th:block layout:fragment="customContent" >	
+	<!--===================직원목록불러오기시작===================-->
+	<div style="width:40%; float:left" class="container-fluid">		
+		<table id="tb" class ="table table-striped">			
+			<tr>
+				<td colspan="3" style="text-align: center; vertical-align:middle;"> 직원목록 </td>
+			</tr>
+			<tr th:each="o : ${OfficersList}">
+				<td style="text-align: center;" th:text="${o.mrId}"><input type="hidden" name="mrId" th:value="${o.mrId}"></td>
+				<td style="text-align: center;" th:text="${o.mrName}"><input type="hidden" name="mrName" th:value="${o.mrName}"></td>
+				<td style="text-align: center;">					
+					<button type="button" class="callOfficersInfo">정보보기</button>
+				</td>
+			</tr>
+		</table>			
+	</div>
+	<div style="width:60%; float:right" class="container-fluid">
+		<table id="tb2" class ="table table-striped">
+			<tr>
+				<td colspan="4" style="text-align: center; vertical-align:middle;"> 직원정보 </td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">아이디</td>
+				<td colspan="3" style="text-align: left;">
+				<input type="text" class="form-control" id="mrId" name="tb2MrId" th:value="${mrId}" readonly>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">이름</td>
+				<td colspan="3" style="text-align: left;">
+				<input type="text" class="form-control" id="mrName" name="tb2MrName" th:value="${mrName}" readonly>
+				</td>			
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">입사일</td>
+				<td colspan="3" style="text-align: left;">
+				<input type="text" class="form-control" id="mrJoinDate"  readonly>
+				</td>			
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">은행</td>
+				<td colspan="3" style="text-align: left;">
+				<input type="text" class="form-control" id="pmRTitle" readonly>
+				</td>		
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">계좌</td>
+				<td colspan="3" style="text-align: left;">
+				<input type="text" class="form-control" id="mrAccountNum" readonly>
+				</td>		
+			</tr>
+		</table>	
+	</div>
+	<!--===================직원목록불러오기끝===================-->
+	
+	<!--===================시급지급기준 시작===================-->
+	<div style="width:60%; float:left" class="container-fluid">	
+		<div id="tb3" class="container-fluid">		
+			<table class ="table table-striped" >
+				<tr>
+					<td colspan="3" style="text-align: center; vertical-align:middle;">지급기준표</td>
+				</tr>
+				<tr>
+					<td rowspan="5" style="text-align: center; vertical-align:middle;">시급기준</td>
+				</tr>
+				<tr th:if="${s.pRTitle} > 1000 " th:each="s : ${standardSheetHour}" style="text-align: center;">
+					<td th:text="${s.pREct}"></td>
+					<td th:text="${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}"></td>
+				</tr>
+			</table>			
+		</div>	
+	</div>
+	<div id="tb4" style="width:40%; float:left" class="container-fluid">		
+		<table class ="table table-striped" >
+			<tr>
+				<td colspan="4" style="text-align: center; vertical-align:middle;"> 지급기준 입력 </td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">지 급 월</td>
+				<td colspan="3" style="text-align: left;">
+					<select name ="pRTitle" class="form-control" >
+			  			<option>::지급월::</option>
+			  			<th:block th:if="${s.pRTitle} >=1 and ${s.pRTitle} <=12" th:each="s : ${standardSheetHour}">
+				  			<option id ="pRTitle" th:value="${s.pRTitle}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
+			  			</th:block>
+			  		</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">시     급</td>
+				<td colspan="3" style="text-align: left;">
+					<select name ="HourlyWage" class="form-control" >
+			  			<option>::시급::</option>
+			  			<th:block  th:if="${s.pRTitle} > 1000" th:each="s : ${standardSheetHour}">
+				  			<option id="HourlyWage" th:value="${#numbers.formatInteger(s.pRTitle, 0)}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}]]</option>
+			  			</th:block>
+			  		</select>
+				</td>			
+			</tr>
+			<tr>
+				<td colspan="3">
+	 			<button type="button" id="OfficersCalformBtn" class="btn btn-primary btn-md btn-block">입력<a th:each="l : ${OfficersList}" th:href="@{/officersFoinForm(mrId=${l.mrId})}"></a></button>		
+				
+				</td>
+			</tr>		
+		</table>
+	</div>			
+	<!--===================시급지급기준 끝===================-->	
+		
+	<!--===================지급계산시작===================-->
+	<form>	
+		<div class="container-fluid">
+			<table class ="table table-striped">
+				<tr>
+					<td rowspan="5" style="text-align: center; vertical-align:middle;">지급내역</td>
+				</tr>
+				<tr class="info" style="text-align: center;">	
+					<td>계산번호</td>
+					<td>지급월</td>
+					<td>아이디</td>
+					<td>이름</td>
+					<td>시급</td>
+					<td>근무시간</td>
+					<td>기본급</td>				
+				</tr>
+				<tr style="text-align: center;">
+					<td></td>
+					<td>
+					<input type="text" class="form-control" id="cpRTitle" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="cMrId" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="cMrName" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="opcHourlyWage" readonly>
+					</td>
+					<td>
+					</td>
+					<td>계산하기</td>
+				</tr>
+				<tr class="info" style="text-align: center;">
+					<td>식비</td>
+					<td>교통비</td>
+					<td>복지후생</td>
+					<td>상여금</td>
+					<td>기타</td>				
+					<td>급여계총액</td>
+				</tr>
+				<tr style="text-align: center;">
+					<td>
+					<input type="text" class="form-control" id="opcFoodExpenses" name="opcFoodExpenses" placeholder="식비">
+					</td>
+					<td>
+					<input type="text" class="form-control" id="opcTransportation" name="opcTransportation" placeholder="교통비">
+					</td>
+					<td>
+					<input type="text" class="form-control" id="opcWelfare" name="opcWelfare" placeholder="복지후생">
+					</td>
+					<td>
+					<input type="text" class="form-control" id="opcBonus" name="opcBonus" placeholder="상여금">
+					</td>
+					<td>
+					<input type="text" class="form-control" id="opcEct" name="opcEct" placeholder="기타">
+					</td>
+					<td>계산</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+	<!--===================지급계산끝===================-->	
+
+	<br>
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	</th:block>
+</html>
