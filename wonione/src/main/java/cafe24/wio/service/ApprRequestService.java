@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cafe24.wio.bean.ApprovalRequest;
-import cafe24.wio.bean.Member;
 import cafe24.wio.mapper.ApprMapper;
 
 @Service
@@ -19,16 +18,15 @@ public class ApprRequestService {
 	
 	
 	
+	public int hListDuplicate(String startDate,String endDate) {
+		int hDuplicate = 1;
+		
+		hDuplicate = apprMapper.hListDuplicate(startDate,endDate);
 	
-	public List<Map<String, Object>> getHolidayListTest() {
 		
-		//List<Map<String, Object>> 데이터 타입으로 holliday 선언하고
-		//ApprMapper 클래스의 getHolidayListTest 메소드를 통해 입력 받은 값을 담는다
-		List<Map<String, Object>> holliday = apprMapper.getHolidayListTest();
-		
-		//리턴받은 holliday을 리턴한다
-		return holliday;
+		return hDuplicate;
 	}
+
 
 	
 	public int getStartDayCk(String startDate) {

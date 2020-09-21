@@ -6,26 +6,22 @@
     
 <mapper namespace="cafe24.wio.mapper.ApprMapper">
 
+
+
+
+	<select id="hListDuplicate" parameterType="String" resultType="int">
 	
-	<!-- 휴가리스트를 hashMap 타입으로 리턴 -->
-	<select id="getHolidayListTest" resultType="hashMap">
-		
-		SELECT request_date as reDate
-				, r.mr_name as mrId
-				, left(request_start_date,10) as reStartDate
-				, left(request_end_date,10) as reEndDate
-				, request_reason as reReason
-				, sortation as sortation
-				, request_supervisor as reSupervisor 
-				, request_processing_date as reProcessingDate
-				, request_state as reState
-		FROM wt_approval_request AS a 
-			LEFT JOIN wt_member_registration AS r
-			ON a.mr_id = r.mr_id
-		WHERE request_sortation = 'holiday';
-
+		SELECT COUNT(*) FROM wt_approval_request
+		WHERE 
+		request_start_date <![CDATA[ >= ]]> DATE_FORMAT(#{startDate},'%Y-%m-%d')
+		AND
+		request_end_date <![CDATA[ <= ]]> DATE_FORMAT(#{endDate},'%Y-%m-%d')
+		AND
+		(request_state = '신청' OR request_state = '미승인');
+	
 	</select>
-
+	
+	
 	
 	<!-- db에서 입력받은 reStartDate(휴가시작날짜)가 현재 시간보다 같거나 작은지 검색한다 -->
 	<select id="getStartDayCk" parameterType="String"

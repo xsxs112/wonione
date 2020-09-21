@@ -11,6 +11,10 @@ import cafe24.wio.bean.Member;
 @Mapper
 public interface ApprMapper {
 	
+	
+	public int hListDuplicate(String startDate,String endDate);
+	
+	
 	public List<Map<String, Object>> getHolidayListTest();
 	
 	

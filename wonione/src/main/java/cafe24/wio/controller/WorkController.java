@@ -1,7 +1,6 @@
 package cafe24.wio.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,8 @@ public class WorkController {
 	@Autowired
 	private ApprRequestService apprRequestService;
 
-
+	
+	
 	
 	//휴가 중복 체크
 	@ResponseBody
@@ -32,41 +32,15 @@ public class WorkController {
 	//holidayApproval.html에서 startDate,endDate 값을 받는다
 	public int holidayCk(@RequestParam(value = "startDate", required = false) String startDate,
 							@RequestParam(value = "endDate", required = false) String endDate) {
+								
+		int holidayCk = 1;
 		
-
-		
-		// DB에서 불러온 List
-		List<Map<String, Object>> listMap = apprRequestService.getHolidayListTest();
-		
+		holidayCk =	apprRequestService.hListDuplicate(startDate,endDate);
 		
 		
-		//숫자 연산을 하기 위해 가져온 문자형식에서(Ex 2020-19-18) -를 지우고 숫자형으로 변환
-		int numStDate = Integer.parseInt(startDate.replace("-", ""));
-		int numEndDate = Integer.parseInt(endDate.replace("-", ""));
-		//휴가 중복이 있는지 확인하기 위한 변수 선언 초기값은 1, 중복이 있으면 0
-		int resultDate = 1;
+		return holidayCk;
 		
-		for(int i = 0; i<listMap.size();i++) {
-			//List를 풀어서 
-			//DB에 있던 휴가 시작 날짜와 끝나는 날짜를 가져와서 데이터타입 String으로 담음
-			String reStartDate = listMap.get(i).get("reStartDate").toString().replace("-", "");
-			String reEndDate = listMap.get(i).get("reEndDate").toString().replace("-", "");
-			System.out.println(reStartDate);
-			System.out.println(reEndDate);
-			//숫자 연산을 하기 위해 가져온 문자형식에서(Ex 2020-19-18) -를 지우고 숫자형으로 변환
-			int numListStDate = Integer.parseInt(reStartDate);
-			int numListEndDate = Integer.parseInt(reEndDate);
-			
-			if((numStDate >= numListStDate && numStDate <= numListEndDate) || (numEndDate >= numListStDate && numEndDate <= numListEndDate)) {
-				//숫자 비교 연산해서 중복이 되면 resultDate에 0을 대입
-				resultDate = 0;
-			}
-			
-			 
-		}
-		System.out.println(resultDate +"resultDate");
-		return resultDate;
-
+		
 	}
 
 	
