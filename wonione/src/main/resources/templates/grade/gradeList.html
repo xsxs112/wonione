@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="title"></title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+	<style>
+		table {
+		  width:100%;
+		}
+		table, th{
+		  border: 1px solid grey ;
+		  border-collapse: collapse;
+		  font-size: 17px;
+		}
+		th{
+		  padding: 1px;
+		  text-align: center;
+		  background-color: lightgrey;
+		}
+		td {
+		  padding: 3px;
+		  border: 1px solid grey ;
+		   text-align: center;
+		  border-collapse: collapse;
+		  font-size: 15px;
+	</style>
+		<form action="#" class="container-fluid" style="text-align:center">
+			<div style="margin-bottom:10px">
+				<button type="submit" class="btn btn-default btn-lg btn-block">성적 입력하기</button><br>
+			</div>
+			<h3 style="color: grey;">성적리스트</h3><br>
+		</form>	
+		<form id="gradeForm" class="form-inline" action="#" method="post">  
+			<select class="form-control" name="lecGd" id="lecGd">
+			  <option value="grade_man_code">::검색조건::</option>
+			  <option value="grade_man_score">성적</option>
+			  <option value="mr_name">학생명</option>
+			  <option value="test_rounds">회차</option>
+			</select> 
+			
+			<div class="form-group">
+		  	 <input type="text" class="form-control" name="lecGds" placeholder="Search" id="lecGds"/>
+			   <div class="input-group-btn pull-right">
+			        <button class="btn btn-default form-group" type="button" id="searchBtn">검색</button>
+			   </div>
+		   </div>
+		</form>
+		<br>
+			
+		<table class ="table table-striped">
+		<thead>
+			<tr>
+				<th>성적코드</th>
+				<th>학생명</th>
+				<th>회차</th>
+				<th>점수</th>
+				<th>작성일자</th>
+				<th>상세보기</th>
+			</tr>
+		</thead>	
+		<tbody>
+			<tr th:each="g : ${gradeList}">
+			<td th:text=${g.gradeManCode}></td>
+			<td th:text=${g.mrName}></td>
+			<td th:text=${g.testRounds}></td>
+			<td th:text=${g.gradeManScore}></td>
+			<td th:text=${g.gradeManRegDate}></td>
+			<td>
+				<a th:href="@{/gradePage(gradeManCode=${g.gradeManCode})}">상세보기</a>
+			</td>	
+			</tr>
+		</tbody>	
+		</table>
+			</th:block>
+	<th:block layout:fragment="customJsScript">
+	</th:block>
+</html>

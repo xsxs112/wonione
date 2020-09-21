@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cafe24.wio.mapper.GradeMapper">
+<resultMap type="Grade" id="gradeResultMap">
+		<result column="grade_man_code" 		property="gradeManCode"/>
+		<result column="mr_id" 					property="mrId"/>
+		<result column="test_round" 			property="testRound"/>
+		<result column="grade_man_score" 		property="gradeManScore"/>
+		<result column="grade_man_reg_date" 	property="gradeManRegDate"/>
+		<result column="mr_name" 				property="mrName"/>
+		<result column="test_rounds" 				property="testRounds"/>
+		
+		
+</resultMap>
+
+<select id="getGradeList" resultType="Grade" resultMap="gradeResultMap">
+SELECT
+	 grade_man_code
+	, mr_name
+	, test_rounds
+	, grade_man_score
+	, grade_man_reg_date
+FROM
+	wt_member_registration 
+	INNER join
+	wt_grade_management 
+	on
+	wt_member_registration.mr_id = wt_grade_management.mr_id
+	INNER JOIN
+	wt_grade_num 
+	ON.
+	wt_grade_num.grade_test_num = wt_grade_management.test_round;
+		
+	
+</select>
+
+
+<select id="getGradeDetailList" resultType="Grade" parameterType="String" resultMap="gradeResultMap">
+	SELECT
+		 grade_man_code
+		, mr_name
+		, test_rounds
+		, grade_man_score
+		, grade_man_reg_date
+	FROM
+		wt_member_registration 
+		INNER join
+		wt_grade_management 
+		on
+		wt_member_registration.mr_id = wt_grade_management.mr_id
+		INNER JOIN
+		wt_grade_num 
+		ON.
+		wt_grade_num.grade_test_num = wt_grade_management.test_round;
+	where
+		grade_man_code = #{gradeManCode};
+	
+</select>
+
+</mapper>   
+

@@ -58,7 +58,6 @@
 		wt_member_registration.mr_id = wt_open_lecture.mr_id
 	WHERE
 		lec_open_code = #{lecOpenCode};
-
 </select>
 
 <select id="getReCode" resultType="hashMap">
