@@ -4,53 +4,42 @@
 	
 	
 	
+	
 	/*=========================================================================================조원준 js start*/
+
+	
 	//상담수정
 	$('#upConsulting').click(function(){
-		var Name = $('input[name=consultingTitle]');
-		if(Name.val() != ""){
-			if(confirm('수정하시겠습니까?')){
-				alert('수정되었습니다.');
-				$('#consultingForm').submit();
-			}else{
-				alert('취소하셨습니다.');
-			}
-		}else{
-			alert('제목을 클릭해주세요.');
-		}
-		
+		var upconsulting = $('#upConsultingList');
+		upconsulting.submit();
 	});
 	
 	//상담삭제                           
 	$('#deleteConsulting').click(function(){
-		var Name = $('input[name=consultingTitle]');
-		if(Name.val() != ""){
-			if(confirm('삭제하시겠습니까?')){
-				var csCode =  $('#consultingCode').val();
-				var request = $.ajax({
-					url: "/deleteConsulting",
-					method: "POST",
-					data: { csCode : csCode},
-					dataType: "json"
-				});
-				request.done(function(data) {
-					if(data = '1'){
-						alert('삭제되었습니다.');
-						location.href="/consultingList";
-	
-					}else{
-						alert('삭제에 실패하였습니다.');
-					}
-				});
-				request.fail(function( jqXHR, textStatus ) {
-					 alert( "Request failed: " + textStatus );
-				});
+		if(confirm('삭제하시겠습니까?')){
+			var csCode =  $('#consultingCode').val();
+			var request = $.ajax({
+				url: "/deleteConsulting",
+				method: "POST",
+				data: { csCode : csCode},
+				dataType: "json"
+			});
+			request.done(function(data) {
+				if(data = '1'){
+					alert('삭제되었습니다.');
+					location.href="/consultingList";
+
 				}else{
-					alert('취소하셨습니다.');
+					alert('삭제에 실패하였습니다.');
 				}
-		}else{
-			alert('제목을 클릭해주세요.');
-		}
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				 alert( "Request failed: " + textStatus );
+			});
+			}else{
+				alert('취소하셨습니다.');
+			}
+		
 	});
 	
 	
@@ -68,10 +57,9 @@
 				$('#consultingCode').attr('value',data.cs_code);
 				$('#consultingTitle').attr('value',data.cs_title);
 				$('#consultingDate').attr('value',data.cs_date);
-				$('#consultingTeacherCode').attr('value',data.mr_o_id);
-				$('#consultingTeacherName').attr('value',data.mr_name);
-				$('#consultingStudent').attr('value',data.cs_s_name);
-				$('#consultingClass').attr('value',data.cs_lec_name);
+				$('#consultingTeacher').attr('value',data.mr_name);
+				$('#consultingStudent').attr('value',data.cs_lec_name);
+				$('#consultingClass').attr('value',data.cs_s_name);
 				$('#consultingData').attr('value',data.cs_data);
 				textareaVal.text(data.cs_data);
 				
