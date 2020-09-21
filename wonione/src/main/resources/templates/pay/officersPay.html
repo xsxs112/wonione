@@ -71,13 +71,9 @@
  		$('#OfficersCalformBtn').click(function(){
 			
 			var mrId = $('input[name=tb2MrId]').val();
-			console.log(mrId);
 			var mrName = $('input[name=tb2MrName]').val();
-			console.log(mrName);
 			var pRTitle = $('select[name=pRTitle] option:selected').val();
-			console.log(pRTitle);
 			var HourlyWage = $('select[name=HourlyWage] option:selected').val();
-			console.log(HourlyWage);
 					if(mrId == ''){
 						alert('회원정보 선택해주세요.');
 						return;
@@ -276,16 +272,16 @@
 				<tr style="text-align: center;">
 					<td></td>
 					<td>
-					<input type="text" class="form-control" id="cpRTitle" readonly>
+					<input type="text" class="form-control" id="cpRTitle" th:value="${#numbers.formatInteger(, 0)}" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="cMrId" readonly>
+					<input type="text" class="form-control" id="cMrId" th:value="${}" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="cMrName" readonly>
+					<input type="text" class="form-control" id="cMrName" th:value="${}" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="opcHourlyWage" readonly>
+					<input type="text" class="form-control" id="opcHourlyWage" th:value="${}" readonly>
 					</td>
 					<td>
 					</td>

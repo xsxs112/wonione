@@ -48,14 +48,14 @@ public class OfficersPayController {
 	@ResponseBody
 	public OfficersPay callOfficersInfo(String mrId
 										,@RequestParam(value = "pRTitle", required = false) String pRTitle
-										,@RequestParam(value = "opcHourlyWage", required = false) String opcHourlyWage			
+										,@RequestParam(value = "HourlyWage", required = false) String HourlyWage			
 										) {
 		System.out.println(mrId +" <-mrId");
 		OfficersPay OfficersInfo = officersPayService.callOfficersInfo(mrId);
 		
 		//직원정보 급여계 넘기기
 		System.out.println(pRTitle +" <-pRTitle 직원정보 급여계");
-		System.out.println(opcHourlyWage +" <-opcHourlyWage 직원정보 급여계");				
+		System.out.println(HourlyWage +" <-HourlyWage 직원정보 급여계");				
 
 		return OfficersInfo;
 	}
