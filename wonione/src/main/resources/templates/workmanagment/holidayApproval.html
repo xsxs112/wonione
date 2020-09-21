@@ -64,7 +64,7 @@
 						//데이터가 성공적으로 받아지면 실행된다
 						holidayCk.done(function(data) {
 							//ajax를 통해서 받은 데이터가 1이면 submit()실행
-							if(data==1){
+							if(data==0){
 								$('#requestForm').submit();
 							}else{
 								//아니면 휴가기간 중복 신청 불가라고 팝업창을 띄워줌

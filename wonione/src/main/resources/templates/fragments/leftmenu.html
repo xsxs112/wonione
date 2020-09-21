@@ -7,7 +7,7 @@
         <nav id="sidebar" class="">
             <div class="sidebar-header">
                 <a href="/"><img class="main-logo" src="img/won i one logo black.jpg" alt="" /></a>
-                <strong><a href="index.html"><img src="img/logo/logosn.png" alt="" /></a></strong>
+                <strong><a href="index.html"><img src="#" alt="" /></a></strong>
             </div>
             <div class="left-custom-menu-adp-wrap comment-scrollbar">
                 <nav class="sidebar-nav left-sidebar-menu-pro">
@@ -73,6 +73,7 @@
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li style="border: 2px solid #969696;"><a href="#"><span class="mini-sub-pro">출퇴근 #</span></a></li>
                                 <li style="border: 2px solid #969696;"><a href="/holidayApproval"><span class="mini-sub-pro">휴가신청 !</span></a></li>
+                                <li th:if="${session.SLEVEL eq 1}" style="border: 2px solid #969696;"><a href="/holidayList"><span class="mini-sub-pro">휴가신청 리스트</span></a></li>
                             </ul>
                         </li>
                         <li>
