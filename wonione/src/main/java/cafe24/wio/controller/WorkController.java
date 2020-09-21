@@ -18,11 +18,26 @@ import cafe24.wio.service.ApprRequestService;
 @Controller
 public class WorkController {
 
-	// @Autowired private ApprovalRequest approvalRequest;
 
 	@Autowired
 	private ApprRequestService apprRequestService;
 
+	
+	
+	//관리자 화면 휴가요청 리스트
+	@GetMapping("/holidayList")
+	public String holidayList(Model model) {
+
+		List<ApprovalRequest> holidayList = apprRequestService.getHolidayList();
+		model.addAttribute("holidayList", holidayList);
+
+		return "workmanagment/holidayList";
+	}
+
+	
+	
+	
+	
 	
 	
 	
