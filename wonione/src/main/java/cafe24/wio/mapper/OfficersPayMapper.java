@@ -21,7 +21,5 @@ public interface OfficersPayMapper {
 	//직원 정보 조회
 	public OfficersPay callOfficersInfo(String mrId);
 
-	//직원정보 급여계 넘기기
-	public OfficersPay officersFoinForm(String mrId);
 
 }
