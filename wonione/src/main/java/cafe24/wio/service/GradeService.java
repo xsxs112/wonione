@@ -22,11 +22,19 @@ public class GradeService {
 	}
 	
 	//성적상세보기리스트
-	public List<Grade> getGradeDetailList(Grade grade){
+	public List<Grade> getGradeDetailList(String gradeManCode){
 		
-		List<Grade> gradeList = gradeMapper.getGradeDetailList(grade);
+		List<Grade> gradeList = gradeMapper.getGradeDetailList(gradeManCode);
 		System.out.println("getGradeDetailList-->"+gradeList);
 		return gradeList;
+	}
+	
+	//조건검색
+	public List<Grade> searchGrade(String lecGd, String lecGds) {
+		List<Grade> grade = gradeMapper.searchGrade(lecGd, lecGds);
+		return grade;
+		
+		
 	}
 	
 }

@@ -11,7 +11,10 @@ public interface GradeMapper {
 	//성적조회
 	public List<Grade> getGradeList(Grade grade);
 
-	//성적상세조회
-	public List<Grade> getGradeDetailList(Grade grade);
+	//성적코드로상세조회
+	public List<Grade> getGradeDetailList(String gradeManCode);
+	
+	//조건검색
+	public List<Grade> searchGrade(String lecGd, String lecGds);
 	
 }

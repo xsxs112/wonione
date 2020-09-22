@@ -16,7 +16,7 @@
 		
 		
 </resultMap>
-
+<!-- 성적조회 -->
 <select id="getGradeList" resultType="Grade" resultMap="gradeResultMap">
 SELECT
 	 grade_man_code
@@ -38,7 +38,7 @@ FROM
 	
 </select>
 
-
+<!-- 상세조회 -->
 <select id="getGradeDetailList" resultType="Grade" parameterType="String" resultMap="gradeResultMap">
 	SELECT
 		 grade_man_code
@@ -55,11 +55,39 @@ FROM
 		INNER JOIN
 		wt_grade_num 
 		ON.
-		wt_grade_num.grade_test_num = wt_grade_management.test_round;
+		wt_grade_num.grade_test_num = wt_grade_management.test_round
 	where
 		grade_man_code = #{gradeManCode};
 	
 </select>
+
+
+<!-- 조건검색  -->
+
+<select id="searchGrade" resultType="Grade" resultMap="gradeResultMap" >
+	SELECT
+		 grade_man_code
+		, mr_name
+		, test_rounds
+		, grade_man_score
+		, grade_man_reg_date
+	FROM
+		wt_member_registration 
+		INNER join
+		wt_grade_management 
+		on
+		wt_member_registration.mr_id = wt_grade_management.mr_id
+		INNER JOIN
+		wt_grade_num 
+		ON.
+		wt_grade_num.grade_test_num = wt_grade_management.test_round
+	WHERE
+		${lecGd} LIKE CONCAT('%',#{lecGds},'%');	
+
+
+</select>
+
+
 
 </mapper>   
 
