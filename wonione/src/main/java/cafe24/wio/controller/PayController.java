@@ -34,8 +34,10 @@ public class PayController {
 		
 		OfficersPay modiOfficersPay = payService.getMrById(mrId);
 		
+		System.out.println(modiOfficersPay);
 		model.addAttribute("modiOfficersPay", modiOfficersPay);
 		model.addAttribute("title", "직원급여수정");
+
 		return "pay/modiFyOfficersPay";
 	}
 	

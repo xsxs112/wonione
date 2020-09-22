@@ -70,30 +70,31 @@
 		
 	</resultMap>	
 	<!-- 수정할 직원 급여정보 불러오기 -->
-	<select id = "" parameterType="String" resultType="OfficersPay">
+	<select id = "getMrById" parameterType="String" resultType="OfficersPay">
 		SELECT
-			p.op_code
-			,p.mr_id
-			,p.op_pay
-			,pd.opd_code
-			,pd.iy_code
-			,pd.opd_income_tax
-			,pd.opd_resident_income_tax
-			,pd.opd_employment_insurance
-			,pd.opd_national_pension
-			,pd.opd_health_insurance
-			,pd.opd_longterm_nursing_insurance
-			,pd.opd_total
-			,pc.opc_code
-			,pc.opc_hourly_wage
-			,pc.opc_total_hour
-			,pc.opc_base_pay
-			,pc.opc_food_expenses
-			,pc.opc_transportation
-			,pc.opc_welfare
-			,pc.opc_bonus
-			,pc.opc_ect
-			,pc.opc_total		
+			p.op_code									AS opCode
+			,p.mr_id									AS mrId			
+			,mr.mr_name									AS mrName			
+			,p.op_pay									AS opPay
+			,pd.opd_code								AS opCode
+			,pd.iy_code									AS iyCode
+			,pd.opd_income_tax							AS opdIncomeTax
+			,pd.opd_resident_income_tax					AS opdResidentIncomTax
+			,pd.opd_employment_insurance				AS opdEmploymentInsurance
+			,pd.opd_national_pension					AS opdNationalPension
+			,pd.opd_health_insurance					AS opdHealthInsurance
+			,pd.opd_longterm_nursing_insurance			AS opdLongtermNursingInsurance
+			,pd.opd_total								AS opdTotal
+			,pc.opc_code								AS opcCode
+			,pc.opc_hourly_wage							AS opcHourlyWage
+			,pc.opc_total_hour							AS opcTotalHour
+			,pc.opc_base_pay							AS opcBasePay
+			,pc.opc_food_expenses						AS opcFoodExpenses
+			,pc.opc_transportation						AS opcTransportation
+			,pc.opc_welfare								AS opcWelfare
+			,pc.opc_bonus								AS opcBonus
+			,pc.opc_ect									AS opcEct
+			,pc.opc_total								AS opcTotal
 		FROM
 			wt_officers_pay AS p
 			INNER JOIN 
@@ -103,7 +104,11 @@
 			LEFT JOIN 
 			wt_officers_pay_calculate AS pc
 			ON 
-			p.mr_id = pc.mr_id	
+			p.mr_id = pc.mr_id
+			LEFT JOIN 
+			wt_member_registration AS mr
+			ON
+			p.mr_id = mr.mr_id	
 		WHERE
 			p.mr_id = #{mrId};
 	</select>
