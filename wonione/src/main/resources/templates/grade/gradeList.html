@@ -7,6 +7,7 @@
 		<title th:text="title"></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
+	
 	<style>
 		table {
 		  width:100%;
@@ -34,10 +35,10 @@
 			</div>
 			<h3 style="color: grey;">성적리스트</h3><br>
 		</form>	
-		<form id="gradeForm" class="form-inline" action="#" method="post">  
+		<form id="gradeForm" class="form-inline" action="/serchGrade" method="post">  
 			<select class="form-control" name="lecGd" id="lecGd">
 			  <option value="grade_man_code">::검색조건::</option>
-			  <option value="grade_man_score">성적</option>
+			  <option value="grade_man_score">점수</option>
 			  <option value="mr_name">학생명</option>
 			  <option value="test_rounds">회차</option>
 			</select> 
@@ -45,7 +46,7 @@
 			<div class="form-group">
 		  	 <input type="text" class="form-control" name="lecGds" placeholder="Search" id="lecGds"/>
 			   <div class="input-group-btn pull-right">
-			        <button class="btn btn-default form-group" type="button" id="searchBtn">검색</button>
+			        <button class="btn btn-default form-group" type="submit" id="btnsearch">검색</button>
 			   </div>
 		   </div>
 		</form>
@@ -75,7 +76,42 @@
 			</tr>
 		</tbody>	
 		</table>
-			</th:block>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
+	<script type="text/javascript"> 
+	
+	$(function(){
+		$('#btnsearch').click(function(){
+			var gradeForm = $('#gradeForm');
+			var lecGd = $('#lecGd').val();
+			var lecGds = $('#lecGds').val();
+			console.log("lecGd-->"+lecGd);
+			console.log("lecGds-->"+lecGds);
+			
+			var request = $.ajax({
+				  url: "/gradeList",  
+				  method: "GET", 
+				  data: { lecGd : lecGd , lecGds : lecGds }, 
+				  dataType: "json"  
+				});
+				request.done(function(data) {   
+				console.log(data);
+				console.log(data.lecGd);
+				console.log(data.lecGds);
+				
+				if(data == undefined || data == ''){
+					alert('검색되는 내용이 없습니다.');
+				}
+				});
+	
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
+				gradeForm.submit();
+		});
+	});
+	
+	</script>
+	</th:block>
 	<th:block layout:fragment="customJsScript">
 	</th:block>
 </html>

@@ -8,7 +8,6 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<style>
-	
 	table {
 		  width:100%;
 		}
@@ -28,16 +27,14 @@
 		  text-align: center;
 		  border-collapse: collapse;
 		  font-size: 15px;
-		  
 	</style>
-	
-	<form action="/getReportList" class="container-fluid" style="text-align:center">
+	<form action="/getGradeList" class="container-fluid" style="text-align:center">
 	<h3 style="color: grey;">학생성적리스트</h3><br>
 		<table class="table table-striped" style="text-align:center">
 			<tr>
 				<th style="text-align:center">성적코드</th>
 				<th style="text-align:center">학생이름</th>
-			<tr th:each="g : ${gradeList}">	
+			<tr th:each="g : ${Grade}">	
 				<td th:text=${g.gradeManCode}></td>
 				<td th:text=${g.mrName}></td>
 			</tr>	
@@ -45,17 +42,15 @@
 				<th>시험회차</th>
 				<th>시험점수</th>
 			</tr>
-			<tr th:each="g : ${gradeList}">	
+			<tr th:each="g : ${Grade}">	
 				<td th:text=${g.testRounds}></td>
 				<td th:text=${g.gradeManScore}></td>
 			</tr>
-		
 		</table>
-		
-		<div style= "margin-bottom:10px" th:each="#">
-		<a class="btn btn-default btn-danger" th:href="#" role="button">수정하기</a>
+		<div style= "margin-bottom:10px">
+		<a class="btn btn-default btn-danger" role="button">수정하기</a>
 		<button type="submit" class="btn btn-default">리스트로 돌아가기</button>
-		<a class="btn btn-default btn-danger" th:href="#" role="button" >삭제하기</a>
+		<a class="btn btn-default btn-danger" role="button" >삭제하기</a>
 		</div>	
 	</form>	
 	</th:block>
