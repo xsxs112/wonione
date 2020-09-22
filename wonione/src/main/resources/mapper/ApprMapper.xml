@@ -6,8 +6,44 @@
     
 <mapper namespace="cafe24.wio.mapper.ApprMapper">
 
+	<update id="approval" parameterType="ApprovalRequest">
+		UPDATE wt_approval_request
+		SET
+			request_state='승인'
+		WHERE 
+			request_code = #{reCode};
+		
+	
+	
+	</update>
+
+	<update id="modifyMember" parameterType="Member">
+		UPDATE tb_member
+		<trim prefix="SET" suffixOverrides=",">
+
+			<!-- neq는 !=랑 같은 말 -->
+			<if test="memberPw != null and memberPw neq''.toString()">
+				m_pw = #{memberPw},
+			</if>
+			<if test="memberName != null and memberName neq''.toString()">
+				m_name = #{memberName},
+			</if>
+			<if test="memberLevel != null and memberLevel neq''.toString()">
+				m_level = #{memberLevel},
+			</if>
+			<if test="memberEmail != null and memberEmail neq''.toString()">
+				m_email = #{memberEmail},
+			</if>
+			<if test="memberAddr != null and memberAddr neq''.toString()">
+				m_addr = #{memberAddr}
+			</if>
+		</trim>
+		WHERE
+		m_id = #{memberId};
 
 
+
+	</update>
 
 	<select id="hListDuplicate" parameterType="String" resultType="int">
 	
@@ -65,7 +101,8 @@
 	<!-- 휴가신청리스트 검색 -->
 	<select id="getHolidayList" resultType="ApprovalRequest">
 		
-		SELECT request_date as reDate
+		SELECT 	request_code as reCode
+				, request_date as reDate
 				, r.mr_name as mrId
 				, left(request_start_date,10) as reStartDate
 				, left(request_end_date,10) as reEndDate

@@ -93,9 +93,9 @@ FROM
 	RIGHT JOIN
 	wt_warehousing_textbook AS wt
 	on
-	tbi.txb_code
-	=
 	wt.txb_code
+	=
+	tbi.txb_code
 WHERE
 	${whTxbSk} LIKE(CONCAT('%',#{whTxbSv},'%'));
 
@@ -164,9 +164,10 @@ FROM
 	RIGHT JOIN
 	wt_warehousing_textbook AS wt
 	on
-	tbi.txb_code
-	=
 	wt.txb_code
+	=
+	tbi.txb_code
+
 
 </select>
 

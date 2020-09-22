@@ -10,12 +10,24 @@
 	
 	//상담수정
 	$('#upConsulting').click(function(){
-		var upconsulting = $('#upConsultingList');
-		upconsulting.submit();
+		var consultingTitle = $('#consultingTitle');
+		var consultingForm = $('#consultingForm');
+		if(consultingTitle.val() != ''){
+			if(confirm('수정하시겠습니까?')){
+				consultingForm.submit();
+			}else{
+				alert('취소하셨습니다.');
+			}
+		}else{
+			alert('제목을 클릭해주세요.');
+		}
+	
 	});
 	
 	//상담삭제                           
 	$('#deleteConsulting').click(function(){
+		var consultingTitle = $('#consultingTitle');
+		if(consultingTitle.val() != ''){
 		if(confirm('삭제하시겠습니까?')){
 			var csCode =  $('#consultingCode').val();
 			var request = $.ajax({
@@ -39,6 +51,9 @@
 			}else{
 				alert('취소하셨습니다.');
 			}
+		}else{
+			alert('제목을 클릭해주세요.');
+		}
 		
 	});
 	
@@ -57,9 +72,10 @@
 				$('#consultingCode').attr('value',data.cs_code);
 				$('#consultingTitle').attr('value',data.cs_title);
 				$('#consultingDate').attr('value',data.cs_date);
-				$('#consultingTeacher').attr('value',data.mr_name);
-				$('#consultingStudent').attr('value',data.cs_lec_name);
-				$('#consultingClass').attr('value',data.cs_s_name);
+				$('#consultingTeacherName').attr('value',data.mr_name);
+				$('#consultingTeacher').attr('value',data.mr_o_id);
+				$('#consultingStudent').attr('value',data.cs_s_name);
+				$('#consultingClass').attr('value',data.cs_lec_name);
 				$('#consultingData').attr('value',data.cs_data);
 				textareaVal.text(data.cs_data);
 				
@@ -67,39 +83,7 @@
 				
 			});
 			request.fail(function( jqXHR, textStatus ) {
-				if (jqXHR.status === 0) {
-		            alert('Not connect.\n Verify Network.');
-		        } 
-		        else if (jqXHR.status == 400) {
-		            alert('Server understood the request, but request content was invalid. [400]');
-		        } 
-		        else if (jqXHR.status == 401) {
-		            alert('Unauthorized access. [401]');
-		        } 
-		        else if (jqXHR.status == 403) {
-		            alert('Forbidden resource can not be accessed. [403]');
-		        } 
-		        else if (jqXHR.status == 404) {
-		            alert('Requested page not found. [404]');
-		        } 
-		        else if (jqXHR.status == 500) {
-		            alert('Internal server error. [500]');
-		        } 
-		        else if (jqXHR.status == 503) {
-		            alert('Service unavailable. [503]');
-		        } 
-		        else if (exception === 'parsererror') {
-		            alert('Requested JSON parse failed. [Failed]');
-		        } 
-		        else if (exception === 'timeout') {
-		            alert('Time out error. [Timeout]');
-		        } 
-		        else if (exception === 'abort') {
-		            alert('Ajax request aborted. [Aborted]');
-		        } 
-		        else {
-		            alert('Uncaught Error.n' + jqXHR.responseText);
-		        }
+				 alert( "Request failed: " + textStatus );
 			});
 	});
 	//상담등록consultingWrite유효성검사

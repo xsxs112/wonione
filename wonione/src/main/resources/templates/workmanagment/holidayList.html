@@ -11,13 +11,30 @@
 <!-- css---------------------------------------- -->
 <th:block layout:fragment="customCss">
 	
-
-
 </th:block>
-
 <!-- 본문----------------------------------------- -->
 <th:block layout:fragment="customContent">
-
+<script type="text/javascript">
+		$(function() {
+				$('.apprBtn').click(function() {
+					alert("승인하셨습니다.")
+					var reCode = $(this).val();
+				
+					var approval = $.ajax({
+					url : "/approval",
+					method : "GET",
+					data : {reState : "승인", reCode : reCode},
+					dataType: "text" 
+					
+					
+					
+					}) 
+					$('form').submit();
+				})
+		})
+	</script>
+	
+	
 	<div class="static-table-area">
 		<div class="container-fluid">
 
@@ -32,35 +49,37 @@
 				</div>
 				<div class="sparkline8-graph">
 					<div class="static-table-list">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>신청 날짜</th>
-									<th>이름</th>
-									<th>휴가 시작 날짜</th>
-									<th>휴가 끝나는 날짜</th>
-									<th>사유</th>
-									<th>구분</th>
-									<th>승인/거절</th>
-									<th>상태</th>
-									<th>승인날짜</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="l: ${holidayList}">
-									<td th:text="${l.reDate}"></td>
-									<td th:text="${l.mrId}"></td>
-									<td th:text="${l.reStartDate}"></td>
-									<td th:text="${l.reEndDate}"></td>
-									<td th:text="${l.reReason}"></td>
-									<td th:text="${l.sortation}"></td>
-									<td><button type = "button">승인</button>
-									<button type = "button">거절</button></td>
-									<td th:text="${l.reState}"></td>
-									<td th:text="${l.reProcessingDate}"></td>
-								</tr>
-							</tbody>
-						</table>
+						<form action="/holidayList" method="GET">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>신청 날짜</th>
+										<th>이름</th>
+										<th>휴가 시작 날짜</th>
+										<th>휴가 끝나는 날짜</th>
+										<th>사유</th>
+										<th>구분</th>
+										<th>승인/거절</th>
+										<th>상태</th>
+										<th>승인날짜</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="l: ${holidayList}">
+										<td th:text="${l.reDate}"></td>
+										<td th:text="${l.mrId}"></td>
+										<td th:text="${l.reStartDate}"></td>
+										<td th:text="${l.reEndDate}"></td>
+										<td th:text="${l.reReason}"></td>
+										<td th:text="${l.sortation}"></td>
+										<td ><button type = "button" class = "apprBtn" name = "apprBtn" th:value="${l.reCode}">승인</button>
+										<button type = "button" name = "RefuseBtn">거절</button></td>
+										<td th:text="${l.reState}"></td>
+										<td th:text="${l.reProcessingDate}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
 					</div>
 				</div>
 			</div>

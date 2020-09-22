@@ -161,8 +161,8 @@ public class TextbookService {
 	 * @param whTextbook
 	 * @return List<TextbookBasicInfo> textbookOwnList
 	 */
-	public List<TextbookBasicInfo> getTextbookOwnList(WhTextbook whTextbook){
-		List<TextbookBasicInfo> textbookOwnList = textbookMapper.getTextbookOwnList(whTextbook);
+	public List<TextbookBasicInfo> getTextbookOwnList(){
+		List<TextbookBasicInfo> textbookOwnList = textbookMapper.getTextbookOwnList();
 		return textbookOwnList;
 	}
 	
