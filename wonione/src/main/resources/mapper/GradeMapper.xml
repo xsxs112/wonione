@@ -12,9 +12,7 @@
 		<result column="grade_man_score" 		property="gradeManScore"/>
 		<result column="grade_man_reg_date" 	property="gradeManRegDate"/>
 		<result column="mr_name" 				property="mrName"/>
-		<result column="test_rounds" 				property="testRounds"/>
-		
-		
+		<result column="test_rounds" 			property="testRounds"/>	
 </resultMap>
 <!-- 성적조회 -->
 <select id="getGradeList" resultType="Grade" resultMap="gradeResultMap">
@@ -61,7 +59,6 @@ FROM
 	
 </select>
 
-
 <!-- 조건검색  -->
 
 <select id="searchGrade" resultType="Grade" resultMap="gradeResultMap" >
@@ -84,9 +81,55 @@ FROM
 	WHERE
 		${lecGd} LIKE CONCAT('%',#{lecGds},'%');	
 
+</select>
+
+
+<!-- 성적입력  -->
+<insert id="insertGrade"  parameterType="Grade">
+
+INSERT INTO wt_grade_management(
+			grade_man_code
+			, mr_id
+			, test_round
+			, grade_man_score
+			, grade_man_reg_date)
+	VALUES (
+			gradeManCode
+			, mrName
+			, testRounds
+			, gradeManScore
+			, NOW());
+
+</insert>
+
+<!-- 학생이름가져오기  -->
+<select id="sName" resultType="hashMap" >
+
+	SELECT
+		 wt_member_registration.mr_name
+		,wt_member_registration.mr_id
+	FROM
+		wt_member_registration
+	INNER JOIN
+		wt_grade_management
+	ON
+		wt_member_registration.mr_id = wt_grade_management.mr_id
 
 </select>
 
+<!-- 회차가져오기  -->
+<select id="testNum" resultType="hashMap" >
+
+	SELECT
+		wt_grade_num.test_rounds
+	FROM
+		wt_grade_management
+	INNER join
+		wt_grade_num
+	ON
+		wt_grade_management.test_round = wt_grade_num.grade_test_num
+
+</select> 
 
 
 </mapper>   

@@ -1,6 +1,7 @@
 package cafe24.wio.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,10 +25,17 @@ public class GradeController {
 	@RequestMapping(value="/getGradeList" ,method= RequestMethod.GET)
 	public String getGradeList(Grade grade, Model model) {
 		List<Grade> gradeList = gradeService.getGradeList(grade);
+		List<Map<String,Object>> sName = gradeService.sName();
+		List<Map<String,Object>> testNum = gradeService.testNum();
+		
 		System.out.println("gradeList-->"+gradeList);
+		System.out.println("sName-->"+sName);
+		System.out.println("testNum-->"+testNum);
 		
 		model.addAttribute("gradeList", gradeList);
 		model.addAttribute("title", "성적리스트조회");
+		model.addAttribute("sName", sName); 
+		model.addAttribute("testNum", testNum);
 		
 		return "grade/gradeList";
 		
@@ -69,5 +77,18 @@ public class GradeController {
 		
 	}
 	
+	//성적입력하기
+	@PostMapping("/getGradeList")
+	public String inputGrade(Grade grade, Model model
+							,@RequestParam(value="mrName", required=false) String mrName
+							,@RequestParam(value="mrId", required=false)String mrId
+							,@RequestParam(value="testRounds", required=false)String testRounds
+							,@RequestParam(value="gradeManScore", required=false)String gradeManScore
+							,@RequestParam(value="gradeManRegDate", required=false)String gradeManRegDate) {
+		gradeService.insertGrade(grade);
+		model.addAttribute("Grade", grade);
+		return "redirect:/getGradeList";
+	}
+
 	
 }
