@@ -57,8 +57,7 @@ public class TextbookController {
 							,@RequestParam(value="whTxbSk", required=false) String whTxbSk
 							,@RequestParam(value="whTxbSv", required=false) String whTxbSv) {
 		List<TextbookBasicInfo> whTxbSearchResult= textbookService.getWhTxbSearch(whTxbSk, whTxbSv);
-		logger.info(whTxbSearchResult.toString());
-		model.addAttribute("textbookOwnList", whTxbSearchResult);
+		model.addAttribute("getTextbookList", whTxbSearchResult);
 		return "textbookresource/textbookOwnlist";
 	}
 	
@@ -85,7 +84,7 @@ public class TextbookController {
 	@GetMapping("/whTxbCheck")
 	public String wahoTextbookCheck() {
 	
-		return "/whTxbCheck";
+		return "whTxbCheck";
 	}
 
 	//교재 지급내역 조회
@@ -214,16 +213,15 @@ public class TextbookController {
 	
 	//교재보유목록 
 	@GetMapping("/textbookOwnList")
-	public String getTextbookOwnList(Model model
-									, WhTextbook whTextbook) {
+	public String getTextbookOwnList(Model model) {
 		
-		List<TextbookBasicInfo> textbookOwnList = textbookService.getTextbookOwnList(whTextbook);
+		List<TextbookBasicInfo> textbookOwnList = textbookService.getTextbookOwnList();
 		System.out.println(textbookOwnList);
-		model.addAttribute("textbookOwnList", textbookOwnList);
+		model.addAttribute("getTextbookList", textbookOwnList);
 		model.addAttribute("title", "교재보유현황 페이지");
 		model.addAttribute("mainTitle", "교재보유현황 페이지");
 		
-		return "textbookresource/textbookOwnlist";
+		return "textbookresource/textbookOwnList";
 	}
 	
 	//교재관리메인페이지

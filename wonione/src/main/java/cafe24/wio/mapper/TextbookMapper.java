@@ -33,7 +33,7 @@ public interface TextbookMapper {
 	public List<TextbookBasicInfo> getTextbookInfoList();
 
 	//교재보유리스트(입고/재고)
-	public List<TextbookBasicInfo> getTextbookOwnList(WhTextbook whTextbook);
+	public List<TextbookBasicInfo> getTextbookOwnList();
 	
 	//최초 입고등록
 	public int addFirstWhTextbook(WhTextbook whTextbook);
