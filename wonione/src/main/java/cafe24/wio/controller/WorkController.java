@@ -2,6 +2,8 @@ package cafe24.wio.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,21 +26,37 @@ public class WorkController {
 
 	
 	
-	//관리자화면 휴가 승인
-	@GetMapping("/approval")
-	public String approval(ApprovalRequest approvalRequest,
-							@RequestParam(value = "reState", required = false) String reState,
-							@RequestParam(value = "reCode", required = false) String reCode) {
-		
-		approvalRequest.setReState(reState);
-		approvalRequest.setReCode(reCode);
-		
-		apprRequestService.approval(approvalRequest);
+	//관리자 화면 삭제
+	@GetMapping("/reDelete")
+	public String reDelete(Model model, @RequestParam(value = "reCode", required = false) String reCode) {
 
+		apprRequestService.reDelete(reCode);
+		
 		return "redirect:/holidayList";
 	}
 	
-
+	
+	
+	//관리자화면 휴가 승인
+	@GetMapping("/approval")
+	public String approval(ApprovalRequest approvalRequest,
+						@RequestParam(value = "reState", required = false) String reState,
+						@RequestParam(value = "reCode", required = false) String reCode,
+						@RequestParam(value = "inputRefuse", required = false) String inputRefuse
+						,HttpSession session) {
+			approvalRequest.setReState(reState);
+			approvalRequest.setReCode(reCode);
+			String supervisor = (String)session.getAttribute("SNAME");
+			approvalRequest.setReSupervisor(supervisor);
+			approvalRequest.setRefuseReason(inputRefuse);
+			apprRequestService.approval(approvalRequest);
+			
+			return "redirect:/holidayList";
+		
+		
+	}
+	
+	
 	
 	//관리자 화면 휴가요청 리스트
 	@GetMapping("/holidayList")
@@ -50,9 +68,6 @@ public class WorkController {
 		return "workmanagment/holidayList";
 	}
 
-	
-	
-	
 	
 	
 	

@@ -9,7 +9,6 @@ public class LectureOpenSchedule {
 	private String lecRoomCode;		//강의실
 	private String lecDay;			//강의요일
 	private String lecLevelCode;	//수업수준
-	private String tfCode;			//수강료코드
 	private String lecStDate;		//수업시작일자
 	private String lecFinDate;		//수업종료일자
 	private String lecOsRegDate;	//등록일자
@@ -55,12 +54,6 @@ public class LectureOpenSchedule {
 	public void setLecLevelCode(String lecLevelCode) {
 		this.lecLevelCode = lecLevelCode;
 	}
-	public String getTfCode() {
-		return tfCode;
-	}
-	public void setTfCode(String tfCode) {
-		this.tfCode = tfCode;
-	}
 	public String getLecStDate() {
 		return lecStDate;
 	}
@@ -96,8 +89,6 @@ public class LectureOpenSchedule {
 		builder.append(lecDay);
 		builder.append(", lecLevelCode=");
 		builder.append(lecLevelCode);
-		builder.append(", tfCode=");
-		builder.append(tfCode);
 		builder.append(", lecStDate=");
 		builder.append(lecStDate);
 		builder.append(", lecFinDate=");

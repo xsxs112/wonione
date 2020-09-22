@@ -30,7 +30,7 @@ public class TextbookController {
 	
 	
 	//교재 지급내역 검색
-	@PostMapping("/getSuppTxbSearch")
+	@GetMapping("/getSuppTxbSearch")
 	public String getSuppTxbSearch(Model model
 			,@RequestParam(value="suppSk", required=false) String suppTxbSk
 			,@RequestParam(value="suppTxbSv", required=false) String suppTxbSv) {
@@ -41,7 +41,7 @@ public class TextbookController {
 	}
 	
 	//교재 정보 검색
-	@PostMapping("/getTxbInfoSearch")
+	@GetMapping("/getTxbInfoSearch")
 	public String getTxbInfoSearch(Model model
 			,@RequestParam(value="infoTxbSk", required=false) String infoTxbSk
 			,@RequestParam(value="infoTxbSv", required=false) String infoTxbSv) {
@@ -52,7 +52,7 @@ public class TextbookController {
 	}
 	
 	//교재 입고내역 검색
-	@PostMapping("/getWhTxbSearch")
+	@GetMapping("/getWhTxbSearch")
 	public String getWhTxbSearch(Model model
 							,@RequestParam(value="whTxbSk", required=false) String whTxbSk
 							,@RequestParam(value="whTxbSv", required=false) String whTxbSv) {
@@ -60,6 +60,7 @@ public class TextbookController {
 		model.addAttribute("getTextbookList", whTxbSearchResult);
 		return "textbookresource/textbookOwnlist";
 	}
+
 	
 	//입고내역유무 체크
 	@PostMapping(value="/whTxbCheck", produces="application/json") 

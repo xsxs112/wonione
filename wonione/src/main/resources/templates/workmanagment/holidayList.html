@@ -19,18 +19,46 @@
 				$('.apprBtn').click(function() {
 					alert("승인하셨습니다.")
 					var reCode = $(this).val();
-				
+					var inputRefuse = '';
+					
 					var approval = $.ajax({
 					url : "/approval",
 					method : "GET",
-					data : {reState : "승인", reCode : reCode},
+					data : {reState : "승인", reCode : reCode, inputRefuse : inputRefuse},
 					dataType: "text" 
-					
-					
-					
 					}) 
 					$('form').submit();
 				})
+				
+				$('.refuseBtn').click(function() {
+					var inputRefuse = prompt('사유', '거절 사유를 입력해주세요');
+					var reCode = $(this).val();
+					
+					var refuse = $.ajax({
+					url : "/approval",
+					method : "GET",
+					data : {reState : "거절", reCode : reCode, inputRefuse : inputRefuse},
+					dataType: "text"
+					})
+					
+					$('form').submit();
+				})
+				
+				
+				$('.reDelete').click(function() {
+					var reCode = $(this).attr('data-mCode');
+					var confirm_test = confirm("삭제하시겠습니까?.");
+					if ( confirm_test == true ) {
+			            alert("삭제하셨습니다.");
+			            window.location.href='/reDelete?reCode='+reCode;
+			        } else if ( confirm_test == false ) {
+			            alert("취소되었습니다.");
+			        }
+					
+					
+				})
+				
+				
 		})
 	</script>
 	
@@ -62,6 +90,7 @@
 										<th>승인/거절</th>
 										<th>상태</th>
 										<th>승인날짜</th>
+										<th>삭제</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -73,10 +102,11 @@
 										<td th:text="${l.reReason}"></td>
 										<td th:text="${l.sortation}"></td>
 										<td ><button type = "button" class = "apprBtn" name = "apprBtn" th:value="${l.reCode}">승인</button>
-										<button type = "button" name = "RefuseBtn">거절</button></td>
+										<button type = "button" class = "refuseBtn" name = "refuseBtn" th:value="${l.reCode}">거절</button></td>
 										<td th:text="${l.reState}"></td>
 										<td th:text="${l.reProcessingDate}"></td>
-									</tr>
+										<td><a th:data-mCode="${l.reCode}" class ="reDelete">삭제</a></td>
+									</tr>								
 								</tbody>
 							</table>
 						</form>

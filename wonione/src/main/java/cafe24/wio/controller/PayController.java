@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import cafe24.wio.bean.OfficersPay;
 import cafe24.wio.bean.StaffPay;
@@ -23,6 +25,21 @@ public class PayController {
 	// log4j로 로그 찍기 위한 객체 삽입
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(PayController.class);
+	
+	
+	//직원급여수정화면 아이디로 불러오기
+	@GetMapping("/modiFyOfficersPay")
+	public String modiFyOfficersPay(@RequestParam(value="mrId", required = false) String mrId 
+									,Model model) {
+		
+		OfficersPay modiOfficersPay = payService.getMrById(mrId);
+		
+		System.out.println(modiOfficersPay);
+		model.addAttribute("modiOfficersPay", modiOfficersPay);
+		model.addAttribute("title", "직원급여수정");
+
+		return "pay/modiFyOfficersPay";
+	}
 	
 	@RequestMapping(value = "/getPayList", method = RequestMethod.GET)
 	public String getPayList(Model model) {

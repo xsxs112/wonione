@@ -6,17 +6,28 @@
     
 <mapper namespace="cafe24.wio.mapper.ApprMapper">
 
+
+
+	<delete id = "reDelete" parameterType="string">
+		DELETE 
+		FROM wt_approval_request 
+		WHERE request_code= #{reCode};
+	
+	</delete>
+
 	<update id="approval" parameterType="ApprovalRequest">
 		UPDATE wt_approval_request
 		SET
-			request_state='승인'
+			request_state = #{reState},
+			request_supervisor = #{reSupervisor},
+			request_processing_date=NOW(),
+			refuse_reason = #{refuseReason}
 		WHERE 
 			request_code = #{reCode};
 		
-	
-	
 	</update>
-
+	
+	
 	<update id="modifyMember" parameterType="Member">
 		UPDATE tb_member
 		<trim prefix="SET" suffixOverrides=",">
@@ -111,6 +122,7 @@
 				, request_supervisor as reSupervisor 
 				, request_processing_date as reProcessingDate
 				, request_state as reState
+				, refuse_reason as refuseReason
 		FROM wt_approval_request AS a 
 			LEFT JOIN wt_member_registration AS r
 			ON a.mr_id = r.mr_id

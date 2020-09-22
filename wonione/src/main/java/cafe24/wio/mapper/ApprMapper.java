@@ -12,6 +12,8 @@ import cafe24.wio.bean.Member;
 public interface ApprMapper {
 	
 	
+	public int reDelete(String reCode);
+	
 	public int approval(ApprovalRequest approvalRequest);
 	
 	
