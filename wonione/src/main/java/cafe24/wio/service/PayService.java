@@ -28,6 +28,13 @@ public class PayService {
 		List<StaffPay> staffPayList = PayMapper.getStaffPayList();	
 		return staffPayList;
 	}
+
+	//수정할 직원급여정보 불러오기
+	public OfficersPay getMrById(String mrId) {
+		OfficersPay modiOfficersPay = PayMapper.getMrById(mrId);
+		
+		return modiOfficersPay;
+	}
 	
 
 

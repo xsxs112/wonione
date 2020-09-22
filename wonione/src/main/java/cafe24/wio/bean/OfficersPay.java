@@ -253,7 +253,6 @@ public class OfficersPay {
 	public void setpREct(String pREct) {
 		this.pREct = pREct;
 	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -264,12 +263,12 @@ public class OfficersPay {
 		builder.append(mrId);
 		builder.append(", mrName=");
 		builder.append(mrName);
+		builder.append(", opcHourlyWage=");
+		builder.append(opcHourlyWage);
 		builder.append(", opcTotalHour=");
 		builder.append(opcTotalHour);
-		builder.append(", opcHourlyWage=");
 		builder.append(", opcBasePay=");
 		builder.append(opcBasePay);
-		builder.append(opcHourlyWage);
 		builder.append(", opcFoodExpenses=");
 		builder.append(opcFoodExpenses);
 		builder.append(", opcTransportation=");
@@ -286,10 +285,10 @@ public class OfficersPay {
 		builder.append(opcRegDate);
 		builder.append(", opcWriter=");
 		builder.append(opcWriter);
-		builder.append(", opdCode=");		
 		builder.append("===========급여계산테이블 end===========");
 		
 		builder.append("===========급여공제테이블 start===========");
+		builder.append(", opdCode=");
 		builder.append(opdCode);
 		builder.append(", iyCode=");
 		builder.append(iyCode);
@@ -313,7 +312,7 @@ public class OfficersPay {
 		builder.append(opdWriter);
 		builder.append("===========급여공제테이블 end===========");
 		
-		builder.append("===========급여지급테이블 start===========");
+		builder.append("===========급여지급테이블 start===========");		
 		builder.append(", opCode=");
 		builder.append(opCode);
 		builder.append(", pRTitle=");
@@ -326,22 +325,21 @@ public class OfficersPay {
 		builder.append(opRegDate);
 		builder.append(", opWriter=");
 		builder.append(opWriter);
+		builder.append("===========급여지급테이블 end===========");
+		
+		builder.append("===========자원관리비고 시작===========");
+		builder.append(", pmRTitle=");
+		builder.append(pmRTitle);
 		builder.append(", mrJoinDate=");
 		builder.append(mrJoinDate);
 		builder.append(", mrAccountNum=");
 		builder.append(mrAccountNum);
-		builder.append(", pmRTitle=");
-		builder.append(pmRTitle);
-		builder.append("]");
-		builder.append("===========급여지급테이블 end===========");
-		
-		builder.append("===========자원관리비고 시작===========");
 		builder.append(", pREct=");
 		builder.append(pREct);
 		builder.append("]");
 		builder.append("===========자원관리비고 끝===========");
 		return builder.toString();
 	}
-	
+
 	
 }
