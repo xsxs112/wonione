@@ -139,10 +139,35 @@
 		            alert('Uncaught Error.n' + jqXHR.responseText);
 		        }
 			});
-		});  	
-		
-	}); 
-		
+		});  		
+
+ 		$(function(){
+ 			$('#OfficersCalBaseBtn').click(function(){
+ 			var baseMulti = 0;
+			if($('#opcTotalHour').val() == ''){
+				alert('근무시간을 입력해주세요.');
+				return;
+			}
+ 			baseMulti += Number($('#opcHourlyWage').val()) * Number($('#opcTotalHour').val());
+ 				console.log(baseMulti);	
+ 				$('#opcBasePay').val(baseMulti);
+ 			}); 			
+		}); 
+ 		
+ 		$(function(){
+ 			$('#OfficersCalTotalBtn').click(function(){
+ 			var calSum = 0;
+ 			calSum += 	Number($('#opcBasePay').val()) 
+ 						+ Number($('#opcFoodExpenses').val())
+ 						+ Number($('#opcTransportation').val())
+ 						+ Number($('#opcWelfare').val())
+ 						+ Number($('#opcBonus').val())
+ 						+ Number($('#opcEct').val()) 						;
+ 				console.log(calSum);	
+ 				$('#opcTotal').val(calSum);
+ 			}); 			
+		}); 
+	});		
 		
 	
 </script>		

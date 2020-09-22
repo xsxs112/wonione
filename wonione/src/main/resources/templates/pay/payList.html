@@ -33,7 +33,7 @@
 	  				<td style="text-align: center;" th:text="${l.opRegDate}"></td>
 	  				<td style="text-align: center;" th:text="${l.opWriter}"></td>
 	  				<!-- get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음) -->
-	  				<td style="text-align: center;"><a th:href="@{/getOfficersPay(mrId=${l.mrId})}">수정</a></td>
+	  				<td style="text-align: center;"><a th:href="@{/modiFyOfficersPay(mrId=${l.mrId})}">수정</a></td>
 	  				<td style="text-align: center;"><a th:href="@{#}">삭제</a></td>
 	  				<!-- ajax로 모달창 띄우기 -->
 	  				<td style="text-align: center;"><a th:href="@{/getOfficersPay(mrId=${l.mrId})}">출력</a></td>
