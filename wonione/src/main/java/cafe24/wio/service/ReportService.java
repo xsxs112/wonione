@@ -45,8 +45,8 @@ public class ReportService {
 	
 	//보고서작성
 	   public int getReportWrite(Report report) {
-	      int wrtite = reportMapper.getReportWrite(report);
-	      return wrtite;
+	      int write = reportMapper.getReportWrite(report);
+	      return write;
 	   }
 	
 	//코드로 조회

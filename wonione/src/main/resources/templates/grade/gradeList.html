@@ -29,55 +29,86 @@
 		  border-collapse: collapse;
 		  font-size: 15px;
 	</style>
-		<form action="#" class="container-fluid" style="text-align:center">
-			<div style="margin-bottom:10px">
-				<button type="submit" class="btn btn-default btn-lg btn-block">성적 입력하기</button><br>
-			</div>
-			<h3 style="color: grey;">성적리스트</h3><br>
-		</form>	
+		<h3 style="color: grey;">성적리스트</h3><br>
+		
 		<form id="gradeForm" class="form-inline" action="/serchGrade" method="post">  
 			<select class="form-control" name="lecGd" id="lecGd">
-			  <option value="grade_man_code">::검색조건::</option>
+			  <option value="">::검색조건::</option>
 			  <option value="grade_man_score">점수</option>
 			  <option value="mr_name">학생명</option>
 			  <option value="test_rounds">회차</option>
 			</select> 
-			
 			<div class="form-group">
-		  	 <input type="text" class="form-control" name="lecGds" placeholder="Search" id="lecGds"/>
+		  	 	<input type="text" class="form-control" name="lecGds" placeholder="Search" id="lecGds"/>
 			   <div class="input-group-btn pull-right">
 			        <button class="btn btn-default form-group" type="submit" id="btnsearch">검색</button>
 			   </div>
 		   </div>
 		</form>
 		<br>
-			
 		<table class ="table table-striped">
-		<thead>
-			<tr>
-				<th>성적코드</th>
-				<th>학생명</th>
-				<th>회차</th>
-				<th>점수</th>
-				<th>작성일자</th>
-				<th>상세보기</th>
-			</tr>
-		</thead>	
-		<tbody>
-			<tr th:each="g : ${gradeList}">
-			<td th:text=${g.gradeManCode}></td>
-			<td th:text=${g.mrName}></td>
-			<td th:text=${g.testRounds}></td>
-			<td th:text=${g.gradeManScore}></td>
-			<td th:text=${g.gradeManRegDate}></td>
-			<td>
-				<a th:href="@{/gradePage(gradeManCode=${g.gradeManCode})}">상세보기</a>
-			</td>	
-			</tr>
-		</tbody>	
+			<thead>
+				<tr>
+					<th>학생명</th>
+					<th>회차</th>
+					<th>점수</th>
+					<th>저장</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<select name ="mrName" class="form-control" id="mrName">
+							<option value="">::학생이름::</option>
+							<th:block th:each="g : ${sName}">
+								`<option th:value="${g.mr_id}" th:name ="mrName">[[${g.mr_name}]]</option>
+							</th:block>
+						</select>
+					</td>
+					<td>
+						<select name ="testRounds" class="form-control" id="testRounds">
+							<option value="">::회차::</option>
+							<th:block th:each="t : ${testNum}">
+								<option th:value="${t.test_rounds}" th:name ="testRounds">[[${t.test_rounds}]]</option>
+							</th:block>
+						</select> 
+					</td>
+					<td>
+						<input type="text" class="form-control" id="gradeManScore" name="gradeManScore">
+					</td>
+					<td>
+						<div style="margin-bottom:10px"> 
+							<button type="button" class="btn btn-default btn-block" id="#">저장하기</button>
+						</div>
+					</td>
+				</tr>
+			</tbody>
 		</table>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
-	<script type="text/javascript"> 
+		<table class ="table table-striped">
+			<thead>
+				<tr>
+					<th>성적코드</th>
+					<th>학생명</th>
+					<th>회차</th>
+					<th>점수</th>
+					<th>작성일자</th>
+					<th>상세보기</th>
+				</tr>
+			</thead>	
+			<tbody>
+				<tr th:each="g : ${gradeList}">
+					<td th:text=${g.gradeManCode}></td>
+					<td th:text=${g.mrName}></td>
+					<td th:text=${g.testRounds}></td>
+					<td th:text=${g.gradeManScore}></td>
+					<td th:text=${g.gradeManRegDate}></td>
+					<td>
+						<a th:href="@{/gradePage(gradeManCode=${g.gradeManCode})}">상세보기</a>
+					</td>	
+				</tr>
+			</tbody>	
+		</table> 
+	 <script type="text/javascript"> 
 	
 	$(function(){
 		$('#btnsearch').click(function(){
@@ -108,10 +139,10 @@
 				});
 				gradeForm.submit();
 		});
+		
 	});
+	 
 	
-	</script>
-	</th:block>
-	<th:block layout:fragment="customJsScript">
+	</script>  
 	</th:block>
 </html>
