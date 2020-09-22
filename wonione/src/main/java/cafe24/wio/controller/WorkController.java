@@ -26,21 +26,27 @@ public class WorkController {
 	
 	//관리자화면 휴가 승인
 	@GetMapping("/approval")
-	public String approval(@RequestParam(value = "reState", required = false) String reState) {
+	public String approval(ApprovalRequest approvalRequest,
+							@RequestParam(value = "reState", required = false) String reState,
+							@RequestParam(value = "reCode", required = false) String reCode) {
+		
+		approvalRequest.setReState(reState);
+		approvalRequest.setReCode(reCode);
+		
+		apprRequestService.approval(approvalRequest);
 
-		apprRequestService.approval(reState);
-
-		return "workmanagment/holidayList";
+		return "redirect:/holidayList";
 	}
 	
+
 	
 	//관리자 화면 휴가요청 리스트
 	@GetMapping("/holidayList")
 	public String holidayList(Model model) {
-
+		
 		List<ApprovalRequest> holidayList = apprRequestService.getHolidayList();
 		model.addAttribute("holidayList", holidayList);
-
+		
 		return "workmanagment/holidayList";
 	}
 

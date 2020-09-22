@@ -16,18 +16,20 @@
 <th:block layout:fragment="customContent">
 <script type="text/javascript">
 		$(function() {
-			alert("승인하셨습니다.")
 				$('.apprBtn').click(function() {
 					alert("승인하셨습니다.")
-					
+					var reCode = $(this).val();
 				
-					/* var approval = $.ajax({
+					var approval = $.ajax({
 					url : "/approval",
 					method : "GET",
-					data : {reState : "승인"},
+					data : {reState : "승인", reCode : reCode},
 					dataType: "text" 
 					
-					}) */
+					
+					
+					}) 
+					$('form').submit();
 				})
 		})
 	</script>
@@ -47,7 +49,7 @@
 				</div>
 				<div class="sparkline8-graph">
 					<div class="static-table-list">
-						<form>
+						<form action="/holidayList" method="GET">
 							<table class="table">
 								<thead>
 									<tr>
@@ -70,11 +72,10 @@
 										<td th:text="${l.reEndDate}"></td>
 										<td th:text="${l.reReason}"></td>
 										<td th:text="${l.sortation}"></td>
-										<td ><button type = "button" class = "apprBtn" name = "apprBtn">승인</button>
+										<td ><button type = "button" class = "apprBtn" name = "apprBtn" th:value="${l.reCode}">승인</button>
 										<button type = "button" name = "RefuseBtn">거절</button></td>
 										<td th:text="${l.reState}"></td>
 										<td th:text="${l.reProcessingDate}"></td>
-										<td th:hidden="${l.reCode}"></td>
 									</tr>
 								</tbody>
 							</table>

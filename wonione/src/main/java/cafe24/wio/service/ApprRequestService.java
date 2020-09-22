@@ -18,12 +18,10 @@ public class ApprRequestService {
 	
 	
 	
-	public int approval(String approval) {
-		
-		int apprResult = 0;
+	public int approval(ApprovalRequest approvalRequest) {
 		
 		
-		return apprResult;
+		return apprMapper.approval(approvalRequest);
 	}
 	
 	public int hListDuplicate(String startDate,String endDate) {

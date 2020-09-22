@@ -6,12 +6,12 @@
     
 <mapper namespace="cafe24.wio.mapper.ApprMapper">
 
-	<update id="approval">
+	<update id="approval" parameterType="ApprovalRequest">
 		UPDATE wt_approval_request
 		SET
 			request_state='승인'
 		WHERE 
-			request_code = #{request_06};
+			request_code = #{reCode};
 		
 	
 	
@@ -101,7 +101,8 @@
 	<!-- 휴가신청리스트 검색 -->
 	<select id="getHolidayList" resultType="ApprovalRequest">
 		
-		SELECT request_date as reDate
+		SELECT 	request_code as reCode
+				, request_date as reDate
 				, r.mr_name as mrId
 				, left(request_start_date,10) as reStartDate
 				, left(request_end_date,10) as reEndDate

@@ -12,7 +12,7 @@ import cafe24.wio.bean.Member;
 public interface ApprMapper {
 	
 	
-	public int approval(String approval);
+	public int approval(ApprovalRequest approvalRequest);
 	
 	
 	public int hListDuplicate(String startDate,String endDate);
