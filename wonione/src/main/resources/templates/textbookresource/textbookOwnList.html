@@ -11,7 +11,8 @@
 		<form class="form-inline" id="searchForm" action="/getWhTxbSearch" method="POST" >  
 			<select class="form-control" name="whTxbSk" id="selectWtSk">
 				<option disabled="disabled" selected="selected">::검색조건::</option>
-				<option value="tbi.txb_code">교재입고코드</option>
+				<option value="wt.wh_txb_code">교재입고코드</option>
+				<option value="tbi.txb_code">교재코드</option>
 				<option value="tbi.txb_name">교재명</option>
 				<option value="tbi.txb_publisher">출판사</option>
 				<option value="tbi.txb_author">저자</option>
@@ -40,14 +41,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<th:block th:each="til : ${textbookOwnList}">
-					<th:block th:each="tol : ${til.whTextbook}">
+				<th:block th:each="gtl : ${getTextbookList}">
+					<th:block th:each="tol : ${gtl.whTextbook}">
 						<tr>
 						  <td th:text="${tol.whTxbCode}"></td>
-						  <td th:text="${til.txbCode}"></td>
-						  <td th:text="${til.txbName}"></td>
-						  <td th:text="${til.txbPublisher}"></td>
-						  <td th:text="${til.txbAuthor}"></td>
+						  <td th:text="${gtl.txbCode}"></td>
+						  <td th:text="${gtl.txbName}"></td>
+						  <td th:text="${gtl.txbPublisher}"></td>
+						  <td th:text="${gtl.txbAuthor}"></td>
 						  <td th:text="${tol.whTxbQuantity}"></td>
 						  <td th:text="${tol.whTxbDate}"></td>
 						  <td th:text="${tol.stockTxbQuantity}"></td>
