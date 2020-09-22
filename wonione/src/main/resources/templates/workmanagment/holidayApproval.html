@@ -145,8 +145,9 @@
 									<th>사유</th>
 									<th>구분</th>
 									<th>상태</th>
-									<th>승인자</th>
+									<th>관리자</th>
 									<th>승인날짜</th>
+									<th>거절사유</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -160,6 +161,7 @@
 									<td th:text="${l.reState}"></td>
 									<td th:text="${l.reSupervisor}"></td>
 									<td th:text="${l.reProcessingDate}"></td>
+									<td th:text="${l.refuseReason}"></td>
 								</tr>
 							</tbody>
 						</table>
