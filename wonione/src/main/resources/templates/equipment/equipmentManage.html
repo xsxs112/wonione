@@ -8,7 +8,13 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<h2 th:text="${mainTitle}"></h2>
-	<a href="#">비품등록</a>
+	<div class="container-fluid" style="margin: 10px;">
+		<div>
+			<a href="/equipRegisterMain" class="btn btn-default btn-lg" role="button">등록페이지</a>
+			<a href="#" class="btn btn-default btn-lg" role="button">비품입고내역</a>
+			<a href="#" class="btn btn-default btn-lg" role="button">비품목록</a>
+		</div>
+	</div>	
 	</th:block>
 	
 	<div class="container-fluid" style="margin: 10px;">

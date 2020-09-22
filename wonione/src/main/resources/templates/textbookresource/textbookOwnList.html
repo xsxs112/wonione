@@ -8,7 +8,7 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<h2 th:text="${mainTitle}"></h2>
-		<form class="form-inline" id="searchForm" action="/getWhTxbSearch" method="POST" >  
+		<form class="form-inline" id="searchForm" action="/getWhTxbSearch" method="GET" >  
 			<select class="form-control" name="whTxbSk" id="selectWtSk">
 				<option disabled="disabled" selected="selected">::검색조건::</option>
 				<option value="wt.wh_txb_code">교재입고코드</option>

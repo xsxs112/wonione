@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title>
+	</th:block>
+	<th:block layout:fragment="customContent">
+	<h2 th:text="${mainTitle}"></h2>
+	<form action="#" method="POST">
+		<div class="container-fluid">
+			<table class="table table-block" border="1" style="text-align: center;" >
+				<tr>
+					<td>품명</td>
+					<td>
+						<input class="form-control"  type="text" name="txbName" placeholder="교재명 입력해주세요"/>
+					</td>
+				</tr>
+				<tr>
+					<td>출판사</td>
+					<td>
+						<input class="form-control"  type="text" name="txbPublisher" placeholder="출판사를 입력해주세요"/>
+					</td>
+				</tr>
+				<tr>
+					<td>저자</td>
+					<td>
+						<input class="form-control"  type="text" name="txbAuthor" placeholder="저자를 입력해주세요"/>
+					</td>
+				</tr>
+			</table>
+		</div>		
+		<input type="button" class="btn btn-default btn-block" id="addBtn" value="등록버튼">	
+	</form>
+	</th:block>
+	
+	<div class="container-fluid" style="margin: 10px;">
+	</div>	
+	<th:block layout:fragment="customJsScript">
+	 
+	</th:block>
+</html>
