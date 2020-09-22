@@ -26,9 +26,6 @@
 					method : "GET",
 					data : {reState : "승인", reCode : reCode, inputRefuse : inputRefuse},
 					dataType: "text" 
-					
-					
-					
 					}) 
 					$('form').submit();
 				})
@@ -38,7 +35,7 @@
 					var reCode = $(this).val();
 					
 					var refuse = $.ajax({
-					url : "/refuse",
+					url : "/approval",
 					method : "GET",
 					data : {reState : "거절", reCode : reCode, inputRefuse : inputRefuse},
 					dataType: "text"
