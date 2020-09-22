@@ -18,11 +18,19 @@ public class ApprRequestService {
 	
 	
 	
+	public int reDelete(String reCode) {
+		
+		
+		return apprMapper.reDelete(reCode);
+	}
+	
 	public int approval(ApprovalRequest approvalRequest) {
 		
 		
 		return apprMapper.approval(approvalRequest);
 	}
+	
+
 	
 	public int hListDuplicate(String startDate,String endDate) {
 		int hDuplicate = 1;
