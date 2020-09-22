@@ -66,8 +66,7 @@
 		            alert('Uncaught Error.n' + jqXHR.responseText);
 		        }
 			});
-		});  	
-		
+ 		
  		$('#OfficersCalformBtn').click(function(){
 			
 			var mrId = $('input[name=tb2MrId]').val();
@@ -96,14 +95,14 @@
 					  data: { mrId : mrId, mrName : mrName, pRTitle : pRTitle, opcHourlyWage : opcHourlyWage },
 					  dataType: "json"
 					});
-			request.done(function(data) {
-				console.log(data);
-				$('#cMrId').val(data.mrId);
-				$('#cMrName').val(data.mrName);
-				$('#cpRTitle').val(data.pRTitle);
-				$('#opcHourlyWage').val(data.opcHourlyWage);
-				
-			});
+				request.done(function(data) {
+					console.log(data);
+					$('#cMrId').val(data.mrId);
+					$('#cMrName').val(data.mrName);
+					$('#cpRTitle').val(data.pRTitle);
+					$('#opcHourlyWage').val(data.opcHourlyWage);
+					
+				});
 			request.fail(function( jqXHR, textStatus ) {
 				if (jqXHR.status === 0) {
 		            alert('Not connect.\n Verify Network.');
@@ -139,8 +138,18 @@
 		            alert('Uncaught Error.n' + jqXHR.responseText);
 		        }
 			});
-		});  		
-
+			});  		
+		});  	
+ 		
+ 		$(document).on('keyup','#opcTotalHour', function(){
+ 			var regexp =  /^[0-9]*$/;
+ 			var regexpChange =  /[^0-9]/gi;
+ 			var v = $('#opcTotalHour').val();
+ 			if(!regexp.test(v)){ //숫자가 아니라면 				
+ 				$('#opcTotalHour').val(v.replace(regexpChange, ""));
+ 			}
+ 		});
+ 		
  		$(function(){
  			$('#OfficersCalBaseBtn').click(function(){
  			var baseMulti = 0;
