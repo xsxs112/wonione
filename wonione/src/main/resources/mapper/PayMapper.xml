@@ -69,7 +69,45 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>	
-
+	<!-- 수정할 직원 급여정보 불러오기 -->
+	<select id = "" parameterType="String" resultType="OfficersPay">
+		SELECT
+			p.op_code
+			,p.mr_id
+			,p.op_pay
+			,pd.opd_code
+			,pd.iy_code
+			,pd.opd_income_tax
+			,pd.opd_resident_income_tax
+			,pd.opd_employment_insurance
+			,pd.opd_national_pension
+			,pd.opd_health_insurance
+			,pd.opd_longterm_nursing_insurance
+			,pd.opd_total
+			,pc.opc_code
+			,pc.opc_hourly_wage
+			,pc.opc_total_hour
+			,pc.opc_base_pay
+			,pc.opc_food_expenses
+			,pc.opc_transportation
+			,pc.opc_welfare
+			,pc.opc_bonus
+			,pc.opc_ect
+			,pc.opc_total		
+		FROM
+			wt_officers_pay AS p
+			INNER JOIN 
+			wt_officers_pay_deduction AS pd
+			ON 
+			p.mr_id = pd.mr_id
+			LEFT JOIN 
+			wt_officers_pay_calculate AS pc
+			ON 
+			p.mr_id = pc.mr_id	
+		WHERE
+			p.mr_id = #{mrId};
+	</select>
+		
 	<!-- 강사급여목록조회  [최근것만 받아오게 쿼리문 수정완] -->
 	<select id = "getStaffPayList" resultType="StaffPay" >
 		SELECT 

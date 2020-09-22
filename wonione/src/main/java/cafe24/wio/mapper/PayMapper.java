@@ -16,4 +16,7 @@ public interface PayMapper {
 	//직원 급여 목록 조회
 	public List<OfficersPay> getOfficersPayList();
 
+	//수정할직원정보 불러오기
+	public OfficersPay getMrById(String mrId);
+
 }
