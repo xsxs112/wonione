@@ -1,154 +1,45 @@
 (function ($) {
- "use strict";
-
-	/*----------------------------
-	 jQuery MeanMenu
-	------------------------------ */
-	jQuery('nav#dropdown').meanmenu();	
-	/*----------------------------
-	 jQuery myTab
-	------------------------------ */
-	$('#myTab a').on('click', function (e) {
-		  e.preventDefault()
-		  $(this).tab('show')
-		});
-		$('#myTab3 a').on('click', function (e) {
-		  e.preventDefault()
-		  $(this).tab('show')
-		});
-		$('#myTab4 a').on('click', function (e) {
-		  e.preventDefault()
-		  $(this).tab('show')
-		});
-		$('#myTabedu1 a').on('click', function (e) {
-		  e.preventDefault()
-		  $(this).tab('show')
-		});
-
-	  $('#single-product-tab a').on('click', function (e) {
-		  e.preventDefault()
-		  $(this).tab('show')
-		});
-	
-	$('[data-toggle="tooltip"]').tooltip(); 
-	
-	$('#sidebarCollapse').on('click', function () {
-		 $('#sidebar').toggleClass('active');
-	 });
-	// Collapse ibox function
-	$('#sidebar ul li').on('click', function () {
-		var button = $(this).find('i.fa.indicator-mn');
-		button.toggleClass('fa-plus').toggleClass('fa-minus');
-		
-	});
-	/*-----------------------------
-		Menu Stick
-	---------------------------------*/
-	$(".sicker-menu").sticky({topSpacing:0});
-		
-	$('#sidebarCollapse').on('click', function () {
-		$("body").toggleClass("mini-navbar");
-		SmoothlyMenu();
-	});
-	$(document).on('click', '.header-right-menu .dropdown-menu', function (e) {
-		  e.stopPropagation();
-	});
-	/*----------------------------
-	 wow js active
-	------------------------------ */
-	 new WOW().init();
-	/*----------------------------
-	 owl active
-	------------------------------ */  
-	$("#owl-demo").owlCarousel({
-      autoPlay: false, 
-	  slideSpeed:2000,
-	  pagination:false,
-	  navigation:true,	  
-      items : 4,
-	  /* transitionStyle : "fade", */    /* [This code for animation ] */
-	  navigationText:["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"],
-      itemsDesktop : [1199,4],
-	  itemsDesktopSmall : [980,3],
-	  itemsTablet: [768,2],
-	  itemsMobile : [479,1],
-	});
-	/*----------------------------
-	 price-slider active
-	------------------------------ */  
-	  $( "#slider-range" ).slider({
-	   range: true,
-	   min: 40,
-	   max: 600,
-	   values: [ 60, 570 ],
-	   slide: function( event, ui ) {
-		$( "#amount" ).val( "£" + ui.values[ 0 ] + " - £" + ui.values[ 1 ] );
-	   }
-	  });
-	  $( "#amount" ).val( "£" + $( "#slider-range" ).slider( "values", 0 ) +
-	   " - £" + $( "#slider-range" ).slider( "values", 1 ) );
-	/*--------------------------
-	 scrollUp
-	---------------------------- */	
-	$.scrollUp({
-        scrollText: '<i class="fa fa-angle-up"></i>',
-        easingType: 'linear',
-        scrollSpeed: 900,
-        animation: 'fade'
-    });
-	
+ 
 	
 	
 	
 	
 	
 	/*=========================================================================================조원준 js start*/
+
+	
 	//상담수정
 	$('#upConsulting').click(function(){
-		var Name = $('input[name=consultingTitle]');
-		if(Name.val() != ""){
-			if(confirm('수정하시겠습니까?')){
-				alert('수정되었습니다.');
-				$('#consultingForm').submit();
-			}else{
-				alert('취소하셨습니다.');
-			}
-		}else{
-			alert('제목을 클릭해주세요.');
-		}
-		
+		var upconsulting = $('#upConsultingList');
+		upconsulting.submit();
 	});
 	
 	//상담삭제                           
 	$('#deleteConsulting').click(function(){
-		var Name = $('input[name=consultingTitle]');
-		if(Name.val() != ""){
-			if(confirm('삭제하시겠습니까?')){
-				var csCode =  $('#consultingCode').val();
-				var request = $.ajax({
-					url: "/deleteConsulting",
-					method: "POST",
-					data: { csCode : csCode},
-					dataType: "json"
-				});
-				request.done(function(data) {
-					if(data = '1'){
-						alert('삭제되었습니다.');
-						location.href="/consultingList";
-	
-					}else{
-						alert('삭제에 실패하였습니다.');
-					}
-				});
-				request.fail(function( jqXHR, textStatus ) {
-					 alert( "Request failed: " + textStatus );
-				});
+		if(confirm('삭제하시겠습니까?')){
+			var csCode =  $('#consultingCode').val();
+			var request = $.ajax({
+				url: "/deleteConsulting",
+				method: "POST",
+				data: { csCode : csCode},
+				dataType: "json"
+			});
+			request.done(function(data) {
+				if(data = '1'){
+					alert('삭제되었습니다.');
+					location.href="/consultingList";
+
 				}else{
-					alert('취소하셨습니다.');
+					alert('삭제에 실패하였습니다.');
 				}
-		}else{
-			alert('제목을 클릭해주세요.');
-		}
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				 alert( "Request failed: " + textStatus );
+			});
+			}else{
+				alert('취소하셨습니다.');
+			}
+		
 	});
 	
 	
@@ -166,10 +57,9 @@
 				$('#consultingCode').attr('value',data.cs_code);
 				$('#consultingTitle').attr('value',data.cs_title);
 				$('#consultingDate').attr('value',data.cs_date);
-				$('#consultingTeacherCode').attr('value',data.mr_o_id);
-				$('#consultingTeacherName').attr('value',data.mr_name);
-				$('#consultingStudent').attr('value',data.cs_s_name);
-				$('#consultingClass').attr('value',data.cs_lec_name);
+				$('#consultingTeacher').attr('value',data.mr_name);
+				$('#consultingStudent').attr('value',data.cs_lec_name);
+				$('#consultingClass').attr('value',data.cs_s_name);
 				$('#consultingData').attr('value',data.cs_data);
 				textareaVal.text(data.cs_data);
 				

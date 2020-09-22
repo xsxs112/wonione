@@ -42,16 +42,6 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>
-	<!-- 직원정보급여계 넘기기 -->
-	<select id ="officersFoinForm" resultType="OfficersPay" parameterType="String">
-		SELECT
-			m.mr_id				AS mrId
-			,m.mr_name			AS mrName
-		FROM
-			wt_member_registration AS m
-		WHERE 
-			m.mr_id = #{mrId};	
-	</select>
 	
 	<!-- 직원정보조회 -->
 	<select id ="callOfficersInfo" resultType="OfficersPay" parameterType="String">

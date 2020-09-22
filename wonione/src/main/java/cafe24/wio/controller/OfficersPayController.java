@@ -41,25 +41,21 @@ public class OfficersPayController {
 		
 		return "pay/officersPay";		
 	}
-	
-	//직원정보 급여계 넘기기
-	@GetMapping("/officersFoinForm")
-	public String officersFoinForm(@RequestParam(value="mrId", required = false) String mrId 
-									,Model model) {
-		System.out.println(mrId +" <-mrId");
-		
-		OfficersPay officersFoin = officersPayService.officersFoinForm(mrId);
-		model.addAttribute("officersFoin", officersFoin);
-		
-		return "pay/officersPay";
-	}
+
 	
 	//직원 정보 불러오기
 	@PostMapping(value = "/callOfficersInfo",produces = "application/json")
 	@ResponseBody
-	public OfficersPay callOfficersInfo(String mrId) {
+	public OfficersPay callOfficersInfo(String mrId
+										,@RequestParam(value = "pRTitle", required = false) String pRTitle
+										,@RequestParam(value = "HourlyWage", required = false) String HourlyWage			
+										) {
 		System.out.println(mrId +" <-mrId");
 		OfficersPay OfficersInfo = officersPayService.callOfficersInfo(mrId);
+		
+		//직원정보 급여계 넘기기
+		System.out.println(pRTitle +" <-pRTitle 직원정보 급여계");
+		System.out.println(HourlyWage +" <-HourlyWage 직원정보 급여계");				
 
 		return OfficersInfo;
 	}
