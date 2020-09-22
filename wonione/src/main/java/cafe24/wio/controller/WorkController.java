@@ -24,6 +24,16 @@ public class WorkController {
 
 	
 	
+	//관리자화면 휴가 승인
+	@GetMapping("/approval")
+	public String approval(@RequestParam(value = "reState", required = false) String reState) {
+
+		apprRequestService.approval(reState);
+
+		return "workmanagment/holidayList";
+	}
+	
+	
 	//관리자 화면 휴가요청 리스트
 	@GetMapping("/holidayList")
 	public String holidayList(Model model) {

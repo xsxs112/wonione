@@ -18,6 +18,14 @@ public class ApprRequestService {
 	
 	
 	
+	public int approval(String approval) {
+		
+		int apprResult = 0;
+		
+		
+		return apprResult;
+	}
+	
 	public int hListDuplicate(String startDate,String endDate) {
 		int hDuplicate = 1;
 		

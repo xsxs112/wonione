@@ -6,8 +6,44 @@
     
 <mapper namespace="cafe24.wio.mapper.ApprMapper">
 
+	<update id="approval">
+		UPDATE wt_approval_request
+		SET
+			request_state='승인'
+		WHERE 
+			request_code = #{request_06};
+		
+	
+	
+	</update>
+
+	<update id="modifyMember" parameterType="Member">
+		UPDATE tb_member
+		<trim prefix="SET" suffixOverrides=",">
+
+			<!-- neq는 !=랑 같은 말 -->
+			<if test="memberPw != null and memberPw neq''.toString()">
+				m_pw = #{memberPw},
+			</if>
+			<if test="memberName != null and memberName neq''.toString()">
+				m_name = #{memberName},
+			</if>
+			<if test="memberLevel != null and memberLevel neq''.toString()">
+				m_level = #{memberLevel},
+			</if>
+			<if test="memberEmail != null and memberEmail neq''.toString()">
+				m_email = #{memberEmail},
+			</if>
+			<if test="memberAddr != null and memberAddr neq''.toString()">
+				m_addr = #{memberAddr}
+			</if>
+		</trim>
+		WHERE
+		m_id = #{memberId};
 
 
+
+	</update>
 
 	<select id="hListDuplicate" parameterType="String" resultType="int">
 	
