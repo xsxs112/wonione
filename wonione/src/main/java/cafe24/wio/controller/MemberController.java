@@ -1,9 +1,12 @@
 package cafe24.wio.controller;
 
-import java.util.List;
 
+import java.sql.Date;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +25,10 @@ import cafe24.wio.service.MemberService;
 @Controller
 public class MemberController {
 	
+	
 	@Autowired
 	private MemberService memberService;
+	
 	
 	// 2-1. 로그아웃
 	@GetMapping("/logout")
@@ -45,7 +50,10 @@ public class MemberController {
 		System.out.println(mrId + "<--mrId MemberController 변수");
 		System.out.println(mrPw + "<--mrPw MemberController 변수");
 		
+
+		
 		Member member = memberService.getMemberInfo(mrId);
+		
 		System.out.println(mrId + "<-- 로그인memberController");
 		
 		if(member != null) {
@@ -67,7 +75,7 @@ public class MemberController {
 		return "login/login";
 	}
 	
-	//1-3. 아이디 중복 검사
+	//1-4. 아이디 중복 검사
 	@ResponseBody
 	@RequestMapping("/WIOMemberIdCheck")
 	public String WIOMemberIdCheck(@RequestParam(value = "mrId",required = false)String mrId
@@ -81,6 +89,48 @@ public class MemberController {
 		System.out.println(WIOIdCheck +"<-- id 체크 / memberController");
 		
 		return WIOIdCheck;
+	}
+	
+	//1-3. 구성원 등록. 등록 후, 등록 정보를 바로 넘겨서? 수납 처리할 것. 20.09.23.09:58
+	
+	@PostMapping("/addWIOMember")
+	public String addWIOMember(Member member
+								,@RequestParam(value = "mrId",required = false) 			String mrId
+								,@RequestParam(value = "mrPw",required = false) 			String mrPw
+								,@RequestParam(value = "mrName",required = false) 			String mrName
+								,@RequestParam(value = "levelNum",required = false) 		int levelNum
+								,@RequestParam(value = "mrPhone",required = false) 			String mrPhone
+								,@RequestParam(value = "mrAddr",required = false) 			String mrAddr
+								,@RequestParam(value = "mrTargetScore",required = false) 	int mrTargetScore
+								,@RequestParam(value = "pmRCode",required = false) 			String pmRCode
+								,@RequestParam(value = "mrAccountNum",required = false) 	String mrAccountNum
+								,@RequestParam(value = "shuttleNum",required = false) 		String shuttleNum
+								,@RequestParam(value = "mrJoinDate",required = false) 		Date mrJoinDate) {
+		
+		System.out.println(member + "<-- member / memberController");
+		System.out.println(mrId +"<-- mrId memberController");
+		System.out.println(mrPw +"<-- mrPw memberController");
+		System.out.println(mrName +"<-- mrName memberController");
+		System.out.println(levelNum +"<-- levelNum memberController");
+		System.out.println(mrPhone +"<-- mrPhone memberController");
+		System.out.println(mrAddr +"<-- mrAddr memberController");
+		System.out.println(mrTargetScore +"<-- mrTargetScore memberController");
+		System.out.println(pmRCode +"<-- pmRCode memberController");
+		System.out.println(mrAccountNum +"<-- mrAccountNum memberController");
+		System.out.println(shuttleNum +"<-- shuttleNum memberController");
+		System.out.println(mrJoinDate +"<-- mrJoinDate memberController");
+		
+		memberService.addWIOMember(member);
+		
+		return "member/WIOMemberList";
+	}
+
+	@GetMapping("/addWIOMember")
+	public String addWIOMember(Model model) {
+		
+		model.addAttribute("title", "구성원 정보 입력");
+		
+		return "member/addWIOMember";
 	}
 	
 
@@ -100,6 +150,7 @@ public class MemberController {
 		
 		return "member/MemberInfo";
 	}
+	
 
 	//1. 리스트 가져오기
 	@GetMapping("/getWIOMemberList")
