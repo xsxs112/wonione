@@ -2,12 +2,12 @@ package cafe24.wio.controller;
 
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,13 +28,16 @@ public class OfficersPayController {
 	private final static Logger logger = LoggerFactory.getLogger(OfficersPayController.class);
 		
 	//직원급여계 입력하기
-	@PostMapping("/addOffiCalpay")
-	public String addOffiCalpay(OfficersPay officersPay
+	@PostMapping(value = "/addOffiCalpay",produces = "application/json")
+	@ResponseBody
+	public int addOffiCalpay(OfficersPay officersPay
 								,@RequestParam(value = "mrId", required = false) String mrId
-								,@RequestParam(value = "opcCode", required = false) String opcCode) {
+								,@RequestParam(value = "opcCode", required = false) String opcCode
+								) { 
+	
+		int addOffiCalpayNum = officersPayService.addOffiCalpay(officersPay);	
 		
-		officersPayService.addOffiCalpay(officersPay);
-		return "redirect:/addOffiCalpay";		
+		return addOffiCalpayNum;		
 	}		
 	
 	//직원 정보 불러오기

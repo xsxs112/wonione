@@ -22,12 +22,12 @@
 			  dataType: "json"
 			});
 			request.done(function(data) {
-				console.log(data);
 				$('#mrId').val(data.mrId);
 				$('#mrName').val(data.mrName);
 				$('#mrJoinDate').val(data.mrJoinDate);
 				$('#pmRTitle').val(data.pmRTitle);
 				$('#mrAccountNum').val(data.mrAccountNum);
+				$('#opcCode').val(data.opcCode);
 				
 			});
 			request.fail(function( jqXHR, textStatus ) {
@@ -36,9 +36,9 @@
  		});
  		$('#OfficersCalformBtn').click(function(){
 			
-			var mrId = $('input[name=tb2MrId]').val();
+			var mrId = $('input[name=mrId]').val();
 			console.log(mrId);
-			var mrName = $('input[name=tb2MrName]').val();
+			var mrName = $('input[name=mrName]').val();
 			console.log(mrName);
 			var pRTitle = $('select[name=pRTitle] option:selected').val();
 			console.log(pRTitle);
@@ -84,7 +84,6 @@
  			}
  		});
  		
- 		$(function(){
  			$('#OfficersCalBaseBtn').click(function(){
  			var baseMulti = 0;
  			var pRTitle = $('#cpRTitle').val();
@@ -94,14 +93,11 @@
 				return;
 			}
  			baseMulti += Number($('#opcHourlyWage').val()) * Number($('#opcTotalHour').val());
- 				console.log(baseMulti);	
  				$('#opcBasePay').val(baseMulti);
  				$('#cpRTitle').val(pRTitle);
  				$('#cMrId').val(mrId);
  			}); 			
-		}); 
- 		
- 		$(function(){
+		 		 		
  			$('#OfficersCalTotalBtn').click(function(){
  			var calSum = 0;
  			var opcBasePay = Number($('#opcBasePay').val());
@@ -116,7 +112,6 @@
  					+ opcWelfare 						
  					+ opcBonus 						
  					+ opcEct; 						
- 				console.log(calSum);	
  				$('#opcFoodExpenses').val(opcFoodExpenses);
  				$('#opcTransportation').val(opcTransportation);
  				$('#opcWelfare').val(opcWelfare);
@@ -124,33 +119,58 @@
  				$('#opcEct').val(opcEct);
  				$('#opcTotal').val(calSum);
  			}); 			
-		});
+	
  		
 		$('#offiCalInsertBtn').click(function(){
-			
 			var foinForm = $('#offiCalFoinForm');
-			var mrId = $('#cMrId');
-			var pRTitle = $('#cpRTitle');
-			var opcHourlyWage = $('#opcHourlyWage');
-			var opcTotalHour = $('#opcTotalHour');
-			var opcBasePay = $('#opcBasePay');
-			var opcFoodExpenses = $('#opcFoodExpenses');
-			var opcTransportation = $('#opcTransportation');
-			var opcWelfare = $('#opcWelfare');
-			var opcBonus = $('#opcBonus');
-			var opcEct = $('#opcEct');
-			var opcTotal = $('#opcTotal');			
-		
- 			if(opcBasePay.val() == ''){
-				alert('기본급을 입력해주세요.');				
-				return;			
-			}; 
-			if(opcTotal.val() == ''){
-				alert('급여계 총액을 계산해주세요.');				
-				return;			
-			}; 
-			foinForm.attr('action', '/addOffiCalpay');
-			foinForm.submit();		 	
+			var opcCode = $('#opcCode').val();
+			var mrId = $('#cMrId').val();
+			var pRTitle = $('#cpRTitle').val();
+			var opcHourlyWage = $('#opcHourlyWage').val();
+			var opcTotalHour = $('#opcTotalHour').val();
+			var opcBasePay = $('#opcBasePay').val();
+			var opcFoodExpenses = $('#opcFoodExpenses').val();
+			var opcTransportation = $('#opcTransportation').val();
+			var opcWelfare = $('#opcWelfare').val();
+			var opcBonus = $('#opcBonus').val();
+			var opcEct = $('#opcEct').val();
+			var opcTotal = $('#opcTotal').val();		
+			
+			var request = $.ajax({
+				  url: "/addOffiCalpay",
+				  method: "POST",
+				  data: { opcCode : opcCode
+					  	, mrId : mrId
+					  	, pRTitle : pRTitle
+					  	, opcHourlyWage : opcHourlyWage
+					  	, opcTotalHour : opcTotalHour
+					  	, opcBasePay : opcBasePay
+					  	, opcFoodExpenses : opcFoodExpenses
+					  	, opcTransportation : opcTransportation
+					  	, opcWelfare : opcWelfare
+					  	, opcBonus : opcBonus
+					  	, opcEct : opcEct
+					  	, opcTotal : opcTotal },
+				  dataType: "json"
+				});
+					request.done(function(data) {
+					$('#opcCode').val(data.opcCode);
+					$('#mrId').val(data.mrId);
+					$('#pRTitle').val(data.pRTitle);
+					$('#opcHourlyWage').val(data.opcHourlyWage);
+					$('#opcTotalHour').val(data.opcTotalHour);
+					$('#opcBasePay').val(data.opcBasePay);
+					$('#opcFoodExpenses').val(data.opcFoodExpenses);
+					$('#opcTransportation').val(data.opcTransportation);
+					$('#opcWelfare').val(data.opcWelfare);
+					$('#opcBonus').val(data.opcBonus);
+					$('#opcEct').val(data.opcEct);
+					$('#opcTotal').val(data.opcTotal);					
+				});
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+				});	
+					
 		});	
 	});
 		
@@ -183,13 +203,13 @@
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">아이디</td>
 				<td colspan="3" style="text-align: left;">
-				<input type="text" class="form-control" id="mrId" name="tb2MrId" th:value="${mrId}" readonly>
+				<input type="text" class="form-control" id="mrId" name="mrId" th:value="${mrId}" readonly>
 				</td>
 			</tr>
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">이름</td>
 				<td colspan="3" style="text-align: left;">
-				<input type="text" class="form-control" id="mrName" name="tb2MrName" th:value="${mrName}" readonly>
+				<input type="text" class="form-control" id="mrName" name="mrName" th:value="${mrName}" readonly>
 				</td>			
 			</tr>
 			<tr>
