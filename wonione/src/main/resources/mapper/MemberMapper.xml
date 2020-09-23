@@ -10,18 +10,18 @@
 		INSERT 
 		INTO 
 			wt_member_registration(
-				mr_id				AS mrId
-			, 	mr_pw				AS mrPw
-			, 	mr_name				AS mrName
-			, 	level_num			AS levelNum
-			, 	mr_phone			AS mrPhone
-			, 	mr_addr				AS mrAddr
-			, 	mr_target_score		AS mrTargetScore
-			, 	pm_r_code			AS pmRCode
-			,	mr_account_num		AS mrAccountNum
-			, 	shuttle_num			AS shuttleNum
-			, 	mr_join_date		AS mrJoinDate
-			, 	mr_reg_date			AS mrRegDate
+				mr_id			
+			, 	mr_pw				
+			, 	mr_name			
+			, 	level_num		
+			, 	mr_phone		
+			, 	mr_addr			
+			, 	mr_target_score		
+			, 	pm_r_code			
+			,	mr_account_num	
+			, 	shuttle_num			
+			, 	mr_join_date		
+			, 	mr_reg_date		
 		) VALUES (
 				#{mrId}
 			, 	#{mrPw}
@@ -101,6 +101,7 @@
 			,	m.mr_addr			AS mrAddr
 			,	m.mr_target_score	AS mrTargetScore
 			,	m.mr_account_num	AS mrAccountNum
+			,	m.shuttle_num		AS shuttleNum
 			,	m.mr_join_date		AS mrJoinDate
 			,	m.mr_reg_date		AS mrRegDate
 			,	pr.pm_r_title		AS pmRTitle
