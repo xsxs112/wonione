@@ -53,4 +53,43 @@ public class QuestionService {
 	      return resultMap;
 	}
 
+	public Map<String, Object> question(int currentPage) {
+			//보여줄 행의 갯수
+	      final int ROW_PER_PAGE = 1;
+	      
+	      //보여줄 행의 시작점 초기화
+	      int startRow = 0;
+	      
+	      //시작페이지번호, 끝페이지번호
+	      int startPageNum = 1;
+	      int lastPageNum = ROW_PER_PAGE;
+	     
+	      
+	      //페이징 알고리즘
+	      startRow = (currentPage - 1) * ROW_PER_PAGE ;
+	      
+	      Map<String,Object> parameterMap = new HashMap<String,Object>();
+	            
+	      parameterMap.put("startRow", startRow);
+	      parameterMap.put("rowPerPage", ROW_PER_PAGE);
+	      
+	      double totalRowCount = questionMapper.QuestionCount();
+	      
+	      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
+	      
+	      List<Map<String,Object>> Question = questionMapper.Question(parameterMap);
+	      
+	      if(currentPage >= (lastPage-4)) {
+	         lastPageNum = lastPage;
+	      }
+	      
+	      Map<String,Object> resultMap = new HashMap<String,Object>();
+	      resultMap.put("Question", Question);
+	      resultMap.put("lastPage", lastPage);
+	      resultMap.put("startPageNum", startPageNum);
+	      resultMap.put("lastPageNum", lastPageNum);
+	      
+	      return resultMap;
+	}
+
 }

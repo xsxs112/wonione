@@ -27,5 +27,17 @@ public class QuestionController {
 		
 		return "question/QuestionList";
 	}
+	@GetMapping("/Question")
+	public String Question(Model model
+							,@RequestParam(value="questionName", required = false) String questionName
+							,@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
+			Map<String,Object> questionMap = questionService.question(currentPage);
+			model.addAttribute("lastPage", questionMap.get("lastPage"));
+			model.addAttribute("Question", questionMap.get("Question"));
+			model.addAttribute("startPageNum", questionMap.get("startPageNum"));
+			model.addAttribute("lastPageNum", questionMap.get("lastPageNum"));
+			model.addAttribute("currentPage",currentPage);         
+		return "question/Question";
+	}
 
 }

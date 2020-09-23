@@ -13,5 +13,9 @@ public interface QuestionMapper {
 
 	public int QuestionListCount();
 
+	public int QuestionCount();
+
+	public List<Map<String, Object>> Question(Map<String, Object> parameterMap);
+
 
 }

@@ -11,18 +11,60 @@
 		<result column="qe_answer" 		property="qeAnswer"/>
 		<result column="qe_date" 		property="qeDate"/>
 	</resultMap>
+	<select id="Question" resultType="hashMap" parameterType="map">
+		SELECT 
+		 	 q.rowNum   AS rowNum
+		 	,q.qe_code
+			,q.qe_data
+			,q.qe_data
+			,q.qe_score
+			,q.qe_answer
+			,q.qe_date
+			,qe_A
+			,qe_B
+			,qe_C
+			,qe_D
+      FROM 
+         (SELECT
+            (@rowNum := @rowNum+1) AS rowNum,
+        	 q.qe_code
+			,q.qe_data
+			,q.qe_date
+			,q.qe_score
+			,q.qe_answer
+			,q.qe_A
+			,q.qe_B
+			,q.qe_C
+			,q.qe_D
+         FROM
+			wt_questions_enrollment AS q  
+         	INNER JOIN
+           	wt_question_taker AS qt
+         	on
+           	q.qt_codeName = qt.qt_codename
+         	JOIN
+           	(SELECT @rowNum :=0 ) AS r   
+       		ORDER BY q.qt_codeName ASC) AS q
+       		LIMIT #{startRow},#{rowPerPage};
+	</select>
+	<select id="QuestionCount" resultType="int">
+      SELECT
+         COUNT(*)
+      FROM
+         wt_questions_enrollment;
+    </select>
 	<select id="QuestionList" resultType="hashMap" parameterType="map">
 		SELECT 
 		 	 q.rowNum   AS rowNum
-		 	,qt_codeName
+		 	,qt_codename
 		 	,qt_title
 		 	,qt_teacher
 		 	,qt_date
 			,mr_name
       FROM 
          (SELECT
-            (@rowNum := @rowNum+1) AS rowNum,
-        	q.qt_codeName
+            (@rowNum := @rowNum+1) AS rowNum
+            ,q.qt_codename
         	,q.qt_title
         	,q.qt_teacher
         	,q.qt_date

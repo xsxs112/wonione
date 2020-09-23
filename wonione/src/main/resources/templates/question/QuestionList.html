@@ -8,28 +8,27 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 		<div style="border: 1px; padding-left: 350px; padding-right: 350px;" class="container-fluid">
-	<!-- 상담리스트페이지 -->
+		<div class="product-payment-inner-st">
 		<h4>문제리스트</h4>
-		<table border="1" class="table">
-	  		<thead>
-	  			<tr>
-	  				<th>순번</th>
-	  				<th>제목</th>
-	  				<th>출제자</th>
-	  				<th>출제일</th>
-	  			</tr>
-	  		</thead>	  
-	  		<!-- 상담내역출력 -->	
-	  		<tbody>
-  				<tr th:each="q : ${QuestionList}">
-	  				<td style="text-align:center;" th:text="${#numbers.formatInteger(q.rowNum,0,'POINT')}"></td>
-	  				<td><input type="hidden"><a>[[${q.qt_title}]]</a></td>
-	  				<td th:text="${q.mr_name}"></td>
-	  				<td th:text="${q.qt_date}"></td>
-	  			</tr>
-	  		</tbody>	
-  		</table>
-  		<!-- 상담리스트의 페이징처리 -->
+			<table border="1" class="table">
+		  		<thead>
+		  			<tr>
+		  				<th>순번</th>
+		  				<th>제목</th>
+		  				<th>출제자</th>
+		  				<th>출제일</th>
+		  			</tr>
+		  		</thead>	  
+		  		<tbody>
+	  				<tr th:each="q : ${QuestionList}">
+		  				<td style="text-align:center;" th:text="${#numbers.formatInteger(q.rowNum,0,'POINT')}"></td>
+		  				<td><input type="hidden" id="questionCodeName"  th:value="${q.qt_codename}"><a class="questionCodeName">[[${q.qt_title}]]</a></td>
+		  				<td th:text="${q.mr_name}"></td>
+		  				<td th:text="${q.qt_date}"></td>
+		  			</tr>
+		  		</tbody>	
+	  		</table>
+  		</div>
   		<a th:href="@{/QuestionList}">처음</a>
 		    
 		    <span th:if="${currentPage > 1}"><a th:href="@{/QuestionList(currentPage=(${currentPage}-1))}">이전</a></span>
@@ -44,6 +43,6 @@
 		    <span th:unless="${currentPage != lastPage}" th:text="다음"></span>
 		    <a th:href="@{/QuestionList(currentPage=${lastPage})}">마지막</a>
   	</div>
-	
+	<script src="js/question.js"></script>
 	</th:block>
 </html>
