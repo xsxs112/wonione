@@ -278,3 +278,9 @@ textarea {
         page-break-after: avoid;
     }
 }
+.QuestionCheckbox{
+	font-size:x-large;
+	width:17px;
+	height:17px;
+    
+}
