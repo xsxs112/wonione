@@ -11,6 +11,7 @@ import cafe24.wio.bean.WhTextbook;
 @Mapper
 public interface TextbookMapper {
 	
+	
 	//교재 지급내역 검색
 	public List<SupplyTextbook> getSuppTxbSearch(String suppTxbSk, String suppTxbSv);
 	
@@ -22,6 +23,15 @@ public interface TextbookMapper {
 	
 	//교재 지급내역 조회
 	public List<SupplyTextbook> getTextbookSuppList();
+	
+	//교재지급코드 maxcount
+	public String getTxbSuppMaxCode();
+	
+	//교재입고코드 maxcount
+	public String getTxbWhMaxCode();
+	
+	//교재정보코드 maxcount
+	public String getTxbInfoMaxCode();
 	
 	//교재코드로 교재정보 가져오기 
 	public TextbookBasicInfo getOnlyTxbInfo(String txbInfoCode);

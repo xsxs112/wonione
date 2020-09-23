@@ -26,8 +26,6 @@ public class TextbookController {
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
-
-	
 	
 	//교재 지급내역 검색
 	@GetMapping("/getSuppTxbSearch")
@@ -60,7 +58,6 @@ public class TextbookController {
 		model.addAttribute("getTextbookList", whTxbSearchResult);
 		return "textbookresource/textbookOwnlist";
 	}
-
 	
 	//입고내역유무 체크
 	@PostMapping(value="/whTxbCheck", produces="application/json") 
@@ -133,12 +130,14 @@ public class TextbookController {
 		logger.info("==============================");
 		logger.info("교재정보등록페이지 textbookInfoRegister 겟매핑!!!!");
 		logger.info("==============================");
-		
+		String txbCode = textbookService.getTxbInfoMaxCode();
 		model.addAttribute("title", "교재기본정보등록  페이지");
 		model.addAttribute("mainTitle", "교재기본정보등록 페이지");
-		
+		model.addAttribute("txbCode", txbCode);
+		System.out.println(txbCode);
 		return "textbookresource/textbookInfoRegister";
 	}	
+	
 	//교재 최초입고등록
 	@PostMapping("/textbookFirstWahoRegister")
 	public String textbookFirstWahoRegister(Model model
@@ -164,7 +163,8 @@ public class TextbookController {
 		//교재 기본정보조회
 		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList();
 		model.addAttribute("textbookInfoList", textbookinfolist);
-		
+		String whTxbCode = textbookService.getTxbWhMaxCode();
+		model.addAttribute("whTxbCode", whTxbCode);
 		return "textbookresource/textbookFirstWahoRegister";
 	}
 	
@@ -198,6 +198,8 @@ public class TextbookController {
 		//교재입고목록 조회
 		List<WhTextbook> whTextbookList = textbookService.getWhTextbookList();
 		model.addAttribute("whTextbookList", whTextbookList);
+		String whTxbCode = textbookService.getTxbWhMaxCode();
+		model.addAttribute("whTxbCode", whTxbCode);
 		
 		return "textbookresource/textbookWahoRegister";
 	}
@@ -233,7 +235,6 @@ public class TextbookController {
 		logger.info("==============================");
 		logger.info("교재관리페이지 textbookManage 겟매핑!!!!");
 		logger.info("==============================");
-		
 		
 		return "textbookresource/textbookManage";
 		}

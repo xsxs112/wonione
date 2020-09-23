@@ -6,6 +6,205 @@
     
 <mapper namespace="cafe24.wio.mapper.EquipmentMapper">
 
+<resultMap type="Equipment" id="equipmentResult">
+<result column="eq_code" 		property="eqCode"/>
+<result column="eq_category" 		property="eqCategory"/>
+<result column="eq_name" 		property="eqName"/>
+<result column="eq_model_name" 		property="eqModelName"/>
+<result column="eq_writer" 		property="eqWriter"/>
+<result column="eq_reg_date" 		property="eqReg_date"/>
+<result column="eq_remark" 		property="eqRemark"/>
+</resultMap>
+
+<resultMap type="WhEquipment" id="whEquipmentResult">
+
+<result column="wh_eq_code" 		property="whEqCode"/>
+<result column="eq_code" 		property="eqCode"/>
+<result column="wh_eq_name" 		property="whEqName"/>
+<result column="wh_eq_unit_price" 		property="whEqUnitPrice"/>
+<result column="wh_eq_quantity" 		property="whEqQuantity"/>
+<result column="wh_eq_total" 		property="whEqTotal"/>
+<result column="wh_eq_date" 		property="whEqDate"/>
+<result column="wh_eq_writer" 		property="whEqWriter"/>
+<result column="wh_eq_reg_date" 		property="whEqRegDate"/>
+<result column="wh_eq_remark" 		property="whEqRemark"/>
+
+</resultMap>
+
+<!-- 비품관리 추가 -->
+<!-- <insert id="">
+INSERT INTO wt_equip_management
+	(
+		eq_mng_code
+	,	eq_code
+	,	eq_name
+	,	eq_quantity
+	,	eq_mng_quantity
+	,	eq_stock_quantity
+	,	eq_main_director
+	,	eq_sub_director
+	,	eq_reg_date
+	,	eq_remark)VALUES (
+
+		''
+	,	''
+	,	''
+	,	0
+	,	0
+	,	0
+	,	''
+	,	''
+	,	CURRENT_TIME()
+	,	'')
+</insert> -->
+
+<!-- 비품관리테이블 조회 -->
+<!-- <select id="">
+SELECT 
+		eq_mng_code
+	,	eq_code
+	,	eq_name
+	,	eq_quantity
+	,	eq_mng_quantity
+	,	eq_stock_quantity
+	,	eq_main_director
+	,	eq_sub_director
+	,	eq_reg_date
+	,	eq_remark
+FROM 
+	wt_equip_management
+</select> -->
+
+<!-- 비품입고등록 -->
+<!-- <insert id="">
+
+INSERT INTO wt_warehousing_equipment
+	(
+		wh_eq_code
+	, 	eq_code
+	, 	wh_eq_name
+	,	 wh_eq_unit_price
+	,	 wh_eq_quantity
+	,	 wh_eq_total
+	,	 wh_eq_date
+	,	 wh_eq_writer
+	,	 wh_eq_reg_date
+	,	 wh_eq_remark)VALUES (
+		''
+	,	''
+	,	''
+	,	0
+	,	0
+	,	0
+	,	''
+	,	'oid003'
+	, CURRENT_TIME()
+	, '')
+
+
+</insert> -->
+
+<!-- 비품 입고내역 검색 -->
+<select id="getEquipWhSearchList" parameterType="String" resultMap="whEquipmentResult">
+SELECT 
+		wh_eq_code
+	, 	eq_code
+	,	wh_eq_name
+	, 	wh_eq_unit_price
+	, 	wh_eq_quantity
+	, 	wh_eq_total
+	, 	wh_eq_date
+	, 	wh_eq_writer
+	,	wh_eq_reg_date
+	, 	wh_eq_remark
+FROM 
+	wt_equipment
+WHERE
+	${equipWhSk} LIKE (CONCAT ('%',#{equipWhSv},'%'));
+
+</select>
+
+<!-- 비품입고내역 조회 -->
+<select id="getEquipWhList" resultMap="whEquipmentResult">
+SELECT 
+		wh_eq_code
+	, 	eq_code
+	,	wh_eq_name
+	, 	wh_eq_unit_price
+	, 	wh_eq_quantity
+	, 	wh_eq_total
+	, 	wh_eq_date
+	, 	wh_eq_writer
+	,	wh_eq_reg_date
+	, 	wh_eq_remark
+FROM 
+	wt_warehousing_equipment
+
+</select>
+
+<!-- 비품코드 maxcount -->
+<select id="equipMaxCode" resultType="String">
+	SELECT IFNULL(
+		(SELECT 
+			MAX(CAST(SUBSTRING(eq_code,7) AS DECIMAL))+1 
+		FROM 
+			wt_equipment),1) AS max;
+</select>
+
+<!-- 비품정보등록 -->
+<insert id="addEquipment" parameterType="Equipment">
+
+INSERT INTO wt_equipment
+	(
+		eq_code
+	,	eq_category
+	,	eq_name
+	,	eq_model_name
+	,	eq_writer
+	,	eq_reg_date
+	,	eq_remark)
+	VALUES (
+		#{eqCode}
+	,	#{eqCategory}
+	,	#{eqName}
+	,	#{eqModelName}
+	,	'oid003'
+	,	CURRENT_TIME()
+	,	'')
+
+</insert>
+
+<!-- 비품정보 검색 -->
+<select id="getEquipSearchList" parameterType="String" resultMap="equipmentResult">
+SELECT 
+		eq_code
+	, 	eq_category
+	, 	eq_name
+	, 	eq_model_name
+	, 	eq_writer
+	, 	eq_reg_date
+	, 	eq_remark
+FROM 
+	wt_equipment
+WHERE
+	${equipSk} LIKE (CONCAT ('%',#{equipSv},'%'));
+
+</select>
+
+<!-- 비품정보 보기 -->
+ <select id="getEquipList" resultMap="equipmentResult">
+SELECT 
+		eq_code
+	, 	eq_category
+	, 	eq_name
+	, 	eq_model_name
+	, 	eq_writer
+	, 	eq_reg_date
+	, 	eq_remark
+FROM 
+	wt_equipment
+
+</select> 
 
 </mapper>
     

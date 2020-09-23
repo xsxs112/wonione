@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title>
+	</th:block>
+	<th:block layout:fragment="customContent">
+	<h2 th:text="${mainTitle}"></h2>
+			<form class="form-inline" id="searchForm" action="/equipWhSearch" method="GET" >  
+			<select class="form-control" name="equipWhSk" id="selectEqWhSk">
+				<option disabled="disabled" selected="selected">::검색조건::</option>
+				<option value="wh_eq_code">비품입고코드</option>
+				<option value="eq_code">비품코드</option>
+				<option value="wh_eq_name">품명</option>
+				<option value="wh_eq_writer">작성자아이디</option>
+			</select> 
+			<div class="form-group">
+			<input type="text" id="equipWhSv" class="form-control" name="equipWhSv" placeholder="검색어를 입력해주세요"/>
+				<div class="input-group-btn pull-right">
+					<button class="btn btn-default form-group" id="searchEqWhBtn" type="button">검색</button>
+				</div>
+			</div>
+		</form>
+		<table class="table table-bordered table-hover table-striped">
+			<thead>
+				<tr>
+				  <th>비품입고코드</th>
+				  <th>비품코드</th>
+				  <th>품명</th>
+				  <th>단가</th>
+				  <th>수량</th>
+				  <th>총구매액</th>
+				  <th>입고일자</th>
+				  <th>작성자아이디</th>
+				  <th>등록일자</th>
+				  <th>비고</th>
+				</tr>
+			</thead>
+			<tbody th:each="ewl : ${equipWhList}">
+				<tr>
+				  <td th:text="${ewl.whEqCode}"></td>
+				  <td th:text="${ewl.eqCode}"></td>
+				  <td th:text="${ewl.whEqName}"></td>
+				  <td th:text="${ewl.whEqUnitPrice}"></td>
+				  <td th:text="${ewl.whEqQuantity}"></td>
+				  <td th:text="${ewl.whEqTotal}"></td>
+				  <td th:text="${ewl.whEqDate}"></td>
+				  <td th:text="${ewl.whEqWriter}"></td>
+				  <td th:text="${ewl.whEqRegDate}"></td>
+				  <td th:text="${ewl.whEqRemark}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="container-fluid" style="margin: 10px;">
+			<a href="/equipWhList" class="btn btn-default" role="button">전체리스트보기</a>
+		</div>			
+		
+		<div class="container-fluid" style="margin: 10px;">
+			<a href="/equipmentManage" class="btn btn-default btn-lg" role="button">관리 메인페이지</a>
+			<a href="/equipListMain" class="btn btn-default btn-lg" role="button">리스트메인페이지</a>
+		</div>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	$('#searchEqWhBtn').click(function(){
+		var searchForm = $('#searchForm');
+		var selectEqWhSk = $('#selectEqWhSk').val();
+		var equipWhSv = $('#equipWhSv').val();
+		console.log(selectEqWhSk + ' < -- selectEqWhSk');
+		console.log(equipWhSv + ' < -- equipWhSv');
+		if(selectEqWhSk == null || selectEqWhSk == undefined){
+			alert('검색조건을 선택해주세요');
+			return;
+		}else if(equipWhSv == null || equipWhSv == ''){
+			alert('검색어를 입력해주세요');
+			$('#equipWhSv').focus();
+			return;
+		}
+		searchForm.submit();
+	});
+	
+	</script>	
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	 
+	</th:block>
+</html>

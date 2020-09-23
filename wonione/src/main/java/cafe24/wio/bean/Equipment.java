@@ -2,13 +2,14 @@ package cafe24.wio.bean;
 
 public class Equipment {
 
-	public String eqCode;
-	public String eqCategory;
-	public String eqName;
-	public String eqModelName;
-	public String eqWriter;
-	public String eqReg_date;
-	public String eqRemark;
+	public String eqCode;			//비품코드
+	public String eqCategory;		//물품카테고리
+	public String eqName;			//품명
+	public String eqModelName;		//모델명
+	public String eqWriter;			//작성자아이디
+	public String eqReg_date;		//등록일자
+	public String eqRemark;			//비고
+	
 	public String getEqCode() {
 		return eqCode;
 	}

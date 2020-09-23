@@ -38,9 +38,12 @@
 	<result column="sup_txb_reg_date" 		property="supTxbRegDate"/>
 </resultMap>
 
+<!-- *********************** START ************************* -->
+<!-- ************************교재지급************************* -->
+<!-- *********************** START ************************* -->
+
 <!-- 교재 지급내역 검색 -->
 <select id="getSuppTxbSearch" resultMap="resultSupplyTextbook">
-
 	SELECT 
 			sup_txb_code
 		,   txb_code
@@ -52,27 +55,43 @@
 	FROM wt_supply_textbook
 	WHERE
 		${suppTxbSk} LIKE (CONCAT ('%',#{suppTxbSv},'%'));
-
 </select>
 
-<!-- 교재 정보 검색 -->
-<select id="getTxbInfoSearch" resultMap="resultTxbBasicInfo">
+<!-- 교재지급내역조회 -->
+<select id="getTextbookSuppList" resultMap="resultSupplyTextbook">
 	SELECT 
-			txb_code
-		,   txb_name
-		,   txb_publisher
-		,   txb_author
-		,   txb_writer
-		,   txb_reg_date
-	FROM 
-		wt_textbook_basic_information
-	WHERE
-		${infoTxbSk} LIKE(CONCAT('%',#{infoTxbSv},'%'))
+			sup_txb_code
+		,  txb_code
+		,  sup_txb_quantity
+		,  txb_receiver_id
+		,  sup_txb_date
+		,  sup_txb_writer
+		,  sup_txb_reg_date
+	FROM wt_supply_textbook
 </select>
+
+<!-- 교재지급코드 자동증가를 위해 max에 +1을 한값 select -->
+<select id="getTxbSuppMaxCode" resultType="String">
+	SELECT IFNULL(
+		(SELECT 
+			MAX(CAST(substring(sup_txb_code,9) AS DECIMAL))+1 
+		FROM 
+			wt_supply_textbook),1) AS max;
+</select>
+
+
+<!-- *********************** END ************************** -->
+<!-- ************************교재지급************************ -->
+<!-- *********************** END ************************** -->
+
+
+
+<!-- *********************** START ************************* -->
+<!-- ************************교재입고************************* -->
+<!-- *********************** START ************************* -->
 
 <!-- 교재 입고내역 검색 -->
 <select id="getWhTxbSearch" resultMap="resultTxbBasicInfo">
-
 SELECT
 		wt.wh_txb_code
 	,	wt.txb_code
@@ -98,20 +117,123 @@ FROM
 	tbi.txb_code
 WHERE
 	${whTxbSk} LIKE(CONCAT('%',#{whTxbSv},'%'));
-
 </select>
 
-<!-- 교재지급내역조회 -->
-<select id="getTextbookSuppList" resultMap="resultSupplyTextbook">
+<!-- 입고내역조회 -->
+<select id="getWhTextbookList" resultMap="resultWhTextbook">
+	SELECT
+		 wh_txb_code
+		 , txb_code
+		 , wh_txb_quantity
+		 , wh_txb_date
+		 , stock_txb_quantity
+		 , wh_txb_writer
+		 , wh_txb_reg_date
+		 , wh_txb_remark
+	FROM wt_warehousing_textbook
+</select>
+
+<!-- 최초등록인지 체크 -->
+<select id="wahoTextbookCheck" resultMap="resultTxbBasicInfo">
+	SELECT
+			wt.txb_code
+		,	wt.stock_txb_quantity
+		,	tbi.txb_code
+		,	tbi.txb_name
+	FROM
+		wt_textbook_basic_information AS tbi
+		LEFT JOIN
+		wt_warehousing_textbook AS wt
+		on
+		tbi.txb_code
+		=
+		wt.txb_code
+	WHERE
+		wt.txb_code = #{txbCode};
+</select>
+
+<!-- 교재최초입고등록 -->
+<insert id="addFirstWhTextbook" parameterType="WhTextbook">
+	INSERT INTO wt_warehousing_textbook
+		(wh_txb_code
+		, txb_code
+		, wh_txb_quantity
+		, wh_txb_date
+		, stock_txb_quantity
+		, wh_txb_writer
+		, wh_txb_reg_date
+		, wh_txb_remark)VALUES (
+			#{whTxbCode}
+		,	#{txbCode}
+		,	${whTxbQuantity}
+		,	CURRENT_TIME()
+		,	${whTxbQuantity}
+		,	'oid002'
+		,	CURRENT_TIME()	
+		,	'');	
+</insert>
+
+<!-- 교재입고등록 -->
+<insert id="addWhTextbook" parameterType="WhTextbook">
+	INSERT INTO wt_warehousing_textbook
+		(wh_txb_code
+		, txb_code
+		, wh_txb_quantity
+		, wh_txb_date
+		, stock_txb_quantity
+		, wh_txb_writer
+		, wh_txb_reg_date
+		, wh_txb_remark)VALUES (
+			#{whTxbCode}
+		, 	#{txbCode}
+		, 	${whTxbQuantity}
+		, 	CURRENT_TIME()
+		, 	(SELECT 
+				stock_txb_quantity
+			FROM wt_warehousing_textbook AS wt
+			WHERE
+				txb_code = #{txbCode}
+			GROUP BY
+				wt.wh_txb_date
+			ORDER BY wt.wh_txb_date DESC LIMIT 1)+${whTxbQuantity}
+		, 'oid002'
+		, CURRENT_TIME()	
+		, '');	
+</insert>
+
+<!-- 교재입고코드 자동증가를 위해 max에 +1을 한값 select -->
+<select id="getTxbWhMaxCode" resultType="String">
+	SELECT IFNULL(
+		(SELECT 
+			MAX(CAST(SUBSTRING(wh_txb_code,15) AS DECIMAL))+1 
+		FROM 
+			wt_warehousing_textbook),1) AS max;
+</select>
+
+
+<!-- *********************** END ************************* -->
+<!-- ************************교재입고************************ -->
+<!-- *********************** END ************************ -->
+
+
+
+<!-- *********************** START ************************* -->
+<!-- ************************교재정보************************ -->
+<!-- *********************** START ************************ -->
+
+<!-- 교재 정보 검색 -->
+<select id="getTxbInfoSearch" resultMap="resultTxbBasicInfo">
 	SELECT 
-			sup_txb_code
-		,  txb_code
-		,  sup_txb_quantity
-		,  txb_receiver_id
-		,  sup_txb_date
-		,  sup_txb_writer
-		,  sup_txb_reg_date
-	FROM wt_supply_textbook
+			txb_code
+		,   txb_name
+		,   txb_publisher
+		,   txb_author
+		,   txb_writer
+		,   txb_reg_date
+	FROM 
+		wt_textbook_basic_information
+	WHERE
+		${infoTxbSk} LIKE(CONCAT('%',#{infoTxbSv},'%'))
 </select>
 
 <!-- 교재정보조회 -->
@@ -127,127 +249,6 @@ WHERE
 		wt_textbook_basic_information
 </select>
 
-<!-- 입고내역조회 -->
-<select id="getWhTextbookList" resultMap="resultWhTextbook">
-	SELECT
-		 wh_txb_code
-		 , txb_code
-		 , wh_txb_quantity
-		 , wh_txb_date
-		 , stock_txb_quantity
-		 , wh_txb_writer
-		 , wh_txb_reg_date
-		 , wh_txb_remark
-	FROM wt_warehousing_textbook
-
-</select>
-
-<!-- 보유교재리스트 조회 -->
-<select id="getTextbookOwnList" resultMap="resultTxbBasicInfo">
-SELECT
-		wt.wh_txb_code
-	,	wt.txb_code
-	,	wt.wh_txb_quantity
-	,	wt.wh_txb_date
-	,	wt.stock_txb_quantity
-	,	wt.wh_txb_writer
-	,	wt.wh_txb_reg_date
-	,	wt.wh_txb_remark
-	,	tbi.txb_code
-	,	tbi.txb_name
-	,	tbi.txb_publisher
-	,	tbi.txb_author
-	,	tbi.txb_writer
-	,	tbi.txb_reg_date
-FROM
-	wt_textbook_basic_information AS tbi
-	RIGHT JOIN
-	wt_warehousing_textbook AS wt
-	on
-	wt.txb_code
-	=
-	tbi.txb_code
-
-
-</select>
-
-<!-- 최초등록인지 체크 -->
-<select id="wahoTextbookCheck" resultMap="resultTxbBasicInfo">
-
-SELECT
-		wt.txb_code
-	,	wt.stock_txb_quantity
-	,	tbi.txb_code
-	,	tbi.txb_name
-FROM
-	wt_textbook_basic_information AS tbi
-	LEFT JOIN
-	wt_warehousing_textbook AS wt
-	on
-	tbi.txb_code
-	=
-	wt.txb_code
-WHERE
-	wt.txb_code = #{txbCode};
-</select>
-
-<!-- 교재최초입고등록 -->
-<insert id="addFirstWhTextbook" parameterType="WhTextbook">
-INSERT INTO wt_warehousing_textbook
-	(wh_txb_code
-	, txb_code
-	, wh_txb_quantity
-	, wh_txb_date
-	, stock_txb_quantity
-	, wh_txb_writer
-	, wh_txb_reg_date
-	, wh_txb_remark)VALUES (
-		CONCAT('wh_txb_code',
-			(SELECT LPAD(COUNT(*)+1,5,'0')
-		 FROM
-		 wt_warehousing_textbook AS wt))
-	, #{txbCode}
-	, ${whTxbQuantity}
-	, CURRENT_TIME()
-	, ${whTxbQuantity}
-	, 'oid002'
-	, CURRENT_TIME()	
-	, '');	
-
-</insert>
-
-<!-- 교재입고등록 -->
-<insert id="addWhTextbook" parameterType="WhTextbook">
-INSERT INTO wt_warehousing_textbook
-	(wh_txb_code
-	, txb_code
-	, wh_txb_quantity
-	, wh_txb_date
-	, stock_txb_quantity
-	, wh_txb_writer
-	, wh_txb_reg_date
-	, wh_txb_remark)VALUES (
-		CONCAT('wh_txb_code',
-			(SELECT LPAD(COUNT(*)+1,5,'0')
-		 FROM
-		 wt_warehousing_textbook AS wt))
-	, #{txbCode}
-	, ${whTxbQuantity}
-	, CURRENT_TIME()
-	, (SELECT 
-			stock_txb_quantity
-		FROM wt_warehousing_textbook AS wt
-		WHERE
-			txb_code = #{txbCode}
-		GROUP BY
-			wt.wh_txb_date
-		ORDER BY wt.wh_txb_date DESC LIMIT 1)+${whTxbQuantity}
-	, 'oid002'
-	, CURRENT_TIME()	
-	, '');	
-
-</insert>
-
 <!-- 교재코드로 교재정보 가져오기 -->
 <select id="getOnlyTxbInfo" resultMap="resultTxbBasicInfo">
 	SELECT 
@@ -261,39 +262,76 @@ INSERT INTO wt_warehousing_textbook
 		wt_textbook_basic_information AS tbi
 	WHERE
 		tbi.txb_code = #{txbInfoCode};
+</select>
 
+<!-- 교재정보코드 자동증가를 위해 max에 +1을 한값 select -->
+<select id="getTxbInfoMaxCode" resultType="String">
+	SELECT IFNULL(
+		(SELECT 
+			MAX(CAST(substring(txb_code,8) AS DECIMAL))+1 
+		FROM 
+			wt_textbook_basic_information),1) AS max;
 </select>
 
 <!-- 교재정보등록시 마지막으로 등록된 코드 가져오기 -->
 <select id="getAddTxbInfoCode" resultType="String">
-SELECT 
-	tbi.txb_code 
-FROM 
-	wt_textbook_basic_information AS tbi
-ORDER BY 
-	tbi.txb_code DESC LIMIT 1;
+	SELECT 
+		tbi.txb_code 
+	FROM 
+		wt_textbook_basic_information AS tbi
+	ORDER BY 
+		tbi.txb_code DESC LIMIT 1;
 </select>
 
 <!-- 교재기초정보등록 -->
 <insert id="addTextbookInfo" parameterType="TextbookBasicInfo">
-INSERT INTO wt_textbook_basic_information
-	( txb_code
-	, txb_name
-	, txb_publisher
-	, txb_author
-	, txb_writer
-	, txb_reg_date)VALUES (
-		CONCAT('txb_',
-			(SELECT LPAD(COUNT(*)+1,5,'0')
-		 FROM
-		 wt_textbook_basic_information AS tbi))
-	,  #{txbName}
-	,  #{txbPublisher}
-	,  #{txbAuthor}
-	,  'oid002'
-	,  CURRENT_TIME())
-
+	INSERT INTO wt_textbook_basic_information
+		( txb_code
+		, txb_name
+		, txb_publisher
+		, txb_author
+		, txb_writer
+		, txb_reg_date)VALUES (
+			#{txbCode}
+		,   #{txbName}
+		,   #{txbPublisher}
+		,   #{txbAuthor}
+		,   'oid002'
+		,   CURRENT_TIME())
 </insert>
+
+<!-- 보유교재리스트 조회 -->
+<select id="getTextbookOwnList" resultMap="resultTxbBasicInfo">
+	SELECT
+			wt.wh_txb_code
+		,	wt.txb_code
+		,	wt.wh_txb_quantity
+		,	wt.wh_txb_date
+		,	wt.stock_txb_quantity
+		,	wt.wh_txb_writer
+		,	wt.wh_txb_reg_date
+		,	wt.wh_txb_remark
+		,	tbi.txb_code
+		,	tbi.txb_name
+		,	tbi.txb_publisher
+		,	tbi.txb_author
+		,	tbi.txb_writer
+		,	tbi.txb_reg_date
+	FROM
+		wt_textbook_basic_information AS tbi
+		RIGHT JOIN
+		wt_warehousing_textbook AS wt
+		on
+		wt.txb_code
+		=
+		tbi.txb_code
+</select>
+
+
+<!-- *********************** END ************************* -->
+<!-- ************************교재정보*********************** -->
+<!-- *********************** END ************************* -->
+
 
 </mapper>
     
