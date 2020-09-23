@@ -80,6 +80,24 @@ public class BoardController {
 	      return "board/noticeAdd";
 	   }
 	  
+	// 공지사항 수정 (미구현)
+	@PostMapping("/modifyNotice")
+	public String modifyNotice(Board board,Model model) {
+		boardService.modifyNotice(board);
+		model.addAttribute("Board", board);
+		return "redirect:/getNotice";
+	}
+	
+	// 공지사항 수정 (미구현)
+	@GetMapping("/modifyNotice")
+	public String modifyBoard(@RequestParam(value="boardNum", required = false) String boardNum
+							,Model model) {
+		Board board = boardService.readNotice(boardNum);
+		System.out.println(board+"<--board");
+		model.addAttribute("Board", board);
+		return "board/noticeModify";
+	}
+	   
 	// 자료게시판 조회
 	@RequestMapping(value = "/getDataLibrary", method = RequestMethod.GET)
 	public String getDataLibrary(Model model, Board board) {
@@ -105,7 +123,7 @@ public class BoardController {
 		return "board/dataLibraryRead";		  
 	}
 	
-	// 수강후기 조회
+	// 수강후기 조회(미구현)
 	@GetMapping("/getReview")
 	public String viewList() {
 		return "board/view";

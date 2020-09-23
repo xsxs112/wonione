@@ -12,13 +12,15 @@ public interface BoardMapper {
 	//공지사항 목록 조회
 	public List<Board> getNotice(Board board);
 		
-	//자료게시판 목록 조회
-	public List<Board> getDataLibrary(Board board);
-
-	//글 읽기 (글번호로 조회)
-	public Board readBoard(String boardNum);
-	
 	//공지사항 등록
 	public int insertNotice(Board board);
 
+	//자료게시판 목록 조회
+	public List<Board> getDataLibrary(Board board);
+
+	//게시물 읽기
+	public Board readBoard(String boardNum);
+	
+	//게시물 수정 (미구현)
+	public int modifyBoard(Board board);
 }
