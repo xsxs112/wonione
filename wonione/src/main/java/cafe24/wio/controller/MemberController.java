@@ -98,31 +98,39 @@ public class MemberController {
 								,@RequestParam(value = "mrId",required = false) 			String mrId
 								,@RequestParam(value = "mrPw",required = false) 			String mrPw
 								,@RequestParam(value = "mrName",required = false) 			String mrName
-								,@RequestParam(value = "levelNum",required = false) 		int levelNum
+								,@RequestParam(value = "levelNum",required = false) 		int	   levelNum
 								,@RequestParam(value = "mrPhone",required = false) 			String mrPhone
 								,@RequestParam(value = "mrAddr",required = false) 			String mrAddr
-								,@RequestParam(value = "mrTargetScore",required = false) 	int mrTargetScore
+								,@RequestParam(value = "mrTargetScore",required = false) 	int    mrTargetScore
 								,@RequestParam(value = "pmRCode",required = false) 			String pmRCode
 								,@RequestParam(value = "mrAccountNum",required = false) 	String mrAccountNum
 								,@RequestParam(value = "shuttleNum",required = false) 		String shuttleNum
-								,@RequestParam(value = "mrJoinDate",required = false) 		Date mrJoinDate) {
+								,@RequestParam(value = "mrJoinDate",required = false) 		String   mrJoinDate) {
 		
-		System.out.println(member + "<-- member / memberController");
-		System.out.println(mrId +"<-- mrId memberController");
-		System.out.println(mrPw +"<-- mrPw memberController");
-		System.out.println(mrName +"<-- mrName memberController");
-		System.out.println(levelNum +"<-- levelNum memberController");
-		System.out.println(mrPhone +"<-- mrPhone memberController");
-		System.out.println(mrAddr +"<-- mrAddr memberController");
-		System.out.println(mrTargetScore +"<-- mrTargetScore memberController");
-		System.out.println(pmRCode +"<-- pmRCode memberController");
-		System.out.println(mrAccountNum +"<-- mrAccountNum memberController");
-		System.out.println(shuttleNum +"<-- shuttleNum memberController");
-		System.out.println(mrJoinDate +"<-- mrJoinDate memberController");
+		
+		member.setMrId(mrId);
+		member.setMrPw(mrPw);
+		member.setMrName(mrName);
+		member.setLevelNum(levelNum);
+		member.setMrAddr(mrAddr);
+		member.setMrTargetScore(mrTargetScore);
+		member.setPmRCode(pmRCode);
+		member.setMrAccountNum(mrAccountNum);
+		
+		//셔틀 신청 부분을 빈 칸으로 두면 에러가 발생하면서 '' 공백으로 값이 들어감. 그래서 조건문 처리.
+		if(shuttleNum.equals("")||shuttleNum.equals(null)) {
+			
+			member.setShuttleNum(null);
+			
+		}else if(mrJoinDate.equals("") || mrJoinDate.equals(null)) {
+			
+			member.setMrJoinDate(null);
+		}
+		
 		
 		memberService.addWIOMember(member);
 		
-		return "member/WIOMemberList";
+		return "redirect:/WIOMemberList";
 	}
 
 	@GetMapping("/addWIOMember")
