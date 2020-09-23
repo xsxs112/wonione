@@ -18,6 +18,12 @@ public class ApprRequestService {
 	
 	
 	
+	public ApprovalRequest getHolidayDetail(String reCode) {
+		
+		
+		return apprMapper.getHolidayDetail(reCode);
+	}
+	
 	public int reDelete(String reCode) {
 		
 		
@@ -71,8 +77,11 @@ public class ApprRequestService {
 		
 		String tempCode = "request_";
 		
+		//reCodeMax 에서 가져온 "max"는 처음에 데이터타입이 String이고 그걸 Integer.parseInt로 int 타입으로 바꿔준거니까
+		//int형으로 변환하기전에 String으로 담아서 가져온 max값이 null인지 확인하고 null이라면 숫자 getMax는 1로 바꿔줘요
 		int getMax = Integer.parseInt(reCodeMax.get("max").toString());
-
+		
+		
 		if(getMax<10) {
 			tempCode = "request_0";
 		}

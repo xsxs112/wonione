@@ -12,6 +12,16 @@
 <th:block layout:fragment="customCss">
 	<script type="text/javascript">
 		$(function() {
+			
+
+			$('.detail').click(function() {
+				var reCode = $(this).attr('data-mCode');
+	            window.location.href='/detail?reCode='+reCode;
+			})
+			
+			
+			
+			
 			$('#requestBtn').click(function() {
 				
 				//input data 값 변수에 담기
@@ -63,7 +73,8 @@
 							
 						//데이터가 성공적으로 받아지면 실행된다
 						holidayCk.done(function(data) {
-							//ajax를 통해서 받은 데이터가 1이면 submit()실행
+							alert(data);
+							//ajax를 통해서 받은 데이터가 0이면 submit()실행
 							if(data==0){
 								$('#requestForm').submit();
 							}else{
@@ -135,19 +146,14 @@
 				</div>
 				<div class="sparkline8-graph">
 					<div class="static-table-list">
-						<table class="table">
+						<table class="table" style="text-align: center;">
 							<thead>
 								<tr>
-									<th>신청 날짜</th>
-									<th>이름</th>
-									<th>휴가 시작 날짜</th>
-									<th>휴가 끝나는 날짜</th>
-									<th>사유</th>
-									<th>구분</th>
-									<th>상태</th>
-									<th>관리자</th>
-									<th>승인날짜</th>
-									<th>거절사유</th>
+									<th style="text-align: center;">신청 날짜</th>
+									<th style="text-align: center;">이름</th>
+									<th style="text-align: center;" colspan="3">휴가 기간</th>
+									<th style="text-align: center;">상태</th>
+									<th style="text-align: center;">상세보기</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -155,13 +161,10 @@
 									<td th:text="${l.reDate}"></td>
 									<td th:text="${l.mrId}"></td>
 									<td th:text="${l.reStartDate}"></td>
+									<td>~</td>
 									<td th:text="${l.reEndDate}"></td>
-									<td th:text="${l.reReason}"></td>
-									<td th:text="${l.sortation}"></td>
 									<td th:text="${l.reState}"></td>
-									<td th:text="${l.reSupervisor}"></td>
-									<td th:text="${l.reProcessingDate}"></td>
-									<td th:text="${l.refuseReason}"></td>
+									<td><a th:data-mCode="${l.reCode}" class ="detail">상세보기</a></td>
 								</tr>
 							</tbody>
 						</table>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default">
+
+<th:block layout:fragment="customTitle">
+	<title>휴가신청</title>
+</th:block>
+
+
+<!-- css---------------------------------------- -->
+<th:block layout:fragment="customCss">
+
+</th:block>
+
+
+
+   
+   
+
+<th:block layout:fragment="customContent">
+<!-- 스트립트------------------------------------------------ -->
+	<script type="text/javascript">
+	
+		$(function(){
+			
+			$('.list').click(function() {
+				var reCode = $(this).attr('data-mCode');
+			    window.location.href='/holidayApproval';
+			})
+	
+		})
+	
+	
+	
+	
+	</script>
+	
+	
+	
+<!-- 본문----------------------------------------- -->
+	<div class="static-table-area">
+		<div class="container-fluid">
+
+			<table style="text-align: center; font-size: 30px">
+				<tr>
+					<td style="font-size: 30px;">상세보기</td>
+				</tr>
+
+			</table> 
+			<br>
+
+			<div style="width:60%; float:left" class="container-fluid">		
+				<table id="tb" class ="table table-striped">
+
+					<tr>
+						<td colspan="2"
+							style="text-align: center; vertical-align: middle;">정보</td>
+					</tr>
+					<tr>
+						<td>이름</td>
+						<td th:text="${holidayDetail.mrName}"></td>
+					</tr>
+					<tr>
+						<td>구분</td>
+						<td th:text="${holidayDetail.sortation}"></td>
+					</tr>
+					<tr>
+						<td>휴가 시작날짜</td>
+						<td th:text="${holidayDetail.reStartDate}"></td>
+					</tr>
+					<tr>
+						<td>휴가 종료날짜</td>
+						<td th:text="${holidayDetail.reEndDate}"></td>
+					</tr>
+
+
+				</table>
+			</div>
+			<div style="width:40%; float:right" class="container-fluid">
+				<table class ="table table-striped">
+					<tr>
+						<td colspan="2"
+							style="text-align: center; vertical-align: middle;">상태</td>
+					</tr>
+					<tr>
+						<td>신청</td>
+						<td th:text="${holidayDetail.reState}"></td>
+					</tr>
+					<tr>
+						<td>승인자</td>
+						<td th:text="${holidayDetail.reSupervisor}"></td>
+					</tr>
+					<tr>
+						<td>승인날짜</td>
+						<td th:text="${holidayDetail.reProcessingDate}"></td>
+					</tr>
+					<tr>
+						<td>거절 사유</td>
+						<td th:text="${holidayDetail.refuseReason}"></td>
+					</tr>
+
+				</table>
+			</div>
+				
+				
+			<div style="width:100%;" class="container-fluid">
+				<table border="1" style="width: 100%; border-color: #ddd;">
+					<tr>
+						<td colspan="2" style="text-align: center; vertical-align: middle; padding: 10px">사유</td>
+					</tr>
+					<tr>
+						<td colspan="2" th:text="${holidayDetail.reReason}" style="padding: 100px;"></td>
+					</tr>
+					
+				</table>
+			</div>
+			
+			<br>
+			<a style="color: black;" class ="list">[목록]</a>
+			<br>
+			<br>
+			
+		</div>
+	</div>
+
+
+
+</th:block>
+
+
+
+<!-- 스크립트 -------------------------------------------->
+<th:block layout:fragment="customJsScript">
+	<div th:replace="fragments/js :: jsFragment"></div>
+
+</th:block>
+
+<!-- js	 ------------------------------------------------>
+<th:block layout:fragment="customJs">
+
+</th:block>
+</html>

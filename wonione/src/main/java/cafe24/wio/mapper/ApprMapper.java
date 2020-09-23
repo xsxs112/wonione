@@ -12,7 +12,11 @@ import cafe24.wio.bean.Member;
 public interface ApprMapper {
 	
 	
+	public ApprovalRequest getHolidayDetail(String reCode);
+
+	
 	public int reDelete(String reCode);
+	
 	
 	public int approval(ApprovalRequest approvalRequest);
 	
