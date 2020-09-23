@@ -13,8 +13,7 @@
  		$('.callOfficersInfo').click(function(){
  		var tr = $(this).parent().parent();
  		var td = tr.children();
- 		var mrId = td.eq(0).text(); 	
- 		
+ 		var mrId = td.eq(0).text(); 	  
 		console.log(mrId + ' < -- mrId');
 		var request = $.ajax({
 			  url: "/callOfficersInfo",
