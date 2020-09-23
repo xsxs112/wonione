@@ -13,6 +13,20 @@ public class MemberService {
 @Autowired
 private MemberMapper memberMapper;
 
+		
+		/**
+		 * 4. 구성원 등록. 기본 정보만.
+		 * @param member
+		 * @return
+		 */
+		public int addWIOMember(Member member) {
+			
+			int addMemberResult = memberMapper.addWIOMember(member);
+			
+			System.out.println(addMemberResult + "<--addMember / Service");
+			
+			return addMemberResult;
+		}
 
 		/**
 		 * 3. 아이디 중복 검사, 로그인 처리시 사용

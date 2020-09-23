@@ -26,6 +26,19 @@ public class WorkController {
 
 	
 	
+	//상세보기
+	@GetMapping("/detail")
+	public String detail(Model model, @RequestParam(value = "reCode", required = false) String reCode) {
+
+		ApprovalRequest holidayDetail = apprRequestService.getHolidayDetail(reCode);
+		model.addAttribute("holidayDetail", holidayDetail);
+		
+		return "workmanagment/holidayDetail";
+	}
+	
+	
+	
+	
 	//관리자 화면 삭제
 	@GetMapping("/reDelete")
 	public String reDelete(Model model, @RequestParam(value = "reCode", required = false) String reCode) {

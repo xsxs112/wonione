@@ -35,45 +35,6 @@
 		WHERE
 			board_menu = '공지사항';
 	</select>
-		
-	<!-- 자료게시판 리스트 조회 쿼리  -->
-	<select id="getDataLibrary" resultType="Board" parameterType="Board" resultMap="boardResultMap">
-		SELECT
-			b.board_num,
-			b.board_title,
-			b.board_writer_id,
-			m.mr_name,
-			b.board_reg_date
-		FROM 
-			wt_board AS b
-		INNER JOIN
-			wt_member_registration AS m
-		ON
-			m.mr_id = b.board_writer_id
-		WHERE
-			board_menu = '자료게시판';
-	</select>
-
-	<!-- 글 읽기 쿼리 -->
-	<select id="readBoard" resultType="Board" parameterType="String" resultMap="boardResultMap">
-		SELECT
-			b.board_num,
-			b.board_title,
-			b.board_writer_id,
-			m.mr_name,
-			b.board_reg_date,
-			b.board_contents,
-			b.board_picture,
-			b.board_file
-		FROM 
-			wt_board AS b
-		INNER JOIN
-			wt_member_registration AS m
-		ON
-			m.mr_id = b.board_writer_id
-		WHERE
-			b.board_num = #{boardNum};
-	</select>
 	
 	<!-- 공지사항 등록 쿼리 -->
 	<insert id="insertNotice" parameterType="Board">
@@ -96,7 +57,58 @@
 			, #{boardPicture}
 			, #{boardFile});
 	</insert>
+		
+	<!-- 자료게시판 리스트 조회 쿼리  -->
+	<select id="getDataLibrary" resultType="Board" parameterType="Board" resultMap="boardResultMap">
+		SELECT
+			b.board_num,
+			b.board_title,
+			b.board_writer_id,
+			m.mr_name,
+			b.board_reg_date
+		FROM 
+			wt_board AS b
+		INNER JOIN
+			wt_member_registration AS m
+		ON
+			m.mr_id = b.board_writer_id
+		WHERE
+			board_menu = '자료게시판';
+	</select>
 
+	<!-- 게시물 읽기 쿼리 -->
+	<select id="readBoard" resultType="Board" parameterType="String" resultMap="boardResultMap">
+		SELECT
+			b.board_num,
+			b.board_title,
+			b.board_writer_id,
+			m.mr_name,
+			b.board_reg_date,
+			b.board_contents,
+			b.board_picture,
+			b.board_file
+		FROM 
+			wt_board AS b
+		INNER JOIN
+			wt_member_registration AS m
+		ON
+			m.mr_id = b.board_writer_id
+		WHERE
+			b.board_num = #{boardNum};
+	</select>
+	
+	<!-- 게시물 수정 쿼리 -->
+	<update id="modifyBoard" parameterType="Board">
+		UPDATE
+			wt_board
+		SET
+			board_title 	= #{boardTitle},
+			board_contents 	= #{boardContents},
+			board_picture 	= #{boardPicture},
+			board_file 		= #{boardFile}
+		WHERE
+			board_num = #{boardNum};
+	</update>
 
 </mapper>
     

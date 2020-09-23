@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	  
+	<th:block layout:fragment="customTitle">
+  		<title th:text="title"></title>
+	</th:block>
+	
+	<th:block layout:fragment="customContent">
+		
+		<h2>기본 정보 입력</h2>
+			<form class="form-horizontal" style="margin: 10px;" action="/addWIOMember" method="post">
+				<table border="1" class="table table-condensed table-bordered">
+				
+					<tr>
+						<td>아이디</td>
+						<td>
+							<input type="text" name="mrId" class="form-control">
+						</td>
+					</tr>
+					<tr>
+						<td>비밀번호</td>
+						<td>
+							<input type="password" name="mrPw" class="form-control">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>이름</td>
+						<td>
+							<input type="text" name="mrName" class="form-control">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>권한</td>
+						<td>
+							<input type="text" name="levelNum" class="form-control" value="0">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>연락처</td>
+						<td>
+							<input type="text" name="mrPhone" class="form-control" placeholder="'-'까지 입력해 주세요">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>주소</td>
+						<td>
+							<input type="text" name="mrAddr" class="form-control">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>목표 점수</td>
+						<td>
+							<input type="text" name="mrTargetScore" class="form-control" value="0">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>은행 코드</td>
+						<td>
+							<input type="text" name="pmRCode" class="form-control">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>계좌 번호</td>
+						<td>
+							<input type="text" name="mrAccountNum" class="form-control" placeholder="'-'까지 입력해 주세요">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>셔틀버스 신청</td>
+						<td>
+							<input type="text" name="shuttleNum" class="form-control">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>입사일</td>
+						<td>
+							<input type="date" name="mrJoinDate" class="form-control">
+						</td>
+					</tr>
+					
+				</table>
+				<button type="submit" class="btn btn-default">등록</button>	
+			</form>
+	</th:block>
+	
+	
