@@ -27,6 +27,35 @@ public class OfficersPayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(OfficersPayController.class);
 		
+	//직원급여계 입력하기
+	@PostMapping("/addOffiCalpay")
+	public String addOffiCalpay(OfficersPay officersPay
+								,@RequestParam(value = "mrId", required = false) String mrId
+								,@RequestParam(value = "opcCode", required = false) String opcCode) {
+		
+		officersPayService.addOffiCalpay(officersPay);
+		return "redirect:/addOffiCalpay";		
+	}		
+	
+	//직원 정보 불러오기
+	@PostMapping(value = "/callOfficersInfo",produces = "application/json")
+	@ResponseBody
+	public OfficersPay callOfficersInfo(String mrId
+			,@RequestParam(value = "pRTitle", required = false) String pRTitle
+			,@RequestParam(value = "opcHourlyWage", required = false) String opcHourlyWage			
+			) {
+		OfficersPay OfficersInfo = officersPayService.callOfficersInfo(mrId);
+		
+		//직원정보 급여계 넘기기
+		
+		if(pRTitle != null && opcHourlyWage != null) {
+			OfficersInfo.setpRTitle(Float.parseFloat(pRTitle));
+			OfficersInfo.setOpcHourlyWage(Integer.parseInt(opcHourlyWage));			
+		}		
+		
+		return OfficersInfo;
+	}
+	
 	@RequestMapping(value = "/officersPayIndex", method = RequestMethod.GET)
 	public String getOfficersList(Model model) {
 		//직원리스트조회
@@ -40,37 +69,12 @@ public class OfficersPayController {
 		model.addAttribute("title", "시급기준표");
 		
 		return "pay/officersPay";		
-	}
-
-	
-	//직원 정보 불러오기
-	@PostMapping(value = "/callOfficersInfo",produces = "application/json")
-	@ResponseBody
-	public OfficersPay callOfficersInfo(String mrId
-										,@RequestParam(value = "pRTitle", required = false) String pRTitle
-										,@RequestParam(value = "opcHourlyWage", required = false) String opcHourlyWage			
-										) {
-		System.out.println(mrId +" <-mrId");
-		OfficersPay OfficersInfo = officersPayService.callOfficersInfo(mrId);
-		
-		//직원정보 급여계 넘기기
-		System.out.println(pRTitle +" <-pRTitle 직원정보 급여계");
-		System.out.println(opcHourlyWage +" <-opcHourlyWage 직원정보 급여계");
-		
-		if(pRTitle != null && opcHourlyWage != null) {
-			OfficersInfo.setpRTitle(Float.parseFloat(pRTitle));
-			OfficersInfo.setOpcHourlyWage(Integer.parseInt(opcHourlyWage));			
-		}		
-		System.out.println(OfficersInfo + "<--OfficersInfo");
-
-		return OfficersInfo;
-	}
+	}	
 	
 	// 직원급여명세서조회
 	@RequestMapping(value = "/getOfficersPay", method = RequestMethod.GET)
 	public String getOfficersPay(Model model
 								,@RequestParam(value = "mrId", required = false) String mrId) {
-		System.out.println(mrId +" <-mrId");
 		List<OfficersPay> officersPay = officersPayService.getOfficersPay(mrId);
 
 		model.addAttribute("officersPay", officersPay);
