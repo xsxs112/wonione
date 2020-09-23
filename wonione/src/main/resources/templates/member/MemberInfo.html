@@ -11,9 +11,10 @@
 	  
 	<th:block layout:fragment="customContent">
 	
+	
 		<h2>구성원 정보 보기</h2>
 	
-		<table class="table table-striped table-bordered">	
+		<table class="table table-striped table-bordered" style="margin: 10px">	
 			<tr>
 				<td>아이디</td>
 				<td th:text="${WIOMemberInfo.mrId}"></td>
@@ -50,6 +51,11 @@
 			</tr>
 			
 			<tr>
+				<td>셔틀버스</td>
+				<td th:text="${WIOMemberInfo.shuttleNum}"></td>
+			</tr>
+			
+			<tr>
 				<td>입사일</td>
 				<td th:text="${WIOMemberInfo.mrJoinDate}"></td>
 			</tr>
@@ -59,6 +65,9 @@
 				<td th:text="${WIOMemberInfo.mrRegDate}"></td>
 			</tr>
 		</table>	
-			
+		
+		<!-- 회원 정보보기 후, 다시 리스트로 돌아가기. -->
+		<a  href="/getWIOMemberList" class="btn btn-default" role="button">목록으로</a>
+		
 	</th:block> 
 </html>

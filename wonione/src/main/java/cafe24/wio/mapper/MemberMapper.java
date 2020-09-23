@@ -9,6 +9,9 @@ import cafe24.wio.bean.Member;
 @Mapper
 public interface MemberMapper {
 	
+	// 4. 구성원 등록
+	public int addWIOMember(Member member);
+	
 	// 3. 아이디 중복 검사 , 로그인 처리시 사용
 	public String WIOMemberIdCheck(String mrId, String mrPw);
 	

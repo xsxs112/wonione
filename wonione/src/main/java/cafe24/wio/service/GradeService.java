@@ -57,5 +57,25 @@ public class GradeService {
 		List<Map<String,Object>> testList = gradeMapper.testNum(); 
 		return testList; 
 	}
+	
+	//자동증가코드가져오기
+	 public String gradeCode() {
+		 
+	      Map<String, Object> reCodeMax =  gradeMapper.gradeCode();
+	      
+	      System.out.println("reCodeMax ------------> " + reCodeMax);
+	      String tempCode = "grade";
+	      
+	      int getMax = Integer.parseInt(reCodeMax.get("max").toString());
+
+	      if(getMax<10) {
+	         tempCode = "grade0";
+	      }
+	      String reCode = tempCode + String.valueOf(reCodeMax.get("max"));
+	      
+	      System.out.println("reCode ------------> " + reCode);
+	      
+	      return reCode;
+	   }
 	 
 }

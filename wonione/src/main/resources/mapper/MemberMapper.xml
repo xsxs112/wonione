@@ -5,6 +5,38 @@
     
 <mapper namespace="cafe24.wio.mapper.MemberMapper">
 
+	<!--  3. 구성원 등록, 수납 처리 전 -->
+	<insert id="addWIOMember" parameterType="Member">
+		INSERT 
+		INTO 
+			wt_member_registration(
+				mr_id			
+			, 	mr_pw				
+			, 	mr_name			
+			, 	level_num		
+			, 	mr_phone		
+			, 	mr_addr			
+			, 	mr_target_score		
+			, 	pm_r_code			
+			,	mr_account_num	
+			, 	shuttle_num			
+			, 	mr_join_date		
+			, 	mr_reg_date		
+		) VALUES (
+				#{mrId}
+			, 	#{mrPw}
+			, 	#{mrName}
+			, 	${levelNum}
+			, 	#{mrPhone}
+			, 	#{mrAddr}
+			, 	${mrTargetScore}
+			, 	#{pmRCode}
+			, 	#{mrAccountNum}
+			, 	#{shuttleNum}
+			, 	#{mrJoinDate}
+			, 	NOW());
+	</insert>
+
 	<!-- 2. 로그인 -->
 	<select id="login" resultType="Member" parameterType="String">
 		SELECT
@@ -69,6 +101,7 @@
 			,	m.mr_addr			AS mrAddr
 			,	m.mr_target_score	AS mrTargetScore
 			,	m.mr_account_num	AS mrAccountNum
+			,	m.shuttle_num		AS shuttleNum
 			,	m.mr_join_date		AS mrJoinDate
 			,	m.mr_reg_date		AS mrRegDate
 			,	pr.pm_r_title		AS pmRTitle

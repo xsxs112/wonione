@@ -25,7 +25,6 @@ public class WorkReportController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(WorkReportController.class);
 
-	
 	//보고서목록조회
 	@RequestMapping(value="/getReportList", method= RequestMethod.GET)
 	public String getReportList(Report report, Model model) {
@@ -95,7 +94,6 @@ public class WorkReportController {
 	      model.addAttribute("writeName", wName);
 	      return "humanresource/workreportwrite";
 	   }
-	   
 	   
 	   //보고서 삭제
 	   @GetMapping("/deleteCode")

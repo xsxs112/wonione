@@ -42,6 +42,39 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>
+	<!-- 직원급여계 입력하기 -->
+	<insert id="addOffiCalpay" parameterType="OfficersPay">
+		INSERT INTO wt_officers_pay_calculate
+			(opc_code							
+			, mr_id								
+			, p_r_title							
+			, opc_hourly_wage					
+			, opc_total_hour					
+			, opc_base_pay						
+			, opc_food_expenses					
+			, opc_transportation				
+			, opc_welfare						
+			, opc_bonus							
+			, opc_ect							
+			, opc_total							
+			, opc_reg_date						
+			, opc_writer						
+			)VALUES(
+					#{opcCode}
+					,#{mrId}
+					,#{pRTitle}
+					,#{opcHourlyWage}
+					,#{opcTotalHour}
+					,#{opcBasePay}
+					,#{opcFoodExpenses}
+					,#{opcTransportation}
+					,#{opcWelfare}
+					,#{opcBonus}
+					,#{opcEct}
+					,#{opcTotal}
+					, NOW()
+					,'');
+	</insert>
 	
 	<!-- 직원정보조회 -->
 	<select id ="callOfficersInfo" resultType="OfficersPay" parameterType="String">
@@ -51,6 +84,11 @@
 			,m.mr_join_date		AS mrJoinDate
 			,r.pm_r_title		AS pMRTitle
 			,m.mr_account_num	AS mrAccountNum
+			,CONCAT('OPCD_',(
+				SELECT 
+			LPAD(COUNT(*)+1, 4, '0') 
+				FROM 
+					wt_officers_pay_calculate)) AS opcCode 
 		FROM
 			wt_member_registration AS m
 			INNER JOIN 

@@ -27,5 +27,7 @@ public interface GradeMapper {
 	//회차 불러오기
 	public List<Map<String, Object>> testNum();
 	 
+	//자동증가코드
+	public Map<String, Object> gradeCode();
 	
 }

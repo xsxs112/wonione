@@ -87,17 +87,18 @@ FROM
 <!-- 성적입력  -->
 <insert id="insertGrade"  parameterType="Grade">
 
-INSERT INTO wt_grade_management(
+INSERT INTO 
+	wt_grade_management(
 			grade_man_code
 			, mr_id
 			, test_round
 			, grade_man_score
 			, grade_man_reg_date)
 	VALUES (
-			gradeManCode
-			, mrName
-			, testRounds
-			, gradeManScore
+			  #{gradeManCode}
+			, #{mrName}
+			, #{testRounds}
+			, #{gradeManScore}
 			, NOW());
 
 </insert>
@@ -105,32 +106,59 @@ INSERT INTO wt_grade_management(
 <!-- 학생이름가져오기  -->
 <select id="sName" resultType="hashMap" >
 
-	SELECT
-		 wt_member_registration.mr_name
-		,wt_member_registration.mr_id
-	FROM
+	SELECT 
+		 mr_id
+		,mr_pw
+		,mr_name
+		,level_num
+		,mr_phone
+		,mr_addr
+		,mr_target_score
+		,pm_r_code
+		,mr_account_num
+		,shuttle_num
+		,mr_join_date
+		,mr_reg_date
+	FROM 
 		wt_member_registration
-	INNER JOIN
-		wt_grade_management
-	ON
-		wt_member_registration.mr_id = wt_grade_management.mr_id
-
+	WHERE
+		level_num = 4;	
+		
 </select>
 
 <!-- 회차가져오기  -->
 <select id="testNum" resultType="hashMap" >
 
-	SELECT
-		wt_grade_num.test_rounds
-	FROM
-		wt_grade_management
-	INNER join
-		wt_grade_num
-	ON
-		wt_grade_management.test_round = wt_grade_num.grade_test_num
-
+	SELECT 
+		 grade_test_num
+		,test_rounds
+		,grade_test_reg_date
+	FROM 
+		wt_grade_num;
+		
 </select> 
 
+<!-- 자동증가코드  -->
+<select id="gradeCode" resultType="hashMap">
+	SELECT IFNULL((SELECT max(CAST(SUBSTRING(grade_man_code,6) AS DECIMAL))+1 FROM wt_grade_management),1) AS max;
+</select>
+
+<!-- 강의 소스가져오기  -->
+<select id="classFile" resultType="hashMap" >
+	SELECT 
+
+		  lec_number
+		, lec_designation
+		, lec_group_id
+		, lec_group_name
+		, lec_group_sort
+		, lec_starttime
+		, lec_endtime
+		, lec_grading_std
+		, qs_sd_score
+	FROM
+	 	wt_lec_resource
+</select>
 
 </mapper>   
 

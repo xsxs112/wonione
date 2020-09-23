@@ -30,10 +30,8 @@
 		  font-size: 15px;
 	</style>
 		<h3 style="color: grey;">성적리스트</h3><br>
-		
 		<form id="gradeForm" class="form-inline" action="/serchGrade" method="post">  
 			<select class="form-control" name="lecGd" id="lecGd">
-			  <option value="">::검색조건::</option>
 			  <option value="grade_man_score">점수</option>
 			  <option value="mr_name">학생명</option>
 			  <option value="test_rounds">회차</option>
@@ -44,11 +42,13 @@
 			        <button class="btn btn-default form-group" type="submit" id="btnsearch">검색</button>
 			   </div>
 		   </div>
-		</form>
+		</form >
 		<br>
-		<table class ="table table-striped">
+		<form id="gradeInsertForm" action="/getGradeList" method="POST">
+		<table class ="table table-striped" id="member_table">
 			<thead>
 				<tr>
+					<th>성적코드</th>
 					<th>학생명</th>
 					<th>회차</th>
 					<th>점수</th>
@@ -57,6 +57,8 @@
 			</thead>
 			<tbody>
 				<tr>
+				<td>
+				<input class="form-control" th:value="${gradeCode}" name="gradeManCode" readonly="readonly">
 					<td>
 						<select name ="mrName" class="form-control" id="mrName">
 							<option value="">::학생이름::</option>
@@ -69,7 +71,7 @@
 						<select name ="testRounds" class="form-control" id="testRounds">
 							<option value="">::회차::</option>
 							<th:block th:each="t : ${testNum}">
-								<option th:value="${t.test_rounds}" th:name ="testRounds">[[${t.test_rounds}]]</option>
+								<option th:value="${t.grade_test_num}" th:name ="testRounds">[[${t.test_rounds}]]</option>
 							</th:block>
 						</select> 
 					</td>
@@ -78,13 +80,14 @@
 					</td>
 					<td>
 						<div style="margin-bottom:10px"> 
-							<button type="button" class="btn btn-default btn-block" id="#">저장하기</button>
+							<button type="button" class="btn btn-default btn-block" id="gradeSubmit">저장하기</button>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<table class ="table table-striped">
+		</form>
+		<table class ="table table-striped" name="htmlCode">
 			<thead>
 				<tr>
 					<th>성적코드</th>
@@ -141,6 +144,37 @@
 		});
 		
 	});
+	
+	 $(function() {
+		  $('#gradeSubmit').click(function(){
+			  console.log('클릭 이벤트');
+			  var gradeInsertForm = $('#gradeInsertForm');
+			  var gradeManCode = $('#gradeManCode').val();
+				var mrName = $('#mrName').val();
+				var testRounds = $('#testRounds').val();
+				var gradeManScore = $('#gradeManScore').val();
+				console.log("mrName-->"+mrName);
+				console.log("testRounds-->"+testRounds);
+				console.log("gradeManScore-->"+gradeManScore);
+				
+				if(mrName == undefined || mrName ==''){
+					alert('성적등록을 위한 학생 이름을 입력해주세요');
+					$('#mrName').focus();
+					return;
+				}else if(testRounds == '' || testRounds == undefined){
+					alert('성적등록을 위한 시험 회차를 입력해주세요');
+					$('#testRounds').focus();
+					return;	
+				}else if(gradeManScore == ''|| gradeManScore == undefined){
+					alert('성적등록을 위한 점수를 입력해주세요');
+					$('#gradeManScore').focus();
+					return;
+				}
+				gradeInsertForm.submit();
+			}); 
+		});
+	 
+	 
 	 
 	
 	</script>  

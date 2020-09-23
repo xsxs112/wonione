@@ -13,8 +13,7 @@
  		$('.callOfficersInfo').click(function(){
  		var tr = $(this).parent().parent();
  		var td = tr.children();
- 		var mrId = td.eq(0).text(); 	
- 		
+ 		var mrId = td.eq(0).text(); 	  
 		console.log(mrId + ' < -- mrId');
 		var request = $.ajax({
 			  url: "/callOfficersInfo",
@@ -23,56 +22,23 @@
 			  dataType: "json"
 			});
 			request.done(function(data) {
-				console.log(data);
 				$('#mrId').val(data.mrId);
 				$('#mrName').val(data.mrName);
 				$('#mrJoinDate').val(data.mrJoinDate);
 				$('#pmRTitle').val(data.pmRTitle);
 				$('#mrAccountNum').val(data.mrAccountNum);
+				$('#opcCode').val(data.opcCode);
 				
 			});
 			request.fail(function( jqXHR, textStatus ) {
-				if (jqXHR.status === 0) {
-		            alert('Not connect.\n Verify Network.');
-		        } 
-		        else if (jqXHR.status == 400) {
-		            alert('Server understood the request, but request content was invalid. [400]');
-		        } 
-		        else if (jqXHR.status == 401) {
-		            alert('Unauthorized access. [401]');
-		        } 
-		        else if (jqXHR.status == 403) {
-		            alert('Forbidden resource can not be accessed. [403]');
-		        } 
-		        else if (jqXHR.status == 404) {
-		            alert('Requested page not found. [404]');
-		        } 
-		        else if (jqXHR.status == 500) {
-		            alert('Internal server error. [500]');
-		        } 
-		        else if (jqXHR.status == 503) {
-		            alert('Service unavailable. [503]');
-		        } 
-		        else if (exception == 'parsererror') {
-		            alert('Requested JSON parse failed. [Failed]');
-		        } 
-		        else if (exception == 'timeout') {
-		            alert('Time out error. [Timeout]');
-		        } 
-		        else if (exception == 'abort') {
-		            alert('Ajax request aborted. [Aborted]');
-		        } 
-		        else {
-		            alert('Uncaught Error.n' + jqXHR.responseText);
-		        }
-			});
-		});  	
-		
+				  alert( "Request failed: " + textStatus );
+			});	
+ 		});
  		$('#OfficersCalformBtn').click(function(){
 			
-			var mrId = $('input[name=tb2MrId]').val();
+			var mrId = $('input[name=mrId]').val();
 			console.log(mrId);
-			var mrName = $('input[name=tb2MrName]').val();
+			var mrName = $('input[name=mrName]').val();
 			console.log(mrName);
 			var pRTitle = $('select[name=pRTitle] option:selected').val();
 			console.log(pRTitle);
@@ -96,84 +62,124 @@
 					  data: { mrId : mrId, mrName : mrName, pRTitle : pRTitle, opcHourlyWage : opcHourlyWage },
 					  dataType: "json"
 					});
-			request.done(function(data) {
-				console.log(data);
-				$('#cMrId').val(data.mrId);
-				$('#cMrName').val(data.mrName);
-				$('#cpRTitle').val(data.pRTitle);
-				$('#opcHourlyWage').val(data.opcHourlyWage);
-				
-			});
-			request.fail(function( jqXHR, textStatus ) {
-				if (jqXHR.status === 0) {
-		            alert('Not connect.\n Verify Network.');
-		        } 
-		        else if (jqXHR.status == 400) {
-		            alert('Server understood the request, but request content was invalid. [400]');
-		        } 
-		        else if (jqXHR.status == 401) {
-		            alert('Unauthorized access. [401]');
-		        } 
-		        else if (jqXHR.status == 403) {
-		            alert('Forbidden resource can not be accessed. [403]');
-		        } 
-		        else if (jqXHR.status == 404) {
-		            alert('Requested page not found. [404]');
-		        } 
-		        else if (jqXHR.status == 500) {
-		            alert('Internal server error. [500]');
-		        } 
-		        else if (jqXHR.status == 503) {
-		            alert('Service unavailable. [503]');
-		        } 
-		        else if (exception == 'parsererror') {
-		            alert('Requested JSON parse failed. [Failed]');
-		        } 
-		        else if (exception == 'timeout') {
-		            alert('Time out error. [Timeout]');
-		        } 
-		        else if (exception == 'abort') {
-		            alert('Ajax request aborted. [Aborted]');
-		        } 
-		        else {
-		            alert('Uncaught Error.n' + jqXHR.responseText);
-		        }
-			});
-		});  		
-
- 		$(function(){
+				request.done(function(data) {
+					console.log(data);
+					$('#cMrId').val(data.mrId);
+					$('#cMrName').val(data.mrName);
+					$('#cpRTitle').val(data.pRTitle);
+					$('#opcHourlyWage').val(data.opcHourlyWage);
+					
+				});
+				request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});	
+			});  			  	
+ 		
+ 		$(document).on('keyup','#opcTotalHour', function(){
+ 			var regexp =  /^[0-9]*$/;
+ 			var regexpChange =  /[^0-9]/gi;
+ 			var v = $('#opcTotalHour').val();
+ 			if(!regexp.test(v)){ //숫자가 아니라면 				
+ 				$('#opcTotalHour').val(v.replace(regexpChange, ""));
+ 			}
+ 		});
+ 		
  			$('#OfficersCalBaseBtn').click(function(){
  			var baseMulti = 0;
+ 			var pRTitle = $('#cpRTitle').val();
+ 			var mrId = $('#cMrId').val();
 			if($('#opcTotalHour').val() == ''){
 				alert('근무시간을 입력해주세요.');
 				return;
 			}
  			baseMulti += Number($('#opcHourlyWage').val()) * Number($('#opcTotalHour').val());
- 				console.log(baseMulti);	
  				$('#opcBasePay').val(baseMulti);
+ 				$('#cpRTitle').val(pRTitle);
+ 				$('#cMrId').val(mrId);
  			}); 			
-		}); 
- 		
- 		$(function(){
+		 		 		
  			$('#OfficersCalTotalBtn').click(function(){
  			var calSum = 0;
- 			calSum += 	Number($('#opcBasePay').val()) 
- 						+ Number($('#opcFoodExpenses').val())
- 						+ Number($('#opcTransportation').val())
- 						+ Number($('#opcWelfare').val())
- 						+ Number($('#opcBonus').val())
- 						+ Number($('#opcEct').val()) 						;
- 				console.log(calSum);	
+ 			var opcBasePay = Number($('#opcBasePay').val());
+ 			var opcFoodExpenses = Number($('#opcFoodExpenses').val());
+ 			var opcTransportation = Number($('#opcTransportation').val());
+ 			var opcWelfare = Number($('#opcWelfare').val());
+ 			var opcBonus = Number($('#opcBonus').val());
+ 			var opcEct = Number($('#opcEct').val());
+ 			calSum += opcBasePay 
+ 					+ opcFoodExpenses 						
+ 					+ opcTransportation 						
+ 					+ opcWelfare 						
+ 					+ opcBonus 						
+ 					+ opcEct; 						
+ 				$('#opcFoodExpenses').val(opcFoodExpenses);
+ 				$('#opcTransportation').val(opcTransportation);
+ 				$('#opcWelfare').val(opcWelfare);
+ 				$('#opcBonus').val(opcBonus);
+ 				$('#opcEct').val(opcEct);
  				$('#opcTotal').val(calSum);
  			}); 			
-		}); 
-	});		
+	
+ 		
+		$('#offiCalInsertBtn').click(function(){
+			var foinForm = $('#offiCalFoinForm');
+			var opcCode = $('#opcCode').val();
+			var mrId = $('#cMrId').val();
+			var pRTitle = $('#cpRTitle').val();
+			var opcHourlyWage = $('#opcHourlyWage').val();
+			var opcTotalHour = $('#opcTotalHour').val();
+			var opcBasePay = $('#opcBasePay').val();
+			var opcFoodExpenses = $('#opcFoodExpenses').val();
+			var opcTransportation = $('#opcTransportation').val();
+			var opcWelfare = $('#opcWelfare').val();
+			var opcBonus = $('#opcBonus').val();
+			var opcEct = $('#opcEct').val();
+			var opcTotal = $('#opcTotal').val();		
+			
+			var request = $.ajax({
+				  url: "/addOffiCalpay",
+				  method: "POST",
+				  data: { opcCode : opcCode
+					  	, mrId : mrId
+					  	, pRTitle : pRTitle
+					  	, opcHourlyWage : opcHourlyWage
+					  	, opcTotalHour : opcTotalHour
+					  	, opcBasePay : opcBasePay
+					  	, opcFoodExpenses : opcFoodExpenses
+					  	, opcTransportation : opcTransportation
+					  	, opcWelfare : opcWelfare
+					  	, opcBonus : opcBonus
+					  	, opcEct : opcEct
+					  	, opcTotal : opcTotal },
+				  dataType: "json"
+				});
+					request.done(function(data) {
+					$('#opcCode').val(data.opcCode);
+					$('#mrId').val(data.mrId);
+					$('#pRTitle').val(data.pRTitle);
+					$('#opcHourlyWage').val(data.opcHourlyWage);
+					$('#opcTotalHour').val(data.opcTotalHour);
+					$('#opcBasePay').val(data.opcBasePay);
+					$('#opcFoodExpenses').val(data.opcFoodExpenses);
+					$('#opcTransportation').val(data.opcTransportation);
+					$('#opcWelfare').val(data.opcWelfare);
+					$('#opcBonus').val(data.opcBonus);
+					$('#opcEct').val(data.opcEct);
+					$('#opcTotal').val(data.opcTotal);					
+				});
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+				});	
+					
+		});	
+	});
 		
 	
 </script>		
 		
 	</th:block>
 	<th:block layout:fragment="customContent" >	
+	<form action="/addOffiCalpay" id="offiCalFoinForm" method="post"> <!-- 급여계 입력폼 -->
 	<!--===================직원목록불러오기시작===================-->
 	<div style="width:40%; float:left" class="container-fluid">		
 		<table id="tb" class ="table table-striped">			
@@ -197,13 +203,13 @@
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">아이디</td>
 				<td colspan="3" style="text-align: left;">
-				<input type="text" class="form-control" id="mrId" name="tb2MrId" th:value="${mrId}" readonly>
+				<input type="text" class="form-control" id="mrId" name="mrId" th:value="${mrId}" readonly>
 				</td>
 			</tr>
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">이름</td>
 				<td colspan="3" style="text-align: left;">
-				<input type="text" class="form-control" id="mrName" name="tb2MrName" th:value="${mrName}" readonly>
+				<input type="text" class="form-control" id="mrName" name="mrName" th:value="${mrName}" readonly>
 				</td>			
 			</tr>
 			<tr>
@@ -287,7 +293,7 @@
 	<!--===================시급지급기준 끝===================-->	
 		
 	<!--===================지급계산시작===================-->
-	<form>	
+	
 		<div class="container-fluid">
 			<table class ="table table-striped">
 				<tr>
@@ -296,7 +302,7 @@
 				<tr class="info" style="text-align: center;" >	
 					<td>계산번호</td>
 					<td>지급월</td>
-					<td>이름</td>
+					<td>아이디</td>
 					<td>시급</td>
 					<td>근무시간</td>	
 					<td>
@@ -305,22 +311,22 @@
 				</tr>
 				<tr style="text-align: center;">
 					<td>
-					<input type="text" class="form-control" id="opcCode" th:value="${opcCode}" placeholder="급여계산번호" readonly>
+					<input type="text" class="form-control" id="opcCode" name="opcCode" th:value="${opcCode}" placeholder="급여계산번호" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="cpRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" placeholder="계산월" readonly>
+					<input type="text" class="form-control" id="cpRTitle" name="cpRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" placeholder="계산월" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="cMrName" th:value="${mrName}" placeholder="이름" readonly>
+					<input type="text" class="form-control" id="cMrId" name="cMrId" th:value="${mrId}" placeholder="아이디" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="opcHourlyWage" th:value="${opcHourlyWage}" placeholder="시급" readonly>
+					<input type="text" class="form-control" id="opcHourlyWage" name="opcHourlyWage" th:value="${opcHourlyWage}" placeholder="시급" readonly>
 					</td>
 					<td>
 					<input type="text" class="form-control" id="opcTotalHour" name="opcTotalHour" placeholder="근무시간입력">
 					</td>	
 					<td>
-					<input type="text" class="form-control" id="opcBasePay" th:value="${opcBasePay}" placeholder="기본급계산" readonly>
+					<input type="text" class="form-control" id="opcBasePay" name="opcBasePay" th:value="${opcBasePay}" placeholder="기본급계산" readonly>
 					</td>
 				</tr>
 				<tr class="info" style="text-align: center;">					
@@ -353,13 +359,25 @@
 					<input type="text" class="form-control" id="opcTotal" name="opcTotal" placeholder="급여계총액" readonly >
 					</td>	
 				</tr>	
+				<tr style="text-align: center;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="2" >
+					<button type="button" id="offiCalInsertBtn" class="btn btn-primary btn-sm btn-block">
+					급여계입력
+					</button>
+					</td>	
+				</tr>	
 			</table>
 		</div>
-	
+	</form>
 	<!--===================지급계산끝===================-->	
 	
 	<!--===================공제계산시작===================-->
-	
+	<form>
 		<div class="container-fluid">
 			<table class ="table table-striped">
 				<tr>
@@ -368,29 +386,29 @@
 				<tr class="info" style="text-align: center;">	
 					<td>공제번호</td>
 					<td>공제월</td>
-					<td>이름</td>
+					<td>아이디</td>
 					<td>요율시행년도</td>
 					<td>소득세</td>	
 					<td>주민소득세</td>		
 				</tr>
 				<tr style="text-align: center;">
 					<td>
-					<input type="text" class="form-control" id="opdCode" th:value="${opdCode}" placeholder="공제계산번호" readonly>
+					<input type="text" class="form-control" id="opdCode" name="opdCode" th:value="${opdCode}" placeholder="공제계산번호" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="dpRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" readonly>
+					<input type="text" class="form-control" id="dpRTitle" name="dpRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="dMrName" th:value="${mrName}" readonly>
+					<input type="text" class="form-control" id="dMrId" name="dMrId" th:value="${mrId}" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="iyCode" th:value="${iyCode}" placeholder="요율시행년도" readonly>
+					<input type="text" class="form-control" id="iyCode" name="iyCode" th:value="${iyCode}" placeholder="요율시행년도" readonly>
 					</td>
 					<td>
 					<input type="text" class="form-control" id="opdIncomeTax" name="opdIncomeTax" placeholder="소득세" >
 					</td>	
 					<td>
-					<input type="text" class="form-control" id="opdResidentIncomTax" th:value="${opdResidentIncomTax}" placeholder="주민소득세" readonly>
+					<input type="text" class="form-control" id="opdResidentIncomTax" name="opdResidentIncomTax" th:value="${opdResidentIncomTax}" placeholder="주민소득세" readonly>
 					</td>
 				</tr>
 				<tr class="info" style="text-align: center;">					
@@ -428,7 +446,6 @@
 			</table>
 		</div>
 	</form>
-	<button>입력</button>
 	<!--===================지급계산끝===================-->
 
 	<br>

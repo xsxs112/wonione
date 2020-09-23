@@ -5,6 +5,7 @@ public class ApprovalRequest {
 	private String reCode; //요청코드
 	private String reSortation; //요청구분
 	private String mrId; //아이디
+	private String mrName; //이름
 	private String reDate; //요청날짜
 	private String reStartDate; //시작날짜
 	private String reEndDate; //종료날짜
@@ -32,6 +33,12 @@ public class ApprovalRequest {
 	}
 	public void setMrId(String mrId) {
 		this.mrId = mrId;
+	}
+	public String getMrName() {
+		return mrName;
+	}
+	public void setMrName(String mrName) {
+		this.mrName = mrName;
 	}
 	public String getReDate() {
 		return reDate;
@@ -95,14 +102,12 @@ public class ApprovalRequest {
 	}
 	@Override
 	public String toString() {
-		return "ApprovalRequest [reCode=" + reCode + ", reSortation=" + reSortation + ", mrId=" + mrId + ", reDate="
-				+ reDate + ", reStartDate=" + reStartDate + ", reEndDate=" + reEndDate + ", reOuttingTime="
-				+ reOuttingTime + ", reReason=" + reReason + ", sortation=" + sortation + ", reSupervisor="
-				+ reSupervisor + ", reProcessingDate=" + reProcessingDate + ", reState=" + reState + ", refuseReason="
-				+ refuseReason + "]";
+		return "ApprovalRequest [reCode=" + reCode + ", reSortation=" + reSortation + ", mrId=" + mrId + ", mrName="
+				+ mrName + ", reDate=" + reDate + ", reStartDate=" + reStartDate + ", reEndDate=" + reEndDate
+				+ ", reOuttingTime=" + reOuttingTime + ", reReason=" + reReason + ", sortation=" + sortation
+				+ ", reSupervisor=" + reSupervisor + ", reProcessingDate=" + reProcessingDate + ", reState=" + reState
+				+ ", refuseReason=" + refuseReason + "]";
 	}
-	
-	
 	
 	
 	

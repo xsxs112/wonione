@@ -6,7 +6,6 @@
 	
 	
 	/*=========================================================================================조원준 js start*/
-
 	
 	//상담수정
 	$('#upConsulting').click(function(){
@@ -14,6 +13,7 @@
 		var consultingForm = $('#consultingForm');
 		if(consultingTitle.val() != ''){
 			if(confirm('수정하시겠습니까?')){
+				alert('수정되었습니다.');
 				consultingForm.submit();
 			}else{
 				alert('취소하셨습니다.');

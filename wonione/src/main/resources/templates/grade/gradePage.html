@@ -38,6 +38,7 @@
 				<td th:text=${g.gradeManCode}></td>
 				<td th:text=${g.mrName}></td>
 			</tr>	
+			
 			<tr>	
 				<th>시험회차</th>
 				<th>시험점수</th>
@@ -45,6 +46,22 @@
 			<tr th:each="g : ${Grade}">	
 				<td th:text=${g.testRounds}></td>
 				<td th:text=${g.gradeManScore}></td>
+			</tr>
+			<tr>	
+				<th>수강과목</th>
+				<th>수강교실</th>
+			</tr>
+			<tr>	
+				<td>없음</td>
+				<td>없음</td>
+			</tr>
+			<tr>	
+				<th>과정상태</th>
+				<th>수강교실</th>
+			</tr>
+			<tr>	
+				<td>종강</td>
+				<td></td>
 			</tr>
 		</table>
 		<div style= "margin-bottom:10px">
