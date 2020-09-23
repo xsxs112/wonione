@@ -1,6 +1,5 @@
 package cafe24.wio.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +44,8 @@ public class ReportService {
 	
 	//보고서작성
 	   public int getReportWrite(Report report) {
-	      int wrtite = reportMapper.getReportWrite(report);
-	      return wrtite;
+	      int write = reportMapper.getReportWrite(report);
+	      return write;
 	   }
 	
 	//코드로 조회
