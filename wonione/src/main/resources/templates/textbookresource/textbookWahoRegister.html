@@ -10,6 +10,7 @@
 	<h2 th:text="${mainTitle}"></h2>
 	<form action="/textbookWahoRegister" method="POST" id="addForm" >
 	<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
+	<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
 		<div class="container-fluid">
 		<!-- <a href="/textbookFirstWahoRegister" class="btn btn-warning btn-lg" role="button" >최초등록</a> -->
 			<table class="table table-block" border="1" style="text-align: center;" >
@@ -102,7 +103,7 @@
 				if(data == 0){
 					alert('해당교재의 입고내역이 존재하지 않습니다.');
 					 if(confirm('최초입고등록을 하시겠습니까?')){
-						 location.href = '/textbookFirstWahoRegister';
+						 location.href = '/textbookFirstWahoRegister?txbCode='+txbCode;
 					}
 				}else{
 					alert('해당교재의 입고내역이 있습니다.');

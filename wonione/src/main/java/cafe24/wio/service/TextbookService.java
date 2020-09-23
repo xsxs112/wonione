@@ -20,6 +20,17 @@ public class TextbookService {
 
 	@Autowired
 	private TextbookMapper textbookMapper;
+
+	/**
+	 * 가장 마지막에 등록한 입고정보 가져오기
+	 * @return WhTextbook txbWhResult
+	 */
+	public WhTextbook getRecentTxbWhList() {
+		
+		WhTextbook txbWhResult = textbookMapper.getRecentTxbWhList();
+		
+		return txbWhResult;
+	}
 	
 	/**
 	 * 교재 지급내역 검색
@@ -146,9 +157,8 @@ public class TextbookService {
 	 * @param txbInfoCode
 	 * @return TextbookBasicInfo textbookBasicInfo
 	 */
-	public TextbookBasicInfo getOnlyTxbInfo(String txbInfoCode) {
-		TextbookBasicInfo textbookBasicInfo = textbookMapper.getOnlyTxbInfo(txbInfoCode);
-		
+	public TextbookBasicInfo getOnlyTxbInfo(String txbCode) {
+		TextbookBasicInfo textbookBasicInfo = textbookMapper.getOnlyTxbInfo(txbCode);
 		return textbookBasicInfo;
 	}
 	

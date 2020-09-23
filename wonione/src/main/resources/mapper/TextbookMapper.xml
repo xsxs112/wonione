@@ -90,6 +90,22 @@
 <!-- ************************교재입고************************* -->
 <!-- *********************** START ************************* -->
 
+<!-- 마지막으로 입고된 내역 조회 -->
+<select id="getRecentTxbWhList" resultType="WhTextbook" resultMap="resultWhTextbook">
+	SELECT 
+			wh_txb_code
+		, 	txb_code
+		, 	wh_txb_quantity
+		, 	wh_txb_date
+		, 	stock_txb_quantity
+		, 	wh_txb_writer
+		, 	wh_txb_reg_date
+		, 	wh_txb_remark
+	FROM
+		wt_warehousing_textbook
+	ORDER BY wh_txb_code DESC LIMIT 1
+</select>
+
 <!-- 교재 입고내역 검색 -->
 <select id="getWhTxbSearch" resultMap="resultTxbBasicInfo">
 SELECT
@@ -168,9 +184,9 @@ WHERE
 		,	${whTxbQuantity}
 		,	CURRENT_TIME()
 		,	${whTxbQuantity}
-		,	'oid002'
+		,	#{whTxbWriter}
 		,	CURRENT_TIME()	
-		,	'');	
+		,	#{whTxbRemark});	
 </insert>
 
 <!-- 교재입고등록 -->
@@ -196,9 +212,9 @@ WHERE
 			GROUP BY
 				wt.wh_txb_date
 			ORDER BY wt.wh_txb_date DESC LIMIT 1)+${whTxbQuantity}
-		, 'oid002'
+		, #{whTxbWriter}
 		, CURRENT_TIME()	
-		, '');	
+		, #{whTxbRemark});	
 </insert>
 
 <!-- 교재입고코드 자동증가를 위해 max에 +1을 한값 select -->
@@ -261,7 +277,7 @@ WHERE
 	FROM 
 		wt_textbook_basic_information AS tbi
 	WHERE
-		tbi.txb_code = #{txbInfoCode};
+		tbi.txb_code = #{txbCode};
 </select>
 
 <!-- 교재정보코드 자동증가를 위해 max에 +1을 한값 select -->
@@ -296,7 +312,7 @@ WHERE
 		,   #{txbName}
 		,   #{txbPublisher}
 		,   #{txbAuthor}
-		,   'oid002'
+		,   #{txbWriter}
 		,   CURRENT_TIME())
 </insert>
 
