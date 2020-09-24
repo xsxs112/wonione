@@ -28,9 +28,16 @@ public class WorkController {
 	
 	
 	@GetMapping("/holiRequest")
-	public String holiRequest(Model model, @RequestParam(value = "reCode", required = false) String reCode) {
-
+	public String holiRequest(ApprovalRequest approvalRequest,Model model, @RequestParam(value = "reCode", required = false) String reCode) {
 		
+		
+		
+		String now = apprRequestService.getNow();
+		now = now.substring(0, 10);
+		System.out.println(now);
+		approvalRequest.setReDate(now);
+		String getPhone = apprRequestService.getMemberPhone(reCode);
+		model.addAttribute("getPhone", getPhone);
 		
 		return "workmanagment/holidayRequest";
 	}

@@ -16,6 +16,18 @@ public class ApprRequestService {
 	@Autowired
 	private ApprMapper apprMapper;
 	
+	public String getMemberPhone(String reCode) {
+		
+		return apprMapper.getMemberPhone(reCode);
+	}
+	
+	
+	public String getNow() {
+		
+		
+		return apprMapper.getNow();
+	}
+	
 	
 	
 	public ApprovalRequest getHolidayDetail(String reCode) {

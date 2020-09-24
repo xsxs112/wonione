@@ -6,8 +6,32 @@
     
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 
-
 	
+	
+	<select id = "getMemberPhone" parameterType="string" resultType="string">
+	
+	SELECT m.mr_phone
+	FROM wt_approval_request AS a 
+		LEFT JOIN wt_member_registration AS m
+		ON a.mr_id = m.mr_id
+	WHERE a.request_code = 'request_08';
+	
+	
+	
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- 현재날짜 구하기 -->
+	<select id = "getNow" resultType = "string">
+		SELECT NOW();
+	</select>
+	
+	
+	<!-- 휴가 상세보기 -->
 	<select id="getHolidayDetail" parameterType="string" resultType="ApprovalRequest">
 		SELECT 	request_code as reCode
 				, request_date as reDate
@@ -28,7 +52,7 @@
 	</select>
 
 
-
+	<!-- 휴가 리스트 삭제 -->
 	<delete id = "reDelete" parameterType="string">
 		DELETE 
 		FROM wt_approval_request 
@@ -36,6 +60,8 @@
 	
 	</delete>
 
+
+	<!-- 휴가 승인 -->
 	<update id="approval" parameterType="ApprovalRequest">
 		UPDATE wt_approval_request
 		SET
@@ -49,6 +75,7 @@
 	</update>
 	
 	
+	<!-- 업데이트 예제 -->
 	<update id="modifyMember" parameterType="Member">
 		UPDATE tb_member
 		<trim prefix="SET" suffixOverrides=",">
@@ -78,6 +105,7 @@
 	</update>
 
 	
+	<!-- 휴가리스트 중복 구하기 -->
 	<select id="hListDuplicate" parameterType="String" resultType="int">
 	
 		select COUNT(*) 

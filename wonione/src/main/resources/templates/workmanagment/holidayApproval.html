@@ -158,6 +158,7 @@
 									<th style="text-align: center;">신청 날짜</th>
 									<th style="text-align: center;">이름</th>
 									<th style="text-align: center;" colspan="3">휴가 기간</th>
+									<th style="text-align: center;">사유</th>
 									<th style="text-align: center;">상태</th>
 									<th style="text-align: center;">상세보기</th>
 								</tr>
@@ -169,6 +170,7 @@
 									<td th:text="${l.reStartDate}"></td>
 									<td>~</td>
 									<td th:text="${l.reEndDate}"></td>
+									<td th:text="${l.reReason}"></td>
 									<td th:text="${l.reState}"></td>
 									<td><a th:data-mCode="${l.reCode}" class ="detail">상세보기</a></td>
 								</tr>

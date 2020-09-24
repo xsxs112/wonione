@@ -12,6 +12,10 @@ import cafe24.wio.bean.Member;
 public interface ApprMapper {
 	
 	
+	public String getMemberPhone(String reCode);
+	
+	public String getNow();
+
 	public ApprovalRequest getHolidayDetail(String reCode);
 
 	
