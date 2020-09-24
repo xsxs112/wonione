@@ -7,10 +7,11 @@
 		<title>테스트</title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>			
 		  
 		    <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
-		        <span th:if="${currentPage == num}" th:text="${'■'}"></span>
-		        <span th:unless="${currentPage == num}" th:text="${'□'}" th:href="@{/Question(currentPage=${num})}"></span>
+		        <span th:if="${currentPage == num}" th:text="${'●'}" style="font-size: x-large;"></span>
+		        <span th:unless="${currentPage == num}" th:text="${'○'}" th:href="@{/Question(currentPage=${num})}" style="font-size: large;"></span>
 		    </th:block>
 		<table th:each="q : ${Question}" class="table">
 			<tr>
@@ -19,20 +20,20 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="radio" name="QuestionCheckbox" class="QuestionCheckbox"><label>&nbsp;&nbsp;A.</label><label th:text="${q.qe_A}"></label><br/>
+					<input type="radio" name="QuestionCheckbox" class="QuestionScoreCheckbox" value="A"><label>&nbsp;&nbsp;A.</label><label th:text="${q.qe_A}"></label><br/>
 					
-					<input type="radio" name="QuestionCheckbox" class="QuestionCheckbox"><label>&nbsp;&nbsp;B.</label><label th:text="${q.qe_B}"></label><br/>
+					<input type="radio" name="QuestionCheckbox" class="QuestionScoreCheckbox" value="B"><label>&nbsp;&nbsp;B.</label><label th:text="${q.qe_B}"></label><br/>
 			
-					<input type="radio" name="QuestionCheckbox"	class="QuestionCheckbox"><label>&nbsp;&nbsp;C.</label><label th:text="${q.qe_C}"></label><br/>
+					<input type="radio" name="QuestionCheckbox"	class="QuestionScoreCheckbox" value="C"><label>&nbsp;&nbsp;C.</label><label th:text="${q.qe_C}"></label><br/>
 				
-					<input type="radio" name="QuestionCheckbox" class="QuestionCheckbox"><label>&nbsp;&nbsp;D.</label><label th:text="${q.qe_D}"></label><br/>
+					<input type="radio" name="QuestionCheckbox" class="QuestionScoreCheckbox" value="D"><label>&nbsp;&nbsp;D.</label><label th:text="${q.qe_D}"></label><br/>
 				</td>
 			</tr>
 			
-			
+		<tr>
+		<td><span th:if="${currentPage ne lastPage}"><a th:href="@{/Question(currentPage=${currentPage}+1,questionName=${q.qt_codeName})}"><button type="button" class="btn btn-default">다음</button></a></span></td>
+		<td><span th:if="${currentPage eq lastPage}"><a href="#"><button type="button" class="btn btn-default" id="Questionbtn">완료</button></a></span></td>
+		</tr>
 		</table>
-		<span th:if="${currentPage > 1}"><a th:href="@{/Question(currentPage=(${currentPage}-1))}"><button type="button"  class="btn btn-default">이전 </button></a></span>
-		<span th:if="${currentPage ne lastPage}"><a th:href="@{/Question(currentPage=(${currentPage}+1))}"><button type="button" class="btn btn-default">다음</button></a></span>
-		<span th:if="${currentPage eq lastPage}"><a href="#"><button type="button" class="btn btn-default">완료</button></a></span>
 	</th:block>
 </html>

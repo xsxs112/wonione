@@ -5,6 +5,7 @@
 <mapper namespace="cafe24.wio.mapper.QuestionMapper">
 	<resultMap type="Question" id="QuestionMap">
 		<result column="qe_code" 		property="qeCode"/>
+		<result column="qt_codeName" 	property="qtCodeName"/>
 		<result column="mr_o_id" 		property="qeOid"/>
 		<result column="qe_data" 		property="qeData"/>
 		<result column="qe_score" 		property="qeScore"/>
@@ -13,39 +14,45 @@
 	</resultMap>
 	<select id="Question" resultType="hashMap" parameterType="map">
 		SELECT 
-		 	 q.rowNum   AS rowNum
-		 	,q.qe_code
-			,q.qe_data
-			,q.qe_data
-			,q.qe_score
-			,q.qe_answer
-			,q.qe_date
-			,qe_A
-			,qe_B
-			,qe_C
-			,qe_D
-      FROM 
-         (SELECT
-            (@rowNum := @rowNum+1) AS rowNum,
-        	 q.qe_code
-			,q.qe_data
-			,q.qe_date
-			,q.qe_score
-			,q.qe_answer
-			,q.qe_A
-			,q.qe_B
-			,q.qe_C
-			,q.qe_D
-         FROM
-			wt_questions_enrollment AS q  
-         	INNER JOIN
-           	wt_question_taker AS qt
-         	on
-           	q.qt_codeName = qt.qt_codename
-         	JOIN
-           	(SELECT @rowNum :=0 ) AS r   
-       		ORDER BY q.qt_codeName ASC) AS q
-       		LIMIT #{startRow},#{rowPerPage};
+		 	 qn.rowNum   AS rowNum
+		 	,qn.qe_code
+		 	,qt_codeName
+			,qn.qe_data
+			,qn.qe_data
+			,qn.qe_score
+			,qn.qe_answer
+			,qn.qe_date
+			,qn.qe_A
+			,qn.qe_B
+			,qn.qe_C
+			,qn.qe_D
+		FROM 
+        	 (
+	        	 SELECT
+	           		 (@rowNum := @rowNum+1) AS rowNum,
+		        	 q.qe_code
+		        	,q.qt_codeName
+					,q.qe_data
+					,q.qe_date
+					,q.qe_score
+					,q.qe_answer
+					,q.qe_A
+					,q.qe_B
+					,q.qe_C
+					,q.qe_D
+				FROM
+					wt_questions_enrollment AS q  
+	         	INNER JOIN
+	           	wt_question_taker AS qt
+	         	on
+	           	q.qt_codeName = qt.qt_codename
+	         	JOIN
+	           	(SELECT @rowNum :=0 ) AS r
+	       		ORDER BY q.qe_code ASC
+	       	) AS qn
+		WHERE
+			qn.qt_codeName = #{questionName}
+    	LIMIT #{startRow},#{rowPerPage};
 	</select>
 	<select id="QuestionCount" resultType="int">
       SELECT

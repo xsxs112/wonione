@@ -53,7 +53,7 @@ public class QuestionService {
 	      return resultMap;
 	}
 
-	public Map<String, Object> question(int currentPage) {
+	public Map<String, Object> question(int currentPage, String questionName) {
 			//보여줄 행의 갯수
 	      final int ROW_PER_PAGE = 1;
 	      
@@ -72,6 +72,7 @@ public class QuestionService {
 	            
 	      parameterMap.put("startRow", startRow);
 	      parameterMap.put("rowPerPage", ROW_PER_PAGE);
+	      parameterMap.put("questionName", questionName);
 	      
 	      double totalRowCount = questionMapper.QuestionCount();
 	      

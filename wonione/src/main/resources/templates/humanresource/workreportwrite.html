@@ -55,35 +55,33 @@
 table {
 		  width:100%;
 		}
-		table, th{
-		  border: 1px solid grey ;
-		  border-collapse: collapse;
-		  font-size: 17px;
+		table{
+		  	font-size: 17px;
+   			height: 50%;
 		}
 		th{
-		  padding: 1px;
-		  text-align: center;
-		  background-color: lightgrey;
+		  padding-right:30px;
+		  text-align: end;
+		  width: 20%;
+		  vertical-align: top;
 		}
 		td {
 		  padding: 3px;
-		  border: 1px solid grey ;
 		  text-align: center;
 		  border-collapse: collapse;
 		  font-size: 15px;
 
 </style>
 	
-	<form action="/workreportwrite" class="container-fluid" method="post" id="reportForm">
+	<form action="/workreportwrite" method="post" id="reportForm">
 	<h3 style="color: grey;" >개설예정 강의 계획보고서 작성</h3><br>
-		<table class="table table-striped">
+		<table>
 			<tr>
 				<th>강의개설예정코드</th>	
-				<th>강의개설예정과목</th>
-				<th>작성자</th>
+				<td><input class="form-control" th:value="${codeResult}" name="lecOpenCode" readonly="readonly"></td>
 			</tr>
 			<tr>
-				<td><input class="form-control" th:value="${codeResult}" name="lecOpenCode" readonly="readonly"></td>
+				<th>강의개설예정과목</th>
 				<td>
 					<select name ="lecName" class="form-control" id="lecName">
 						<option value="">::개설예정 강의::</option>
@@ -92,6 +90,8 @@ table {
 						</th:block>
 					</select>
 				</td>
+			<tr>
+				<th>작성자</th>
 				<td>
 					<select name ="mrName" class="form-control" id="mrName">
 						<option value="">::작성자::</option>
@@ -101,27 +101,21 @@ table {
 					</select>
 				</td>
 			</tr>
-			<tr>
-				 <th colspan="6">업무목표</th>
-			</tr>
 			<tr>	
-				<td colspan="6"><input type="text" class="form-control" name="lecTarget" id="lecTarget"></td>
-			</tr>
-			<tr>	
-				<th colspan="6">업무계획</th>
+				<th>업무목표</th>
+				<td><input type="text" class="form-control" name="lecTarget" id="lecTarget"></td>
 			</tr>
 			<tr>
-			<td colspan="6"><textarea class="form-control" rows="6" name="lecPlan" id="lecPlan"></textarea></td>
-			</tr>
-			<tr>	
-				<th colspan="6">기타사항</th>
+				<th>업무계획</th>
+			<td><textarea class="form-control" rows="6" name="lecPlan" id="lecPlan"></textarea></td>
 			</tr>
 			<tr>
-			<td colspan="3"><textarea class="form-control" rows="6" name="lecEtc" id="lecEtc"></textarea></td>
+				<th>기타사항</th>
+			<td><textarea class="form-control" rows="6" name="lecEtc" id="lecEtc"></textarea></td>
 			</tr>
 		</table>
 		<div style="margin-bottom:10px"> 
-			<button type="button" class="btn btn-default btn-lg btn-block" id="btnSubmit">저장하기</button>
+			<button type="button" class="btn btn-default" id="btnSubmit">저장하기</button>
 		</div>
 	</form>	
 	
