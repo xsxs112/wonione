@@ -9,16 +9,17 @@
 
 	<h2 th:text="${mainTitle}"></h2>
 	<form action="/textbookFirstWahoRegister" method="post" id="addForm" >
+	<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
+	<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
 		<div class="container-fluid">
 			<table class="table table-block" border="1" style="text-align: center;" >
 				<tr>
 					<td>교재명</td>
 					<td>
 					<select id="txbCode" name = "txbCode" class="form-control">
-					<option disabled="disabled" selected="selected">::교재 선택::</option>
-						<th:block th:each=" til : ${textbookInfoList} ">
-							<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
-						</th:block>
+					<th:block>
+						<option th:value=${textbookBasicInfo.txbCode} selected="selected">[[${textbookBasicInfo.txbName}]]</option>
+					</th:block>
 					</select>
 					</td>
 				</tr>

@@ -7,23 +7,23 @@
 		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
-	<h2 th:text="${mainTitle}"></h2>
+		<h2 th:text="${mainTitle}"></h2>
 	<div>
-	<h2 th:text="${regResult}"></h2>
+		<h2 th:text="${regResult}"></h2>
 	</div>
 		<table class="table table-bordered table-hover table-striped">
-			<thead>
-				<tr>
-				  <th>교재코드</th>
-				  <th>교재명</th>
-				  <th>출판사</th>
-				  <th>저자</th>
-				  <th>작성자아이디</th>
-				  <th>등록일자</th>		  
-				</tr>
-			</thead>
-			<tbody>
-				 <th:block th:each="tbi : ${textbookBasicInfo}">
+			<th:block th:each="tbi : ${textbookBasicInfo}">
+				<thead>
+					<tr>
+					  <th>교재코드</th>
+					  <th>교재명</th>
+					  <th>출판사</th>
+					  <th>저자</th>
+					  <th>작성자아이디</th>
+					  <th>등록일자</th>		  
+					</tr>
+				</thead>
+				<tbody>
 					<tr>
 					  <td th:text="${tbi.txbCode}"></td>
 					  <td th:text="${tbi.txbName}"></td>
@@ -32,8 +32,34 @@
 					  <td th:text="${tbi.txbWriter}"></td>
 					  <td th:text="${tbi.txbRegDate}"></td>
 					</tr>
-				</th:block> 
-			</tbody>
+				</tbody>
+			</th:block>
+			<th:block th:each="twr : ${txbWhResult}">
+				<thead>
+					<tr>
+						<th>교재입고코드</th>
+						<th>교재코드</th>
+						<th>입고수량</th>
+						<th>입고일자</th>
+						<th>재고수량</th>
+						<th>작성자아이디</th>		  
+						<th>등록일자</th>		
+						<th>비고</th>	
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${twr.whTxbCode}"></td>
+						<td th:text="${twr.txbCode}"></td>
+						<td th:text="${twr.whTxbQuantity}"></td>
+						<td th:text="${twr.whTxbDate}"></td>
+						<td th:text="${twr.stockTxbQuantity}"></td>
+						<td th:text="${twr.whTxbWriter}"></td>
+						<td th:text="${twr.whTxbRegDate}"></td>
+						<td th:text="${twr.whTxbRemark}"></td>
+					</tr>
+				</tbody>
+			</th:block> 
 		</table>
 		<div class="container-fluid" style="margin: 10px;">
 			<a href="/textbookRegister" class="btn btn-default" role="button">교재등록 메인페이지로</a>

@@ -42,6 +42,13 @@ public class OfficersPayService {
 		List<OfficersPay> officersPay = officersPayMapper.getOfficersPay(mrId);		
 		return officersPay;
 	}
+
+	//직원급여계 입력하기
+	public int addOffiCalpay(OfficersPay officersPay) {
+		int result = officersPayMapper.addOffiCalpay(officersPay);
+		
+		return 	result;
+	}
 	
 
 }

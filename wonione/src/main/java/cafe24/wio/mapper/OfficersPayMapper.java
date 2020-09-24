@@ -21,5 +21,8 @@ public interface OfficersPayMapper {
 	//직원 정보 조회
 	public OfficersPay callOfficersInfo(String mrId);
 
+	//직원급여계 입력하기
+	public int addOffiCalpay(OfficersPay officersPay);
+
 
 }

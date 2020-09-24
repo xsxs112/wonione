@@ -2,6 +2,8 @@ package cafe24.wio.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +28,9 @@ public class TextbookController {
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
-
-	
 	
 	//교재 지급내역 검색
-	@PostMapping("/getSuppTxbSearch")
+	@GetMapping("/getSuppTxbSearch")
 	public String getSuppTxbSearch(Model model
 			,@RequestParam(value="suppSk", required=false) String suppTxbSk
 			,@RequestParam(value="suppTxbSv", required=false) String suppTxbSv) {
@@ -41,7 +41,7 @@ public class TextbookController {
 	}
 	
 	//교재 정보 검색
-	@PostMapping("/getTxbInfoSearch")
+	@GetMapping("/getTxbInfoSearch")
 	public String getTxbInfoSearch(Model model
 			,@RequestParam(value="infoTxbSk", required=false) String infoTxbSk
 			,@RequestParam(value="infoTxbSv", required=false) String infoTxbSv) {
@@ -52,7 +52,7 @@ public class TextbookController {
 	}
 	
 	//교재 입고내역 검색
-	@PostMapping("/getWhTxbSearch")
+	@GetMapping("/getWhTxbSearch")
 	public String getWhTxbSearch(Model model
 							,@RequestParam(value="whTxbSk", required=false) String whTxbSk
 							,@RequestParam(value="whTxbSv", required=false) String whTxbSv) {
@@ -127,17 +127,23 @@ public class TextbookController {
 	
 	//교재 기초정보 등록
 	@GetMapping("/textbookInfoRegister")
-	public String textbookInfoRegister(Model model) {
+	public String textbookInfoRegister(Model model
+									,HttpSession session) {
 		
 		logger.info("==============================");
 		logger.info("교재정보등록페이지 textbookInfoRegister 겟매핑!!!!");
 		logger.info("==============================");
-		
+		String txbCode = textbookService.getTxbInfoMaxCode();
+		String sessionId = session.getAttribute("SID").toString();
+		logger.info(txbCode + " < -- txbCode");
+		logger.info(sessionId + " < -- sessionId");
 		model.addAttribute("title", "교재기본정보등록  페이지");
 		model.addAttribute("mainTitle", "교재기본정보등록 페이지");
-		
+		model.addAttribute("txbCode", txbCode);
+		model.addAttribute("sessionId", sessionId);
 		return "textbookresource/textbookInfoRegister";
 	}	
+	
 	//교재 최초입고등록
 	@PostMapping("/textbookFirstWahoRegister")
 	public String textbookFirstWahoRegister(Model model
@@ -145,28 +151,42 @@ public class TextbookController {
 			 					,@RequestParam(value="txbCode", required = false)String txbCode
 			 					,@RequestParam(value="whTxbQuantity", required = false)String whTxbQuantity
 			 					,@RequestParam(value="whTxbRemark", required = false)String whTxbRemark) {
-	System.out.println(txbCode + "  < -- txbCode");
-	System.out.println(whTxbQuantity + "  < -- whTxbQuantity");
-	System.out.println(whTxbRemark + "  < -- whTxbRemark");
-
-	textbookService.addFirstWhTextbook(whTextbook);
+		System.out.println(txbCode + "  < -- txbCode");
+		System.out.println(whTxbQuantity + "  < -- whTxbQuantity");
+		System.out.println(whTxbRemark + "  < -- whTxbRemark");
 	
-	return "redirect:/textbookManage";
+		textbookService.addFirstWhTextbook(whTextbook);
+		WhTextbook txbWhResult = textbookService.getRecentTxbWhList();
+		model.addAttribute("title", "교재등록 완료  페이지");
+		model.addAttribute("mainTitle", "교재등록 완료 페이지");
+		model.addAttribute("regResult", "다음과 같은 정보로 등록되었습니다");
+		model.addAttribute("txbWhResult", txbWhResult);
+		
+		return "textbookresource/textbookRegResult";
 	} 
 	
 	//교재 최초입고등록 
 	@GetMapping("/textbookFirstWahoRegister")
-	public String textbookFirstWahoRegister(Model model) {
+	public String textbookFirstWahoRegister(Model model
+										,	HttpSession session
+										,@RequestParam(value="txbCode", required = false) String txbCode) {
+		
+		String sessionId = session.getAttribute("SID").toString();
+		logger.info(sessionId);
+		logger.info(txbCode);
+		//교재 기본정보조회
+		TextbookBasicInfo textbookBasicInfo = textbookService.getOnlyTxbInfo(txbCode);
+		//교재입고코드 자동증가
+		String whTxbCode = textbookService.getTxbWhMaxCode();
 		
 		model.addAttribute("title", "교재최초입고등록  페이지");
 		model.addAttribute("mainTitle", "교재최초입고등록 페이지");
-		//교재 기본정보조회
-		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList();
-		model.addAttribute("textbookInfoList", textbookinfolist);
+		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("whTxbCode", whTxbCode);
+		model.addAttribute("textbookBasicInfo", textbookBasicInfo);
 		
 		return "textbookresource/textbookFirstWahoRegister";
 	}
-	
 	
 	//교재 입고등록
 	@PostMapping("/textbookWahoRegister")
@@ -176,27 +196,39 @@ public class TextbookController {
 			 					,@RequestParam(value="whTxbQuantity", required = false)String whTxbQuantity
 			 					,@RequestParam(value="stockTxbQuantity", required = false)String stockTxbQuantity
 			 					,@RequestParam(value="whTxbRemark", required = false)String whTxbRemark) {
-	System.out.println(txbCode + "  < -- txbCode");
-	System.out.println(whTxbQuantity + "  < -- whTxbQuantity");
-	System.out.println(stockTxbQuantity + "stockTxbQuantity");
-	System.out.println(whTxbRemark + "  < -- whTxbRemark");
-	textbookService.addWhTextbook(whTextbook);
-	
-	return "redirect:/textbookManage";
+		System.out.println(txbCode + "  < -- txbCode");
+		System.out.println(whTxbQuantity + "  < -- whTxbQuantity");
+		System.out.println(stockTxbQuantity + "stockTxbQuantity");
+		System.out.println(whTxbRemark + "  < -- whTxbRemark");
+		textbookService.addWhTextbook(whTextbook);
+		WhTextbook txbWhResult = textbookService.getRecentTxbWhList();
+		model.addAttribute("title", "교재등록 완료  페이지");
+		model.addAttribute("mainTitle", "교재등록 완료 페이지");
+		model.addAttribute("regResult", "다음과 같은 정보로 등록되었습니다");
+		model.addAttribute("txbWhResult", txbWhResult);
+		
+		return "textbookresource/textbookRegResult";
 	} 
 	
 	//교재입고등록 
 	@GetMapping("/textbookWahoRegister")
-	public String textbookWahoRegister(Model model) {
+	public String textbookWahoRegister(Model model
+									,  HttpSession session) {
+		String sessionId = session.getAttribute("SID").toString();
+		logger.info(sessionId);
+		//교재 기본정보조회
+		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList();
+		//교재입고목록 조회
+		List<WhTextbook> whTextbookList = textbookService.getWhTextbookList();
+		//코드자동증가
+		String whTxbCode = textbookService.getTxbWhMaxCode();
 		
 		model.addAttribute("title", "교재입고등록  페이지");
 		model.addAttribute("mainTitle", "교재입고등록 페이지");
-		//교재 기본정보조회
-		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList();
+		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("textbookInfoList", textbookinfolist);
-		//교재입고목록 조회
-		List<WhTextbook> whTextbookList = textbookService.getWhTextbookList();
 		model.addAttribute("whTextbookList", whTextbookList);
+		model.addAttribute("whTxbCode", whTxbCode);
 		
 		return "textbookresource/textbookWahoRegister";
 	}
@@ -227,12 +259,11 @@ public class TextbookController {
 	//교재관리메인페이지
 	@GetMapping("/textbookManage")
 	public String textbookManage(Model model) {
-		model.addAttribute("title", "교재관리페이지");
-		model.addAttribute("mainTitle", "교재관리페이지");
 		logger.info("==============================");
 		logger.info("교재관리페이지 textbookManage 겟매핑!!!!");
 		logger.info("==============================");
-		
+		model.addAttribute("title", "교재관리페이지");
+		model.addAttribute("mainTitle", "교재관리페이지");
 		
 		return "textbookresource/textbookManage";
 		}

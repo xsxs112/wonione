@@ -58,7 +58,6 @@
 		wt_member_registration.mr_id = wt_open_lecture.mr_id
 	WHERE
 		lec_open_code = #{lecOpenCode};
-
 </select>
 
 <select id="getReCode" resultType="hashMap">
@@ -92,31 +91,42 @@
 <select id="classCode" resultType="hashMap"  parameterType="String">
 
 	SELECT
-		os.lec_name,
-		os.lec_os_code
-	FROM
-		wt_lecture_open_schedule AS os
-		INNER join
-		wt_lecture_open AS od
-		on
-		od.lec_os_code = os.lec_os_code;	
+		   lec_os_code
+		 , lec_name
+		 , mr_teacher_id
+		 , lec_time_code
+		 , lec_room_code
+		 , lec_day
+		 , lec_level_code
+		 , lec_st_date
+		 , lec_fin_date
+		 , lec_os_reg_date
+	FROM 
+		wt_lecture_open_schedule;
 
 </select>
 
 <!-- 작성자이름가져오기  -->
 <select id="writeName" resultType="hashMap"  parameterType="String">
 
-	SELECT
-			wt_member_registration.mr_name,
-			wt_member_registration.mr_id
-			
-	FROM
-			wt_member_registration
-			INNER join
-			wt_open_lecture
-			on
-			wt_member_registration.mr_id = wt_open_lecture.mr_id;
-
+	SELECT 
+		 mr_id
+		,mr_pw
+		,mr_name
+		,level_num
+		,mr_phone
+		,mr_addr
+		,mr_target_score
+		,pm_r_code
+		,mr_account_num
+		,shuttle_num
+		,mr_join_date
+		,mr_reg_date
+	FROM 
+		wt_member_registration
+	WHERE
+		level_num = 2;	
+		
 </select>
 
 <!-- 삭제처리  -->

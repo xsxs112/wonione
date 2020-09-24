@@ -8,7 +8,7 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<h2 th:text="${mainTitle}"></h2>
-			<form class="form-inline" id="searchForm" action="/getSuppTxbSearch" method="POST" >  
+			<form class="form-inline" id="searchForm" action="/getSuppTxbSearch" method="GET" >  
 			<select class="form-control" name="suppSk" id="selectStSk">
 				<option disabled="disabled" selected="selected">::검색조건::</option>
 				<option value="sup_txb_code">교재지급코드</option>

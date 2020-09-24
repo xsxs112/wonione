@@ -26,6 +26,18 @@ public class BoardService {
 		return board;
 	}
 	
+	//공지사항 작성
+	public int insertNotice(Board board) {
+		int write = boardMapper.insertNotice(board);
+		return write;		
+	}
+	
+	//공지사항 수정
+	public int modifyNotice(Board board) {
+		int modify = boardMapper.modifyBoard(board);
+		return modify;
+	}
+	
 	//자료게시판 조회
 	public List<Board> getDataLibrary(Board board){
 		System.out.println(board + " <-- board");
@@ -39,11 +51,6 @@ public class BoardService {
 		return board;
 	}
 	
-	//공지사항 작성
-	public int insertNotice(Board board) {
-		int write = boardMapper.insertNotice(board);
-		return write;		
-	}
 
 
 

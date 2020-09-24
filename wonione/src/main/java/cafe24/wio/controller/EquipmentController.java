@@ -1,15 +1,111 @@
 package cafe24.wio.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import cafe24.wio.bean.Equipment;
+import cafe24.wio.bean.WhEquipment;
+import cafe24.wio.service.EquipmentService;
 
 @Controller
 public class EquipmentController {
 
+	
+	@Autowired
+	private EquipmentService equipmentService;
+	
+	//비품 입고 검색 후 리스트객체를 비품입고내역 리스트로 forward
+	@GetMapping("/equipWhSearch")
+	public String getEquipWhSearchList(Model model
+							,@RequestParam(value="equipWhSk", required = false) String equipWhSk
+							,@RequestParam(value="equipWhSv", required = false) String equipWhSv) {
+		model.addAttribute("title", "비품입고내역 검색결과");
+		model.addAttribute("mainTitle", "검색결과는 아래와 같습니다");
+		List<WhEquipment> getEqWhSearchList = equipmentService.getEquipWhSearchList(equipWhSk, equipWhSv);
+		model.addAttribute("equipWhList", getEqWhSearchList);
+		
+		return "equipment/equipWhList";
+	}
+	
+	//비품 정보 검색 후 리스트객체를 비품정보 리스트로 forward
+	@GetMapping("/equipSearch")
+	public String getEquipSearchList(Model model
+							,@RequestParam(value="equipSk", required = false) String equipSk
+							,@RequestParam(value="equipSv", required = false) String equipSv) {
+		model.addAttribute("title", "비품 리스트 검색결과");
+		model.addAttribute("mainTitle", "검색결과는 아래와 같습니다");
+		List<Equipment> getEqSearchResult =
+							equipmentService.getEquipSearchList(equipSk, equipSv);
+		model.addAttribute("equipList", getEqSearchResult);
+		
+		return "equipment/equipList";
+	}
+	
+	//비품 입고내역조회 view로 forward
+	@GetMapping("/equipWhList")
+	public String equipWhList(Model model) {
+		
+		model.addAttribute("title", "비품입고내역 조회");
+		model.addAttribute("mainTitle", "비품입고내역 조회");
+		List<WhEquipment> equipWhList = equipmentService.getEquipWhList();
+		model.addAttribute("equipWhList", equipWhList);
+		
+		return "equipment/equipWhList";
+	}
+	
+	//비품 정보조회 view로 forward
+	@GetMapping("/equipList")
+	public String equipList(Model model) {
+
+		model.addAttribute("title", "등록비품 조회");
+		model.addAttribute("mainTitle", "등록비품 조회");
+		List<Equipment> equipList = equipmentService.getEquipList();
+		model.addAttribute("equipList", equipList);
+		
+		return "equipment/equipList";
+	}
+	
+	//비품 리스트 메인페이지 view로 forward
+	@GetMapping("/equipListMain")
+	public String equipListMain(Model model) {
+
+		model.addAttribute("title", "비품 리스트 메인페이지");
+		model.addAttribute("mainTitle", "비품 리스트 메인페이지");
+		
+		return "equipment/equipListMain";
+	}
+	
+	//비품 정보등록 페이지 view로 forward
+	@GetMapping("/equipRegister")
+	public String equipRegister(Model model) {
+		
+		model.addAttribute("title", "비품 정보등록 페이지");
+		model.addAttribute("mainTitle", "비품 정보등록 페이지");
+		
+		return "equipment/equipRegister";
+	}
+	
+	//비품등록 메인페이지 view로 forward
+	@GetMapping("/equipRegisterMain")
+	public String equipRegMain(Model model) {
+		
+		model.addAttribute("title", "등록 메인페이지");
+		model.addAttribute("mainTitle", "등록 메인페이지");
+		
+		return "equipment/equipRegisterMain";
+	}
+	
+	//비품관리 메인페이지 view로 forward
 	@GetMapping("/equipmentManage")
 	public String equipmentMain(Model model) {
 		
+		model.addAttribute("title", "비품관리 메인페이지");
+		model.addAttribute("mainTitle", "비품관리 메인페이지");
 		return "equipment/equipmentManage";
 	}
 }

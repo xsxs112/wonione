@@ -8,7 +8,9 @@
 	<th:block layout:fragment="customContent">
 
 	<h2 th:text="${mainTitle}"></h2>
-	<form action="/textbookWahoRegister" method="post" id="addForm" >
+	<form action="/textbookWahoRegister" method="POST" id="addForm" >
+	<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
+	<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
 		<div class="container-fluid">
 		<!-- <a href="/textbookFirstWahoRegister" class="btn btn-warning btn-lg" role="button" >최초등록</a> -->
 			<table class="table table-block" border="1" style="text-align: center;" >
@@ -23,7 +25,7 @@
 							<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
 						</th:block>
 					</select>
-					<button type="button" id="whTxbCheckBtn" class="btn btn-block">입고내역체크</button>
+					<button type="button" id="whTxbCheckBtn" class="btn btn-block" >입고내역체크</button>
 					</td>
 				</tr>
 				<tr>
@@ -53,21 +55,28 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
+	var whTxbCheck = "";
 	$('#addBtn').click(function(){
 		console.log('addBtn');
 		var txbCode = $('#txbCode').val();
 		var whTxbQuantity = $('#whTxbQuantity').val();
 		console.log(whTxbQuantity);
+		console.log(txbCode + ' < --txbCode 등록버튼 클릭 시');
+		console.log(whTxbCheck + ' < --whTxbCheck 등록버튼 클릭 시');
 		if(txbCode == null || txbCode == undefined){
 			alert('교재를 선택해주세요');
 			return ;
 		}else if(whTxbQuantity == undefined || whTxbQuantity == ''){
 			alert('입고수량을 입력해주세요');
 			$('#whTxbQuantity').focus();
+			return ;
 		}else if(whTxbQuantity<1){
 			alert('0보다 큰 값을 입력해주세요');
 			$('#whTxbQuantity').focus();
-			return; 
+			return ; 
+		}else if(whTxbCheck != txbCode){
+			alert('입고내역체크를 해주세요');
+			return;
 		}
 		addForm.submit();
 	});
@@ -88,11 +97,13 @@
 		});
 		request.done(function( data ) {
 			console.log(data);
+			whTxbCheck = $('#txbCode').val();
+			console.log(whTxbCheck + ' < -- whTxbCheck 입고체크버튼');
 			if(data != undefined){
 				if(data == 0){
 					alert('해당교재의 입고내역이 존재하지 않습니다.');
 					 if(confirm('최초입고등록을 하시겠습니까?')){
-						 location.href = '/textbookFirstWahoRegister';
+						 location.href = '/textbookFirstWahoRegister?txbCode='+txbCode;
 					}
 				}else{
 					alert('해당교재의 입고내역이 있습니다.');
@@ -105,7 +116,6 @@
 		});   
 		
 	});
-	
 	</script>
 	
 	<div class="container-fluid" style="margin: 10px;">

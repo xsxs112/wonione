@@ -20,6 +20,17 @@ public class TextbookService {
 
 	@Autowired
 	private TextbookMapper textbookMapper;
+
+	/**
+	 * 가장 마지막에 등록한 입고정보 가져오기
+	 * @return WhTextbook txbWhResult
+	 */
+	public WhTextbook getRecentTxbWhList() {
+		
+		WhTextbook txbWhResult = textbookMapper.getRecentTxbWhList();
+		
+		return txbWhResult;
+	}
 	
 	/**
 	 * 교재 지급내역 검색
@@ -67,13 +78,87 @@ public class TextbookService {
 	}
 	
 	/**
+	 * 교재지급코드 maxcount
+	 * 코드자동증가
+	 * @return String supTxbCode
+	 */
+	public String getTxbSuppMaxCode() {
+		String txbSuppMaxcode = textbookMapper.getTxbSuppMaxCode();
+		String tempCode = null;
+		String supTxbCode = null;
+		int maxCode = 0;
+		if(txbSuppMaxcode != null && !"".equals(txbSuppMaxcode)) {
+			maxCode = Integer.parseInt(txbSuppMaxcode);
+			if(maxCode <10) {
+				tempCode = "suptxb_0000";
+			}else if(10<=maxCode && maxCode <100) {
+				tempCode = "suptxb_000";
+			}else if(100<=maxCode && maxCode <1000) {
+				tempCode = "suptxb_00";
+			}
+		}
+		supTxbCode = tempCode + maxCode;
+		
+		return supTxbCode;
+	}
+	
+	/**
+	 * 교재입고코드 maxcount
+	 * 코드자동증가
+	 * @return String whEqCode
+	 */
+	public String getTxbWhMaxCode() {
+		String txbWhMaxcode = textbookMapper.getTxbWhMaxCode();
+		String tempCode = null;
+		String whTxbCode = null;
+		int maxCode = 0;
+		if(txbWhMaxcode != null && !"".equals(txbWhMaxcode)) {
+			maxCode = Integer.parseInt(txbWhMaxcode);
+			if(maxCode <10) {
+				tempCode = "wh_txb_code0000";
+			}else if(10<=maxCode && maxCode <100) {
+				tempCode = "wh_txb_code000";
+			}else if(100<=maxCode && maxCode <1000) {
+				tempCode = "wh_txb_code00";
+			}
+		}
+		whTxbCode = tempCode + maxCode;
+		
+		return whTxbCode;
+	}
+	
+	/**
+	 * 교재정보코드 maxcount
+	 * 코드자동증가
+	 * @return String txbCode
+	 */
+	public String getTxbInfoMaxCode() {
+		String txbInfoMaxcode = textbookMapper.getTxbInfoMaxCode();
+		String tempCode = null;
+		String txbCode = null;
+		int maxCode = 0;
+		if(txbInfoMaxcode != null && !"".equals(txbInfoMaxcode)) {
+			maxCode = Integer.parseInt(txbInfoMaxcode);
+			if(maxCode <10) {
+				tempCode = "txb_0000";
+			}else if(10<=maxCode && maxCode <100) {
+				tempCode = "txb_000";
+			}else if(100<=maxCode && maxCode <1000) {
+				tempCode = "txb_00";
+			}
+		}
+		txbCode = tempCode + maxCode;
+		
+		return txbCode;
+	}
+	
+	/**
 	 * 교재코드로 교재정보 가져오기 
 	 * @param txbInfoCode
 	 * @return TextbookBasicInfo textbookBasicInfo
 	 */
-	public TextbookBasicInfo getOnlyTxbInfo(String txbInfoCode) {
-		TextbookBasicInfo textbookBasicInfo = textbookMapper.getOnlyTxbInfo(txbInfoCode);
-		
+	public TextbookBasicInfo getOnlyTxbInfo(String txbCode) {
+		TextbookBasicInfo textbookBasicInfo = textbookMapper.getOnlyTxbInfo(txbCode);
 		return textbookBasicInfo;
 	}
 	
@@ -136,7 +221,7 @@ public class TextbookService {
 	
 	/**
 	 * 교재 입고 테이블 조회
-	 * @return List<WhTextbook> whTextbookList
+	 * @return List WhTextbook whTextbookList
 	 */
 	public List<WhTextbook> getWhTextbookList(){
 		
@@ -148,7 +233,7 @@ public class TextbookService {
 	/**
 	 * 교재 기초정보 조회
 	 * @param txbBasicInfo
-	 * @return List<TextbookBasicInfo> textbookinfolist
+	 * @return List TextbookBasicInfo textbookinfolist
 	 */
 	public List<TextbookBasicInfo> getTextbookInfoList(){
 		List<TextbookBasicInfo> textbookinfolist = textbookMapper.getTextbookInfoList();
@@ -159,7 +244,7 @@ public class TextbookService {
 	/**
 	 * 보유 교재리스트 조회
 	 * @param whTextbook
-	 * @return List<TextbookBasicInfo> textbookOwnList
+	 * @return List TextbookBasicInfo textbookOwnList
 	 */
 	public List<TextbookBasicInfo> getTextbookOwnList(){
 		List<TextbookBasicInfo> textbookOwnList = textbookMapper.getTextbookOwnList();

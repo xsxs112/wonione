@@ -8,10 +8,14 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<h2 th:text="${mainTitle}"></h2>
-	<a href="/textbookRegister">교재등록</a>
-	<a href="/textbookInfoList">등록교재정보</a>
-	<a href="/textbookOwnList">교재보유목록</a>
-	<a href="/textbookSupplyList">교재지급내역</a>
+	<div class="container-fluid" style="margin: 10px;">
+		<div>
+			<a href="/textbookRegister" class="btn btn-default btn-lg"role="button">교재등록</a>
+			<a href="/textbookInfoList" class="btn btn-default btn-lg"role="button">등록교재정보</a>
+			<a href="/textbookOwnList" class="btn btn-default btn-lg"role="button">교재보유목록</a>
+			<a href="/textbookSupplyList" class="btn btn-default btn-lg"role="button">교재지급내역</a>
+		</div>
+	</div>	
 	</th:block>
 	
 	<div class="container-fluid" style="margin: 10px;">
