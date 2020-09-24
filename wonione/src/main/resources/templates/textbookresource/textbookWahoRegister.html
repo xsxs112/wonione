@@ -6,53 +6,84 @@
 		<title th:text="${title}"></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-
-	<h2 th:text="${mainTitle}"></h2>
-	<form action="/textbookWahoRegister" method="POST" id="addForm" >
-	<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
-	<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
-		<div class="container-fluid">
-		<!-- <a href="/textbookFirstWahoRegister" class="btn btn-warning btn-lg" role="button" >최초등록</a> -->
-			<table class="table table-block" border="1" style="text-align: center;" >
 			<!-- 입고목록 조회해서 해당교재의 입고내역이 없으면(ajax)
 				 팝업창띄워서 최초입고등록으로 이동시켜주기 -->
-				<tr>
-					<td>교재명</td>
-					<td>
-					<select id="txbCode" name ="txbCode" class="form-control">
-						<option disabled="disabled" selected="selected">::교재를 선택해주세요::</option>
-						<th:block th:each=" til : ${textbookInfoList} ">
-							<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
-						</th:block>
-					</select>
-					<button type="button" id="whTxbCheckBtn" class="btn btn-block" >입고내역체크</button>
-					</td>
-				</tr>
-				<tr>
-					<td>입고수량</td>
-					<td>
-						<input class="form-control"  type="number" name="whTxbQuantity" id="whTxbQuantity" onFocus="this.value=0; return true;" placeholder="수량을 입력해주세요"/>
-					</td>
-				</tr>
-				<tr hidden="hidden">
-				<th:block th:each="wtl : ${whTextbookList}"></th:block>
-					<td>재고수량</td>
-					<td>
-						<input class="form-control"  type="text" >
-						<!-- th:value="${wtl.stockTxbQuantity}" -->
-					</td>
-				</tr>
-				<tr>
-					<td>비고</td>
-					<td>
-						<input class="form-control"  type="text" id="whTxbRemark" name="whTxbRemark" placeholder="비고"/>
-					</td>
-				</tr>
-			</table>
-		</div>		
-		<button type="button" class="btn btn-default btn-block" id="addBtn">등록버튼</button>
-	</form>
-	
+	<div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="sparkline12-list">
+                    <div class="sparkline12-hd">
+                        <div class="main-sparkline12-hd">
+                            <h1 th:text="${mainTitle}"></h1>
+                        </div>
+                    </div>
+                    <div class="sparkline12-graph">
+                        <div class="basic-login-form-ad">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="all-form-element-inner">
+                                        <form action="/textbookWahoRegister" method="post" id="addForm">
+									<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
+									<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">교재입고코드</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" disabled class="form-control" th:value="${whTxbCode}" name="whTxbCode" th:placeholder="${whTxbCode}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">교재명</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <div class="form-select-list">
+                                                            <select class="form-control custom-select-value" id="txbCode" name ="txbCode">
+										<th:block th:each=" til : ${textbookInfoList} ">
+											<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
+										</th:block>																		
+									</select>
+									<button type="button" id="whTxbCheckBtn" class="btn btn-block" >입고내역체크</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>	                                                  
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">입고수량</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="number" class="form-control" name="whTxbQuantity" id="whTxbQuantity" onFocus="this.value=0; return true;" placeholder="수량을 입력해주세요"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">작성자아이디</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" disabled class="form-control" th:value="${sessionId}" name="whTxbWriter" th:placeholder="${sessionId}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">비고</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <textarea class="form-control" name="whTxbRemark" placeholder="비고사항을 입력하세요."></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>                                                    
+                        					<a href="/textbookOwnList" class="btn btn-default" role="button">취소</a>
+                                            <button class="btn btn-primary login-submit-cs" type="submit" id="addBtn">등록</button>
+                                        </form>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
 	var whTxbCheck = "";
@@ -116,82 +147,7 @@
 		});   
 		
 	});
-	</script>
-	
-	<div class="container-fluid" style="margin: 10px;">
-		<a href="/textbookRegister" class="btn btn-default" role="button">교재등록 메인페이지로</a>	
-		<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
-	</div>
-	
-	
-	
-<div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="sparkline12-list">
-                            <div class="sparkline12-hd">
-                                <div class="main-sparkline12-hd">
-                                    <h1 th:text="${mainTitle}"></h1>
-                                </div>
-                            </div>
-                            <div class="sparkline12-graph">
-                                <div class="basic-login-form-ad">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="all-form-element-inner">
-                                                <form action="/textbookInfoRegister" method="post" id="addForm">
-													<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
-													<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
-                                                    <div class="form-group-inner">
-                                                        <div class="row">
-                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                <label class="login2 pull-right pull-right-pro">교재입고코드</label>
-                                                            </div>
-                                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                <input type="text" disabled class="form-control" th:value="${whTxbCode}" name="whTxbCode" th:placeholder="${whTxbCode}" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group-inner">
-                                                        <div class="row">
-                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                <label class="login2 pull-right pull-right-pro">교재명</label>
-                                                            </div>
-                                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                <div class="form-select-list">
-                                                                    <select class="form-control custom-select-value" name="account">
-																			<option>Select 1</option>
-																			<option>Select 2</option>
-																			<option>Select 3</option>
-																			<option>Select 4</option>
-																		</select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>	                                                  
-                                                    <div class="form-group-inner">
-                                                        <div class="row">
-                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                <label class="login2 pull-right pull-right-pro">입고수량</label>
-                                                            </div>
-                                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                <input type="number" class="form-control" name="whTxbQuantity" id="whTxbQuantity" onFocus="this.value=0; return true;" placeholder="수량을 입력해주세요"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group-inner">
-                                                        <div class="row">
-                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                                <label class="login2 pull-right pull-right-pro">작성자아이디</label>
-                                                            </div>
-                                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                <input type="text" disabled class="form-control" th:value="${sessionId}" name="whTxbWriter" th:placeholder="${sessionId}"/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                					<a href="/textbookOwnList" class="btn btn-default" role="button">취소</a>
-                                                    <button class="btn btn-primary login-submit-cs" type="submit" id="addBtn">등록</button>
-                                                </form>
+	</script>                                                
                                             </div>
                                         </div>
                                     </div>
