@@ -121,7 +121,91 @@
 	<div class="container-fluid" style="margin: 10px;">
 		<a href="/textbookRegister" class="btn btn-default" role="button">교재등록 메인페이지로</a>	
 		<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
-	</div>	
+	</div>
+	
+	
+	
+<div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sparkline12-list">
+                            <div class="sparkline12-hd">
+                                <div class="main-sparkline12-hd">
+                                    <h1 th:text="${mainTitle}"></h1>
+                                </div>
+                            </div>
+                            <div class="sparkline12-graph">
+                                <div class="basic-login-form-ad">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="all-form-element-inner">
+                                                <form action="/textbookInfoRegister" method="post" id="addForm">
+													<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
+													<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
+                                                    <div class="form-group-inner">
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                <label class="login2 pull-right pull-right-pro">교재입고코드</label>
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" disabled class="form-control" th:value="${whTxbCode}" name="whTxbCode" th:placeholder="${whTxbCode}" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group-inner">
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                <label class="login2 pull-right pull-right-pro">교재명</label>
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                <div class="form-select-list">
+                                                                    <select class="form-control custom-select-value" name="account">
+																			<option>Select 1</option>
+																			<option>Select 2</option>
+																			<option>Select 3</option>
+																			<option>Select 4</option>
+																		</select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>	                                                  
+                                                    <div class="form-group-inner">
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                <label class="login2 pull-right pull-right-pro">입고수량</label>
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="number" class="form-control" name="whTxbQuantity" id="whTxbQuantity" onFocus="this.value=0; return true;" placeholder="수량을 입력해주세요"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group-inner">
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                                <label class="login2 pull-right pull-right-pro">작성자아이디</label>
+                                                            </div>
+                                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                <input type="text" disabled class="form-control" th:value="${sessionId}" name="whTxbWriter" th:placeholder="${sessionId}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                					<a href="/textbookOwnList" class="btn btn-default" role="button">취소</a>
+                                                    <button class="btn btn-primary login-submit-cs" type="submit" id="addBtn">등록</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        		<div class="container-fluid" style="margin: 10px;">
+									<a href="/textbookRegister" class="btn btn-default" role="button">교재등록 메인페이지로</a>
+									<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
+								</div>        
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>	
+		
 	</th:block>
 	<th:block layout:fragment="customJsScript">
 	</th:block>
