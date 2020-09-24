@@ -48,7 +48,11 @@
 			board_picture,
 			board_file
 		)VALUES(
-			#{boardNum}
+			CONCAT('board_num',
+	       (SELECT 
+	       		LPAD(COUNT(*)+1,5,'0')
+	       	FROM
+	       		wt_board))
 			, '공지사항'
 			, #{boardTitle}
 			, #{boardWriterId}
@@ -109,6 +113,15 @@
 		WHERE
 			board_num = #{boardNum};
 	</update>
+	
+	<!-- 게시물 삭제 쿼리 -->
+	<delete id="removeBoard" parameterType="String">
+	DELETE
+	FROM
+		wt_board
+	WHERE
+		board_num = #{boardNum};
+	</delete>
 
 </mapper>
     

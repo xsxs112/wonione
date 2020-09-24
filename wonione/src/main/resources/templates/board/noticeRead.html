@@ -42,13 +42,13 @@
 				<td colspan="6" align="left" th:text=${b.boardContents}></td>
 			</tr>								
 			<tr class="info">
-				<th colspan="6">사진</th>
+				<th colspan="6">사진(미구현)</th>
 			</tr>
 			<tr th:each="b : ${Board}">	
 				<td colspan="6" align="left" th:text=${b.boardPicture}></td>
 			</tr>
 			<tr class="info">
-				<th colspan="6">파일</th>
+				<th colspan="6">첨부파일(다운로드 불가)</th>
 			</tr>
 			<tr th:each="b : ${Board}">	
 				<td colspan="6" align="left" th:text=${b.boardFile}></td>
@@ -57,7 +57,7 @@
 				
 		<a href="/getNotice" class="btn btn-default btn-info">리스트로 돌아가기</a>
 		<a href="/modifyNotice" class="btn btn-default btn-warning">수정</a>
-		<a href="/getNotice" class="btn btn-default btn-danger">삭제</a>
+		<a href="/removeNotice" class="btn btn-default btn-danger">삭제</a>
 	
 	</form>	
 	</th:block>

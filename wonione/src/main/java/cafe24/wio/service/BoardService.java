@@ -51,6 +51,11 @@ public class BoardService {
 		return board;
 	}
 	
+	//게시물 삭제
+	public int removeNotice(String boardNum) {
+		int remove = boardMapper.removeBoard(boardNum);
+		return remove;		
+	}
 
 
 

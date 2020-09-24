@@ -123,6 +123,15 @@ public class BoardController {
 		return "board/dataLibraryRead";		  
 	}
 	
+	//공지사항 삭제
+	@GetMapping("/removeNotice")
+	public String removeNotice(Model model
+								,@RequestParam(value="boardNum", required = false) String boardNum) {
+		boardService.removeNotice(boardNum);
+		System.out.println(boardNum + "boardNum");
+		return "redirect:/getNotice";	
+	}
+	
 	// 수강후기 조회(미구현)
 	@GetMapping("/getReview")
 	public String viewList() {
