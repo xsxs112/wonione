@@ -42,7 +42,14 @@
 /*----------------------------------------*/
 /*  1. Common
 /*----------------------------------------*/
-html, body {height: 100%; font-family: 'Roboto', sans-serif;font-weight:400;background: rgb(246, 248, 250);}
+html, body {
+	height: 100%;
+	font-family: 'Roboto', sans-serif;
+	font-weight:400;
+	background: rgb(246, 248, 250);
+	min-height: 100%;
+   	margin: 0 auto -155px;
+	 }
 .floatleft {float:left}
 .floatright {float:right}
 .alignleft {float:left;margin-right:15px;margin-bottom: 15px}

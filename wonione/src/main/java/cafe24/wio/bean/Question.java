@@ -2,7 +2,7 @@ package cafe24.wio.bean;
 
 public class Question {
 	private String qeCode;
-	private String qeCodeName;
+	private String qtCodeName;
 	private String qeOid;
 	private String qeData;
 	private int qeScore;
@@ -16,14 +16,14 @@ public class Question {
 	
 	@Override
 	public String toString() {
-		return "Question [qeCode=" + qeCode + ", qeCodeName=" + qeCodeName + ", qeOid=" + qeOid + ", qeData=" + qeData
+		return "Question [qeCode=" + qeCode + ", qtCodeName=" + qtCodeName + ", qeOid=" + qeOid + ", qeData=" + qeData
 				+ ", qeScore=" + qeScore + ", qeAnswer=" + qeAnswer + ", qeDate=" + qeDate + "]";
 	}
-	public String getQeCodeName() {
-		return qeCodeName;
+	public String getQtCodeName() {
+		return qtCodeName;
 	}
-	public void setQeCodeName(String qeCodeName) {
-		this.qeCodeName = qeCodeName;
+	public void setQtCodeName(String qtCodeName) {
+		this.qtCodeName = qtCodeName;
 	}
 	public String getQeDate() {
 		return qeDate;
