@@ -77,26 +77,15 @@
 
 	</update>
 
-	<!-- <select id="hListDuplicate" parameterType="String" resultType="int">
-	
-		SELECT COUNT(*) FROM wt_approval_request
-		WHERE 
-		request_start_date <![CDATA[ >= ]]> DATE_FORMAT(#{startDate},'%Y-%m-%d')
-		AND
-		request_end_date <![CDATA[ <= ]]> DATE_FORMAT(#{endDate},'%Y-%m-%d')
-		AND
-		(request_state = '승인' OR request_state = '미승인');
-	
-	</select> -->
-	
 	
 	<select id="hListDuplicate" parameterType="String" resultType="int">
 	
 		select COUNT(*) 
 		from wt_approval_request
 		WHERE 
-			(DATE_FORMAT('2020-09-26','%Y-%m-%d') <![CDATA[ <= ]]> request_start_date and request_start_date <![CDATA[ <= ]]> DATE_FORMAT('2020-09-27','%Y-%m-%d')) or (DATE_FORMAT('2020-09-27','%Y-%m-%d') <![CDATA[ <= ]]> request_end_date and DATE_FORMAT('2020-09-27','%Y-%m-%d') <![CDATA[ >= ]]> request_start_date) or (DATE_FORMAT('2020-09-26','%Y-%m-%d') <![CDATA[ >= ]]> request_start_date and DATE_FORMAT('2020-09-27','%Y-%m-%d') <![CDATA[ <= ]]> request_end_date)
-		
+			((DATE_FORMAT(#{startDate},'%Y-%m-%d') <![CDATA[ <= ]]> request_start_date and request_start_date <![CDATA[ <= ]]> DATE_FORMAT(#{endDate},'%Y-%m-%d')) or (DATE_FORMAT(#{endDate},'%Y-%m-%d') <![CDATA[ <= ]]> request_end_date and DATE_FORMAT(#{endDate},'%Y-%m-%d') <![CDATA[ >= ]]> request_start_date) or (DATE_FORMAT(#{startDate},'%Y-%m-%d') <![CDATA[ >= ]]> request_start_date and DATE_FORMAT(#{endDate},'%Y-%m-%d') <![CDATA[ <= ]]> request_end_date))
+			AND request_state = '승인';
+
 	</select>
 	
 	

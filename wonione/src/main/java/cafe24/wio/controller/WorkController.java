@@ -26,6 +26,19 @@ public class WorkController {
 
 	
 	
+	
+	@GetMapping("/holiRequest")
+	public String holiRequest(Model model, @RequestParam(value = "reCode", required = false) String reCode) {
+
+		
+		
+		return "workmanagment/holidayRequest";
+	}
+	
+	
+	
+	
+	
 	//상세보기
 	@GetMapping("/detail")
 	public String detail(Model model, @RequestParam(value = "reCode", required = false) String reCode) {

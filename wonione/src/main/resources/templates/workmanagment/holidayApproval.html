@@ -13,6 +13,13 @@
 	<script type="text/javascript">
 		$(function() {
 			
+			
+			$('.request').click(function() {
+				var reCode = $(this).attr('data-mCode');
+	         	window.location.href='/holiRequest?reCode='+reCode;
+			})
+			
+			
 
 			$('.detail').click(function() {
 				var reCode = $(this).attr('data-mCode');
@@ -73,7 +80,6 @@
 							
 						//데이터가 성공적으로 받아지면 실행된다
 						holidayCk.done(function(data) {
-							alert(data);
 							//ajax를 통해서 받은 데이터가 0이면 submit()실행
 							if(data==0){
 								$('#requestForm').submit();
@@ -103,16 +109,16 @@
 		<div class="container-fluid">
 
 			<p style="color: gray;">
-			당일,지나간 날짜는 신청 불가 (ajax)<br>
-			휴가 리스트에서 중복된 날짜가 있으면 신청 불가(ajax)<br>
-			휴가 시작 날짜보다 끝나는 날자가 이르면 신청 불가 (script)<br>
+			달력으로 만들고 싶은데..
 			<p>
 			<form action="/holidayRequest" method="POST" id="requestForm">
 				<input type="hidden" name="mrName" th:value="${session.SNAME}">
 				<input type="hidden" name="mrId" th:value="${session.SID}">
 				<table style="text-align: center;">
 					<tr>
-						<td colspan="3"><h3>휴가신청</h3></td>
+						<td style="font-size:30px; font-weight:1000;" colspan="3">
+						<a style="color: black;" th:data-mCode="${session.SID}" class ="request">휴가 신청</a>
+						</td>
 					</tr>
 
 					<tr>

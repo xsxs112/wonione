@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default">
+
+<th:block layout:fragment="customTitle">
+	<title>휴가신청</title>
+</th:block>
+
+
+<!-- css---------------------------------------- -->
+<th:block layout:fragment="customCss">
+
+
+</th:block>
+
+<!-- 본문----------------------------------------- -->
+<th:block layout:fragment="customContent">
+
+	<div class="static-table-area">
+		<div class="container-fluid">
+			<div id="myTabContent" class="tab-content custom-product-edit">
+				<div class="product-tab-list tab-pane fade active in"
+					id="description">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="review-content-section">
+								<div id="dropzone1" class="pro-ad">
+
+
+
+
+
+									<p>휴가 신청서</p>
+									<form>
+										<div class="form-group">
+											<input type="text" class="form-control" placeholder="CSE"
+												value="CSE" readonly="readonly">
+										</div>
+										<div class="form-group edit-ta-resize res-mg-t-15">
+											<textarea name="description" placeholder="사유"></textarea>
+										</div>
+										<div class="form-group">
+											휴가중 연락처 
+										</div>
+										<div class="form-group">
+											<select class="form-control">
+												<option>Nepal</option>
+												<option>India</option>
+												<option>Pakistan</option>
+												<option>Amerika</option>
+												<option>China</option>
+												<option>Dubai</option>
+												<option>Nepal</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<select class="form-control">
+												<option>Maharastra</option>
+												<option>Gujarat</option>
+												<option>Maharastra</option>
+												<option>Rajastan</option>
+												<option>Maharastra</option>
+												<option>Rajastan</option>
+												<option>Gujarat</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<select class="form-control">
+												<option>Baroda</option>
+												<option>Surat</option>
+												<option>Baroda</option>
+												<option>Navsari</option>
+												<option>Baroda</option>
+												<option>Surat</option>
+											</select>
+										</div>
+									</form>
+
+
+
+
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</th:block>
+
+
+
+<!-- 스크립트 -------------------------------------------->
+<th:block layout:fragment="customJsScript">
+	<div th:replace="fragments/js :: jsFragment"></div>
+
+</th:block>
+
+<!-- js	 ------------------------------------------------>
+<th:block layout:fragment="customJs">
+
+</th:block>
+</html>

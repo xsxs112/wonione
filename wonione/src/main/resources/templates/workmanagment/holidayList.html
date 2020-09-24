@@ -34,14 +34,16 @@
 					var inputRefuse = prompt('사유', '거절 사유를 입력해주세요');
 					var reCode = $(this).val();
 					
-					var refuse = $.ajax({
-					url : "/approval",
-					method : "GET",
-					data : {reState : "거절", reCode : reCode, inputRefuse : inputRefuse},
-					dataType: "text"
-					})
-					
-					$('form').submit();
+					if(inputRefuse != null){
+						var refuse = $.ajax({
+						url : "/approval",
+						method : "GET",
+						data : {reState : "거절", reCode : reCode, inputRefuse : inputRefuse},
+						dataType: "text"
+						})
+						
+						$('form').submit();
+					}
 				})
 				
 				
