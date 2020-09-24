@@ -21,6 +21,9 @@ public interface BoardMapper {
 	//게시물 읽기
 	public Board readBoard(String boardNum);
 	
-	//게시물 수정 (미구현)
+	//게시물 수정
 	public int modifyBoard(Board board);
+	
+	//게시물 삭제
+	public int removeBoard(String boardNum);
 }
