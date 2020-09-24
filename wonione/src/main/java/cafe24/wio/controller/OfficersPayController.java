@@ -30,14 +30,14 @@ public class OfficersPayController {
 	//직원급여계 입력하기
 	@PostMapping(value = "/addOffiCalpay",produces = "application/json")
 	@ResponseBody
-	public int addOffiCalpay(OfficersPay officersPay
+	public OfficersPay addOffiCalpay(OfficersPay officersPay
 								,@RequestParam(value = "mrId", required = false) String mrId
 								,@RequestParam(value = "opcCode", required = false) String opcCode
 								) { 
 	
-		int addOffiCalpayNum = officersPayService.addOffiCalpay(officersPay);	
+		officersPayService.addOffiCalpay(officersPay);	
 		
-		return addOffiCalpayNum;		
+		return officersPay;		
 	}		
 	
 	//직원 정보 불러오기

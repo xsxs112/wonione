@@ -40,6 +40,7 @@ public class OfficersPayService {
 	public List<OfficersPay> getOfficersPay(String mrId) {
 		
 		List<OfficersPay> officersPay = officersPayMapper.getOfficersPay(mrId);		
+		
 		return officersPay;
 	}
 

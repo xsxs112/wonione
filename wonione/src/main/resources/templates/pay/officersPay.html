@@ -37,33 +37,33 @@
  		$('#OfficersCalformBtn').click(function(){
 			
 			var mrId = $('input[name=mrId]').val();
-			console.log(mrId);
 			var mrName = $('input[name=mrName]').val();
-			console.log(mrName);
 			var pRTitle = $('select[name=pRTitle] option:selected').val();
-			console.log(pRTitle);
 			var opcHourlyWage = $('select[name=HourlyWage] option:selected').val();
-			console.log(opcHourlyWage);
-					if(mrId == ''){
-						alert('회원정보 선택해주세요.');
-						return;
-					}
-					if(pRTitle == '::지급월::'){
-						alert('지급월을 선택해주세요.');
-						return;
-					}
-					if(opcHourlyWage == '::시급::'){
-						alert('시급을 선택해주세요.');
-						return;
-					}
-				var request = $.ajax({
-					  url: "/callOfficersInfo",
-					  method: "POST",
-					  data: { mrId : mrId, mrName : mrName, pRTitle : pRTitle, opcHourlyWage : opcHourlyWage },
-					  dataType: "json"
-					});
+				if(mrId == ''){
+					alert('회원정보 선택해주세요.');
+					return;
+				}
+				if(pRTitle == '::지급월::'){
+					alert('지급월을 선택해주세요.');
+					return;
+				}
+				if(opcHourlyWage == '::시급::'){
+					alert('시급을 선택해주세요.');
+					return;
+				}
+			var request = $.ajax({
+				  url: "/callOfficersInfo",
+				  method: "POST",
+				  data: { mrId : mrId
+					  , mrName : mrName
+					  , pRTitle : pRTitle
+					  , opcHourlyWage : opcHourlyWage
+					  },
+				  dataType: "json"
+				});
 				request.done(function(data) {
-					console.log(data);
+					
 					$('#cMrId').val(data.mrId);
 					$('#cMrName').val(data.mrName);
 					$('#cpRTitle').val(data.pRTitle);
@@ -120,7 +120,7 @@
  				$('#opcTotal').val(calSum);
  			}); 			
 	
- 		
+ 		//직원 급여계 입력
 		$('#offiCalInsertBtn').click(function(){
 			var foinForm = $('#offiCalFoinForm');
 			var opcCode = $('#opcCode').val();
@@ -170,6 +170,9 @@
 					request.fail(function( jqXHR, textStatus ) {
 					  alert( "Request failed: " + textStatus );
 				});	
+				
+						alert( "입력이 완료되었습니다.");
+					
 					
 		});	
 	});
