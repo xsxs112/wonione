@@ -35,8 +35,9 @@
 	INNER JOIN
 		wt_member_registration 
 	ON
-		wt_member_registration.mr_id = wt_open_lecture.mr_id;
-
+		wt_member_registration.mr_id = wt_open_lecture.mr_id
+	ORDER by
+		wt_open_lecture.lec_open_code DESC;
 </select>
 
 <!--보고서 상세보기  -->
