@@ -30,6 +30,9 @@ public class MemberController {
 	private MemberService memberService;
 	
 	
+	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
+
+	
 	// 2-1. 로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
