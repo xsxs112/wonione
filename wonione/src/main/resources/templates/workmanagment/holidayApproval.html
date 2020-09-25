@@ -111,7 +111,6 @@
 			<p style="color: gray;">
 			달력으로 만들고 싶은데..
 			<p>
-			<form action="/holidayRequest" method="POST" id="requestForm">
 				<input type="hidden" name="mrName" th:value="${session.SNAME}">
 				<input type="hidden" name="mrId" th:value="${session.SID}">
 				<table style="text-align: center;">
@@ -120,27 +119,7 @@
 						<a th:data-mCode="${session.SID}" class ="request">휴가 신청[클릭]</a>
 						</td>
 					</tr>
-
-					<tr>
-						<td colspan="3"><input type="date" name="reStartDate">
-							~ <input type="date" name="reEndDate"></td>
-					</tr>
-					<tr>
-						<td>사유 <input type="text" name="reReason">
-						</td>
-						<td><select name="holidaySt" id="holidaySt">
-								<option value="정기휴가">정기휴가</option>
-								<option value="연차">연차</option>
-								<option value="월차">월차</option>
-								<option value="경조사">경조사</option>
-						</select></td>
-						<td>
-							<button type="button" id="requestBtn">신청</button>
-						</td>
-					</tr>
-
 				</table>
-			</form>
 
 			<br>
 

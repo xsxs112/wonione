@@ -140,6 +140,7 @@ public class WorkController {
 	//holidayApproval.html에서 데이터들을 받는다
 	@PostMapping("/holidayRequest")
 	public String holidayRequest(ApprovalRequest approvalRequest,
+			HttpSession session,
 			@RequestParam(value = "reStartDate", required = false) String reStartDate,
 			@RequestParam(value = "reEndDate", required = false) String reEndDate,
 			@RequestParam(value = "mrId", required = false) String mrId,
@@ -148,6 +149,12 @@ public class WorkController {
 			@RequestParam(value = "holidaySt", required = false) String holidaySt) {
 		
 		//approvalRequest에 입력받은 값들을 셋팅한다
+		String sname = (String) session.getAttribute("SNAME");
+		System.out.println(sname + "snamedndndsnfkjdsh");
+		System.out.println(mrName + "mrNamesssssssssss");
+		System.out.println(mrId + "mrId");
+		
+		
 		approvalRequest.setMrId(mrId);
 		approvalRequest.setReStartDate(reStartDate);
 		approvalRequest.setReEndDate(reEndDate);
