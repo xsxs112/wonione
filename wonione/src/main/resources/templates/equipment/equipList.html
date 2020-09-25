@@ -7,7 +7,6 @@
 		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
-	<h2 th:text="${mainTitle}"></h2>
 			<form class="form-inline" id="searchForm" action="/equipSearch" method="GET" >  
 			<select class="form-control" name="equipSk" id="selectEqSk">
 				<option disabled="disabled" selected="selected">::검색조건::</option>
@@ -24,39 +23,65 @@
 				</div>
 			</div>
 		</form>
-		<table class="table table-bordered table-hover table-striped">
-			<thead>
-				<tr>
-				  <th>비품코드</th>
-				  <th>물품카테고리</th>
-				  <th>품명</th>
-				  <th>물품모델명</th>
-				  <th>작성자아이디</th>
-				  <th>등록일자</th>
-				  <th>비고</th>
-				</tr>
-			</thead>
-			<tbody th:each="eL : ${equipList}">
-				<tr>
-				  <td th:text="${eL.eqCode}"></td> 
-				  <td th:text="${eL.eqCategory}"></td> 
-				  <td th:text="${eL.eqName}"></td> 
-				  <td th:text="${eL.eqModelName}"></td> 
-				  <td th:text="${eL.eqWriter}"></td> 
-				  <td th:text="${eL.eqReg_date}"></td> 
-				  <td th:text="${eL.eqRemark}"></td> 
-				</tr>
-			</tbody>
-		</table>
-		<div class="container-fluid" style="margin: 10px;">
-			<a href="/equipList" class="btn btn-default" role="button">전체리스트보기</a>
-		</div>			
-		
-		<div class="container-fluid" style="margin: 10px;">
-			<a href="/equipmentManage" class="btn btn-default btn-lg" role="button">관리 메인페이지</a>
-			<a href="/equipListMain" class="btn btn-default btn-lg" role="button">리스트메인페이지</a>
-		</div>
-		
+	        <div class="product-status mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-status-wrap">
+                            <h4 th:text="${mainTitle}"></h4>
+                            <div class="add-product">
+                                <a href="/equipRegister">비품정보등록하기</a>
+                            </div>
+                            <div class="asset-inner">
+                                <table>
+                                    <tr>
+									  <td>비품코드</td>
+									  <td>물품카테고리</td>
+									  <td>품명</td>
+									  <td>물품모델명</td>
+									  <td>작성자아이디</td>
+									  <td>등록일자</td>
+									  <td>비고</td>
+                                      <td>수정 / 삭제</td>
+                                    </tr>
+							<th:block th:each="eL : ${equipList}">
+								<tr>
+								  <td th:text="${eL.eqCode}"></td> 
+								  <td th:text="${eL.eqCategory}"></td> 
+								  <td th:text="${eL.eqName}"></td> 
+								  <td th:text="${eL.eqModelName}"></td> 
+								  <td th:text="${eL.eqWriter}"></td> 
+								  <td th:text="${eL.eqReg_date}"></td> 
+								  <td th:text="${eL.eqRemark}"></td> 
+									<td>
+                                      <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                      <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                   </td>									  
+								</tr>
+							</th:block>
+                                </table>
+                            </div>
+                            <div class="custom-pagination">
+								<ul class="pagination">
+									<li class="page-item"><a class="page-link" href="#">이전</a></li>
+									<li class="page-item"><a class="page-link" href="#">1</a></li>
+									<li class="page-item"><a class="page-link" href="#">2</a></li>
+									<li class="page-item"><a class="page-link" href="#">3</a></li>
+									<li class="page-item"><a class="page-link" href="#">다음</a></li>
+								</ul>
+                            </div>
+                        	<div class="container-fluid" style="margin: 10px;">
+								<a href="/equipList" class="btn btn-default" role="button">전체리스트보기</a>
+							</div>		
+                            <div class="btn-group" style="margin: 10px;">
+								<a href="/equipmentManage" class="btn btn-default " role="button">관리 메인페이지</a>
+								<a href="/equipListMain" class="btn btn-default " role="button">리스트메인페이지</a>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
 	$('#searchEqBtn').click(function(){

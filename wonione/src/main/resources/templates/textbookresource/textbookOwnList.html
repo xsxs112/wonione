@@ -7,7 +7,7 @@
 		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
-		<form class="form-inline" id="searchForm" action="/getWhTxbSearch" method="GET" >  
+		<form class="form-inline " id="searchForm" action="/getWhTxbSearch" method="GET" >  
 			<select class="form-control" name="whTxbSk" id="selectWtSk">
 				<option disabled="disabled" selected="selected">::검색조건::</option>
 				<option value="wt.wh_txb_code">교재입고코드</option>
@@ -20,7 +20,7 @@
 			<div class="form-group">
 			<input type="text" id="whTxbSv" class="form-control" name="whTxbSv" placeholder="검색어를 입력해주세요"/>
 				<div class="input-group-btn pull-right">
-					<button class="btn btn-default form-group" id="searchWhBtn" type="button">검색</button>
+					<button class="btn btn-default" id="searchWhBtn" type="button">검색</button>
 				</div>
 			</div>
 		</form>

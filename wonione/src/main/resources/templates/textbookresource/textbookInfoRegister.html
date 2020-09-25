@@ -39,7 +39,7 @@
                                                                 <label class="login2 pull-right pull-right-pro">교재명</label>
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                <input type="text" class="form-control" name="txbName"/>
+                                                                <input type="text" class="form-control" name="txbName"  id="txbName"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -49,7 +49,7 @@
                                                                 <label class="login2 pull-right pull-right-pro">출판사</label>
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                <input type="text" class="form-control" name="txbPublisher"/>
+                                                                <input type="text" class="form-control" name="txbPublisher"  id="txbPublisher"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -59,7 +59,7 @@
                                                                 <label class="login2 pull-right pull-right-pro">저자</label>
                                                             </div>
                                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                <input type="text" class="form-control" name="txbAuthor"/>
+                                                                <input type="text" class="form-control" name="txbAuthor" id="txbAuthor"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -91,14 +91,14 @@
                                                         </div>
                                                     </div>	
                                 					<a href="/textbookInfoList" class="btn btn-default" role="button">취소</a>
-                                                    <button class="btn btn-primary login-submit-cs" type="submit" id="addBtn">등록</button>
+                                                    <button class="btn btn-primary login-submit-cs" type="button" id="addBtn">등록</button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                         		<div class="container-fluid" style="margin: 10px;">
-									<a href="/textbookRegister" class="btn btn-default" role="button">교재등록 메인페이지로</a>
 									<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 								</div>        
                             </div>
@@ -106,6 +106,33 @@
                         
                     </div>
                 </div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	$('#addBtn').click(function(){
+		console.log('addBtn');
+		var addForm = $('#addForm');
+		var txbName = $('#txbName').val();
+		var txbPublisher = $('#txbPublisher').val();
+		var txbAuthor = $('#txbAuthor').val();
+		console.log(txbName + ' < --txbName 등록버튼 클릭 시');
+		console.log(txbPublisher + ' < --txbPublisher 등록버튼 클릭 시');
+		console.log(txbAuthor + ' < --txbAuthor 등록버튼 클릭 시');
+		if(txbName == undefined || txbName == ''){
+			alert('교재명을 입력해주세요');
+			$('#txbName').focus();
+			return;
+		}else if(txbPublisher == undefined || txbPublisher == ''){
+			alert('출판사를 입력해주세요');
+			$('#txbPublisher').focus();
+			return;
+		}else if(txbAuthor == undefined || txbAuthor == ''){
+			alert('저자를 입력해주세요');
+			$('#txbAuthor').focus();
+			return;
+		}
+		addForm.submit();
+	});
+	</script>                
 	</th:block>
 	<th:block layout:fragment="customJsScript">
 	 

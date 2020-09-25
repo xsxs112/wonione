@@ -233,15 +233,17 @@ public class TextbookController {
 		return "textbookresource/textbookWahoRegister";
 	}
 	
-	//교재등록선택페이지
-	@GetMapping("/textbookRegister")
-	public String textbookRegister(Model model) {
-		
-		model.addAttribute("title", "교재등록 선택 페이지");
-		model.addAttribute("mainTitle", "교재등록 선택 페이지");
-		
-		return "textbookresource/textbookRegister";
-	}
+	/*
+	 * //교재등록선택페이지
+	 * 
+	 * @GetMapping("/textbookRegister") public String textbookRegister(Model model)
+	 * {
+	 * 
+	 * model.addAttribute("title", "교재등록 선택 페이지"); model.addAttribute("mainTitle",
+	 * "교재등록 선택 페이지");
+	 * 
+	 * return "textbookresource/textbookRegister"; }
+	 */
 	
 	//교재보유목록 
 	@GetMapping("/textbookOwnList")
