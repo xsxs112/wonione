@@ -5,6 +5,20 @@
     
 <mapper namespace="cafe24.wio.mapper.MemberMapper">
 
+	<!-- 4. 구성원 정보 수정 -->
+	<update id="modifyWIOMember" parameterType="Member">
+		UPDATE wt_member_registration
+		SET
+				mr_pw			=		#{mrPw}
+			,	mr_phone		=		#{mrPhone}
+			,	mr_addr			=		#{mrAddr}
+			,	pm_r_code		=		#{pmRCode}
+			,	mr_account_num	=		#{mrAccountNum}
+			,	shuttle_num		=		#{shuttleNum}
+		WHERE 
+				mr_id= #{mrId}
+	</update>
+
 	<!--  3. 구성원 등록, 수납 처리 전 -->
 	<insert id="addWIOMember" parameterType="Member">
 		INSERT 

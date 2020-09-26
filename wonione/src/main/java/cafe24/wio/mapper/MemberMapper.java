@@ -9,6 +9,8 @@ import cafe24.wio.bean.Member;
 @Mapper
 public interface MemberMapper {
 	
+
+	
 	// 4. 구성원 등록
 	public int addWIOMember(Member member);
 	

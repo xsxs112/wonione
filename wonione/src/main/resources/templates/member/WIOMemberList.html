@@ -15,7 +15,7 @@
   				<th>아이디</th>
   				<th>이름</th>
   				<th>권한</th>
-  				<th>정보 보기</th>
+  				<th th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 2 || session.SLEVEL eq 3}">정보 보기</th>
   				<th>정보 수정</th>
   				<th>삭제</th>
   			</tr>
@@ -31,8 +31,11 @@
   						정보 보기
   					</a>
   				</td>
-  				<td>수정</td>
-  				<td>삭제</td>
+  				<td>
+  					<a th:href="@{/modifyWIOMember(mrId=${m.mrId},mrPw=${m.mrPw})}" th:if="${session.SID eq mrId}"> <!-- 0926_18:35 본인만 수정 가능 -->
+  					</a>
+  				</td>
+  				<td></td>
   			</tr>
   		</tbody>
   	</table>
