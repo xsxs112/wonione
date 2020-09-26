@@ -1,15 +1,16 @@
 /**
  * 2020-09-24 새로 생성
+ * 2020-09-26 직원공제계 등록, 직원급여 등록
  */
  
- 	// 직원 아이디값 받아 넘기기
 	$(function(){
+	
 		
+ 		// 직원 아이디값 받아 넘기기
  		$('.callOfficersInfo').click(function(){
  		var tr = $(this).parent().parent();
  		var td = tr.children();
- 		var mrId = td.eq(0).text(); 	  
-		console.log(mrId + ' < -- mrId');
+ 		var mrId = td.eq(0).text();
 		var request = $.ajax({
 			  url: "/callOfficersInfo",
 			  method: "POST",
@@ -86,7 +87,7 @@
 		var baseMulti = 0;
 		var pRTitle = $('#cpRTitle').val();
 		var mrId = $('#cMrId').val();
-		if($('#opcTotalHour').val() == ''){
+		if($('#opcTotalHour').val() == null){
 			alert('근무시간을 입력해주세요.');
 			return;
 		}
@@ -164,13 +165,16 @@
 					$('#opcWelfare').val(data.opcWelfare);
 					$('#opcBonus').val(data.opcBonus);
 					$('#opcEct').val(data.opcEct);
-					$('#opcTotal').val(data.opcTotal);					
+					$('#opcTotal').val(data.opcTotal);	
+					$('#opdCode').val(data.opcCode);
+					$('#dpRTitle').val(data.pRTitle);
+					$('#dMrId').val(data.mrId);				
+						alert( "입력이 완료되었습니다.");				
 				});
 					request.fail(function( jqXHR, textStatus ) {
 					  alert( "Request failed: " + textStatus );
 				});	
 				
-						alert( "입력이 완료되었습니다.");				
 		});	
  		
  		
