@@ -30,15 +30,31 @@ public class OfficersPayController {
 	//직원급여계 입력하기
 	@PostMapping(value = "/addOffiCalpay",produces = "application/json")
 	@ResponseBody
-	public OfficersPay addOffiCalpay(OfficersPay officersPay
-								,@RequestParam(value = "mrId", required = false) String mrId
-								,@RequestParam(value = "opcCode", required = false) String opcCode
-								) { 
+	public OfficersPay addOffiCalpay(OfficersPay officersPay) { 
 	
 		officersPayService.addOffiCalpay(officersPay);	
 		
 		return officersPay;		
 	}		
+	
+	//요율표 비교 공제액 계산하기
+	@PostMapping(value = "/OfficersDeduTotal",produces = "application/json")
+	@ResponseBody
+	public OfficersPay OfficersDeduTotal(String opdCode, String iyCode, String opdIncomeTax
+	/* ,@RequestParam(value = "iyCode", required = false) String iyCode */
+	/*
+	 * ,@RequestParam(value = "opdIncomeTax", required = false) String opdIncomeTax
+	 */			
+										) {
+		OfficersPay OfficersDedu = officersPayService.OfficersDeduTotal(opdCode, iyCode, opdIncomeTax);
+		
+		if(iyCode != null && opdIncomeTax != null) {
+			OfficersDedu.setIyCode(Integer.parseInt(iyCode));			
+			OfficersDedu.setOpdIncomeTax(Integer.parseInt(opdIncomeTax));
+		}		
+		
+		return OfficersDedu;
+	}
 	
 	//직원 정보 불러오기
 	@PostMapping(value = "/callOfficersInfo",produces = "application/json")
@@ -70,6 +86,11 @@ public class OfficersPayController {
 		List<OfficersPay> standardSheetHour = officersPayService.standardSheet();		
 		model.addAttribute("standardSheetHour",standardSheetHour);
 		model.addAttribute("title", "시급기준표");
+		
+		//자원관리 테이블 통해 요율표 가져오기
+		List<OfficersPay> insuranceYear = officersPayService.insuranceYear();		
+		model.addAttribute("insuranceYear",insuranceYear);
+		model.addAttribute("title", "보험요율표");
 		
 		return "pay/officersPay";		
 	}	

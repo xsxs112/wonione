@@ -41,8 +41,7 @@ public class OfficersPay {
 	private String mrAccountNum;				//직원계좌번호
 	
 	private String pREct;						//급여자원테이블(비고)	
-	
-
+		
 	public String getOpcCode() {
 		return opcCode;
 	}

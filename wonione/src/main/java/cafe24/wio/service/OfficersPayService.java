@@ -29,6 +29,19 @@ public class OfficersPayService {
 		return standardSheetHour;
 	}	
 	
+	//공제액 계산하기
+	public OfficersPay OfficersDeduTotal(String opdCode, String iyCode, String opdIncomeTax ) {
+		OfficersPay OfficersDedu = officersPayMapper.OfficersDeduTotal(opdCode, iyCode, opdIncomeTax);
+		
+		return OfficersDedu;
+	}
+	
+	//보험요율표가져오기
+	public List<OfficersPay> insuranceYear() {
+		List<OfficersPay> insuranceYear = officersPayMapper.insuranceYear();
+		return insuranceYear;
+	}
+	
 	//직원 한명 정보 조회
 	public OfficersPay callOfficersInfo(String mrId) {
 		OfficersPay OfficersInfo = officersPayMapper.callOfficersInfo(mrId);
@@ -50,6 +63,7 @@ public class OfficersPayService {
 		
 		return 	result;
 	}
+
 	
 
 }
