@@ -23,7 +23,6 @@ private MemberMapper memberMapper;
 			
 			int addMemberResult = memberMapper.addWIOMember(member);
 			
-			System.out.println(addMemberResult + "<--addMember / Service");
 			
 			return addMemberResult;
 		}

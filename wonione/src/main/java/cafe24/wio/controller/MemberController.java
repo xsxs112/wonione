@@ -33,6 +33,26 @@ public class MemberController {
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 
 	
+	// 3. 구성원 정보 수정
+	@GetMapping("/modifyResult")
+	public String modifyWIOMember(Model model
+								, @RequestParam(value = "mrId",required = false)String mrId
+								, @RequestParam(value = "mrPw",required = false)String mrPw) {
+		
+		System.out.println(mrId +" <--modify");
+		System.out.println(mrPw +" <--modify");
+		
+		Member member = memberService.getMemberInfo(mrId);
+		
+		System.out.println(member + "<-- modify controller");
+		
+		model.addAttribute("member", member);
+		model.addAttribute("title", "구성원 정보 수정");
+		
+		return "member/modifyWIOMember";
+
+	}
+	
 	// 2-1. 로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -108,7 +128,7 @@ public class MemberController {
 								,@RequestParam(value = "pmRCode",required = false) 			String pmRCode
 								,@RequestParam(value = "mrAccountNum",required = false) 	String mrAccountNum
 								,@RequestParam(value = "shuttleNum",required = false) 		String shuttleNum
-								,@RequestParam(value = "mrJoinDate",required = false) 		String   mrJoinDate) {
+								,@RequestParam(value = "mrJoinDate",required = false) 		String mrJoinDate) {
 		
 		
 		member.setMrId(mrId);
