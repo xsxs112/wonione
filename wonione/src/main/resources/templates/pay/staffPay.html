@@ -5,66 +5,11 @@
 	
 	<th:block layout:fragment="customTitle">
 		<title></title> 
+	<script src="js/pay/staffPay.js"></script>		
 		<script type="text/javascript">
 	 	
-	// 강사 아이디값 받아 넘기기
 	$(function(){	
- 		$('.callStaffInfo').click(function(){
- 		var tr = $(this).parent().parent();
- 		var td = tr.children();
- 		var mrId = td.eq(0).text(); 	
- 		
-		console.log(mrId + ' < -- mrId');
-		var request = $.ajax({
-			  url: "/callStaffInfo",
-			  method: "POST",
-			  data: { mrId : mrId },
-			  dataType: "json"
-			});
-			request.done(function(data) {
-				console.log(data);
-				$('#mrId').val(data.mrId);
-				$('#mrName').val(data.mrName);
-				$('#pmRTitle').val(data.pmRTitle);
-				$('#mrAccountNum').val(data.mrAccountNum);
-				
-			});
-			request.fail(function( jqXHR, textStatus ) {
-				if (jqXHR.status === 0) {
-		            alert('Not connect.\n Verify Network.');
-		        } 
-		        else if (jqXHR.status == 400) {
-		            alert('Server understood the request, but request content was invalid. [400]');
-		        } 
-		        else if (jqXHR.status == 401) {
-		            alert('Unauthorized access. [401]');
-		        } 
-		        else if (jqXHR.status == 403) {
-		            alert('Forbidden resource can not be accessed. [403]');
-		        } 
-		        else if (jqXHR.status == 404) {
-		            alert('Requested page not found. [404]');
-		        } 
-		        else if (jqXHR.status == 500) {
-		            alert('Internal server error. [500]');
-		        } 
-		        else if (jqXHR.status == 503) {
-		            alert('Service unavailable. [503]');
-		        } 
-		        else if (exception == 'parsererror') {
-		            alert('Requested JSON parse failed. [Failed]');
-		        } 
-		        else if (exception == 'timeout') {
-		            alert('Time out error. [Timeout]');
-		        } 
-		        else if (exception == 'abort') {
-		            alert('Ajax request aborted. [Aborted]');
-		        } 
-		        else {
-		            alert('Uncaught Error.n' + jqXHR.responseText);
-		        }
-			});
-		});
+
 	});
 		</script>
 		
@@ -73,6 +18,8 @@
 	</th:block>
 	<th:block layout:fragment="customContent" >	
 	<!--===================강사목록불러오기시작===================-->
+	<!-- 급여계 입력폼 -->
+	<form action="/addStaffCalpay" id="staffCalFoinForm" method="post">
 
 	<div style="width:40%; float:left" class="container-fluid">		
 		<table id="tb1" class ="table table-striped">			
@@ -151,10 +98,10 @@
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">지 급 월</td>
 				<td colspan="3" style="text-align: left;">
-					<select name ="payMonth" class="form-control" >
+					<select name ="pRTitle" class="form-control" >
 			  			<option>::지급월::</option>
 			  			<th:block th:if="${s.pRTitle} >=1 and ${s.pRTitle} <=12" th:each="s : ${standardSheetHour}">
-				  			<option th:value="${s.pRTitle}">[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
+				  			<option id ="pRTitle" th:value="${s.pRTitle}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
 			  			</th:block>
 			  		</select>
 				</td>
@@ -162,10 +109,10 @@
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">시 급</td>
 				<td colspan="3" style="text-align: left;">
-					<select name ="payMonth" class="form-control" >
+					<select name ="HourlyWage" class="form-control" >
 			  			<option>::시  급::</option>
 			  			<th:block th:if="${s.pRTitle} > 1000" th:each="s : ${standardSheetHour}">
-				  			<option th:value="${s.pRTitle}">[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}]]</option>
+				  			<option id="HourlyWage" th:value="${#numbers.formatInteger(s.pRTitle, 0)}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}]]</option>
 			  			</th:block>
 			  		</select>
 				</td>			
@@ -173,70 +120,169 @@
 			<tr>
 				<td style="text-align: center; vertical-align:middle;">인센티브</td>
 				<td colspan="3" style="text-align: left;">
-					<select name ="payMonth" class="form-control" >
+					<select name ="incentive" class="form-control" >
 			  			<option>::인센티브::</option>
 			  			<th:block th:if="${s.pRTitle} < 1" th:each="s : ${standardSheetHour}">
-				  			<option th:value="${s.pRTitle}">[[${#numbers.formatInteger(s.pRTitle*100, 0, 'COMMA') +'%'}]]</option>
+				  			<option id="incentive" th:value="${s.pRTitle}">[[${#numbers.formatInteger(s.pRTitle*100, 0, 'COMMA') +'%'}]]</option>
 			  			</th:block>
 			  		</select>
 				</td>		
 			</tr>
+			<tr>
+				<td hidden="">
+				<input type="text" th:each="l : ${StaffList}" th:href="@{/staffFoinForm(mrId=${l.mrId})}">
+				</td>
+				<td colspan="3">
+				<button type="button" id="StaffCalformBtn" class="btn btn-primary btn-md btn-block">입력</button>	
+				</td>
+			</tr>				
 		</table>			
 	</div>
 	<!--===================시급지급기준 끝===================-->	
 		
-	<!--===================지급계산시작===================-->
-	<form>	
+	<!--===================지급계산시작===================-->	
 		<div class="container-fluid">
 			<table class ="table table-striped">
 				<tr>
-					<td rowspan="5" style="text-align: center; vertical-align:middle;">지급내역</td>
+					<td rowspan="5" style="text-align: center; vertical-align:middle;">급여내역</td>
 				</tr>
 				<tr class="info" style="text-align: center;">	
 					<td>계산번호</td>
+					<td>지급월</td>
 					<td>아이디</td>
-					<td>이름</td>
 					<td>시급</td>
-					<td>근무시간</td>
-					<td>기본급</td>				
+					<td>근무시간</td>	
+					<td>
+					<button type="button" id="StaffCalBaseBtn" class="btn btn-info btn-sm btn-block">기본급</button>
+					</td>				
 				</tr>
-				<tr style="text-align: center;">
-					<td></td>
-					<td></td>
-					<td>불러오기</td>
+				<tr style="text-align: center;">				
 					<td>
+					<input type="text" class="form-control" id="spcCode" name="spcCode" th:value="${spcCode}" placeholder="급여계산번호" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="spcTotalHour" name="spcTotalHour" placeholder="근무시간">
+					<input type="text" class="form-control" id="cpRTitle" name="cpRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" placeholder="계산월" readonly>
 					</td>
-					<td>계산하기</td>
+					<td>
+					<input type="text" class="form-control" id="cMrId" name="cMrId" th:value="${mrId}" placeholder="아이디" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="spcHourlyWage" name="spcHourlyWage" th:value="${spcHourlyWage}" placeholder="시급" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="spcTotalHour" name="spcTotalHour" placeholder="근무시간입력">
+					</td>	
+					<td>
+					<input type="text" class="form-control" id="spcBasePay" name="spcBasePay" th:value="${spcBasePay}" placeholder="기본급계산" readonly>
+					</td>
 				</tr>
 				<tr class="info" style="text-align: center;">
-					<td>인센티브</td>
-					<td></td>
+					<td>인센티브 %</td>
+					<td>인센티브계산액</td>
 					<td></td>
 					<td></td>
 					<td></td>				
-					<td>급여계총액</td>
+					<td colspan="2" >
+					<button type="button" id="StaffCalTotalBtn" class="btn btn-info btn-sm btn-block">급여계총액계산</button>
+					</td>
 				</tr>
 				<tr style="text-align: center;">
 					<td>
-					<input type="text" class="form-control" id="spcIncentive" name="spcIncentive" placeholder="인센티브">
+					<input type="text" class="form-control" id="ipRTitle" name="ipRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" placeholder="인센티브 %" readonly>
 					</td>
 					<td>
+					<input type="text" class="form-control" id="spcIncentive" name="spcIncentive" th:value="${spcIncentive}" placeholder="인센티브계산액" readonly>					
 					</td>
+					<td></td>
+					<td></td>
+					<td></td>
 					<td>
+					<input type="text" class="form-control" id="spcTotal" name="spcTotal" placeholder="급여계총액" readonly >
 					</td>
-					<td>
-					</td>
-					<td>
-					</td>
-					<td>계산</td>
 				</tr>
 			</table>
 		</div>
 	</form>
 	<!--===================지급계산끝===================-->	
+	<!-- 공제계 입력폼 -->
+	<form action="/addStaffDedupay" id="staffDeduFoinForm" method="post"> 
+	<!--===================공제계산시작===================-->
+	
+		<div class="container-fluid">
+			<table class ="table table-striped">
+				<tr>
+					<td rowspan="5" style="text-align: center; vertical-align:middle;">공제내역</td>
+				</tr>
+				<tr class="info" style="text-align: center;">	
+					<td>공제번호</td>
+					<td>공제월</td>
+					<td>아이디</td>
+					<td>요율시행년도</td>
+					<td>
+					<button type="button" id="StaffBusiTaxBtn" class="btn btn-info btn-sm btn-block">원천징수계산</button>					
+					</td>	
+					<td>
+					<button type="button" id="StaffDeduTotalBtn" class="btn btn-info btn-sm btn-block">공제총액계산</button>	
+					</td>		
+				</tr>
+				<tr style="text-align: center;">
+					<td>
+					<input type="text" class="form-control" id="spdCode" name="spdCode" th:value="${spdCode}" placeholder="공제계산번호" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="dpRTitle" name="dpRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="dMrId" name="dMrId" th:value="${mrId}" readonly>
+					</td>
+					<td>
+					<select name ="iyCode" class="form-control" >
+			  			<option>::시행년도::</option>
+			  			<th:block th:each="i : ${insuranceYear}">
+				  			<option id ="iyCode" th:value="${i.iyCode}" >[[${i.iyCode+'년'}]]</option>
+			  			</th:block>
+			  		</select>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="spdTheBusinessTax" name="spdTheBusinessTax" th:value="${spdTheBusinessTax}" placeholder="원천징수금액" >
+					</td>	
+					<td>
+					<input type="text" class="form-control" id="spdTotal" name="spdTotal" th:value="spdTotal" placeholder="공제총액" readonly>
+					</td>
+				</tr>
+				<tr style="text-align: center;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="2" >
+					<button type="button" id="staffDeduInsertBtn" class="btn btn-primary btn-sm btn-block">
+					공제계입력
+					</button>
+					<td colspan="2" >
+					</td>	
+				</tr>					
+				<tr style="text-align: center;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="2">
+					<button type="button" id="StaffPayTotalBtn" class="btn btn-info btn-sm btn-block">실지급액계산</button>					
+					</td>
+					<td colspan="2">
+					<input type="text" class="form-control" id="spPay" name="spPay" placeholder="실지급액" readonly>
+					</td>	
+				</tr>					
+			</table>			
+			<p>
+				<button type="button" id="staffPayInsertBtn" class="btn btn-success btn-lg">
+				강사급여입력
+				</button>					
+			</p>
+			</div>	
+	</form>	
+	<!--===================공제계산끝===================-->
 
 	<br>
 	</th:block>
