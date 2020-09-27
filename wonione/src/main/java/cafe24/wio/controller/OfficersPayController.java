@@ -26,7 +26,24 @@ public class OfficersPayController {
 	// log4j로 로그 찍기 위한 객체 삽입
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(OfficersPayController.class);
+	
+	//직원급여 입력하기
+	@PostMapping("/addOfficersPay")
+	public String addOfficersPay(OfficersPay officersPay) {
+		officersPayService.addOfficersPay(officersPay);
 		
+		return "redirect:/pay/payList";
+	}
+	//직원 공제계 입력하기
+	@PostMapping(value = "/addOffiDedupay",produces = "application/json")
+	@ResponseBody
+	public OfficersPay addOffiDedupay(OfficersPay officersPay) { 
+		
+		officersPayService.addOffiDedupay(officersPay);	
+		
+		return officersPay;		
+	}		
+	
 	//직원급여계 입력하기
 	@PostMapping(value = "/addOffiCalpay",produces = "application/json")
 	@ResponseBody
@@ -38,22 +55,17 @@ public class OfficersPayController {
 	}		
 	
 	//요율표 비교 공제액 계산하기
-	@PostMapping(value = "/OfficersDeduTotal",produces = "application/json")
+	@PostMapping(value = "/OfficersDedu",produces = "application/json")
 	@ResponseBody
-	public OfficersPay OfficersDeduTotal(String opdCode, String iyCode, String opdIncomeTax
-	/* ,@RequestParam(value = "iyCode", required = false) String iyCode */
-	/*
-	 * ,@RequestParam(value = "opdIncomeTax", required = false) String opdIncomeTax
-	 */			
-										) {
-		OfficersPay OfficersDedu = officersPayService.OfficersDeduTotal(opdCode, iyCode, opdIncomeTax);
+	public OfficersPay OfficersDedu(String opdCode, String iyCode, String opdIncomeTax) {
+		OfficersPay officersDedu = officersPayService.OfficersDedu(opdCode, iyCode, opdIncomeTax);
 		
 		if(iyCode != null && opdIncomeTax != null) {
-			OfficersDedu.setIyCode(Integer.parseInt(iyCode));			
-			OfficersDedu.setOpdIncomeTax(Integer.parseInt(opdIncomeTax));
+			officersDedu.setIyCode(Integer.parseInt(iyCode));			
+			officersDedu.setOpdIncomeTax(Integer.parseInt(opdIncomeTax));
 		}		
 		
-		return OfficersDedu;
+		return officersDedu;
 	}
 	
 	//직원 정보 불러오기

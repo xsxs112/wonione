@@ -39,11 +39,62 @@
 		<result column="op_writer"						property="opWriter"/>
 		<result column="mr_join_date"					property="mrJoinDate"/>
 		<result column="mr_account_num"					property="mrAccountNum"/>	
-
 	</resultMap>
 	
+	<!-- 직원급여입력 -->
+	<insert id="addOfficersPay" parameterType="OfficersPay">
+	INSERT INTO wt_officers_pay
+		(op_code
+		, mr_id
+		, p_r_title
+		, op_date
+		, opd_code
+		, op_pay
+		, op_reg_date
+		, op_writer
+		)VALUES(
+				#{opdCode}
+				, #{mrId}
+				, #{pRTitle}
+				, #{opDate}
+				, #{opdCode}
+				, #{opPay}
+				, NOW()
+				, '')	
+	</insert>
+	<!-- 공제계 입력하기 -->
+	<insert id="addOffiDedupay" parameterType="OfficersPay">
+	INSERT INTO wt_officers_pay_deduction
+		(opd_code
+		, mr_id
+		, iy_code
+		, p_r_title
+		, opd_income_tax
+		, opd_resident_income_tax
+		, opc_code
+		, opd_employment_insurance
+		, opd_national_pension, opd_health_insurance
+		, opd_longterm_nursing_insurance, opd_total
+		, opd_reg_date
+		, opd_writer
+		)VALUES(
+				#{opdCode}
+				, #{mrId}
+				, #{iyCode}
+				, #{pRTitle}
+				, #{opdIncomeTax}
+				, #{opdResidentIncomTax}
+				, #{opcCode}
+				, #{opdEmploymentInsurance}
+				, #{opdNationalPension}
+				, #{opdHealthInsurance}
+				, #{opdLongtermNursingInsurance}
+				, #{opdTotal}
+				, NOW()
+				, '');
+	</insert>
 	<!-- 공제계구하기 -->
-	<select id="OfficersDeduTotal" resultType="OfficersPay" parameterType="String">
+	<select id="OfficersDedu" resultType="OfficersPay" parameterType="String">
 	SELECT 
 		iy.iy_resident_income
 			* #{opdIncomeTax}
@@ -113,7 +164,7 @@
 				SELECT 
 			LPAD(COUNT(*)+1, 4, '0') 
 				FROM 
-					wt_officers_pay_calculate)) AS opcCode 
+					wt_officers_pay_calculate)) AS opcCode 			
 		FROM
 			wt_member_registration AS m
 			INNER JOIN 

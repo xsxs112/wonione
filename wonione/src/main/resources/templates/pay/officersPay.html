@@ -9,76 +9,32 @@
 	<script type="text/javascript">	
 	
 	$(function(){		
-				 
-		//요율시행년도, 소득세 넘기기
- 		$('#OfficersDeduTotalBtn').click(function(){
-
-			var opdCode = $('input[name=opdCode]').val();
-			var opdIncomeTax = $('input[name=opdIncomeTax]').val();
-			var iyCode = $('select[name=iyCode] option:selected').val();
-			var pRTitle = $('#dpRTitle').val();
-			var mrId = $('#dMrId').val();	
+		$('#offiPayInsertBtn').click(function(){
 			
-			if(opdIncomeTax == null){
-				alert('소득세를 입력해주세요.');
+			var foinForm = $('#offiDeduFoinForm');
+			var opCode = $('#opCode').val();
+			var mrId = $('#mrId').val();
+			var pRTitle = $('#pRTitle').val();
+			var opdCode = $('#opdCode').val();
+			var opDate = $('#opDate').val();
+			var opPay = $('#opPay').val();
+			console.log(mrId+"<-mrId");
+			if(opPay == null || opPay == undefined || opPay == ''){
+				alert('실지급액을 계산해주세요.');
 				return;
-			}
-			if(iyCode == '::시행년도::'){
-				alert('시행년도를 선택해주세요.');
-				return;
-			}
-						
-			var opdResidentIncomTax = Number($('#opdResidentIncomTax').val());
-			var opdEmploymentInsurance = Number($('#opdEmploymentInsurance').val());
-			var opdNationalPension = Number($('#opdNationalPension').val());
-			var opdHealthInsurance = Number($('#opdHealthInsurance').val());
-			var opdLongtermNursingInsurance = Number($('#opdLongtermNursingInsurance').val());
-			var opdTotal = Number($('#opdTotal').val());
+			}	
 
-			var request = $.ajax({
-				  url: "/OfficersDeduTotal",
-				  method: "POST",
-				  data: { opdCode : opdCode
-						 , opdIncomeTax : opdIncomeTax
-						 , iyCode : iyCode },
-				  dataType: "json"
-				});
-			request.done(function(data){
-				var calSum = 0;	
-				
-				calSum += $('#opdIncomeTax').val(data.opdIncomeTax)
-					+ $('#opdResidentIncomTax').val(data.opdResidentIncomTax)			
-					+ $('#opdEmploymentInsurance').val(data.opdEmploymentInsurance)						
-					+ $('#opdNationalPension').val(data.opdNationalPension)					
-					+ $('#opdHealthInsurance').val(data.opdHealthInsurance)
-					+ $('#opdLongtermNursingInsurance').val(data.opdLongtermNursingInsurance); 	
-				
-				console.log(calSum + "<-calSum");
-				$('#opdCode').val(opdCode);
-				$('#dpRTitle').val(pRTitle);
-				$('#dMrId').val(mrId);
-				$('#iyCode').val(iyCode);
-				$('#opdIncomeTax').val(data.opdIncomeTax);
-				$('#opdResidentIncomTax').val(data.opdResidentIncomTax);
-				$('#opdEmploymentInsurance').val(data.opdEmploymentInsurance);
-				$('#opdNationalPension').val(data.opdNationalPension);
-				$('#opdHealthInsurance').val(data.opdHealthInsurance);
-				$('#opdLongtermNursingInsurance').val(data.opdLongtermNursingInsurance);
-				$('#opdTotal').val(data.calSum);
-				
-			});
-			request.fail(function( jqXHR, textStatus ) {
-				  alert( "Request failed: " + textStatus );
-			});						
-		});				
+			foinForm.attr('action', '/addOfficersPay');
+			foinForm.submit();			
+		}); 
 	});	
 			
 		</script>	
 	</th:block>
 	<th:block layout:fragment="customContent" >	
 	<!-- 급여계 입력폼 -->
-	<form action="/addOffiCalpay" id="offiCalFoinForm" method="post"> 
 	<!--===================직원목록불러오기시작===================-->
+	<form action="/addOffiCalpay" id="offiCalFoinForm" method="post"> 
 	<div style="width:40%; float:left" class="container-fluid">		
 		<table id="tb" class ="table table-striped">			
 			<tr>
@@ -321,10 +277,10 @@
 					<td>건강보험료</td>
 					<td>장기요양보험료</td>
 					<td>
-					<button type="button" id="OfficersDeduTotalBtn" class="btn btn-info btn-sm btn-block">공제총액계산</button>					
+					<button type="button" id="OfficersDeduBtn" class="btn btn-info btn-sm btn-block">보험료계산</button>					
 					</td>	
 					<td>
-					<button type="button" id="OfficersPayTotalBtn" class="btn btn-info btn-sm btn-block">실지급액계산</button>					
+					<button type="button" id="OfficersDeduTotalBtn" class="btn btn-info btn-sm btn-block">공제총액계산</button>					
 					</td>					
 				</tr>
 				<tr style="text-align: center;">
@@ -341,11 +297,12 @@
 					<input type="text" class="form-control" id="opdLongtermNursingInsurance" name="opdLongtermNursingInsurance" placeholder="장기요양보험료" readonly>
 					</td>
 					<td>					
+					<input type="text" class="form-control" placeholder="" readonly>
+					</td>
+					<td>					
 					<input type="text" class="form-control" id="opdTotal" name="opdTotal" placeholder="공제총액" readonly>
 					</td>
-					<td>
-					<input type="text" class="form-control" id="opPay" name="opPay" placeholder="실지급액" readonly>
-					</td>	
+	
 				</tr>
 				<tr style="text-align: center;">
 					<td></td>
@@ -358,6 +315,17 @@
 					공제계입력
 					</button>
 					<td colspan="2" >
+					</td>	
+				</tr>					
+				<tr style="text-align: center;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="2">
+					<button type="button" id="OfficersPayTotalBtn" class="btn btn-info btn-sm btn-block">실지급액계산</button>					
+					</td>
+					<td colspan="2">
+					<input type="text" class="form-control" id="opPay" name="opPay" placeholder="실지급액" readonly>
 					</td>	
 				</tr>					
 			</table>			

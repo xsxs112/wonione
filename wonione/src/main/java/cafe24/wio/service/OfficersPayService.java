@@ -30,10 +30,10 @@ public class OfficersPayService {
 	}	
 	
 	//공제액 계산하기
-	public OfficersPay OfficersDeduTotal(String opdCode, String iyCode, String opdIncomeTax ) {
-		OfficersPay OfficersDedu = officersPayMapper.OfficersDeduTotal(opdCode, iyCode, opdIncomeTax);
+	public OfficersPay OfficersDedu(String opdCode, String iyCode, String opdIncomeTax ) {
+		OfficersPay officersDedu = officersPayMapper.OfficersDedu(opdCode, iyCode, opdIncomeTax);
 		
-		return OfficersDedu;
+		return officersDedu;
 	}
 	
 	//보험요율표가져오기
@@ -62,6 +62,20 @@ public class OfficersPayService {
 		int result = officersPayMapper.addOffiCalpay(officersPay);
 		
 		return 	result;
+	}
+	//직원공제계 입력하기
+	public int addOffiDedupay(OfficersPay officersPay) {
+		int result = officersPayMapper.addOffiDedupay(officersPay);
+		
+		return 	result;
+	}
+
+	//급여 입력하기
+	public int addOfficersPay(OfficersPay officersPay) {
+		int result = officersPayMapper.addOfficersPay(officersPay);
+		
+		return 	result;
+		
 	}
 
 	

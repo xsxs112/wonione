@@ -28,7 +28,13 @@ public interface OfficersPayMapper {
 	public int addOffiCalpay(OfficersPay officersPay);
 
 	//공제계 구하기
-	public OfficersPay OfficersDeduTotal(String opdCode, String iyCode, String opdIncomeTax);
+	public OfficersPay OfficersDedu(String opdCode, String iyCode, String opdIncomeTax);
+
+	//직원공제계 입력하기
+	public int addOffiDedupay(OfficersPay officersPay);
+
+	//직원급여 입력
+	public int addOfficersPay(OfficersPay officersPay);
 
 
 
