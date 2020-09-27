@@ -276,8 +276,12 @@
 			var opcWelfare = $('#opcWelfare').val();
 			var opcBonus = $('#opcBonus').val();
 			var opcEct = $('#opcEct').val();
-			var opcTotal = $('#opcTotal').val();		
-			
+			var opcTotal = $('#opcTotal').val();	
+				
+			if($('#opcTotal').val() == null || $('#opcTotal').val() == undefined || $('#opcTotal').val() == '' || $('#opcTotal').val() == 0){
+			alert('총액을 다시 입력해주세요.');
+			return;
+		}
 			var request = $.ajax({
 				  url: "/addOffiCalpay",
 				  method: "POST",

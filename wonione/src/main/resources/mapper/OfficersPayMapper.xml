@@ -164,7 +164,7 @@
 				SELECT 
 			LPAD(COUNT(*)+1, 4, '0') 
 				FROM 
-					wt_officers_pay_calculate)) AS opcCode 			
+					wt_officers_pay_calculate)) AS opcCode 					
 		FROM
 			wt_member_registration AS m
 			INNER JOIN 
