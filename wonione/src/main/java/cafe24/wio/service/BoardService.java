@@ -59,7 +59,7 @@ public class BoardService {
 	//공지사항 삭제
 	public int removeNotice(String boardNum) {
 		int remove = boardMapper.removeBoard(boardNum);
-		return remove;		
+		return remove;
 	}
 
 	//자료게시판 조회

@@ -54,10 +54,12 @@
 				<td colspan="6" align="left" th:text=${b.boardFile}></td>
 			</tr>
 		</table>
-				
-		<a href="/getNotice" class="btn btn-default btn-info">리스트로 돌아가기</a>
-		<a href="/modifyNotice" class="btn btn-default btn-warning">수정</a>
-		<a href="/removeNotice" class="btn btn-default btn-danger">삭제</a>
+		
+		<div style=	"margin-bottom:10px" th:each="b : ${Board}">
+			<a href="/getNotice" class="btn btn-default btn-info">리스트로 돌아가기</a>
+			<a href="/modifyNotice" class="btn btn-default btn-warning">수정</a>
+			<a th:href="@{/removeNotice(boardNum=${b.boardNum})}" class="btn btn-default btn-danger">삭제</a>
+		</div>
 	
 	</form>	
 	</th:block>
