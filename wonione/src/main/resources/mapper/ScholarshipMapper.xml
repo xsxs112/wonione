@@ -16,16 +16,30 @@
 		<result column="award_bm_price" 	property="awardBmPrice"/>	
 </resultMap>
 
-<select id="getScholarList" parameterType="ScholarShip">
-
+<select id="getScholarList" parameterType="ScholarShip" resultMap="ScholarShipResultMap">
+	
 	SELECT 
-		  pm_info_code
-		, award_bm_code
-		, mr_name
-		, mr_name
-		, pm_info_reg_date
+		  wt_payments_information.pm_info_code
+		, wt_award_benchmark.award_bm_price 
+		, (SELECT 
+			wt_member_registration.mr_name 
+			FROM 
+			wt_member_registration 
+			where
+			wt_member_registration.mr_id = wt_payments_information.mr_id )
+		, (SELECT 
+			wt_member_registration.mr_name 
+			FROM 
+			wt_member_registration 
+			where
+			wt_member_registration.mr_id = wt_payments_information.pm_info_Payer )
+		,  wt_payments_information.pm_info_reg_date
 	FROM 
-		wt_payments_information
+		wt_payments_information 
+	inner join
+		wt_award_benchmark 
+	on
+		wt_payments_information.award_bm_code =wt_award_benchmark.award_bm_code ;	
 		
 </select>
 
