@@ -32,24 +32,19 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>
-	<!-- 강사목록조회 -->
-	<select id = "getStaffList" resultType="StaffPay" >
-		SELECT
-			 m.mr_id 		AS mrId
-			,m.mr_name 		AS mrName
-		FROM
-			wt_member_registration AS m
-		WHERE 
-			m.level_num = 2;	
-	</select>
 	
 	<!-- 강사정보조회 -->
 	<select id ="callStaffInfo" resultType="StaffPay" parameterType="String">
 		SELECT
 			m.mr_id				AS mrId
 			,m.mr_name			AS mrName
-			,r.pm_r_title		AS pMRTitle
+			,r.pm_r_title		AS pmRTitle
 			,m.mr_account_num	AS mrAccountNum
+			,CONCAT('SPCD_',(
+				SELECT 
+			LPAD(COUNT(*)+1, 4, '0') 
+				FROM 
+					wt_staff_pay_calculate)) AS spcCode
 		FROM
 			wt_member_registration AS m
 			INNER JOIN 
@@ -63,13 +58,35 @@
 	<!-- 시급& 인센티브 기준표 -->
  	<select id="standardSheet" resultType="StaffPay">
 		SELECT
-			(case when p_r_group_name = '시급' then substr(pr.p_r_ect,1,(INSTR(pr.p_r_ect,'or')-1))
-				when p_r_group_name = '인센티브' then pr.p_r_ect				 
-				end) AS pREct
+			(case when p_r_group_name = '시급' 
+						then substr(pr.p_r_ect,1,(INSTR(pr.p_r_ect,'or')-1))
+				when p_r_group_name = '인센티브' 
+						then pr.p_r_ect				 
+				end) 
+			AS pREct
 			,pr.p_r_title AS pRTitle
 		FROM 
 			wt_pay_resource AS pr;
 	</select>	
+	
+	<!-- 보험요율표 -->
+	<select id="insuranceYear" resultType="StaffPay">
+		SELECT
+			iy.iy_code AS iyCode
+		FROM 
+			wt_insurance_year AS iy;
+	</select>
+	
+	<!-- 강사목록조회 -->
+	<select id = "getStaffList" resultType="StaffPay" >
+		SELECT
+			 m.mr_id 		AS mrId
+			,m.mr_name 		AS mrName
+		FROM
+			wt_member_registration AS m
+		WHERE 
+			m.level_num = 2;	
+	</select>
 	
 	<!-- 강사급여명세서조회 -->
 	<select id = "getStaffPay" resultType="StaffPay">
@@ -109,7 +126,7 @@
 			LEFT JOIN 
 			wt_pay_resource AS pr
 			ON 
-			p.p_r_code = pr.p_r_code 
+			p.p_r_title = pr.p_r_title
 		WHERE 
 			p.mr_id = #{mrId};	
 	</select>

@@ -33,7 +33,7 @@ public class OfficersPayController {
 		officersPayService.addOfficersPay(officersPay);
 		System.out.println(officersPay);
 		
-		return "redirect:/pay/payList";
+		return "redirect:/getPayList";
 	}
 	//직원 공제계 입력하기
 	@PostMapping(value = "/addOffiDedupay",produces = "application/json")

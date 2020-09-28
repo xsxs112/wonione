@@ -157,112 +157,7 @@
 			$('#opdTotal').val(deduSum);
 		}); 
 				
- 		// 직원 아이디값 받아 넘기기
- 		$('.callOfficersInfo').click(function(){
- 		var tr = $(this).parent().parent();
- 		var td = tr.children();
- 		var mrId = td.eq(0).text();
-		var request = $.ajax({
-			  url: "/callOfficersInfo",
-			  method: "POST",
-			  data: { mrId : mrId },
-			  dataType: "json"
-			});
-			request.done(function(data) {
-				$('#mrId').val(data.mrId);
-				$('#mrName').val(data.mrName);
-				$('#mrJoinDate').val(data.mrJoinDate);
-				$('#pmRTitle').val(data.pmRTitle);
-				$('#mrAccountNum').val(data.mrAccountNum);
-				$('#opcCode').val(data.opcCode);
-				
-			});
-			request.fail(function( jqXHR, textStatus ) {
-				  alert( "Request failed: " + textStatus );
-			});	
- 		});
- 		
- 		//회원정보와 시급, 지급월 넘기기
- 		$('#OfficersCalformBtn').click(function(){
-			
-			var mrId = $('input[name=mrId]').val();
-			var mrName = $('input[name=mrName]').val();
-			var pRTitle = $('select[name=pRTitle] option:selected').val();
-			var opcHourlyWage = $('select[name=HourlyWage] option:selected').val();
-				if(mrId == null || mrId == undefined || mrId == ''){
-					alert('회원정보 선택해주세요.');
-					return;
-				}
-				if(pRTitle == '::지급월::'){
-					alert('지급월을 선택해주세요.');
-					return;
-				}
-				if(opcHourlyWage == '::시급::'){
-					alert('시급을 선택해주세요.');
-					return;
-				}
-			var request = $.ajax({
-				  url: "/callOfficersInfo",
-				  method: "POST",
-				  data: { mrId : mrId
-					  , mrName : mrName
-					  , pRTitle : pRTitle
-					  , opcHourlyWage : opcHourlyWage
-					  },
-				  dataType: "json"
-				});
-				request.done(function(data) {
-					
-					$('#cMrId').val(data.mrId);
-					$('#cMrName').val(data.mrName);
-					$('#cpRTitle').val(data.pRTitle);
-					$('#opcHourlyWage').val(data.opcHourlyWage);
-					
-				});
-				request.fail(function( jqXHR, textStatus ) {
-					  alert( "Request failed: " + textStatus );
-					});	
-			});  			  	
-
- 		//근무시간 입력시 기본급 계산 
-		$('#OfficersCalBaseBtn').click(function(){
-		var baseMulti = 0;
-		var pRTitle = $('#cpRTitle').val();
-		var mrId = $('#cMrId').val();
-		if($('#opcTotalHour').val() == null || $('#opcTotalHour').val() == undefined || $('#opcTotalHour').val() == ''){
-			alert('근무시간을 입력해주세요.');
-			return;
-		}
-		baseMulti += Number($('#opcHourlyWage').val()) * Number($('#opcTotalHour').val());
-			$('#opcBasePay').val(baseMulti);
-			$('#cpRTitle').val(pRTitle);
-			$('#cMrId').val(mrId);
-		}); 			
-	 	
-	 	//급여계 총액 구하기	 		
-		$('#OfficersCalTotalBtn').click(function(){
-		var calSum = 0;
-		var opcBasePay = Number($('#opcBasePay').val());
-		var opcFoodExpenses = Number($('#opcFoodExpenses').val());
-		var opcTransportation = Number($('#opcTransportation').val());
-		var opcWelfare = Number($('#opcWelfare').val());
-		var opcBonus = Number($('#opcBonus').val());
-		var opcEct = Number($('#opcEct').val());
-		calSum += opcBasePay 
-				+ opcFoodExpenses 						
-				+ opcTransportation 						
-				+ opcWelfare 						
-				+ opcBonus 						
-				+ opcEct; 						
-			$('#opcFoodExpenses').val(opcFoodExpenses);
-			$('#opcTransportation').val(opcTransportation);
-			$('#opcWelfare').val(opcWelfare);
-			$('#opcBonus').val(opcBonus);
-			$('#opcEct').val(opcEct);
-			$('#opcTotal').val(calSum);
-		}); 			
-
- 		//직원 급여계 입력
+		//직원 급여계 입력
 		$('#offiCalInsertBtn').click(function(){
 			var foinForm = $('#offiCalFoinForm');
 			var opcCode = $('#opcCode').val();
@@ -281,7 +176,7 @@
 			if($('#opcTotal').val() == null || $('#opcTotal').val() == undefined || $('#opcTotal').val() == '' || $('#opcTotal').val() == 0){
 			alert('총액을 다시 입력해주세요.');
 			return;
-		}
+			}
 			var request = $.ajax({
 				  url: "/addOffiCalpay",
 				  method: "POST",
@@ -322,6 +217,113 @@
 				});	
 				
 		});	
+			 	
+	 	//급여계 총액 구하기	 		
+		$('#OfficersCalTotalBtn').click(function(){
+			var calSum = 0;
+			var opcBasePay = Number($('#opcBasePay').val());
+			var opcFoodExpenses = Number($('#opcFoodExpenses').val());
+			var opcTransportation = Number($('#opcTransportation').val());
+			var opcWelfare = Number($('#opcWelfare').val());
+			var opcBonus = Number($('#opcBonus').val());
+			var opcEct = Number($('#opcEct').val());
+			calSum += opcBasePay 
+					+ opcFoodExpenses 						
+					+ opcTransportation 						
+					+ opcWelfare 						
+					+ opcBonus 						
+					+ opcEct; 						
+				$('#opcFoodExpenses').val(opcFoodExpenses);
+				$('#opcTransportation').val(opcTransportation);
+				$('#opcWelfare').val(opcWelfare);
+				$('#opcBonus').val(opcBonus);
+				$('#opcEct').val(opcEct);
+				$('#opcTotal').val(calSum);
+		}); 
+		
+ 		//근무시간 입력시 기본급 계산 
+		$('#OfficersCalBaseBtn').click(function(){
+			var baseMulti = 0;
+			var pRTitle = $('#cpRTitle').val();
+			var mrId = $('#cMrId').val();
+			if($('#opcTotalHour').val() == null || $('#opcTotalHour').val() == undefined || $('#opcTotalHour').val() == ''){
+				alert('근무시간을 입력해주세요.');
+				return;
+			}
+			baseMulti += Number($('#opcHourlyWage').val()) * Number($('#opcTotalHour').val());
+				$('#opcBasePay').val(baseMulti);
+				$('#cpRTitle').val(pRTitle);
+				$('#cMrId').val(mrId);
+		}); 
+		
+ 		//직원정보와 시급, 지급월 넘기기
+ 		$('#OfficersCalformBtn').click(function(){
+			
+			var mrId = $('input[name=mrId]').val();
+			var mrName = $('input[name=mrName]').val();
+			var pRTitle = $('select[name=pRTitle] option:selected').val();
+			var opcHourlyWage = $('select[name=HourlyWage] option:selected').val();
+				if(mrId == null || mrId == undefined || mrId == ''){
+					alert('직원정보 선택해주세요.');
+					return;
+				}
+				if(pRTitle == '::지급월::'){
+					alert('지급월을 선택해주세요.');
+					return;
+				}
+				if(opcHourlyWage == '::시급::'){
+					alert('시급을 선택해주세요.');
+					return;
+				}
+			var request = $.ajax({
+				  url: "/callOfficersInfo",
+				  method: "POST",
+				  data: { mrId : mrId
+					  , mrName : mrName
+					  , pRTitle : pRTitle
+					  , opcHourlyWage : opcHourlyWage
+					  },
+				  dataType: "json"
+				});
+				request.done(function(data) {
+					
+					$('#cMrId').val(data.mrId);
+					$('#cMrName').val(data.mrName);
+					$('#cpRTitle').val(data.pRTitle);
+					$('#opcHourlyWage').val(data.opcHourlyWage);
+					
+				});
+				request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});	
+			});  			  	
+		
+		
+  		// 직원 아이디값 받아 넘기기
+ 		$('.callOfficersInfo').click(function(){
+	 		var tr = $(this).parent().parent();
+	 		var td = tr.children();
+	 		var mrId = td.eq(0).text();
+			var request = $.ajax({
+				  url: "/callOfficersInfo",
+				  method: "POST",
+				  data: { mrId : mrId },
+				  dataType: "json"
+				});
+				request.done(function(data) {
+					$('#mrId').val(data.mrId);
+					$('#mrName').val(data.mrName);
+					$('#mrJoinDate').val(data.mrJoinDate);
+					$('#pmRTitle').val(data.pmRTitle);
+					$('#mrAccountNum').val(data.mrAccountNum);
+					$('#opcCode').val(data.opcCode);
+					
+				});
+				request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+				});	
+ 		});		
+ 		
  		
  		 		// 숫자 아닌경우 
  		$(document).on('keyup','#opcTotalHour', function(){

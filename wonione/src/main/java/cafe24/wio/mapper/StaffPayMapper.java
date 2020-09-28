@@ -21,4 +21,7 @@ public interface StaffPayMapper {
 	//강사 정보 조회
 	public StaffPay callStaffInfo(String mrId);
 
+	//보험요율표 불러오기
+	public List<StaffPay> insuranceYear();
+
 }

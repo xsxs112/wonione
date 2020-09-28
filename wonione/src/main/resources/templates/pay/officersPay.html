@@ -14,6 +14,7 @@
 			var foinForm = $('#offiDeduFoinForm');
 			var opCode = $('#opCode').val();
 			var mrId = $('#dMrId').val();
+			
 			var pRTitle = $('#dpRTitle').val();
 			var opdCode = $('#opdCode').val();
 			var opDate = $('#opDate').val();
@@ -250,10 +251,10 @@
 					<input type="text" class="form-control" id="opdCode" name="opdCode" th:value="${opdCode}" placeholder="공제계산번호" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="dpRTitle" name="dpRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" readonly>
+					<input type="text" class="form-control" id="dpRTitle" name="pRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="dMrId" name="dMrId" th:value="${mrId}" readonly>
+					<input type="text" class="form-control" id="dMrId" name="mrId" th:value="${mrId}" readonly>
 					</td>
 					<td>
 					<select name ="iyCode" class="form-control" >
