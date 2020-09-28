@@ -158,7 +158,7 @@
 			m.mr_id				AS mrId
 			,m.mr_name			AS mrName
 			,m.mr_join_date		AS mrJoinDate
-			,r.pm_r_title		AS pMRTitle
+			,r.pm_r_title		AS pmRTitle
 			,m.mr_account_num	AS mrAccountNum
 			,CONCAT('OPCD_',(
 				SELECT 
@@ -249,7 +249,7 @@
 			LEFT JOIN 
 			wt_pay_resource AS pr
 			ON 
-			p.p_r_code = pr.p_r_code 
+			p.p_r_title = pr.p_r_title
 		WHERE 
 			p.mr_id = #{mrId};	
 			<!-- p.mr_id = '수정하기'; -->	

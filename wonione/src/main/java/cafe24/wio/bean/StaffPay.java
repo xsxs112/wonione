@@ -8,6 +8,7 @@ public class StaffPay {
 	private int spcHourlyWage;		//시급
 	private int spcTotalHour;		//근무시간
 	private int spcBasePay;			//강사급여 기본급(시급*근무시간)
+	private float spcIncentivePer;	//강사급여 인센티브%
 	private int spcIncentive;		//강사급여 인센티브
 	private int spcTotal;			//강사급여계산 총액
 	private String spcRegDate;		//강사급여계산 작성일자
@@ -31,6 +32,15 @@ public class StaffPay {
 	private String mrAccountNum;				//강사계좌번호
 	
 	private String pREct;						//급여자원테이블(비고)	
+	
+	
+	public float getSpcIncentivePer() {
+		return spcIncentivePer;
+	}
+
+	public void setSpcIncentivePer(float spcIncentivePer) {
+		this.spcIncentivePer = spcIncentivePer;
+	}
 
 	public String getSpcCode() {
 		return spcCode;

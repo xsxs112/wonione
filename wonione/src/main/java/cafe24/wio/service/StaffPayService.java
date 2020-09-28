@@ -43,4 +43,10 @@ public class StaffPayService {
 		return staffPay;
 	}
 
+	//보험요율표가져오기
+	public List<StaffPay> insuranceYear() {
+		List<StaffPay> insuranceYear = staffPayMapper.insuranceYear();
+		return insuranceYear;
+	}
+
 }

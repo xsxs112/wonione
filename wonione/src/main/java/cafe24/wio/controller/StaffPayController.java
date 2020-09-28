@@ -25,6 +25,29 @@ public class StaffPayController {
 	// log4j로 로그 찍기 위한 객체 삽입
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(StaffPayController.class);
+	
+	//강사 정보 불러오기
+	@PostMapping(value = "/callStaffInfo",produces = "application/json")
+	@ResponseBody
+	public StaffPay callStaffInfo(String mrId
+								,@RequestParam(value = "pRTitle", required = false) String pRTitle
+								,@RequestParam(value = "spcIncentivePer", required = false) String spcIncentivePer
+								,@RequestParam(value = "spcHourlyWage", required = false) String spcHourlyWage) {
+		StaffPay staffInfo = staffPayService.callStaffInfo(mrId);
+
+		if(pRTitle != null && spcHourlyWage != null && spcIncentivePer !=null) {
+			staffInfo.setpRTitle(Float.parseFloat(pRTitle));
+			staffInfo.setSpcIncentivePer(Float.parseFloat(spcIncentivePer));
+			staffInfo.setSpcHourlyWage(Integer.parseInt(spcHourlyWage));			
+			//강사정보 급여계 넘기기
+			System.out.println(Float.parseFloat(pRTitle) + " pRTitle");
+			System.out.println(Float.parseFloat(spcIncentivePer) + " spcIncentivePer" );		
+			System.out.println(Integer.parseInt(spcHourlyWage) + " spcHourlyWage");
+		}
+		
+		
+		return staffInfo;
+	}
 		
 	@RequestMapping(value = "/staffPayIndex", method = RequestMethod.GET)
 	public String getStaffList(Model model) {
@@ -38,19 +61,14 @@ public class StaffPayController {
 		model.addAttribute("standardSheetHour",standardSheetHour);
 		model.addAttribute("title", "시급기준표");
 		
+		//자원관리 테이블 통해 요율표 가져오기
+		List<StaffPay> insuranceYear = staffPayService.insuranceYear();		
+		model.addAttribute("insuranceYear",insuranceYear);
+		model.addAttribute("title", "보험요율표");
+		
 		return "pay/staffPay";		
 	}
 
-	
-	//강사 정보 불러오기
-	@PostMapping(value = "/callStaffInfo",produces = "application/json")
-	@ResponseBody
-	public StaffPay callStaffInfo(String mrId) {
-		System.out.println(mrId +" <-mrId");
-		StaffPay staffInfo = staffPayService.callStaffInfo(mrId);
-
-		return staffInfo;
-	}
 	
 	// 강사급여명세서조회
 	@RequestMapping(value = "/getStaffPay", method = RequestMethod.GET)
