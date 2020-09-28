@@ -19,7 +19,10 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	
+	/*
+	 * private static final Logger logger =
+	 * LoggerFactory.getLogger(BoardController.class);
+	 */
 
 	// 공지사항 조회
 	@RequestMapping(value = "/getNotice", method = RequestMethod.GET)
@@ -40,7 +43,7 @@ public class BoardController {
 			  					@RequestParam(value="boardNum", required = false) String boardNum) {
 		  Board board = boardService.readNotice(boardNum);
 		  System.out.println(board + "board");
-		  model.addAttribute("Board", board);		  
+		  model.addAttribute("Board", board);
 		  model.addAttribute("readNotice", "공지사항 읽기");
 		  
 		  return "board/noticeRead";		  
@@ -67,20 +70,23 @@ public class BoardController {
 		  System.out.println("boardContents -> " + boardContents);
 		  System.out.println("boardPicture -> " + boardPicture);
 		  System.out.println("boardFile -> " + boardFile);
-		  boardService.insertNotice(board);
+		  boardService.addNotice(board);
 		  model.addAttribute("Board", board);
-		/* model.addAttribute("BoardUpload", "/searchNotice");*/
+		 model.addAttribute("BoardUpload", "/notice");
 		  return "redirect:/getNotice";
 	  }
 	  
 	  //공지사항 작성 @Get
 	   @GetMapping("/addNotice")
-	   public String getNoticeadd(Model model) {
+	   public String insertNotice(Model model) {
 		  
+		   String boardNum = boardService.getBoardNum();
+		   System.out.println(boardNum + " <-- boardNum");
+		   model.addAttribute("boardNum", boardNum);
 	      return "board/noticeAdd";
 	   }
 	  
-	// 공지사항 수정 (미구현)
+	// 공지사항 수정 (미구현 : 수정은 가능, 기존에 저장된 값 가져오기 불가)
 	@PostMapping("/modifyNotice")
 	public String modifyNotice(Board board,Model model) {
 		boardService.modifyNotice(board);
@@ -88,7 +94,7 @@ public class BoardController {
 		return "redirect:/getNotice";
 	}
 	
-	// 공지사항 수정 (미구현)
+	// 공지사항 수정
 	@GetMapping("/modifyNotice")
 	public String modifyBoard(@RequestParam(value="boardNum", required = false) String boardNum
 							,Model model) {
@@ -117,7 +123,7 @@ public class BoardController {
 			@RequestParam(value="boardNum", required = false) String boardNum) {
 		Board board = boardService.readDataLibrary(boardNum);
 		System.out.println(board + "board");
-		model.addAttribute("Board", board);		  
+		model.addAttribute("Board", board);
 		model.addAttribute("readDataLibrary", "자료게시판 읽기");
 		
 		return "board/dataLibraryRead";		  
@@ -127,10 +133,12 @@ public class BoardController {
 	@GetMapping("/removeNotice")
 	public String removeNotice(Model model
 								,@RequestParam(value="boardNum", required = false) String boardNum) {
-		boardService.removeNotice(boardNum);
+		boardService.removeNotice(boardNum);		
 		System.out.println(boardNum + "boardNum");
-		return "redirect:/getNotice";	
+		return "redirect:/getNotice";
 	}
+	
+	
 	
 	// 수강후기 조회(미구현)
 	@GetMapping("/getReview")

@@ -11,8 +11,7 @@ public class Board {
 	public String boardContents;
 	public String boardPicture;
 	public String boardFile;
-	public String boardLec;
-	public int boardGrade;
+
 	
 	public String getBoardNum() {
 		return boardNum;
@@ -68,18 +67,6 @@ public class Board {
 	public void setBoardFile(String boardFile) {
 		this.boardFile = boardFile;
 	}
-	public String getBoardLec() {
-		return boardLec;
-	}
-	public void setBoardLec(String boardLec) {
-		this.boardLec = boardLec;
-	}
-	public int getBoardGrade() {
-		return boardGrade;
-	}
-	public void setBoardGrade(int boardGrade) {
-		this.boardGrade = boardGrade;
-	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -101,10 +88,6 @@ public class Board {
 		builder.append(boardPicture);
 		builder.append(", boardFile=");
 		builder.append(boardFile);
-		builder.append(", boardLec=");
-		builder.append(boardLec);
-		builder.append(", boardGrade=");
-		builder.append(boardGrade);
 		builder.append("]");
 		return builder.toString();
 	}
