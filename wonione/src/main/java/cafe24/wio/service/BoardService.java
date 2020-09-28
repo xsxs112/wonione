@@ -1,6 +1,7 @@
 package cafe24.wio.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,26 @@ public class BoardService {
 	}
 	
 	//공지사항 작성
-	public int insertNotice(Board board) {
-		int write = boardMapper.insertNotice(board);
+	public int addNotice(Board board) {
+		int write = boardMapper.addNotice(board);
 		return write;		
+	}
+	
+	//글번호 자동증가
+	public String getBoardNum() {
+		
+		Map<String, Object> boardNumMax = boardMapper.getBoardNum();
+		
+		String tempCode = "board_000";
+		
+		int getMax = Integer.parseInt(boardNumMax.get("max").toString());
+		
+		if(getMax<10) {
+			tempCode = "board_0000";
+		}
+		String boardNum = tempCode + String.valueOf(boardNumMax.get("max"));
+		
+		return boardNum;		
 	}
 	
 	//공지사항 수정
@@ -38,6 +56,12 @@ public class BoardService {
 		return modify;
 	}
 	
+	//공지사항 삭제
+	public int removeNotice(String boardNum) {
+		int remove = boardMapper.removeBoard(boardNum);
+		return remove;		
+	}
+
 	//자료게시판 조회
 	public List<Board> getDataLibrary(Board board){
 		System.out.println(board + " <-- board");
@@ -51,12 +75,5 @@ public class BoardService {
 		return board;
 	}
 	
-	//게시물 삭제
-	public int removeNotice(String boardNum) {
-		int remove = boardMapper.removeBoard(boardNum);
-		return remove;		
-	}
-
-
 
 }

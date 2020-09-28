@@ -26,7 +26,7 @@
 			b.board_writer_id,
 			m.mr_name,
 			b.board_reg_date
-		FROM 
+		FROM
 			wt_board AS b
 		INNER JOIN
 			wt_member_registration AS m
@@ -37,7 +37,7 @@
 	</select>
 	
 	<!-- 공지사항 등록 쿼리 -->
-	<insert id="insertNotice" parameterType="Board">
+	<insert id="addNotice" parameterType="Board">
 		INSERT INTO wt_board(
 			board_num,
 			board_menu,
@@ -48,11 +48,7 @@
 			board_picture,
 			board_file
 		)VALUES(
-			CONCAT('board_num',
-	       (SELECT 
-	       		LPAD(COUNT(*)+1,5,'0')
-	       	FROM
-	       		wt_board))
+			#{boardNum}
 			, '공지사항'
 			, #{boardTitle}
 			, #{boardWriterId}
@@ -61,7 +57,15 @@
 			, #{boardPicture}
 			, #{boardFile});
 	</insert>
-		
+	
+	<!-- 게시글 번호 자동증가 -->
+	<select id="getBoardNum" resultType="hashMap">
+		SELECT 
+			(max(CAST(SUBSTRING(board_num,11) AS DECIMAL))+1)as max 
+		FROM 
+			wt_board
+	</select>
+	
 	<!-- 자료게시판 리스트 조회 쿼리  -->
 	<select id="getDataLibrary" resultType="Board" parameterType="Board" resultMap="boardResultMap">
 		SELECT
@@ -91,7 +95,7 @@
 			b.board_contents,
 			b.board_picture,
 			b.board_file
-		FROM 
+		FROM
 			wt_board AS b
 		INNER JOIN
 			wt_member_registration AS m
