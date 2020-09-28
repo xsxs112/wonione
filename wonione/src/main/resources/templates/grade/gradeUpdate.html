@@ -7,10 +7,10 @@
 		<title></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-	<form action="/getGradeList" class="container-fluid" style="text-align:center">
+	<form action="/updateGrade" class="container-fluid" style="text-align:center" method="post">
+	<th:block th:each="g : ${Grade}">
 	<h3 style="color: grey;" >개설예정 강의 업무계획서 상세보기</h3><br>
 		<div class="row">
-			<th:block th:each="g : ${Grade}">
 				 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				      <div class="sparkline12-list">
 				           <div class="sparkline12-graph">
@@ -23,7 +23,8 @@
 				                                             <label class="login2 pull-right-pro">성적코드</label>
 				                                          </div>
 				                                          <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-				                                              <label  th:text="${g.gradeManCode}" class="form-control"  th:name="gradeManCode"></label>
+				                                          	<input type="hidden" th:value="${g.gradeManCode}" name="gradeManCode">
+				                                              <label  class="form-control" th:text="${g.gradeManCode}"></label>
 				                                          </div>
 				                                     </div>
 				                                </div>
@@ -33,27 +34,27 @@
 				                                          <label class="login2 pull-right-pro">학생이름</label>
 				                                     </div>
 				                                          <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-				                                                <label class="form-control" th:text="${g.mrName}" th:name="mrName"></label>
+				                                          		<label class="form-control" th:text="${g.mrName}" th:name="mrName"></label>
 				                                          </div>
 				                                </div>
 				                           </div>
-				                                <div class="form-group-inner">
-				                                      <div class="row">
-				                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-				                                                 <label class="login2 pull-right-pro">시험회차</label>
-				                                            </div>
-				                                      		<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-				                                                  <label class="form-control" th:text="${g.testNumber}" th:name="testNumber"></label>
-				                                            </div>
-				                                       </div>
-				                                 </div>
+				                           <div class="form-group-inner">
+				                               <div class="row">
+				                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				                                          <label class="login2 pull-right-pro">시험회차</label>
+				                                     </div>
+				                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+				                                          		<label class="form-control" th:text="${g.testNumber}" th:name="testNumber"></label>
+				                                     </div>
+				                                </div>
+				                           </div>
 				                                 <div class="form-group-inner input-with-error">
 				                                       <div class="row">
 				                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 				                                                 <label class="login2 pull-right-pro">시험점수</label>
 				                                             </div>
 				                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-				                                                  <label class="form-control" th:text="${g.gradeManScore}" th:name="gradeManScore"></label>
+				                                            	 <input class="form-control" th:value="${g.gradeManScore}" name="gradeManScore" id="gradeManScore">
 				                                             </div>
 				                                        </div>
 				                                  </div>
@@ -105,11 +106,7 @@
 	                                                 	 <div class="col-lg-3"></div>
 	                                                     <div class="col-lg-9">
 	                                                         <div class="login-horizental cancel-wp  form-bc-ele">
-																<div style= "margin-bottom:10px" th:each="g : ${Grade}">
-																<a class="btn btn-default btn-danger" th:href="@{/updateGrade(gradeManCode=${g.gradeManCode})}" role="button">수정하기</a>
-																<button type="submit" class="btn btn-default">리스트로 돌아가기</button>
-																<a class="btn btn-default btn-danger" th:href="@{/deleteCode(gradeManCode=${g.gradeManCode})}" role="button" >삭제하기</a>
-																</div>	
+	                                                         <button type="submit" class="btn btn-default btn-lg btn-block">저장하기</button>
 	                                                      </div>
 	                                                  </div>
 	                                              </div>
@@ -121,10 +118,9 @@
 	                     </div>
 	                   </div>
 	             </div>
-			</th:block>
-         </div>
-	</form>	
+	          </div>
+	        </th:block>
+		</form>	
+</th:block>
 	</th:block>
 </html>
-
-

@@ -18,7 +18,7 @@
 							<select class="form-control" name="lecGd" id="lecGd">
 							  <option value="grade_man_score">점수</option>
 							  <option value="mr_name">학생명</option>
-							  <option value="test_rounds">회차</option>
+							  <option value="test_number">회차</option>
 							</select> 
 						<div class="form-group">
 							<input type="text" class="form-control" name="lecGds" placeholder="Search" id="lecGds"/>
@@ -52,10 +52,10 @@
 										</select>
 									</td>
 									<td>
-										<select name ="testRounds" class="form-control" id="testRounds">
+										<select name ="testNumber" class="form-control" id="testNumber">
 											<option value="">::회차::</option>
 											<th:block th:each="t : ${testNum}">
-												<option th:value="${t.grade_test_num}" th:name ="testRounds">[[${t.test_rounds}]]</option>
+												<option th:value="${t.grade_test_num}" th:name ="testNumber">[[${t.test_number}]]</option>
 											</th:block>
 										</select> 
 									</td>
@@ -87,7 +87,7 @@
 								<tr th:each="g : ${gradeList}">
 									<td th:text=${g.gradeManCode}></td>
 									<td th:text=${g.mrName}></td>
-									<td th:text=${g.testRounds}></td>
+									<td th:text=${g.testNumber}></td>
 									<td th:text=${g.gradeManScore}></td>
 									<td th:text=${g.gradeManRegDate}></td>
 									<td>
@@ -142,19 +142,19 @@
 			  var gradeInsertForm = $('#gradeInsertForm');
 			  var gradeManCode = $('#gradeManCode').val();
 				var mrName = $('#mrName').val();
-				var testRounds = $('#testRounds').val();
+				var testNumber = $('#testNumber').val();
 				var gradeManScore = $('#gradeManScore').val();
 				console.log("mrName-->"+mrName);
-				console.log("testRounds-->"+testRounds);
+				console.log("testNumber-->"+testNumber);
 				console.log("gradeManScore-->"+gradeManScore);
 				
 				if(mrName == undefined || mrName ==''){
 					alert('성적등록을 위한 학생 이름을 입력해주세요');
 					$('#mrName').focus();
 					return;
-				}else if(testRounds == '' || testRounds == undefined){
+				}else if(testNumber == '' || testNumber == undefined){
 					alert('성적등록을 위한 시험 회차를 입력해주세요');
-					$('#testRounds').focus();
+					$('#testNumber').focus();
 					return;	
 				}else if(gradeManScore == ''|| gradeManScore == undefined){
 					alert('성적등록을 위한 점수를 입력해주세요');

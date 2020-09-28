@@ -23,7 +23,8 @@
 			                                                        <label class="login2 pull-right-pro">강의개설예정코드</label>
 			                                                    </div>
 			                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-			                                                        <label  th:text="${Report.lecOpenCode}" class="form-control"  th:name="lecOpenCode" readonly="readonly" ></label>
+			                                                    	<input type="hidden" th:value="${Report.lecOpenCode}" name="lecOpenCode">
+			                                                    <label class="form-control" th:text="${Report.lecOpenCode}"></label>
 			                                                    </div>
 			                                                </div>
 			                                            </div>
@@ -53,7 +54,7 @@
 			                                                        <label class="login2 pull-right-pro">작성자</label>
 			                                                    </div>
 			                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-			                                                        <label class="form-control" th:text="${Report.mrName}" th:name="mrName" readonly="readonly" ></label>
+			                                                        <label class="form-control" th:text="${Report.mrName}" name="mrName" readonly="readonly" ></label>
 			                                                    </div>
 			                                                </div>
 			                                            </div>
@@ -64,7 +65,7 @@
 			                                        </div>
 			                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 			                                            <div class="form-select-list">
-			                                                <input class="form-control" th:text="${Report.lecTarget}" name="lecTarget" id="lecTarget">
+			                                                <input type="text" class="form-control" th:value="${Report.lecTarget}" name="lecTarget" id="lecTarget"/>
 			                                            </div>
 			                                        </div>
 			                                    </div>

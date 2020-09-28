@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="title"></title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+	 <div class="product-status mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-status-wrap drp-lst">
+                            <h3>장학금 지급 내역 리스트</h3><br>
+			             <form id="searchForm" class="form-inline" action="/" method="post">  
+							<select class="form-control" name="awaBp" id="awaBp">
+						 		 <option value="award_bm_code">장학금지급코드</option>
+						  		 <option value="mr_name">이름</option>
+						  		 <option value="award_bm_price">지급액</option>
+							</select> 
+						
+						<div class="form-group">
+					  		<input type="text" class="form-control" name="awaBps" placeholder="Search" id="awaBps"/>
+						    <div class="input-group-btn pull-right">
+						        <button class="btn btn-default form-group" type="button" id="searchBtn">검색</button>
+						   </div>
+					    </div>
+						</form>
+						    <div class="add-product">
+                                <a href="/workreportwrite">보고서 작성하기</a>
+                            </div>
+						<br>
+                            <div class="asset-inner">
+                                <table>
+                                   <tr>
+										<th>장학금지급코드</th>
+										<th>학생명</th>
+										<th>지급액</th>
+										<th>지급자</th>
+										<th>작성일자</th>
+										<th>상세보기</th>
+									</tr>
+                                  	<tr th:each="a : ${scholarshipList}">
+										<td th:text=${a.pmInfoCode}></td>
+										<td th:text=${a.mrName}></td>
+										<td th:text=${a.awardBmPrice}></td>
+										<td th:text=${a.mrName}></td>
+										<td th:text=${a.pmInfoRegDate}></td>
+										<td>
+											<a th:href="@{/(pmInfoCode=${a.pmInfoCode})}">상세보기</a>
+										</td>	
+									</tr>
+                                </table>
+                            </div>
+                            <div class="custom-pagination">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
+	<script type="text/javascript"> 
+	
+	 $(function(){
+			 $('#searchBtn').click(function(){
+				 var awaBp = $('#awaBp').val();
+				 var awaBps = $('#awaBps').val();
+				 var searchForm = $('#searchForm');
+				 console.log(awaBp + ' < -- awaBp');
+				 console.log(awaBps + ' < -- awaBps');
+				
+					var request = $.ajax({
+					  url: "/workreport",  
+					  method: "GET", 
+					  data: { awaBp : awaBp , awaBps : awaBps  }, 
+					  dataType: "json"  
+					});
+					request.done(function(data) {   
+					console.log(data);
+					console.log(data.awaBp);
+					console.log(data.awaBps);
+					
+					if(data == undefined || data == ''){
+						alert('검색되는 내용이 없습니다.');
+					}
+					});
+		
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+					searchForm.submit();
+			 });
+		 });
+	
+		</script>
+		
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	</th:block>
+</html>

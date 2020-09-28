@@ -49,10 +49,10 @@ public class ReportService {
 	   }
 	
 	//코드로 조회
-		public Report getReportDetailList(String lecOpenCode) {
-			Report report = reportMapper.getReportDetailList(lecOpenCode);
-			return report;
-		}
+	public Report getReportDetailList(String lecOpenCode) {
+		Report report = reportMapper.getReportDetailList(lecOpenCode);
+		return report;
+	}
 
 	//강의예정코드조회	
 	public List<Map<String, Object>> classCode() {
