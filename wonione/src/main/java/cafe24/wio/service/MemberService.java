@@ -13,6 +13,19 @@ public class MemberService {
 @Autowired
 private MemberMapper memberMapper;
 
+		/**
+		 * 5. 구성원 정보 수정
+		 * @param member
+		 * @return
+		 */
+
+		public int modifyWIOMember(Member member) {
+			
+			int modiResult = memberMapper.modifyWIOMember(member);
+			
+			return modiResult;
+		}
+
 		
 		/**
 		 * 4. 구성원 등록. 기본 정보만.
@@ -22,7 +35,6 @@ private MemberMapper memberMapper;
 		public int addWIOMember(Member member) {
 			
 			int addMemberResult = memberMapper.addWIOMember(member);
-			
 			
 			return addMemberResult;
 		}
