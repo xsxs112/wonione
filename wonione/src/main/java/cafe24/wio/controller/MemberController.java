@@ -34,17 +34,13 @@ public class MemberController {
 
 	
 	// 3. 구성원 정보 수정
-	@GetMapping("/modifyResult")
+	@GetMapping("/modifyWIOMember")
 	public String modifyWIOMember(Model model
 								, @RequestParam(value = "mrId",required = false)String mrId
 								, @RequestParam(value = "mrPw",required = false)String mrPw) {
 		
-		System.out.println(mrId +" <--modify");
-		System.out.println(mrPw +" <--modify");
 		
 		Member member = memberService.getMemberInfo(mrId);
-		
-		System.out.println(member + "<-- modify controller");
 		
 		model.addAttribute("member", member);
 		model.addAttribute("title", "구성원 정보 수정");
@@ -52,6 +48,15 @@ public class MemberController {
 		return "member/modifyWIOMember";
 
 	}
+	@PostMapping("/modifyWIOMember")
+	public String modifyWIOMember(Member member) {
+		
+		memberService.modifyWIOMember(member);
+		
+		return "redirect:/getWIOMemberList";
+	}
+	
+	
 	
 	// 2-1. 로그아웃
 	@GetMapping("/logout")
@@ -70,14 +75,8 @@ public class MemberController {
 					   ,@RequestParam(value = "mrPw",required = false)String mrPw
 					   ,HttpSession session) {
 		
-		System.out.println(mrId + "<--mrId MemberController 변수");
-		System.out.println(mrPw + "<--mrPw MemberController 변수");
-		
-
 		
 		Member member = memberService.getMemberInfo(mrId);
-		
-		System.out.println(mrId + "<-- 로그인memberController");
 		
 		if(member != null) {
 			if(member.getMrPw().equals(mrPw)) {
@@ -104,12 +103,8 @@ public class MemberController {
 	public String WIOMemberIdCheck(@RequestParam(value = "mrId",required = false)String mrId
 								 , @RequestParam(value = "mrPw",required = false)String mrPw) {
 		
-		System.out.println(mrId +"<-- mrId WIOMemberIdCheck");
-		System.out.println(mrPw + "<-- mrPw WIOMemberIdCheck");
 		
 		String WIOIdCheck = memberService.WIOMemberIdCheck(mrId, mrPw);
-		
-		System.out.println(WIOIdCheck +"<-- id 체크 / memberController");
 		
 		return WIOIdCheck;
 	}
@@ -171,8 +166,6 @@ public class MemberController {
 							,	@RequestParam(value = "mrId",required = false)String mrId) {
 		
 		Member WIOMemberInfo = memberService.getMemberInfo(mrId);
-		System.out.println(WIOMemberInfo + "<-- 상세 보기 / controller");
-		System.out.println(mrId + "<-- mrId 상세보기 controller");
 		
 		model.addAttribute("title", "상세 정보 보기");
 		model.addAttribute("WIOMemberInfo", WIOMemberInfo);
@@ -188,7 +181,6 @@ public class MemberController {
 	public String getWIOMemberList(Model model) {
 		
 		List<Member> WIOMemberList = memberService.getWIOMemberList();
-		System.out.println(WIOMemberList + "<-- memberList / controller");
 		
 		model.addAttribute("title", "구성원 목록 조회");
 		model.addAttribute("WIOMemberList", WIOMemberList);

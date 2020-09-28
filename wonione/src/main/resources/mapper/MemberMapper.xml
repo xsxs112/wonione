@@ -11,10 +11,9 @@
 		SET
 				mr_pw			=		#{mrPw}
 			,	mr_phone		=		#{mrPhone}
-			,	mr_addr			=		#{mrAddr}
-			,	pm_r_code		=		#{pmRCode}
+			,	mr_addr			=		#{mrAddr}		<!-- pm_r_code 넣고 업데이트 처리되도록 해야함. 일단 오류만 해결.0928_16:40 -->
 			,	mr_account_num	=		#{mrAccountNum}
-			,	shuttle_num		=		#{shuttleNum}
+			,	shuttle_num		=		#{shuttleNum} <!-- 화면 만들고 권한 관리자,일반 직원만 수정 가능하도록 해보쟈.0928 10:25 -->
 		WHERE 
 				mr_id= #{mrId}
 	</update>
