@@ -137,13 +137,5 @@ public class BoardController {
 		System.out.println(boardNum + "boardNum");
 		return "redirect:/getNotice";
 	}
-	
-	
-	
-	// 수강후기 조회(미구현)
-	@GetMapping("/getReview")
-	public String viewList() {
-		return "board/view";
-	}
 
 }
