@@ -2,10 +2,30 @@
  * 2020-09-24 새로 생성
  * 2020-09-26 직원공제계 등록, 직원급여 등록
  * 2020-09-27 등록완료 (유효성검사 검토필요)
+ * 2020-09-28 
  */
  
 	$(function(){
 	
+		//직원 급여 입력
+		$('#offiPayInsertBtn').click(function(){
+			
+			var foinForm = $('#offiDeduFoinForm');
+			var opCode = $('#opCode').val();
+			var mrId = $('#dMrId').val();			
+			var pRTitle = $('#dpRTitle').val();
+			var opdCode = $('#opdCode').val();
+			var opDate = $('#opDate').val();
+			var opPay = $('#opPay').val();
+			console.log(mrId+"<-mrId");
+			if(opPay == null || opPay == undefined || opPay == ''){
+				alert('실지급액을 계산해주세요.');
+				return;
+			}	
+
+			foinForm.attr('action', '/addOfficersPay');
+			foinForm.submit();			
+		}); 	
 	
 	 	//직원급여 총액 구하기	 		
 		$('#OfficersPayTotalBtn').click(function(){
@@ -72,6 +92,36 @@
 				});	
 				
 		});	
+		
+	 	//공제계 총액 구하기	 		
+		$('#OfficersDeduTotalBtn').click(function(){
+		var deduSum = 0;
+		var opdIncomeTax = Number($('#opdIncomeTax').val());
+		var opdResidentIncomTax = Number($('#opdResidentIncomTax').val());
+		var opdEmploymentInsurance = Number($('#opdEmploymentInsurance').val());
+		var opdNationalPension = Number($('#opdNationalPension').val());
+		var opdHealthInsurance = Number($('#opdHealthInsurance').val());
+		var opdLongtermNursingInsurance = Number($('#opdLongtermNursingInsurance').val());
+		
+		if(opdResidentIncomTax == null || opdResidentIncomTax == undefined || opdResidentIncomTax == ''){
+			alert('보험료 계산을 해주세요.');
+			return;
+		}
+		
+		deduSum += opdIncomeTax 
+				+ opdResidentIncomTax 						
+				+ opdEmploymentInsurance 						
+				+ opdNationalPension 						
+				+ opdHealthInsurance 						
+				+ opdLongtermNursingInsurance; 						
+			$('#opdIncomeTax').val(opdIncomeTax);
+			$('#opdResidentIncomTax').val(opdResidentIncomTax);
+			$('#opdEmploymentInsurance').val(opdEmploymentInsurance);
+			$('#opdNationalPension').val(opdNationalPension);
+			$('#opdHealthInsurance').val(opdHealthInsurance);
+			$('#opdLongtermNursingInsurance').val(opdLongtermNursingInsurance);
+			$('#opdTotal').val(deduSum);
+		}); 
 				 
 		//요율시행년도, 소득세 넘기기
  		$('#OfficersDeduBtn').click(function(){
@@ -126,36 +176,6 @@
 			});	
 
 		});	
-		
-	 	//공제계 총액 구하기	 		
-		$('#OfficersDeduTotalBtn').click(function(){
-		var deduSum = 0;
-		var opdIncomeTax = Number($('#opdIncomeTax').val());
-		var opdResidentIncomTax = Number($('#opdResidentIncomTax').val());
-		var opdEmploymentInsurance = Number($('#opdEmploymentInsurance').val());
-		var opdNationalPension = Number($('#opdNationalPension').val());
-		var opdHealthInsurance = Number($('#opdHealthInsurance').val());
-		var opdLongtermNursingInsurance = Number($('#opdLongtermNursingInsurance').val());
-		
-		if(opdResidentIncomTax == null || opdResidentIncomTax == undefined || opdResidentIncomTax == ''){
-			alert('보험료 계산을 해주세요.');
-			return;
-		}
-		
-		deduSum += opdIncomeTax 
-				+ opdResidentIncomTax 						
-				+ opdEmploymentInsurance 						
-				+ opdNationalPension 						
-				+ opdHealthInsurance 						
-				+ opdLongtermNursingInsurance; 						
-			$('#opdIncomeTax').val(opdIncomeTax);
-			$('#opdResidentIncomTax').val(opdResidentIncomTax);
-			$('#opdEmploymentInsurance').val(opdEmploymentInsurance);
-			$('#opdNationalPension').val(opdNationalPension);
-			$('#opdHealthInsurance').val(opdHealthInsurance);
-			$('#opdLongtermNursingInsurance').val(opdLongtermNursingInsurance);
-			$('#opdTotal').val(deduSum);
-		}); 
 				
 		//직원 급여계 입력
 		$('#offiCalInsertBtn').click(function(){
@@ -209,7 +229,8 @@
 					$('#opcTotal').val(data.opcTotal);	
 					$('#opdCode').val(data.opcCode);
 					$('#dpRTitle').val(data.pRTitle);
-					$('#dMrId').val(data.mrId);				
+					$('#dMrId').val(data.mrId);	
+								
 						alert( "입력이 완료되었습니다.");				
 				});
 					request.fail(function( jqXHR, textStatus ) {
@@ -325,7 +346,7 @@
  		});		
  		
  		
- 		 		// 숫자 아닌경우 
+ 		// 숫자 아닌경우 
  		$(document).on('keyup','#opcTotalHour', function(){
  			var regexp =  /^[0-9]*$/;
  			var regexpChange =  /[^0-9]/gi;

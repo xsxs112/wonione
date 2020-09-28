@@ -32,6 +32,42 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>
+	<!-- 공제계구하기 -->
+	<select id="StaffPayDedu" resultType="StaffPay" parameterType="String">
+	SELECT 
+		iy.iy_the_business
+			* #{SELECT pc.spc_total AS spcTotal FROM wt_staff_pay_calculate AS pc WHERE pc.spc_code = #{spdCode}}
+	FROM 
+		wt_insurance_year AS iy
+	WHERE
+		iy.iy_code = #{iyCode};		
+	</select>
+		
+	<!-- 강사급여계 입력하기 -->
+	<insert id="addStaffCalPay" parameterType="StaffPay">
+		INSERT INTO wt_staff_pay_calculate
+			(spc_code							
+			, mr_id								
+			, p_r_title							
+			, spc_hourly_wage					
+			, spc_total_hour					
+			, spc_base_pay						
+			, spc_incentive		
+			, spc_total							
+			, spc_reg_date						
+			, spc_writer						
+			)VALUES(
+					#{spcCode}
+					,#{mrId}
+					,#{pRTitle}
+					,#{spcHourlyWage}
+					,#{spcTotalHour}
+					,#{spcBasePay}
+					,#{spcIncentive}
+					,#{spcTotal}
+					, NOW()
+					,'');
+	</insert>	
 	
 	<!-- 강사정보조회 -->
 	<select id ="callStaffInfo" resultType="StaffPay" parameterType="String">

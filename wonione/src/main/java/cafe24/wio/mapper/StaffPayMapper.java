@@ -24,4 +24,10 @@ public interface StaffPayMapper {
 	//보험요율표 불러오기
 	public List<StaffPay> insuranceYear();
 
+	//강사급여계 입력하기
+	public int addStaffCalPay(StaffPay staffpay);
+
+	//요율표 비교 원천징수액 계산
+	public StaffPay StaffPayDedu(String opdCode, String iyCode, String spdTheBusinessTax);
+
 }

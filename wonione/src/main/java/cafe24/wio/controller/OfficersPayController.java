@@ -45,16 +45,6 @@ public class OfficersPayController {
 		return officersPay;		
 	}		
 	
-	//직원급여계 입력하기
-	@PostMapping(value = "/addOffiCalpay",produces = "application/json")
-	@ResponseBody
-	public OfficersPay addOffiCalpay(OfficersPay officersPay) { 
-	
-		officersPayService.addOffiCalpay(officersPay);	
-		
-		return officersPay;		
-	}		
-	
 	//요율표 비교 공제액 계산하기
 	@PostMapping(value = "/OfficersDedu",produces = "application/json")
 	@ResponseBody
@@ -68,6 +58,16 @@ public class OfficersPayController {
 		
 		return officersDedu;
 	}
+	
+	//직원급여계 입력하기
+	@PostMapping(value = "/addOffiCalpay",produces = "application/json")
+	@ResponseBody
+	public OfficersPay addOffiCalpay(OfficersPay officersPay) { 
+		
+		officersPayService.addOffiCalpay(officersPay);	
+		
+		return officersPay;		
+	}		
 	
 	//직원 정보 불러오기
 	@PostMapping(value = "/callOfficersInfo",produces = "application/json")
