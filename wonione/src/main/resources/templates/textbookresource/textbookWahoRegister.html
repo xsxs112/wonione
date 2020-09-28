@@ -44,7 +44,7 @@
                                                             <select class="form-control custom-select-value" id="txbCode" name ="txbCode">
 										<th:block th:each=" til : ${textbookInfoList} ">
 											<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
-										</th:block>																		
+										</th:block>	
 									</select>
 									<button type="button" id="whTxbCheckBtn" class="btn btn-block" >입고내역체크</button>
                                                         </div>
@@ -82,7 +82,7 @@
                                                 </div>
                                             </div>                                                    
                         					<a href="/textbookOwnList" class="btn btn-default" role="button">취소</a>
-                                            <button class="btn btn-primary login-submit-cs" type="submit" id="addBtn">등록</button>
+                                            <button class="btn btn-primary login-submit-cs" type="button" id="addBtn">등록</button>
                                         </form>
                                             </div>
                                         </div>
@@ -98,18 +98,20 @@
                 </div>	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
-	var whTxbCheck = "";
+	var whTxbCheck = '';
 	$('#addBtn').click(function(){
 		console.log('addBtn');
 		var txbCode = $('#txbCode').val();
 		var whTxbQuantity = $('#whTxbQuantity').val();
+		var txbName =$('#txbName').val();
 		console.log(whTxbQuantity);
 		console.log(txbCode + ' < --txbCode 등록버튼 클릭 시');
+		console.log(txbName + ' < --txbName ');
 		console.log(whTxbCheck + ' < --whTxbCheck 등록버튼 클릭 시');
 		if(txbCode == null || txbCode == undefined){
 			alert('교재를 선택해주세요');
 			return ;
-		}else if(whTxbQuantity == undefined || whTxbQuantity == ''){
+		}else if(whTxbQuantity == undefined || whTxbQuantity == '' || whTxbQuantity == 0){
 			alert('입고수량을 입력해주세요');
 			$('#whTxbQuantity').focus();
 			return ;
@@ -117,11 +119,13 @@
 			alert('0보다 큰 값을 입력해주세요');
 			$('#whTxbQuantity').focus();
 			return ; 
-		}else if(whTxbCheck != txbCode){
+		}else if(whTxbCheck != txbCode || whTxbCheck == ''){
 			alert('입고내역체크를 해주세요');
 			return;
 		}
-		addForm.submit();
+		if(confirm('입고수량 ' + whTxbQuantity +'권이 맞습니까? 등록후엔 수정이 불가합니다.')){
+			addForm.submit(); 
+		}
 	});
 	
 	$('#whTxbCheckBtn').click(function(){

@@ -168,9 +168,9 @@ INSERT INTO wt_equipment
 	,	#{eqCategory}
 	,	#{eqName}
 	,	#{eqModelName}
-	,	'oid003'
+	,	#{eqWriter}
 	,	CURRENT_TIME()
-	,	'')
+	,	#{eqRemark})
 
 </insert>
 
@@ -189,6 +189,15 @@ FROM
 WHERE
 	${equipSk} LIKE (CONCAT ('%',#{equipSv},'%'));
 
+</select>
+
+<!-- 비품카테고리 조회 -->
+<select id="getEquipCategory" resultMap="equipmentResult">
+	SELECT 	
+		eq_category
+	FROM 
+		wt_equipment
+	GROUP BY eq_category
 </select>
 
 <!-- 비품정보 보기 -->

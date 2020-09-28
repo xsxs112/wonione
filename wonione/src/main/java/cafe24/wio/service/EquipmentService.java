@@ -15,6 +15,54 @@ public class EquipmentService {
 	@Autowired
 	private EquipmentMapper equipmentMapper;
 	
+	
+	/**
+	 * 비품카테고리 보기
+	 * @return List Equipment equipmentCategory
+	 */
+	public List<Equipment> getEquipCategory(){
+		
+		List<Equipment> equipmentCategory = equipmentMapper.getEquipCategory();
+		
+		return equipmentCategory;
+	}
+	
+	/**
+	 * 비품정보 등록하기
+	 * @param equipment
+	 * @return int addResult;
+	 */
+	public int addEquipment(Equipment equipment) {
+		
+		int addResult = equipmentMapper.addEquipment(equipment);
+		
+		return addResult;
+	}
+	
+	/**
+	 * 비품코드 자동증가
+	 * @return String eqCode
+	 */
+	public String equipMaxCode() {
+		String equipCodeMaxCount = equipmentMapper.equipMaxCode();
+		String tempCode = null;
+		String eqCode = null;
+		int maxCode = 0;
+		if(equipCodeMaxCount != null && !"".equals(equipCodeMaxCount)) {
+			maxCode = Integer.parseInt(equipCodeMaxCount);
+			if(maxCode <10) {
+				tempCode = "eq_0000";
+			}else if(10<=maxCode && maxCode <100) {
+				tempCode = "eq_000";
+			}else if(100<=maxCode && maxCode <1000) {
+				tempCode = "eq_00";
+			}
+		}
+		eqCode = tempCode + maxCode;
+		
+		return eqCode;
+	}
+	
 	/**
 	 * 비품 입고내역 검색 
 	 * @param selectEqWhSk

@@ -130,7 +130,9 @@
 			$('#txbAuthor').focus();
 			return;
 		}
-		addForm.submit();
+		if(confirm('등록하시겠습니까?')){
+			addForm.submit(); 
+		}
 	});
 	</script>                
 	</th:block>

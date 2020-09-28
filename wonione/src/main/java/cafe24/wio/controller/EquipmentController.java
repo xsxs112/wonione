@@ -2,10 +2,13 @@ package cafe24.wio.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cafe24.wio.bean.Equipment;
@@ -80,12 +83,28 @@ public class EquipmentController {
 		return "equipment/equipListMain";
 	}
 	
+	//비품정보등록
+	@PostMapping("/equipRegister")
+	public String equipRegister(Equipment equipment
+							,@RequestParam(value="eqCode",required = false)String eqCode) {
+
+		equipmentService.addEquipment(equipment);
+		
+		return "redirect:/equipmentManage";
+	}
+	
 	//비품 정보등록 페이지 view로 forward
 	@GetMapping("/equipRegister")
-	public String equipRegister(Model model) {
-		
+	public String equipRegister(Model model
+							,   HttpSession session) {
+		String sessionId = session.getAttribute("SID").toString();
+		String eqCode = equipmentService.equipMaxCode();
+		List<Equipment> equipmentCategory = equipmentService.getEquipCategory();
 		model.addAttribute("title", "비품 정보등록 페이지");
 		model.addAttribute("mainTitle", "비품 정보등록 페이지");
+		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("eqCode", eqCode);
+		model.addAttribute("equipmentCategory", equipmentCategory);
 		
 		return "equipment/equipRegister";
 	}
