@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cafe24.wio.mapper.ScholarshipMapper">
+
+<resultMap type="ScholarShip" id="ScholarShipResultMap">
+		<result column="pm_info_code" 		property="pmInfoCode"/>
+		<result column="award_bm_code" 		property="awardBmCode"/>
+		<result column="mr_id" 				property="mrId"/>
+		<result column="pm_info_Payer" 		property="pmInfoPayer"/>
+		<result column="pm_info_reg_date" 	property="pmInfoRegDate"/>
+		<result column="mr_name" 			property="mrName"/>
+		<result column="award_bm_price" 	property="awardBmPrice"/>	
+</resultMap>
+
+<select id="getScholarList" parameterType="ScholarShip">
+
+	SELECT 
+		  pm_info_code
+		, award_bm_code
+		, mr_name
+		, mr_name
+		, pm_info_reg_date
+	FROM 
+		wt_payments_information
+		
+</select>
+
+
+</mapper>  
+    

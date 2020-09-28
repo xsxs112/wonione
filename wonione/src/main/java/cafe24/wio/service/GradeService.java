@@ -24,10 +24,16 @@ public class GradeService {
 
 	}
 
+	//코드로 조회하기
+	public Grade getGradeCode(String gradeManCode) {
+		Grade gradeCode = gradeMapper.getGradeDetailList(gradeManCode);
+		return gradeCode;
+	}
+	
 	// 성적상세보기리스트
-	public List<Grade> getGradeDetailList(String gradeManCode) {
+	public Grade getGradeDetailList(String gradeManCode) {
 
-		List<Grade> gradeList = gradeMapper.getGradeDetailList(gradeManCode);
+		Grade gradeList = gradeMapper.getGradeDetailList(gradeManCode);
 		System.out.println("getGradeDetailList-->" + gradeList);
 		return gradeList;
 	}
@@ -77,5 +83,13 @@ public class GradeService {
 	      
 	      return reCode;
 	   }
+	 
+	 //성적수정하기
+	 public int updateGrade(Grade grade) {		
+		int updateGr = gradeMapper.updateGrade(grade);
+		 return updateGr;
+		 
+	 }
+	 
 	 
 }

@@ -8,8 +8,7 @@ public class Grade {
 	private String gradeManScore; 
 	private String gradeManRegDate;
 	private String mrName;
-	private String testRounds;
-	
+	private String testNumber;
 	
 	@Override
 	public String toString() {
@@ -26,8 +25,8 @@ public class Grade {
 		builder.append(gradeManRegDate);
 		builder.append(", mrName=");
 		builder.append(mrName);
-		builder.append(", testRounds=");
-		builder.append(testRounds);
+		builder.append(", testNumber=");
+		builder.append(testNumber);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -61,19 +60,17 @@ public class Grade {
 	public void setGradeManRegDate(String gradeManRegDate) {
 		this.gradeManRegDate = gradeManRegDate;
 	}
-	
 	public String getMrName() {
 		return mrName;
 	}
 	public void setMrName(String mrName) {
 		this.mrName = mrName;
 	}
-	public String getTestRounds() {
-		return testRounds;
+	public String getTestNumber() {
+		return testNumber;
 	}
-	public void setTestRounds(String testRounds) {
-		this.testRounds = testRounds;
+	public void setTestNumber(String testNumber) {
+		this.testNumber = testNumber;
 	}
-	
-	
+
 }

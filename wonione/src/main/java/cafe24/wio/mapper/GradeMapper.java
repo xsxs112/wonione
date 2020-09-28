@@ -13,7 +13,7 @@ public interface GradeMapper {
 	public List<Grade> getGradeList(Grade grade);
 
 	//성적코드로상세조회
-	public List<Grade> getGradeDetailList(String gradeManCode);
+	public Grade getGradeDetailList(String gradeManCode);
 	
 	//조건검색
 	public List<Grade> searchGrade(String lecGd, String lecGds);
@@ -29,5 +29,8 @@ public interface GradeMapper {
 	 
 	//자동증가코드
 	public Map<String, Object> gradeCode();
+	
+	//성적수정하기
+	public int updateGrade(Grade grade);
 	
 }

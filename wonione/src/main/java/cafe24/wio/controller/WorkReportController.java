@@ -47,8 +47,12 @@ public class WorkReportController {
 	@GetMapping("/workreportpage")
 	public String getReportDetailList(Model model,
 										@RequestParam(value="lecOpenCode", required = false) String lecOpenCode) {
+		
+		logger.info("===============================");
+		logger.info("@GetMapping workreportpage");
+		logger.info("===============================");
 		Report report = reportService.getReportDetailList(lecOpenCode);
-		System.out.println(report + "report");
+		logger.info("Report" + report);
 		model.addAttribute("Report", report);
 		model.addAttribute("reportSangse", "보고서 상세보기");
 		
@@ -69,13 +73,17 @@ public class WorkReportController {
 	                        ,@RequestParam(value="lecEtc", required = false) String lecEtc
 	                        ,@RequestParam(value="openLecRegDate", required = false) String openLecRegDate
 	                        ) {
-		  System.out.println("lecOpenCode->" + lecOpenCode);
-	      System.out.println("lecOpenScheCode->" + lecOpenScheCode);
-	      System.out.println("lecName->" + lecName);
-	      System.out.println("lecTarget->" + lecTarget);
-	      System.out.println("lecPlan->" + lecPlan);
-	      System.out.println("lecEtc->" + lecEtc);
-	      System.out.println("openLecRegDate->" + openLecRegDate);
+		logger.info("===============================");
+		logger.info("@PostMapping workreportwrite");
+		logger.info("===============================");
+		logger.info("lecOpenCode");
+		logger.info("lecOpenCode->" + lecOpenCode);
+		logger.info("lecOpenScheCode->" + lecOpenScheCode);
+		logger.info("lecName->" + lecName);
+		logger.info("lecTarget->" + lecTarget);
+		logger.info("lecPlan->" + lecPlan);
+		logger.info("lecEtc->" + lecEtc);
+		logger.info("openLecRegDate->" + openLecRegDate);
 	      reportService.getReportWrite(report);
 	      model.addAttribute("Report", report);
 	      model.addAttribute("Reportcomplete", "/workreport");
@@ -88,7 +96,10 @@ public class WorkReportController {
 		  List<Map<String, Object>> clCode = reportService.classCode();
 		  List<Map<String, Object>> wName = reportService.writeName();
 	      String codeResult =  reportService.getReCode();
-	      System.out.println(codeResult + " < -- codeResult");
+	      logger.info("===============================");
+	      logger.info("@GetMapping workreportwrite");
+	      logger.info("===============================");
+	      logger.info(codeResult + " < -- codeResult");
 	      model.addAttribute("codeResult", codeResult);
 	      model.addAttribute("classCode", clCode);
 	      model.addAttribute("writeName", wName);
@@ -100,7 +111,10 @@ public class WorkReportController {
 	   public String deleteCode(Model model  
 			   					,@RequestParam(value="lecOpenCode", required = false) String lecOpenCode) {
 		  reportService.deleteCode(lecOpenCode);
-		  System.out.println(lecOpenCode + "lecOpenCode");
+		  logger.info("===============================");
+	      logger.info("@GetMapping deleteCode");
+	      logger.info("===============================");
+		  logger.info(lecOpenCode + "lecOpenCode");
 		   return "redirect:/getReportList";
 	   }
 	   
@@ -108,7 +122,10 @@ public class WorkReportController {
 	   @PostMapping("/updateCode")
 	   public String updateCode(Report report, Model model
 				               ) {
-		   
+		  logger.info("===============================");
+		  logger.info("@PostMapping updateCode");
+		  logger.info("===============================");
+		  logger.info("보고서수정" + report);
 		   reportService.updateCode(report);
 		   model.addAttribute("Report", report);
 		   return "redirect:/getReportList";
@@ -119,8 +136,12 @@ public class WorkReportController {
 	   public String updateCode(
 			   					@RequestParam(value="lecOpenCode", required = false) String lecOpenCode
 			   					,Model model ) {
-		   Report report = reportService.getReportDetailList(lecOpenCode);
-		   System.out.println(report+"<--report");
+		  Report report = reportService.getReportDetailList(lecOpenCode);
+		  logger.info("===============================");
+		  logger.info("@GetMapping updateCode");
+		  logger.info("===============================");
+		  logger.info(lecOpenCode + " < -- lecOpenCode");
+		  logger.info(report+"<--report");
 		   model.addAttribute("Report", report);
 		   return "humanresource/updateworkreport";
 	   }
@@ -132,7 +153,10 @@ public class WorkReportController {
 								,@RequestParam(value="lecSk", required = false) String lecSk
 								,@RequestParam(value="lecSv", required = false) String lecSv) {
 			List<Report> reportList = reportService.getSearchList(lecSk, lecSv);
-			System.out.println(reportList +"reportList");
+			logger.info("===============================");
+			logger.info("@GetMapping workreport");
+			logger.info("===============================");
+			logger.info(reportList +"reportList");
 			model.addAttribute("reportList", reportList);
 			return reportList;
 }
@@ -145,7 +169,7 @@ public class WorkReportController {
 			logger.info("@PostMapping searchList");
 			logger.info("===============================");
 			List<Report> reportList = reportService.getSearchList(lecSk, lecSv);
-			System.out.println(reportList +"reportList");
+			logger.info(reportList +"reportList");
 			model.addAttribute("reportList", reportList);
 			return "humanresource/workreport";
 		}
