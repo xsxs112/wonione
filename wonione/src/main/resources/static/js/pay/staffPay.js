@@ -19,13 +19,14 @@
 				alert('시행년도를 선택해주세요.');
 				return;
 			}						
-  			var spdTheBusinessTax = Number($('#spdTheBusinessTax').val());		
 				
+  			var spdTheBusinessTax = Number($('#spdTheBusinessTax').val());	
+  			console.log(spdTheBusinessTax +' <--spdTheBusinessTax');
+  				
 			var request = $.ajax({
 				  url: "/StaffPayDedu",
 				  method: "POST",
-				  data: { spdCode : spdCode
-						 , spdTheBusinessTax : spdTheBusinessTax
+				  data: { spdCode : spdCode						 
 						 , iyCode : iyCode
 						 },
 				  dataType: "json"
@@ -37,7 +38,7 @@
 				$('#dpRTitle').val(pRTitle);
 				$('#dMrId').val(mrId);
 				$('#iyCode').val(iyCode);
-				$('#spdTheBusinessTax').val(spdTheBusinessTax);				
+				$('#spdTheBusinessTax').val(data.spdTheBusinessTax);				
 			});
 			request.fail(function( jqXHR, textStatus ) {
 				  alert( "Request failed: " + textStatus );
@@ -195,7 +196,6 @@
 			  dataType: "json"
 			});
 			request.done(function(data) {
-				console.log(data);
 				$('#mrId').val(data.mrId);
 				$('#mrName').val(data.mrName);
 				$('#pmRTitle').val(data.pmRTitle);

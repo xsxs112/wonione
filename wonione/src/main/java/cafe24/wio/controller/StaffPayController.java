@@ -29,12 +29,11 @@ public class StaffPayController {
 	//요율표 비교 원천징수액 계산
 	@PostMapping(value = "/StaffPayDedu",produces = "application/json")
 	@ResponseBody
-	public StaffPay StaffPayDedu(String spdCode, String iyCode, String spdTheBusinessTax) {
-		StaffPay staffPayDedu = staffPayService.StaffPayDedu(spdCode, iyCode, spdTheBusinessTax);
+	public StaffPay StaffPayDedu(String spdCode, String iyCode) {
+		StaffPay staffPayDedu = staffPayService.StaffPayDedu(spdCode, iyCode);
 		
 		if(iyCode != null) {
 			staffPayDedu.setIyCode(Integer.parseInt(iyCode));
-			staffPayDedu.setSpdTheBusinessTax(Integer.parseInt(spdTheBusinessTax));
 		}
 		return staffPayDedu;
 	}	
