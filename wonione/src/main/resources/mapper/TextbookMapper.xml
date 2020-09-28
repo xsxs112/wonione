@@ -7,14 +7,14 @@
 <mapper namespace="cafe24.wio.mapper.TextbookMapper">
 
 <resultMap type="TextbookBasicInfo" id="resultTxbBasicInfo">
-	<id property="txbCode" column="txb_code"/>
+	<!-- <id property="txbCode" column="txb_code"/> -->
 	<result column="txb_code" 		property="txbCode"/>
 	<result column="txb_name" 		property="txbName"/>
 	<result column="txb_publisher" 	property="txbPublisher"/>
 	<result column="txb_author" 	property="txbAuthor"/>
 	<result column="txb_writer" 	property="txbWriter"/>
 	<result column="txb_reg_date" 	property="txbRegDate"/>
-	<collection property="whTextbook" javaType="java.util.ArrayList" ofType="WhTextbook" resultMap="resultWhTextbook"/>
+	<!-- <collection property="whTextbook" javaType="java.util.ArrayList" ofType="WhTextbook" resultMap="resultWhTextbook"/> -->
 </resultMap>
 
 <resultMap type="WhTextbook" id="resultWhTextbook">
@@ -89,6 +89,15 @@
 <!-- *********************** START ************************* -->
 <!-- ************************교재입고************************* -->
 <!-- *********************** START ************************* -->
+
+<!-- 페이징을 위한 입고내역카운팅 -->
+<select id="countWhTxb" resultType="int">
+      SELECT
+         COUNT(*)
+      FROM
+         wt_warehousing_textbook;
+
+</select>
 
 <!-- 마지막으로 입고된 내역 조회 -->
 <select id="getRecentTxbWhList" resultType="WhTextbook" resultMap="resultWhTextbook">
@@ -317,22 +326,22 @@ WHERE
 </insert>
 
 <!-- 보유교재리스트 조회 -->
-<select id="getTextbookOwnList" resultMap="resultTxbBasicInfo">
+<select id="getTextbookOwnList" resultType="hashMap" parameterType="Map">
 	SELECT
-			wt.wh_txb_code
-		,	wt.txb_code
-		,	wt.wh_txb_quantity
-		,	wt.wh_txb_date
-		,	wt.stock_txb_quantity
-		,	wt.wh_txb_writer
-		,	wt.wh_txb_reg_date
-		,	wt.wh_txb_remark
-		,	tbi.txb_code
-		,	tbi.txb_name
-		,	tbi.txb_publisher
-		,	tbi.txb_author
-		,	tbi.txb_writer
-		,	tbi.txb_reg_date
+			wt.wh_txb_code			AS	whTxbCode	
+		,	wt.txb_code				AS	txbCode
+		,	wt.wh_txb_quantity		AS	whTxbQuantity
+		,	wt.wh_txb_date			AS	whTxbDate
+		,	wt.stock_txb_quantity	AS	stockTxbQuantity
+		,	wt.wh_txb_writer		AS	whTxbWriter
+		,	wt.wh_txb_reg_date		AS	whTxbRegDate
+		,	wt.wh_txb_remark		AS	whTxbRemark
+		,	tbi.txb_code			AS	txbCode
+		,	tbi.txb_name			AS	txbName
+		,	tbi.txb_publisher		AS	txbPublisher
+		,	tbi.txb_author			AS	txbAuthor
+		,	tbi.txb_writer			AS	txbWriter
+		,	tbi.txb_reg_date		AS	txbRegDate
 	FROM
 		wt_textbook_basic_information AS tbi
 		RIGHT JOIN
@@ -341,7 +350,8 @@ WHERE
 		wt.txb_code
 		=
 		tbi.txb_code
-	ORDER BY wt.wh_txb_code ASC;
+	ORDER BY wt.wh_txb_code ASC
+	LIMIT #{startRow},#{rowPerPage};
 
 </select>
 

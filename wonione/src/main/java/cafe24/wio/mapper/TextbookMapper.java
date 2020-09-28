@@ -1,6 +1,7 @@
 package cafe24.wio.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -27,11 +28,14 @@ public interface TextbookMapper {
 	/************************************************
 	 * 교재입고
 	 *************************************************/
+	//페이징을 위한 입고내역 카운팅
+	public int countWhTxb();
+	
 	//가장 마지막에 등록한 입고정보 가져오기
 	public WhTextbook getRecentTxbWhList();
 	
 	//교재보유리스트(입고/재고)
-	public List<TextbookBasicInfo> getTextbookOwnList();
+	public List<Map<String, Object>> getTextbookOwnList(Map<String,Object> txbMap);
 	
 	//최초 입고등록
 	public int addFirstWhTextbook(WhTextbook whTextbook);

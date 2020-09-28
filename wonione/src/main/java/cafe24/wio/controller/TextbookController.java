@@ -1,6 +1,7 @@
 package cafe24.wio.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -247,13 +248,20 @@ public class TextbookController {
 	
 	//교재보유목록 
 	@GetMapping("/textbookOwnList")
-	public String getTextbookOwnList(Model model) {
+	public String getTextbookOwnList(Model model
+									,@RequestParam(
+												  value="currentPage"
+												, required = false
+												, defaultValue = "1") int currentPage) {
 		
-		List<TextbookBasicInfo> textbookOwnList = textbookService.getTextbookOwnList();
-		System.out.println(textbookOwnList);
-		model.addAttribute("getTextbookList", textbookOwnList);
+		Map<String, Object> textbookOwnList = textbookService.getTextbookOwnList(currentPage);
 		model.addAttribute("title", "교재보유현황 페이지");
 		model.addAttribute("mainTitle", "교재보유현황 페이지");
+		model.addAttribute("getTextbookList", textbookOwnList.get("textbookOwnList"));
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("lastPage", textbookOwnList.get("lastPage"));
+		model.addAttribute("startPageNum", textbookOwnList.get("startPageNum"));
+		model.addAttribute("lastPageNum", textbookOwnList.get("lastPageNum"));
 		
 		return "textbookresource/textbookOwnList";
 	}

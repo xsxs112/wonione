@@ -1,6 +1,8 @@
 package cafe24.wio.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +18,12 @@ import cafe24.wio.mapper.TextbookMapper;
 public class TextbookService {
 	
 	
-	private static final Logger logger = LoggerFactory.getLogger(TextbookService.class);
 
 	@Autowired
 	private TextbookMapper textbookMapper;
 
+	
+	
 	/**
 	 * 가장 마지막에 등록한 입고정보 가져오기
 	 * @return WhTextbook txbWhResult
@@ -55,7 +58,6 @@ public class TextbookService {
 		List<TextbookBasicInfo> txbInfoSearchResult = textbookMapper.getTxbInfoSearch(infoTxbSk, infoTxbSv);
 		return txbInfoSearchResult;
 	}
-	
 	
 	/**
 	 * 교재 입고내역 검색
@@ -244,11 +246,47 @@ public class TextbookService {
 	/**
 	 * 보유 교재리스트 조회
 	 * @param whTextbook
-	 * @return List TextbookBasicInfo textbookOwnList
+	 * @return Map<Strin, Object> resultMap
 	 */
-	public List<TextbookBasicInfo> getTextbookOwnList(){
-		List<TextbookBasicInfo> textbookOwnList = textbookMapper.getTextbookOwnList();
-		return textbookOwnList;
+	public Map<String, Object> getTextbookOwnList(int currentPage){
+		 final int ROW_PER_PAGE = 10;
+	      
+	      int startRow = 0;
+	      
+	      int startPageNum = 1;
+	      int lastPageNum = ROW_PER_PAGE;
+	      
+	      //6번째 가운데 위치
+	      if(currentPage > (ROW_PER_PAGE/2)) {
+	         startPageNum = currentPage - ((lastPageNum/2)-1);
+	         lastPageNum += startPageNum;
+	      }
+	      
+	      //페이징 알고리즘
+	      startRow = (currentPage - 1) * ROW_PER_PAGE ;
+	      
+	      Map<String,Object> txbMap = new HashMap<String,Object>();
+	            
+	      txbMap.put("startRow", startRow);
+	      txbMap.put("rowPerPage", ROW_PER_PAGE);
+	      
+	      double totalRowCount = textbookMapper.countWhTxb();
+	      
+	      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
+	      
+	      List<Map<String, Object>> textbookOwnList = textbookMapper.getTextbookOwnList(txbMap);
+	      
+	      if(currentPage >= (lastPage-4)) {
+	         lastPageNum = lastPage;
+	      }
+	      
+	      Map<String,Object> resultMap = new HashMap<String,Object>();
+	      resultMap.put("textbookOwnList", textbookOwnList);
+	      resultMap.put("lastPage", lastPage);
+	      resultMap.put("startPageNum", startPageNum);
+	      resultMap.put("lastPageNum", lastPageNum);
+	      
+	      return resultMap;
 	}
 	
 

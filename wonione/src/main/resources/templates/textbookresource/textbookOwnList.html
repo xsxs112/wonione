@@ -49,38 +49,56 @@
                                       <th>수정 / 삭제</th>
                                     </tr>
 							<th:block th:each="gtl : ${getTextbookList}">
-								<th:block th:each="tol : ${gtl.whTextbook}">
 									<tr>
-									  <td th:text="${tol.whTxbCode}"></td>
+									  <td th:text="${gtl.whTxbCode}"></td>
 									  <td th:text="${gtl.txbCode}"></td>
 									  <td th:text="${gtl.txbName}"></td>
 									  <td th:text="${gtl.txbPublisher}"></td>
 									  <td th:text="${gtl.txbAuthor}"></td>
-									  <td th:text="${tol.whTxbQuantity}"></td>
-									  <td th:text="${tol.whTxbDate}"></td>
-									  <td th:text="${tol.stockTxbQuantity}"></td>
-									  <td th:text="${tol.whTxbWriter}"></td>
-									  <td th:text="${tol.whTxbRemark}"></td>
+									  <td th:text="${gtl.whTxbQuantity}"></td>
+									  <td th:text="${gtl.whTxbDate}"></td>
+									  <td th:unless="${gtl.stockTxbQuantity} eq null" th:text="${gtl.stockTxbQuantity}"></td>
+									  
+									  <td th:text="${gtl.whTxbWriter}"></td>
+									  <td th:text="${gtl.whTxbRemark}"></td>
  									<td>
                                        <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                        <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                     </td>									  
 									</tr>
-								</th:block>
 							</th:block>
                                 </table>
                             </div>
                             <div class="custom-pagination">
 								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#">이전</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">다음</a></li>
+									<li class="page-item">
+										<a class="page-link" th:href="@{/textbookOwnList}">처음</a>
+									</li>
+									<li class="page-item">
+										<span th:if="${currentPage > 1}"><a class="page-link" th:href="@{/textbookOwnList(currentPage=(${currentPage}-1))}">이전</a></span>
+		    							<span th:unless="${currentPage > 1}" th:text="이전"></span>
+									</li>
+									<li class="page-item">
+									<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+										<span th:if="${currentPage eq num}" th:text="${num}">
+											<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/textbookOwnList(currentPage=${num})}"></a>
+										</span>
+									</th:block>
+									</li>
+									
+									<li class="page-item">
+										<span th:if="${currentPage != lastPage}">
+											<a th:href="@{/textbookOwnList(currentPage=(${currentPage}+1))}">다음</a>
+										</span>
+			    						<span th:unless="${currentPage != lastPage}" th:text="다음"></span>
+		    						</li>
+		    						<li class="page-item">
+		    							<a th:href="@{/textbookOwnList(currentPage=${lastPage})}">마지막</a>
+		    						</li>
 								</ul>
                             </div>
                             <div class="container-fluid" style="margin: 10px;">
-								<a href="/textbookOwnList" class="btn btn-default" role="button">전체리스트보기</a>
+								<!-- <a href="/textbookOwnList" class="btn btn-default" role="button">전체리스트보기</a> -->
 								<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 							</div>
                         </div>
