@@ -48,5 +48,19 @@ public class StaffPayService {
 		List<StaffPay> insuranceYear = staffPayMapper.insuranceYear();
 		return insuranceYear;
 	}
+	
+	//강사 급여계 입력하기
+	public int addStaffCalPay(StaffPay staffpay) {
+		int result = staffPayMapper.addStaffCalPay(staffpay);
+		
+		return result;
+	}
+
+	//요율표 비교 공제액 계산
+	public StaffPay StaffPayDedu(String spdCode, String iyCode, String spdTheBusinessTax) {
+		StaffPay staffPayDedu = staffPayMapper.StaffPayDedu(spdCode, iyCode, spdTheBusinessTax);
+		
+		return staffPayDedu;
+	}
 
 }

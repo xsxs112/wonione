@@ -9,25 +9,7 @@
 	<script type="text/javascript">	
 	
 	$(function(){		
-		$('#offiPayInsertBtn').click(function(){
-			
-			var foinForm = $('#offiDeduFoinForm');
-			var opCode = $('#opCode').val();
-			var mrId = $('#dMrId').val();
-			
-			var pRTitle = $('#dpRTitle').val();
-			var opdCode = $('#opdCode').val();
-			var opDate = $('#opDate').val();
-			var opPay = $('#opPay').val();
-			console.log(mrId+"<-mrId");
-			if(opPay == null || opPay == undefined || opPay == ''){
-				alert('실지급액을 계산해주세요.');
-				return;
-			}	
 
-			foinForm.attr('action', '/addOfficersPay');
-			foinForm.submit();			
-		}); 
 	});	
 			
 		</script>	
@@ -168,10 +150,10 @@
 					<input type="text" class="form-control" id="opcCode" name="opcCode" th:value="${opcCode}" placeholder="급여계산번호" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="cpRTitle" name="cpRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" placeholder="계산월" readonly>
+					<input type="text" class="form-control" id="cpRTitle" name="pRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" placeholder="계산월" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="cMrId" name="cMrId" th:value="${mrId}" placeholder="아이디" readonly>
+					<input type="text" class="form-control" id="cMrId" name="mrId" th:value="${mrId}" placeholder="아이디" readonly>
 					</td>
 					<td>
 					<input type="text" class="form-control" id="opcHourlyWage" name="opcHourlyWage" th:value="${opcHourlyWage}" placeholder="시급" readonly>

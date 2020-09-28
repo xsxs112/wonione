@@ -2,8 +2,120 @@
  * 20-09-27 생성
  * 
  */
- 
- 	$(function(){	
+  
+ 	$(function(){
+ 	
+ 	
+ 	
+ 		//원천징수금액 구하기
+ 		$('#StaffBusiTaxBtn').click(function(){
+
+			var spdCode = $('input[name=spdCode]').val();
+			var iyCode = $('select[name=iyCode] option:selected').val();
+			var pRTitle = $('#dpRTitle').val();
+			var mrId = $('#dMrId').val();	
+
+			if(iyCode == '::시행년도::'){
+				alert('시행년도를 선택해주세요.');
+				return;
+			}						
+  			var spdTheBusinessTax = Number($('#spdTheBusinessTax').val());		
+				
+			var request = $.ajax({
+				  url: "/StaffPayDedu",
+				  method: "POST",
+				  data: { spdCode : spdCode
+						 , spdTheBusinessTax : spdTheBusinessTax
+						 , iyCode : iyCode
+						 },
+				  dataType: "json"
+				});
+			request.done(function(data){
+				console.log(JSON.stringify(data));
+								
+				$('#spdCode').val(spdCode);
+				$('#dpRTitle').val(pRTitle);
+				$('#dMrId').val(mrId);
+				$('#iyCode').val(iyCode);
+				$('#spdTheBusinessTax').val(spdTheBusinessTax);				
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+			});	
+
+		});	
+ 		
+ 	
+		//강사 급여계 입력
+		$('#staffCalInsertBtn').click(function(){
+			var foinForm = $('#staffCalFoinForm');
+			var spcCode = $('#spcCode').val();
+			var mrId = $('#cMrId').val();
+			var pRTitle = $('#cpRTitle').val();
+			var spcHourlyWage = $('#spcHourlyWage').val();
+			var spcTotalHour = $('#spcTotalHour').val();
+			var spcBasePay = $('#spcBasePay').val();
+			var spcIncentivePer = $('#spcIncentivePer').val();
+			var spcIncentive = $('#spcIncentive').val();
+			var spcTotal = $('#spcTotal').val();	
+				
+			if($('#spcTotal').val() == null || $('#spcTotal').val() == undefined || $('#spcTotal').val() == '' || $('#spcTotal').val() == 0){
+			alert('총액을 다시 입력해주세요.');
+			return;
+			}
+			var request = $.ajax({
+				  url: "/addStaffCalPay",
+				  method: "POST",
+				  data: { spcCode : spcCode
+					  	, mrId : mrId
+					  	, pRTitle : pRTitle
+					  	, spcHourlyWage : spcHourlyWage
+					  	, spcTotalHour : spcTotalHour
+					  	, spcBasePay : spcBasePay
+					  	, spcIncentivePer : spcIncentivePer
+					  	, spcIncentive : spcIncentive
+					  	, spcTotal : spcTotal 
+					  	},
+				  dataType: "json"
+				});
+					request.done(function(data) {
+					$('#spcCode').val(data.spcCode);
+					$('#cMrId').val(data.mrId);
+					$('#cpRTitle').val(data.pRTitle);
+					$('#spcHourlyWage').val(data.spcHourlyWage);
+					$('#spcTotalHour').val(data.spcTotalHour);
+					$('#spcBasePay').val(data.spcBasePay);
+					$('#spcIncentivePer').val(data.spcIncentivePer);
+					$('#spcIncentive').val(data.spcIncentive);
+					$('#spcTotal').val(data.spcTotal);
+					$('#spdCode').val(data.spcCode);
+					$('#dpRTitle').val(data.pRTitle);
+					$('#dMrId').val(data.mrId);
+		
+						alert( "입력이 완료되었습니다.");				
+				});
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+				});	
+				
+		});	
+		
+	 	//급여계 총액 구하기	 		
+		$('#StaffCalTotalBtn').click(function(){
+			var calSum = 0;
+			var spcBasePay = Number($('#spcBasePay').val());
+			var spcIncentivePer = $('#spcIncentivePer').val();	
+			var spcIncentive = spcBasePay * spcIncentivePer;
+			
+			calSum += spcBasePay 
+					+ spcIncentive 						
+									
+				$('#spcBasePay').val(spcBasePay);
+				$('#spcIncentivePer').val(spcIncentivePer);
+				$('#spcIncentive').val(spcIncentive);
+				$('#spcTotal').val(calSum);
+		}); 
+					 	 	
  		//근무시간 입력시 기본급 계산 
 		$('#StaffCalBaseBtn').click(function(){
 			var baseMulti = 0;
@@ -17,8 +129,7 @@
 				$('#spcBasePay').val(baseMulti);
 				$('#cpRTitle').val(pRTitle);
 				$('#cMrId').val(mrId);
-		}); 	
- 	
+		}); 	 	
  	
   		//강사정보와 시급, 지급월, 인센티브 넘기기
  		$(document).on('click','#StaffCalformBtn',function(){
@@ -29,8 +140,6 @@
 			var spcHourlyWage = $('select[name=HourlyWage] option:selected').val();
 			var spcIncentivePer = $('select[name=incentive] option:selected').val();
 			
-			console.log(pRTitle+"<-pRTitle");
-			console.log(spcIncentivePer+"<-spcIncentivePer");
 				if(mrId == null || mrId == undefined || mrId == ''){
 					alert('강사정보 선택해주세요.');
 					return;
@@ -61,7 +170,6 @@
 				  dataType: "json"
 				});
 				request.done(function(data) {
-					console.log(JSON.stringify(data));
 					$('#cMrId').val(data.mrId);
 					$('#cMrName').val(data.mrName);
 					$('#cpRTitle').val(data.pRTitle);
@@ -100,4 +208,17 @@
 			});
 			
 		});
+		
+		
+		
+ 		// 숫자 아닌경우 
+ 		$(document).on('keyup','#spcTotalHour', function(){
+ 			var regexp =  /^[0-9]*$/;
+ 			var regexpChange =  /[^0-9]/gi;
+ 			var v = $('#spcTotalHour').val();
+ 			if(!regexp.test(v)){ //숫자가 아니라면 				
+ 				$('#spcTotalHour').val(v.replace(regexpChange, ""));
+ 			}
+ 		});		
+		
 	});

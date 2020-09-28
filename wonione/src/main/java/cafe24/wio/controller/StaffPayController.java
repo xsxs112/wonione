@@ -26,6 +26,29 @@ public class StaffPayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(StaffPayController.class);
 	
+	//요율표 비교 원천징수액 계산
+	@PostMapping(value = "/StaffPayDedu",produces = "application/json")
+	@ResponseBody
+	public StaffPay StaffPayDedu(String spdCode, String iyCode, String spdTheBusinessTax) {
+		StaffPay staffPayDedu = staffPayService.StaffPayDedu(spdCode, iyCode, spdTheBusinessTax);
+		
+		if(iyCode != null) {
+			staffPayDedu.setIyCode(Integer.parseInt(iyCode));
+			staffPayDedu.setSpdTheBusinessTax(Integer.parseInt(spdTheBusinessTax));
+		}
+		return staffPayDedu;
+	}	
+		
+	//강사 급여계 입력하기
+	@PostMapping(value = "/addStaffCalPay",produces = "application/json")
+	@ResponseBody
+	public StaffPay addStaffCalPay(StaffPay staffpay) {
+		
+		staffPayService.addStaffCalPay(staffpay);		
+		
+		return staffpay;
+	}
+	
 	//강사 정보 불러오기
 	@PostMapping(value = "/callStaffInfo",produces = "application/json")
 	@ResponseBody
@@ -35,14 +58,11 @@ public class StaffPayController {
 								,@RequestParam(value = "spcHourlyWage", required = false) String spcHourlyWage) {
 		StaffPay staffInfo = staffPayService.callStaffInfo(mrId);
 
+		//강사정보 급여계 넘기기
 		if(pRTitle != null && spcHourlyWage != null && spcIncentivePer !=null) {
 			staffInfo.setpRTitle(Float.parseFloat(pRTitle));
 			staffInfo.setSpcIncentivePer(Float.parseFloat(spcIncentivePer));
 			staffInfo.setSpcHourlyWage(Integer.parseInt(spcHourlyWage));			
-			//강사정보 급여계 넘기기
-			System.out.println(Float.parseFloat(pRTitle) + " pRTitle");
-			System.out.println(Float.parseFloat(spcIncentivePer) + " spcIncentivePer" );		
-			System.out.println(Integer.parseInt(spcHourlyWage) + " spcHourlyWage");
 		}
 		
 		

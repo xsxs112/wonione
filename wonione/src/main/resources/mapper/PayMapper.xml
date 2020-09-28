@@ -163,9 +163,9 @@
 					,mr.mr_name			AS mrName
 					,op.op_date			AS opDate
 					,op.op_pay			AS opPay
-					,op.op_reg_date	AS opRegDate
+					,op.op_reg_date		AS opRegDate
 					,op.op_writer	  	AS opWriter	
-					,mr.level_num     AS levelNum
+					,mr.level_num    	AS levelNum
 				FROM
 					wt_officers_pay 	AS op
 					INNER JOIN 
