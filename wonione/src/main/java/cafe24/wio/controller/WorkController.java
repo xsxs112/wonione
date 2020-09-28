@@ -1,5 +1,6 @@
 package cafe24.wio.controller;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafe24.wio.bean.ApprovalRequest;
+import cafe24.wio.bean.AttManagement;
 import cafe24.wio.service.ApprRequestService;
 
 //황미현 - 출퇴근 컨트롤러
@@ -25,6 +27,41 @@ public class WorkController {
 	private ApprRequestService apprRequestService;
 
 	
+	
+	@GetMapping("/workAttendance")
+	public String workAttendance(Model model, AttManagement attManagement,HttpSession session) {
+		String sid = (String) session.getAttribute("SID");
+		String attCode = apprRequestService.getAttCode();
+		session.setAttribute("ATTCODE", attCode);
+		attManagement.setAttCode(attCode);
+		attManagement.setMrId(sid);
+		apprRequestService.addAttendance(attManagement);
+		
+		return "redirect:/workAttendanceList";
+	}
+	
+	//외출시간 구할것임
+	/*
+	 * @GetMapping("/goingOut") public String goingOut(AttManagement
+	 * attManagement,HttpSession session) {
+	 * 
+	 * float goingOutTime = apprRequestService.getGoingOutTime();
+	 * 
+	 * 
+	 * return "redirect:/workAttendanceList"; }
+	 */
+	
+	
+	@GetMapping("/workAttendanceList")
+	public String workAttendanceList(Model model, AttManagement attManagement,HttpSession session) {
+		
+		String sid = (String) session.getAttribute("SID");
+		List<AttManagement> getAttendanceList = apprRequestService.getAttendanceList(sid);
+		model.addAttribute("getAttendanceList", getAttendanceList);
+		
+		
+		return "workmanagment/workAttendance";
+	}
 	
 	
 	@GetMapping("/holiRequest")

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cafe24.wio.bean.ApprovalRequest;
+import cafe24.wio.bean.AttManagement;
 import cafe24.wio.mapper.ApprMapper;
 
 @Service
@@ -15,6 +16,47 @@ public class ApprRequestService {
 	
 	@Autowired
 	private ApprMapper apprMapper;
+	
+	
+	
+	public int addAttendance(AttManagement attManagement) {
+		
+		return apprMapper.addAttendance(attManagement);
+	}
+	
+	
+	public String getAttCode() {
+		
+		Map<String, Object> attCodeMax =  apprMapper.getAttCode();
+		String tempCode = "attendance_";
+		int getMax = Integer.parseInt(attCodeMax.get("max").toString());
+		if(getMax<10) {
+			tempCode = "attendance_0";
+		}
+		String attCode = tempCode + String.valueOf(attCodeMax.get("max"));
+		return attCode;
+	
+	}
+	
+	public float getGoingOutTime(String attCode) {
+		
+		return apprMapper.getGoingOutTime(attCode);
+	}
+	
+	
+	public List<AttManagement> getAttendanceList(String SID) {
+		
+		List<AttManagement> getAttendanceList = apprMapper.getAttendanceList(SID);
+		
+		
+		return getAttendanceList;
+	}
+	
+	public String getLevelName(String reCode) {
+		
+		return apprMapper.getLevelName(reCode);
+	}
+	
 	
 	public String getMemberPhone(String reCode) {
 		
@@ -113,6 +155,9 @@ public class ApprRequestService {
 		
 		return result;
 	}
+
+
+	
 	
 
 }

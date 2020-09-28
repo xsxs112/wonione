@@ -6,16 +6,33 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import cafe24.wio.bean.ApprovalRequest;
+import cafe24.wio.bean.AttManagement;
 import cafe24.wio.bean.Member;
 
 @Mapper
 public interface ApprMapper {
 	
 	
+	public int addAttendance(AttManagement attManagement);
+	
+	public Map<String, Object> getAttCode();
+	
+	
+	public float getGoingOutTime(String attCode);
+	
+	
+	public List<AttManagement> getAttendanceList(String SID);
+	
+	
+	public String getLevelName(String reCode);
+	
+	
 	public String getMemberPhone(String reCode);
+	
 	
 	public String getNow();
 
+	
 	public ApprovalRequest getHolidayDetail(String reCode);
 
 	
@@ -44,5 +61,9 @@ public interface ApprMapper {
 	
 	
 	public List<ApprovalRequest>getHolidayList();
+
+
+	
+
 
 }
