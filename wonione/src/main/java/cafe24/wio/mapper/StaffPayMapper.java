@@ -28,6 +28,6 @@ public interface StaffPayMapper {
 	public int addStaffCalPay(StaffPay staffpay);
 
 	//요율표 비교 원천징수액 계산
-	public StaffPay StaffPayDedu(String opdCode, String iyCode, String spdTheBusinessTax);
+	public StaffPay StaffPayDedu(String spdCode, String iyCode, String spdTheBusinessTax);
 
 }

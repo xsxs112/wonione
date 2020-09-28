@@ -36,7 +36,8 @@
 	<select id="StaffPayDedu" resultType="StaffPay" parameterType="String">
 	SELECT 
 		iy.iy_the_business
-			* #{SELECT pc.spc_total AS spcTotal FROM wt_staff_pay_calculate AS pc WHERE pc.spc_code = #{spdCode}}
+			* (SELECT pc.spc_total AS spcTotal FROM wt_staff_pay_calculate AS pc WHERE pc.spc_code = #{spdCode})
+			AS spdTheBusinessTax
 	FROM 
 		wt_insurance_year AS iy
 	WHERE

@@ -27,10 +27,10 @@ public class StaffPayController {
 	private final static Logger logger = LoggerFactory.getLogger(StaffPayController.class);
 	
 	//요율표 비교 원천징수액 계산
-	@PostMapping(value = "/StaffcersDedu",produces = "application/json")
+	@PostMapping(value = "/StaffPayDedu",produces = "application/json")
 	@ResponseBody
-	public StaffPay StaffPayDedu(String opdCode, String iyCode, String spdTheBusinessTax) {
-		StaffPay staffPayDedu = staffPayService.StaffPayDedu(opdCode, iyCode, spdTheBusinessTax);
+	public StaffPay StaffPayDedu(String spdCode, String iyCode, String spdTheBusinessTax) {
+		StaffPay staffPayDedu = staffPayService.StaffPayDedu(spdCode, iyCode, spdTheBusinessTax);
 		
 		if(iyCode != null) {
 			staffPayDedu.setIyCode(Integer.parseInt(iyCode));

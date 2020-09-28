@@ -12,6 +12,8 @@
 
 			var spdCode = $('input[name=spdCode]').val();
 			var iyCode = $('select[name=iyCode] option:selected').val();
+			var pRTitle = $('#dpRTitle').val();
+			var mrId = $('#dMrId').val();	
 
 			if(iyCode == '::시행년도::'){
 				alert('시행년도를 선택해주세요.');
@@ -20,7 +22,7 @@
   			var spdTheBusinessTax = Number($('#spdTheBusinessTax').val());		
 				
 			var request = $.ajax({
-				  url: "/staffPayDedu",
+				  url: "/StaffPayDedu",
 				  method: "POST",
 				  data: { spdCode : spdCode
 						 , spdTheBusinessTax : spdTheBusinessTax
@@ -29,12 +31,13 @@
 				  dataType: "json"
 				});
 			request.done(function(data){
-				
+				console.log(JSON.stringify(data));
+								
 				$('#spdCode').val(spdCode);
 				$('#dpRTitle').val(pRTitle);
 				$('#dMrId').val(mrId);
 				$('#iyCode').val(iyCode);
-				$('#spdTheBusinessTax').val(data.spdTheBusinessTax);				
+				$('#spdTheBusinessTax').val(spdTheBusinessTax);				
 			});
 			request.fail(function( jqXHR, textStatus ) {
 				  alert( "Request failed: " + textStatus );
@@ -75,8 +78,7 @@
 					  	},
 				  dataType: "json"
 				});
-					request.done(function(data) {					
-					console.log(JSON.stringify(data));
+					request.done(function(data) {
 					$('#spcCode').val(data.spcCode);
 					$('#cMrId').val(data.mrId);
 					$('#cpRTitle').val(data.pRTitle);

@@ -57,8 +57,8 @@ public class StaffPayService {
 	}
 
 	//요율표 비교 공제액 계산
-	public StaffPay StaffPayDedu(String opdCode, String iyCode, String spdTheBusinessTax) {
-		StaffPay staffPayDedu = staffPayMapper.StaffPayDedu(opdCode, iyCode, spdTheBusinessTax);
+	public StaffPay StaffPayDedu(String spdCode, String iyCode, String spdTheBusinessTax) {
+		StaffPay staffPayDedu = staffPayMapper.StaffPayDedu(spdCode, iyCode, spdTheBusinessTax);
 		
 		return staffPayDedu;
 	}
