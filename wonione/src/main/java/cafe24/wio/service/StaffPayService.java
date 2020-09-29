@@ -63,4 +63,18 @@ public class StaffPayService {
 		return staffPayDedu;
 	}
 
+	//강사 공제계 입력하기
+	public int addStaffDedupay(StaffPay staffPay) {
+		int result = staffPayMapper.addStaffDedupay(staffPay);
+		
+		return result;
+	}
+
+	//강사 급여 입력
+	public int addStaffPay(StaffPay staffPay) {
+		int result = staffPayMapper.addStaffPay(staffPay);
+		
+		return result;		
+	}
+
 }

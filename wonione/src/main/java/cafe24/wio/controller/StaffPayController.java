@@ -26,6 +26,23 @@ public class StaffPayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(StaffPayController.class);
 	
+	//강사급여 입력하기
+	@PostMapping("/addStaffPay")
+	public String addStaffPay(StaffPay staffPay) {
+		staffPayService.addStaffPay(staffPay);
+		
+		return "redirect:/getPayList";
+	}
+	
+	//강사 공제계 입력하기
+	@PostMapping(value = "/addStaffDedupay",produces = "application/json")
+	@ResponseBody
+	public StaffPay addStaffDedupay(StaffPay staffPay) {
+		staffPayService.addStaffDedupay(staffPay);
+		
+		return staffPay;
+	}
+		
 	//요율표 비교 원천징수액 계산
 	@PostMapping(value = "/StaffPayDedu",produces = "application/json")
 	@ResponseBody
