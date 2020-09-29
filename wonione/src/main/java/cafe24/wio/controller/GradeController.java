@@ -60,8 +60,9 @@ public class GradeController {
 
 	// 조건검색
 	@PostMapping("/serchGrade")
-	public String serchGrade(Model model, @RequestParam(value = "lecGd", required = false) String lecGd,
-			@RequestParam(value = "lecGds", required = false) String lecGds) {
+	public String serchGrade(Model model,
+							@RequestParam(value = "lecGd", required = false) String lecGd,
+							@RequestParam(value = "lecGds", required = false) String lecGds) {
 		List<Grade> gradeList = gradeService.searchGrade(lecGd, lecGds);
 		logger.info("serchGrade gradeList-->" + gradeList);
 		List<Map<String, Object>> sName = gradeService.sName();
@@ -78,8 +79,9 @@ public class GradeController {
 	// 조건검색
 	@GetMapping(value = "/gradeList", produces = "application/json")
 	@ResponseBody
-	public List<Grade> searchGrade(Model model, @RequestParam(value = "lecGd", required = false) String lecGd,
-			@RequestParam(value = "lecGds", required = false) String lecGds) {
+	public List<Grade> searchGrade(Model model,
+									@RequestParam(value = "lecGd", required = false) String lecGd,
+									@RequestParam(value = "lecGds", required = false) String lecGds) {
 		List<Grade> gradeList = gradeService.searchGrade(lecGd, lecGds);
 		model.addAttribute("gradeList", gradeList);
 		return gradeList;

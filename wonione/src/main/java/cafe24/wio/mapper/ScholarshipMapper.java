@@ -1,6 +1,7 @@
 package cafe24.wio.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,5 +12,23 @@ public interface ScholarshipMapper {
 
 	//장학금지급내역리스
 	public List<ScholarShip> getScholarList(ScholarShip scholarship);
+	
+	//장학금 상세보기
+	public ScholarShip ScholarDetailList(String pmInfoCode);
+	
+	//코드자동증가
+	public Map<String, Object> ScholarReCode();
+	
+	//장학금 지급내역 작성
+	public int giveScholarShip(ScholarShip scholarship);
+	
+	//학생이름가져오기
+	public List<Map<String, Object>> sName();
+	
+	//장학금액가져오기
+	public List<Map<String, Object>> sMoney();
+	
+	//조건검색
+	public List<ScholarShip> serchScholar(String awaBp,String awaBpSc);
 	
 }

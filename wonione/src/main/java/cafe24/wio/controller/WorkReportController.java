@@ -47,7 +47,6 @@ public class WorkReportController {
 	@GetMapping("/workreportpage")
 	public String getReportDetailList(Model model,
 										@RequestParam(value="lecOpenCode", required = false) String lecOpenCode) {
-		
 		logger.info("===============================");
 		logger.info("@GetMapping workreportpage");
 		logger.info("===============================");
