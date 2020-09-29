@@ -11,19 +11,6 @@
   <th:block layout:fragment="customContent">
   
   
- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- 	<script type="text/javascript">
-		$(function(){
-			$('#modiBtn').click(function(){
-				alert('click check');
-				
-			})
-			
-		})	
-  
- 	</script>
-  
-  
   		<h2>구성원 목록</h2>
   	<table class="table table-bordered table-hover" style="margin: 10px">
   		<thead>
@@ -47,14 +34,12 @@
   					</a>
   				</td>
   				
-  				<!--  <td th:if="${session.SID eq m.mrId || session.SLEVEL eq 1 || session.SLEVEL eq 3}"> -->
-  				
   				<td>
-  					<a class="btn btn-default" role="button" id="modiBtn" th:href="@{/modifyWIOMember(mrId=${m.mrId},mrPw=${m.mrPw})}">
+  					<a th:href="@{/modifyWIOMember(mrId=${m.mrId},mrPw=${m.mrPw})}" th:if="${m.mrId eq session.SID || session.SLEVEL eq 1 || session.SLEVEL eq 3}"> 
   						수정
   					</a>
+  					<label th:unless="${m.mrId eq session.SID || session.SLEVEL eq 1 || session.SLEVEL eq 3}">수정</label>
   				</td>
-
   			</tr>
   		</tbody>
   	</table>

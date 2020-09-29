@@ -44,7 +44,7 @@
 					<td>
 						<select name="pmRCode">
 							<option>::::결제 수단 선택::::</option>
-							<th:block th:each="l:${pmResourceList}">		<!-- 정보 수정 클릭 시, 현재 결제 수단이 보여져야함. selected. 0929_12:43 -->
+							<th:block th:each="l:${pmResourceList}">
 								<option th:value="${l.pmResourceCode}" th:text="${l.pmResourceTitle}" th:selected="${l.pmResourceCode==member.pmRCode}"></option>
 							</th:block>
 						</select>
