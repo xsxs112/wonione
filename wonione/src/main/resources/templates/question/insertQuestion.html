@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/defaultLogin">
+
+  	<th:block layout:fragment="customTitle">
+		<title>문제등록</title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+	<style>
+			table.insertQuestion {
+			    border-collapse: separate;
+			    border-spacing: 0;
+			    text-align: left;
+			    line-height: 1.5;
+			    border-top: 1px solid #ccc;
+			    border-left: 1px solid #ccc;
+			  	margin : 20px 10px;
+			}
+			table.insertQuestion th {
+			    width: 150px;
+			    padding: 10px;
+			    font-weight: bold;
+			    vertical-align: top;
+			    border-right: 1px solid #ccc;
+			    border-bottom: 1px solid #ccc;
+			    border-top: 1px solid #fff;
+			    border-left: 1px solid #fff;
+			    background: #eee;
+			}
+			table.insertQuestion td {
+			    width: 350px;
+			    padding: 10px;
+			    vertical-align: top;
+			    border-right: 1px solid #ccc;
+			    border-bottom: 1px solid #ccc;
+			    
+			}
+			table.insertQuestion input{
+				inline-size: -webkit-fill-available;
+			}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<div class="container-fluid" style="text-align: center;">
+		<h4 style="font-weight: 700;">문제등록</h4>
+		<form action="/#" method="POST">
+		<table class="insertQuestion">
+		    <tr>
+		        <th scope="row">문제이름</th>
+		        <td><input type="text" placeholder="영문으로 작성해주세요." name="qtCodeName"></td>
+		    </tr>
+		    <tr>
+		        <th scope="row">LIST TITLE</th>
+		        <td><input type="text" placeholder="문제리스트에  나오는제목이름입니다." name="qtTitle"></td>
+		    </tr>
+		    <tr>
+		        <th scope="row">문제내용</th>
+		        <td><textarea style="resize: none; overflow-y:scroll;" cols="45" rows="5" name="qeData"></textarea></td>
+		    </tr>
+		    <tr>
+		        <th scope="row">문제정답</th>
+		        <td>
+			        <select name="qeAnswer">
+			        	<option value="A" class="insertQuestionAnswer">A</option>
+			        	<option value="B" class="insertQuestionAnswer">B</option>
+			        	<option value="C" class="insertQuestionAnswer">C</option>
+			        	<option value="D" class="insertQuestionAnswer">D</option>
+			        </select>
+		        </td>
+		    </tr>
+		    <tr>
+		        <th scope="row">A보기</th>
+		        <td><input type="text" name="qeA"></td>
+		    </tr>
+		    <tr>
+		        <th scope="row">B보기</th>
+		        <td><input type="text" name="qeB"></td>
+		    </tr>
+		    <tr>
+		        <th scope="row">C보기</th>
+		        <td><input type="text" name="qeC"></td>
+		    </tr>
+		    <tr>
+		        <th scope="row">D보기</th>
+		        <td><input type="text" name="qeD"></td>
+		    </tr>
+		    <tr>
+		        <th scope="row">문제점수</th>
+		        <td><input type="number" name="qeScore"></td>
+		        <td hidden=""><input name="qtTeacher" th:value="${session.SID}"></td>
+		    </tr>
+		</table>
+		<button type="submit" class="btn btn-default">등록</button>
+		</form>
+	</div>
+	<script type="text/javascript">
+		self.moveTo(600,100); //창위치
+	    self.resizeTo(600,690); //창크기
+	</script>
+	<script src="js/question.js"></script>
+	</th:block>
+</html>

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cafe24.wio.bean.Question;
 import cafe24.wio.mapper.QuestionMapper;
 
 @Service
@@ -113,4 +114,17 @@ public class QuestionService {
 		return result;
 	}
 
+	public int selectIdQuestion(String questionSid) {
+		int result = questionMapper.selectIdQuestion(questionSid);
+		return result;
+	}
+
+	public int insertQuestion(Question question) {
+		System.out.println(question);
+		questionMapper.insertQuestionTitle(question);
+		//questionMapper.insertQuestion(question,teacherId);
+		return 0;
+	}
+
+	
 }
