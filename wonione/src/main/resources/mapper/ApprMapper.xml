@@ -45,7 +45,7 @@
 	<update id = "goingStOut" parameterType="string">
 		UPDATE wt_attendance_management
 		SET
-			attendance_start_time=NOW(),
+			going_out_stTime=NOW(),
 			attendance_note='외출'
 		WHERE 
 			attendance_code = #{attCode};

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default">
+
+<th:block layout:fragment="customTitle">
+	<title>출퇴근시간관리</title>
+</th:block>
+
+
+<!-- css---------------------------------------- -->
+<th:block layout:fragment="customCss">
+
+
+</th:block>
+
+<!-- 본문----------------------------------------- -->
+<th:block layout:fragment="customContent">
+
+
+</th:block>
+
+
+
+<!-- 스크립트 -------------------------------------------->
+<th:block layout:fragment="customJsScript">
+	<div th:replace="fragments/js :: jsFragment"></div>
+
+</th:block>
+
+<!-- js	 ------------------------------------------------>
+<th:block layout:fragment="customJs">
+
+</th:block>
+</html>

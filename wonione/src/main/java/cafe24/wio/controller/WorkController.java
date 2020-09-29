@@ -27,6 +27,13 @@ public class WorkController {
 	
 	
 	
+	@GetMapping("/attManage")
+	public String goingOutEnd(Model model) {
+		
+		
+
+		return "workmanagment/attManage";
+	}
 	
 	@GetMapping("/goingOutEnd")
 	public String goingOutEnd(AttManagement attManagement, HttpSession session) {
