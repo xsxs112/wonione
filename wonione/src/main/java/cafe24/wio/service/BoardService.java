@@ -44,6 +44,12 @@ public class BoardService {
 		
 		if(getMax<10) {
 			tempCode = "board_0000";
+		}else if(getMax<100) {
+			tempCode = "board_000";
+		}else if(getMax<1000) {
+			tempCode = "board_00";
+		}else if(getMax<10000) {
+			tempCode = "board_0";
 		}
 		String boardNum = tempCode + String.valueOf(boardNumMax.get("max"));
 		

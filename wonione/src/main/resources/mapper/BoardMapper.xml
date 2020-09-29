@@ -61,7 +61,7 @@
 	<!-- 게시글 번호 자동증가 -->
 	<select id="getBoardNum" resultType="hashMap">
 		SELECT 
-			(max(CAST(SUBSTRING(board_num,11) AS DECIMAL))+1)as max 
+			(max(CAST(SUBSTRING(board_num,7) AS DECIMAL))+1)as max 
 		FROM 
 			wt_board
 	</select>
