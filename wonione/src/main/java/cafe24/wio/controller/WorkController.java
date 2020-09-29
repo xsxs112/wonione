@@ -27,6 +27,30 @@ public class WorkController {
 	
 	
 	
+	
+	@GetMapping("/goingOutEnd")
+	public String goingOutEnd(AttManagement attManagement, HttpSession session) {
+		String SID = (String) session.getAttribute("SID");
+		String attCode = apprRequestService.getAttCode(SID);
+		apprRequestService.goingOutEnd(attCode);
+
+		return "redirect:/workAttendanceList";
+	}
+	
+	
+	
+	@GetMapping("/workAttendanceEnd")
+	public String workAttendanceEnd(AttManagement attManagement, HttpSession session) {
+		String SID = (String) session.getAttribute("SID");
+		String attCode = apprRequestService.getAttCode(SID);
+		
+		apprRequestService.workAttendanceEnd(attCode);
+
+		return "redirect:/workAttendanceList";
+	}
+	
+	
+	
 	@ResponseBody
 	@GetMapping("/dateCheck")
 	public int dateCheck(HttpSession session, @RequestParam(value = "sid", required = false) String sid) {
@@ -53,7 +77,6 @@ public class WorkController {
 
 		String SID = (String) session.getAttribute("SID");
 		String attCode = apprRequestService.getAttCode(SID);
-
 		apprRequestService.goingStOut(attCode);
 
 		return "redirect:/workAttendanceList";

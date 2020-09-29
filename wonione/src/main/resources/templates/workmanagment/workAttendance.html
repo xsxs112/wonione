@@ -27,10 +27,7 @@
 	$(function(){
 	
 		$('#stTimeBtn').click(function() {
-			
-	
 			var sid= $('#sid').val();
-			 
          	var dateCheck = $.ajax({
 				url : "/dateCheck",
 				method : "GET",
@@ -38,24 +35,15 @@
 				dataType: "text"
 				}) 
 				
-				
 				dateCheck.done(function(data) {
-					//ajax를 통해서 받은 데이터가 0이면 submit()실행
 					if(data==0){
 						window.location.href='/workAttendance';
 					}else{
-						//아니면 휴가기간 중복 신청 불가라고 팝업창을 띄워줌
 						alert("이미 출근 하셨습니다");
 					}
 				})
-
-				
 		})
-		
-		
 	})
-	
-	
 	
 	
 	</script>
@@ -150,7 +138,7 @@
 												<h2>퇴근</h2>
 											</div>
 											<div class="modal-footer">
-												<a data-dismiss="modal" href="#">확인</a> <a data-dismiss="modal"href="#">취소</a>
+												<a href="/workAttendanceEnd">확인</a> <a data-dismiss="modal"href="#">취소</a>
 											</div>
 										</div>
 									</div>
@@ -186,7 +174,7 @@
 									<div class="address-hr tb-sm-res-d-n dps-tb-ntn">
 										<div class="modal-area-button">
 											<a class="Primary mg-b-10" href="#" data-toggle="modal"
-												data-target="#PrimaryModalalert4" style="color: white;">조퇴</a>
+												data-target="#PrimaryModalalert4" style="color: white;">복귀</a>
 										</div>
 									</div>
 								</div>
@@ -201,10 +189,10 @@
 											</div>
 											<div class="modal-body">
 												<i class="educate-icon educate-checked modal-check-pro"></i>
-												<h2>조퇴</h2>
+												<h2>복귀</h2>
 											</div>
 											<div class="modal-footer">
-												<a  href="#">확인</a> <a data-dismiss="modal" href="#">취소</a>
+												<a href="/goingOutEnd">확인</a> <a data-dismiss="modal" href="#">취소</a>
 											</div>
 										</div>
 									</div>
