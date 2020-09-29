@@ -18,11 +18,6 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-	
-	/*
-	 * private static final Logger logger =
-	 * LoggerFactory.getLogger(BoardController.class);
-	 */
 
 	// 공지사항 조회
 	@RequestMapping(value = "/getNotice", method = RequestMethod.GET)
@@ -86,7 +81,7 @@ public class BoardController {
 	      return "board/noticeAdd";
 	   }
 	  
-	// 공지사항 수정 (미구현 : 수정은 가능, 기존에 저장된 값 가져오기 불가)
+	// 공지사항 수정 (내용 칼럼에 기존에 저장된 값 가져오기 불가)
 	@PostMapping("/modifyNotice")
 	public String modifyNotice(Board board,Model model) {
 		boardService.modifyNotice(board);
@@ -126,7 +121,7 @@ public class BoardController {
 		model.addAttribute("Board", board);
 		model.addAttribute("readDataLibrary", "자료게시판 읽기");
 		
-		return "board/dataLibraryRead";		  
+		return "board/dataLibraryRead";
 	}
 	
 	//공지사항 삭제

@@ -4,40 +4,115 @@
  */
   
  	$(function(){
+		//강사 급여 입력
+		$('#staffPayInsertBtn').click(function(){
+			
+			var foinForm = $('#staffDeduFoinForm');
+			var spCode = $('#spCode').val();
+			var mrId = $('#dMrId').val();			
+			var pRTitle = $('#dpRTitle').val();
+			var spdCode = $('#spdCode').val();
+			var spDate = $('#spDate').val();
+			var spPay = $('#spPay').val();
+			if(spPay == null || spPay == undefined || spPay == ''){
+				alert('실지급액을 계산해주세요.');
+				return;
+			}	
+
+			foinForm.attr('action', '/addStaffPay');
+			foinForm.submit();			
+		}); 	 	
  	
+ 		//강사 급여 총액 구하기
+ 		$('#StaffPayTotalBtn').click(function(){
+		var totalPay = 0;
+		
+		var spcTotal = Number($('#spcTotal').val());
+		var spdTotal = Number($('#spdTotal').val());
+		totalPay += spcTotal 
+					- spdTotal;
+		if($('#spcTotal').val() == null || $('#spcTotal').val() == undefined || $('#spcTotal').val() == ''){
+			alert('급여계를 계산해주세요.');
+			return;
+		}	
+		if($('#spdTotal').val() == null || $('#spdTotal').val() == undefined || $('#spdTotal').val() == ''){
+			alert('공제계를 계산해주세요.');
+			return;
+		}	
+		$('#spPay').val(totalPay);
+		});	
+				 		
+ 		//강사 공제계 입력
+ 		$('#staffDeduInsertBtn').click(function(){
+ 			var foinForm = $('#staffDeduFoinForm');
+			var spdCode = $('#spdCode').val();
+			var spcCode = $('#spcCode').val();
+			var mrId = $('#dMrId').val();
+			var pRTitle = $('#dpRTitle').val();
+			var iyCode = $('#iyCode').val();
+			var spdTheBusinessTax = $('#spdTheBusinessTax').val();
+			var spdTotal = $('#spdTotal').val();
+			
+			var request = $.ajax({
+				  url: "/addStaffDedupay",
+				  method: "POST",
+				  data: { spdCode : spdCode
+						, spcCode : spcCode
+					  	, mrId : mrId
+					  	, pRTitle : pRTitle
+					  	, iyCode : iyCode
+					  	, spdTheBusinessTax : spdTheBusinessTax
+					  	, spdTotal : spdTotal },
+				  dataType: "json"
+				});
+				request.done(function(data) {
+					console.log(JSON.stringify(data));
+					
+					$('#spdCode').val(data.spdCode);
+					$('#dMrId').val(data.mrId);
+					$('#dpRTitle').val(data.pRTitle);
+					$('#iyCode').val(data.iyCode);
+					$('#spdTheBusinessTax').val(data.spdTheBusinessTax);
+					$('#spdTotal').val(data.spdTotal);
+						
+					alert( "입력이 완료되었습니다.");				
+				});
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});	
+				
+		});		
+		
  	
- 	
- 		//원천징수금액 구하기
- 		$('#StaffBusiTaxBtn').click(function(){
+ 		//원천징수금액 구하기, 공제총액 구하기
+ 		$('#StaffDeduTotalBtn').click(function(){
 
 			var spdCode = $('input[name=spdCode]').val();
 			var iyCode = $('select[name=iyCode] option:selected').val();
 			var pRTitle = $('#dpRTitle').val();
 			var mrId = $('#dMrId').val();	
+  			var spdTheBusinessTax = Number($('#spdTheBusinessTax').val());			
 
 			if(iyCode == '::시행년도::'){
 				alert('시행년도를 선택해주세요.');
 				return;
-			}						
-  			var spdTheBusinessTax = Number($('#spdTheBusinessTax').val());		
+			}					
 				
 			var request = $.ajax({
 				  url: "/StaffPayDedu",
 				  method: "POST",
-				  data: { spdCode : spdCode
-						 , spdTheBusinessTax : spdTheBusinessTax
+				  data: { spdCode : spdCode						 
 						 , iyCode : iyCode
 						 },
 				  dataType: "json"
 				});
-			request.done(function(data){
-				console.log(JSON.stringify(data));
-								
+			request.done(function(data){								
 				$('#spdCode').val(spdCode);
 				$('#dpRTitle').val(pRTitle);
 				$('#dMrId').val(mrId);
 				$('#iyCode').val(iyCode);
-				$('#spdTheBusinessTax').val(spdTheBusinessTax);				
+				$('#spdTheBusinessTax').val(data.spdTheBusinessTax);				
+				$('#spdTotal').val(data.spdTheBusinessTax);				
 			});
 			request.fail(function( jqXHR, textStatus ) {
 				  alert( "Request failed: " + textStatus );
@@ -78,7 +153,7 @@
 					  	},
 				  dataType: "json"
 				});
-					request.done(function(data) {
+				request.done(function(data) {
 					$('#spcCode').val(data.spcCode);
 					$('#cMrId').val(data.mrId);
 					$('#cpRTitle').val(data.pRTitle);
@@ -183,7 +258,7 @@
 				});	
 			});  	 	
  	
-	// 강사 아이디값 받아 넘기기
+		// 강사 아이디값 받아 넘기기
  		$('.callStaffInfo').click(function(){
  		var tr = $(this).parent().parent();
  		var td = tr.children();
@@ -195,7 +270,6 @@
 			  dataType: "json"
 			});
 			request.done(function(data) {
-				console.log(data);
 				$('#mrId').val(data.mrId);
 				$('#mrName').val(data.mrName);
 				$('#pmRTitle').val(data.pmRTitle);
@@ -207,9 +281,7 @@
 				  alert( "Request failed: " + textStatus );
 			});
 			
-		});
-		
-		
+		});		
 		
  		// 숫자 아닌경우 
  		$(document).on('keyup','#spcTotalHour', function(){

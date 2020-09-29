@@ -160,7 +160,7 @@
 			,m.mr_join_date		AS mrJoinDate
 			,r.pm_r_title		AS pmRTitle
 			,m.mr_account_num	AS mrAccountNum
-			,CONCAT('OPCD_',(
+			,CONCAT('OP_',(
 				SELECT 
 			LPAD(COUNT(*)+1, 4, '0') 
 				FROM 

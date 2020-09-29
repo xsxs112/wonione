@@ -13,6 +13,9 @@ import cafe24.wio.mapper.QuestionMapper;
 public class QuestionService {
 	@Autowired
 	private QuestionMapper questionMapper;
+		
+	
+
 
 	public Map<String, Object> questionList(int currentPage) {
 		  //보여줄 행의 갯수
@@ -91,6 +94,23 @@ public class QuestionService {
 	      resultMap.put("lastPageNum", lastPageNum);
 	      
 	      return resultMap;
+	}
+
+	public int QuestionScoreCheck(String qeAnswer, String studentName, int qeCode) {
+		System.out.println(studentName+"<--studentName");
+		int result= questionMapper.QuestionScoreCheck(qeAnswer,qeCode,studentName);
+		
+		return result;
+	}
+
+	public Map<String, Object> ScoreCheck(String scoreSid) {
+		Map<String, Object> scoreSidMap = questionMapper.ScoreCheck(scoreSid);
+		return scoreSidMap;
+	}
+
+	public int QuestionSidCheck(String questionSid, String questionName) {
+		int result = questionMapper.QuestionSidCheck(questionSid,questionName);
+		return result;
 	}
 
 }

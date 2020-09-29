@@ -31,7 +31,6 @@ public class OfficersPayController {
 	@PostMapping("/addOfficersPay")
 	public String addOfficersPay(OfficersPay officersPay) {
 		officersPayService.addOfficersPay(officersPay);
-		System.out.println(officersPay);
 		
 		return "redirect:/getPayList";
 	}

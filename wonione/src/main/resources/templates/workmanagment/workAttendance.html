@@ -9,71 +9,69 @@
 
 
 <th:block layout:fragment="customCss">
-
-
-
-</th:block>
-
-<th:block layout:fragment="customContent">
-	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-	<!-- Google Fonts
-		============================================ -->
-	<link
-		href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900"
-		rel="stylesheet">
-	<!-- Bootstrap CSS
-		============================================ -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<!-- Bootstrap CSS
-		============================================ -->
-	<link rel="stylesheet" href="css/font-awesome.min.css">
 	<!-- owl.carousel CSS
 		============================================ -->
 	<link rel="stylesheet" href="css/owl.carousel.css">
 	<link rel="stylesheet" href="css/owl.theme.css">
 	<link rel="stylesheet" href="css/owl.transitions.css">
-	<!-- animate CSS
-		============================================ -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- normalize CSS
-		============================================ -->
-	<link rel="stylesheet" href="css/normalize.css">
-	<!-- meanmenu icon CSS
-		============================================ -->
-	<link rel="stylesheet" href="css/meanmenu.min.css">
-	<!-- main CSS
-		============================================ -->
-	<link rel="stylesheet" href="css/main.css">
-	<!-- educate icon CSS
-		============================================ -->
-	<link rel="stylesheet" href="css/educate-custon-icon.css">
 	<!-- morrisjs CSS
 		============================================ -->
 	<link rel="stylesheet" href="css/morrisjs/morris.css">
-	<!-- mCustomScrollbar CSS
-		============================================ -->
-	<link rel="stylesheet"
-		href="css/scrollbar/jquery.mCustomScrollbar.min.css">
-	<!-- metisMenu CSS
-		============================================ -->
-	<link rel="stylesheet" href="css/metisMenu/metisMenu.min.css">
-	<link rel="stylesheet" href="css/metisMenu/metisMenu-vertical.css">
-	<!-- calendar CSS
-		============================================ -->
-	<link rel="stylesheet" href="css/calendar/fullcalendar.min.css">
-	<link rel="stylesheet" href="css/calendar/fullcalendar.print.min.css">
 	<!-- modals CSS
 		============================================ -->
 	<link rel="stylesheet" href="css/modals.css">
-	<!-- style CSS
-		============================================ -->
-	<link rel="stylesheet" href="style.css">
-	<!-- responsive CSS
-		============================================ -->
-	<link rel="stylesheet" href="css/responsive.css">
-	<!-- modernizr JS
-		============================================ -->
-	<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+	
+	
+	<script type="text/javascript">
+	
+	$(function(){
+	
+		$('#stTimeBtn').click(function() {
+			
+	
+			var sid= $('#sid').val();
+			 
+         	var dateCheck = $.ajax({
+				url : "/dateCheck",
+				method : "GET",
+				data : {sid : sid},
+				dataType: "text"
+				}) 
+				
+				
+				dateCheck.done(function(data) {
+					//ajax를 통해서 받은 데이터가 0이면 submit()실행
+					if(data==0){
+						window.location.href='/workAttendance';
+					}else{
+						//아니면 휴가기간 중복 신청 불가라고 팝업창을 띄워줌
+						alert("이미 출근 하셨습니다");
+					}
+				})
+
+				
+		})
+		
+		
+	})
+	
+	
+	
+	
+	</script>
+	
+
+</th:block>
+
+<th:block layout:fragment="customContent">
+
+
+
+	
+	
+	
+	
+	
 	<div class="single-pro-review-area mt-t-30 mg-b-15">
 		<div class="container-fluid">
 			<div class="row">
@@ -89,7 +87,7 @@
 										<p>
 											<b>name</b>
 										<div th:text="${session.SNAME}"></div>
-
+										<input type = "hidden" id = "sid" th:value="${session.SID}">
 
 									</div>
 								</div>
@@ -124,7 +122,8 @@
 												<h2>출근</h2>
 											</div>
 											<div class="modal-footer">
-												<a  href="/workAttendance">확인</a> <a data-dismiss="modal" href="#">취소</a>
+												<a id = "stTimeBtn">확인</a> <a data-dismiss="modal" href="#">취소</a>
+												<!-- href="/workAttendance" -->
 											</div>
 										</div>
 									</div>
@@ -159,7 +158,7 @@
 								<div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
 									<div class="address-hr tb-sm-res-d-n dps-tb-ntn">
 										<div class="modal-area-button">
-											<a class="Primary mg-b-10" href="/goingOut" data-toggle="modal"
+											<a class="Primary mg-b-10" href="#" data-toggle="modal"
 												data-target="#PrimaryModalalert3" style="color: white;">외출</a>
 										</div>
 									</div>
@@ -178,7 +177,7 @@
 												<h2>외출</h2>
 											</div>
 											<div class="modal-footer">
-												<a  href="#">확인</a> <a data-dismiss="modal" href="#">취소</a>
+												<a  href="/goingStOut">확인</a> <a data-dismiss="modal" href="#">취소</a>
 											</div>
 										</div>
 									</div>
@@ -263,6 +262,7 @@
 										<th>출근 시간</th>
 										<th>퇴근시간</th>
 										<th>외출시간</th>
+										<th>복귀시간</th>
 										<th>점심시간</th>
 										<th>근무시간</th>
 										<th>비고</th>
@@ -274,12 +274,12 @@
 										<td th:text="${l.attDate}"></td>
 										<td th:text="${l.attStTime}"></td>
 										<td th:text="${l.attEndTime}"></td>
-										<td th:text="${l.goingOut}"></td>
+										<td th:text="${l.goingOutStTime}"></td>
+										<td th:text="${l.goingOutEndTime}"></td>
 										<td>점심시간</td>
 										<td th:text="${l.attTime}"></td>
 										<td th:text="${l.attNote}"></td>
 										<td>관리자 확인</td>
-										<td> </td>
 									</tr>								
 								</tbody>
 							</table>
