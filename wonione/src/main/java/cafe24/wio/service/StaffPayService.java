@@ -57,10 +57,24 @@ public class StaffPayService {
 	}
 
 	//요율표 비교 공제액 계산
-	public StaffPay StaffPayDedu(String spdCode, String iyCode, String spdTheBusinessTax) {
-		StaffPay staffPayDedu = staffPayMapper.StaffPayDedu(spdCode, iyCode, spdTheBusinessTax);
+	public StaffPay StaffPayDedu(String spdCode, String iyCode) {
+		StaffPay staffPayDedu = staffPayMapper.StaffPayDedu(spdCode, iyCode);
 		
 		return staffPayDedu;
+	}
+
+	//강사 공제계 입력하기
+	public int addStaffDedupay(StaffPay staffPay) {
+		int result = staffPayMapper.addStaffDedupay(staffPay);
+		
+		return result;
+	}
+
+	//강사 급여 입력
+	public int addStaffPay(StaffPay staffPay) {
+		int result = staffPayMapper.addStaffPay(staffPay);
+		
+		return result;		
 	}
 
 }
