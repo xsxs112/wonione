@@ -13,6 +13,10 @@ import cafe24.wio.bean.Member;
 public interface ApprMapper {
 	
 	
+	public int goingOutEnd(String attCode);
+	
+	public int workAttendanceEnd(String attCode);
+	
 	
 	public int dateCheck(String sid);
 	

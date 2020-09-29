@@ -7,6 +7,30 @@
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
 	
+	
+	<update id = "goingOutEnd" parameterType="string">
+		UPDATE wt_attendance_management
+		SET
+			going_out_endTime=NOW()
+		WHERE 
+			attendance_code = #{attCode};
+	</update>
+	
+	
+	
+	<update id = "workAttendanceEnd" parameterType="string">
+	
+		UPDATE wt_attendance_management
+		SET
+			attendance_end_time=NOW(),
+			attendance_note='조퇴'
+		WHERE 
+		TIME(NOW())<![CDATA[ < ]]>'18:00:00' AND attendance_code = #{attCode};
+	
+	</update>
+	
+	
+	
 	<select id="dateCheck" parameterType="string" resultType = "int">
 	
 		select COUNT(*) 
@@ -18,12 +42,11 @@
 
 	
 	
-	
-	
 	<update id = "goingStOut" parameterType="string">
 		UPDATE wt_attendance_management
 		SET
-			going_out_stTime=NOW()
+			attendance_start_time=NOW(),
+			attendance_note='외출'
 		WHERE 
 			attendance_code = #{attCode};
 	</update>

@@ -13,9 +13,6 @@ public class AttManagement {
 	String goingOut;
 	String goingOutStTime;
 	String goingOutEndTime;
-	
-	
-	
 	public String getAttCode() {
 		return attCode;
 	}
@@ -73,18 +70,19 @@ public class AttManagement {
 	public String getGoingOutEndTime() {
 		return goingOutEndTime;
 	}
-	public void setGoingOutEndTime(String goingOuEndTime) {
-		this.goingOutEndTime = goingOuEndTime;
+	public void setGoingOutEndTime(String goingOutEndTime) {
+		this.goingOutEndTime = goingOutEndTime;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "AttManagement [attCode=" + attCode + ", attDate=" + attDate + ", mrId=" + mrId + ", attStTime="
 				+ attStTime + ", attEndTime=" + attEndTime + ", attTime=" + attTime + ", attNote=" + attNote
-				+ ", goingOut=" + goingOut + ", goingOutStTime=" + goingOutStTime + ", goingOuEndTime=" + goingOutEndTime
-				+ "]";
+				+ ", goingOut=" + goingOut + ", goingOutStTime=" + goingOutStTime + ", goingOutEndTime="
+				+ goingOutEndTime + "]";
 	}
+	
+	
+	
 	
 	
 	

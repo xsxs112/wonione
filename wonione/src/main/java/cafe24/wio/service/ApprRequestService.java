@@ -19,6 +19,16 @@ public class ApprRequestService {
 	
 	
 	
+	public int goingOutEnd(String attCode) {
+		
+		return apprMapper.goingOutEnd(attCode);
+	}
+	
+	public int workAttendanceEnd(String attCode) {
+		
+		return apprMapper.workAttendanceEnd(attCode);
+	}
+	
 	public int dateCheck(String sid) {
 		
 		return apprMapper.dateCheck(sid);
@@ -32,7 +42,7 @@ public class ApprRequestService {
 	
 	
 	public String getAttCode(String SID) {
-		
+	
 		return apprMapper.getAttCode(SID);
 	}
 	
