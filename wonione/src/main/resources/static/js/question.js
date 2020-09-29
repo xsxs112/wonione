@@ -42,10 +42,10 @@
 	});
 	
 	
-	$('.questionCodeName').click(function(){
+	$(document).on('click','.questionCodeName',function(){
 		var questionSid = $('#questionSid').val();
 		var questionName = $(this).parent().children('#questionCodeName').val();
-		if(questionSid != null){
+		if(questionSid != null && questionSid != undefined && questionSid != ''){
 			var request = $.ajax({
 				url: "/QuestionSidCheck",
 				method: "POST",
@@ -58,7 +58,6 @@
 				}else{
 					alert('해당 문제를 완료했던 아이디입니다.');
 				}
-				
 			});
 			request.fail(function( jqXHR, textStatus ) {
 				alert( "Request failed: " + textStatus );
