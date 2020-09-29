@@ -44,7 +44,7 @@
 			</tr>
 			<tr class="info">
 				<td colspan="6">
-				<textarea class="form-control" rows="10" name="boardContents" placeholder="공지할 내용을 입력해주세요." id="summernote">
+				<textarea class="form-control" rows="10" name="boardContents" placeholder="공지할 내용을 입력해주세요." id="boardContents">
 				</textarea>
 				</td>
 			</tr>
@@ -67,10 +67,10 @@
 		</div>
 	</form>
 		<!-- 썸머노트 -->
-	    <div id="summernote"></div>
+	    <div id="boardContents"></div>
 	    <script>
 	    $(document).ready(function() {
-	        $('#summernote').summernote();
+	        $('#boardContents').summernote();
 	    });
 	    </script>
 <!-- 유효성 검사 start
