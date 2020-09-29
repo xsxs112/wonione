@@ -47,7 +47,7 @@
 										<select name ="mrName" class="form-control" id="mrName">
 											<option value="">::학생이름::</option>
 											<th:block th:each="g : ${sName}">
-												`<option th:value="${g.mr_id}" th:name ="mrName">[[${g.mr_name}]]</option>
+												`<option th:value="${g.mr_id}">[[${g.mr_name}]]</option>
 											</th:block>
 										</select>
 									</td>
@@ -55,7 +55,7 @@
 										<select name ="testNumber" class="form-control" id="testNumber">
 											<option value="">::회차::</option>
 											<th:block th:each="t : ${testNum}">
-												<option th:value="${t.grade_test_num}" th:name ="testNumber">[[${t.test_number}]]</option>
+												<option th:value="${t.grade_test_num}">[[${t.test_number}]]</option>
 											</th:block>
 										</select> 
 									</td>
@@ -70,7 +70,6 @@
 								</tr>
 							</tbody>
 						</table>
-					
 						</form>
 						<table name="htmlCode">
 							<thead>

@@ -13,43 +13,87 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-status-wrap drp-lst">
                             <h3>장학금 지급 내역 리스트</h3><br>
-			             <form id="searchForm" class="form-inline" action="/" method="post">  
+			             <form id="scholarForm" class="form-inline" action="/serchScholar" method="post">  
 							<select class="form-control" name="awaBp" id="awaBp">
-						 		 <option value="award_bm_code">장학금지급코드</option>
-						  		 <option value="mr_name">이름</option>
+						 		 <option value="pm_info_code">장학금지급코드</option>
+						  		 <option value="mr_name">학생이름</option>
 						  		 <option value="award_bm_price">지급액</option>
 							</select> 
-						
 						<div class="form-group">
-					  		<input type="text" class="form-control" name="awaBps" placeholder="Search" id="awaBps"/>
+					  		<input type="text" class="form-control" name="awaBpSc" placeholder="Search" id="awaBpSc"/>
 						    <div class="input-group-btn pull-right">
-						        <button class="btn btn-default form-group" type="button" id="searchBtn">검색</button>
+						        <button class="btn btn-default form-group" type="button" id="searchScholar">검색</button>
 						   </div>
 					    </div>
 						</form>
 						<br>
-                            <div class="asset-inner">
-                                <table>
-                                   <tr>
-										<th>장학금지급코드</th>
-										<th>학생명</th>
-										<th>지급액</th>
-										<th>지급자</th>
-										<th>작성일자</th>
-										<th>상세보기</th>
-									</tr>
-                                  	<tr th:each="a : ${scholarshipList}">
-										<td th:text=${a.pmInfoCode}></td>
-										<td th:text=${a.mrName}></td>
-										<td th:text=${a.awardBmPrice}></td>
-										<td th:text=${a.mrName}></td>
-										<td th:text=${a.pmInfoRegDate}></td>
-										<td>
-											<a th:href="@{/(pmInfoCode=${a.pmInfoCode})}">상세보기</a>
-										</td>	
-									</tr>
-                                </table>
-                            </div>
+						<br>
+						<form id="scholarSubmitForm" action="/getScholarList" method="POST">
+						<table id="member_table">
+							<thead>
+								<tr>
+									<th>장학코드</th>
+									<th>학생이름</th>
+									<th>지급액</th>
+									<th>지급자</th>
+									<th>저장</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+								<td>
+								<input class="form-control" th:value="${scholarCode}" name="pmInfoCode" readonly="readonly">
+									<td>
+										<select name ="mrName" class="form-control" id="mrName">
+											<option value="">::학생이름::</option>
+											<th:block th:each="s : ${sName}">
+												`<option th:value="${s.mr_id}">[[${s.mr_name}]]</option>
+											</th:block>
+										</select>
+									</td>
+									<td>
+										<select name ="awardBmPrice" class="form-control" id="awardBmPrice">
+											<option>::지급액::</option>
+											<th:block th:each="m : ${sMoney}">
+												<option th:value="${m.award_bm_code}">[[${m.award_bm_price}]]</option>
+											</th:block>
+										</select> 
+									</td>
+									<td>
+										<input type="text" class="form-control" th:placeholder="${sessionName}" readonly="readonly">
+										<input type="hidden" th:value="${sessionId}" name="pmInfoPayerName">
+									</td>
+									<td>
+										<div style="margin-bottom:10px"> 
+											<button type="button" class="btn btn-default btn-block" id="scholarSubmit">저장</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</form>
+                        <div class="asset-inner">
+                            <table>
+                               <tr>
+									<th>장학금지급코드</th>
+									<th>학생명</th>
+									<th>지급장학금액</th>
+									<th>지급자</th>
+									<th>작성일자</th>
+									<th>상세보기</th>
+								</tr>
+                              	<tr th:each="a : ${scholarshipList}">
+									<td th:text=${a.pmInfoCode}></td>
+									<td th:text=${a.mrName}></td>
+									<td th:text=${a.awardBmPrice}></td>
+									<td th:text=${a.pmInfoPayerName}></td>
+									<td th:text=${a.pmInfoRegDate}></td>
+									<td>
+										<a th:href="@{/ScholarDetailList(pmInfoCode=${a.pmInfoCode})}">상세보기</a>
+									</td>	
+								</tr>
+                            </table>
+                        </div>
                             <div class="custom-pagination">
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
@@ -71,15 +115,15 @@
 	<script type="text/javascript"> 
 	
 	 $(function(){
-			 $('#searchBtn').click(function(){
+			 $('#searchScholar').click(function(){
 				 var awaBp = $('#awaBp').val();
-				 var awaBps = $('#awaBps').val();
-				 var searchForm = $('#searchForm');
+				 var awaBpSc = $('#awaBpSc').val();
+				 var scholarForm = $('#scholarForm');
 				 console.log(awaBp + ' < -- awaBp');
-				 console.log(awaBps + ' < -- awaBps');
+				 console.log(awaBpSc + ' < -- awaBpSc');
 				
 					var request = $.ajax({
-					  url: "/workreport",  
+					  url: "/scholarship",  
 					  method: "GET", 
 					  data: { awaBp : awaBp , awaBps : awaBps  }, 
 					  dataType: "json"  
@@ -97,10 +141,30 @@
 					request.fail(function( jqXHR, textStatus ) {
 					  alert( "Request failed: " + textStatus );
 					});
-					searchForm.submit();
+					scholarForm.submit();
 			 });
 		 });
-	
+	 
+	 $(function() {
+		  $('#scholarSubmit').click(function(){
+			  console.log('클릭 이벤트');
+			  	var scholarSubmitForm = $('#scholarSubmitForm');
+				var mrName = $('#mrName').val();
+				var awardBmPrice = $('#awardBmPrice').val();
+				console.log("mrName-->"+mrName);
+				console.log("awardBmPrice-->"+awardBmPrice);
+				
+				if(mrName == undefined || mrName ==''){
+					alert('장학금지급 등록을 위한 학생 이름을 입력해주세요');
+					return;
+				}else if(awardBmPrice == '' || awardBmPrice == undefined){
+					alert('장학금지급 등록을 위한 지급장학금액을 입력해주세요');
+					return;	
+				}
+				scholarSubmitForm.submit();
+			}); 
+		});
+	 
 		</script>
 		
 	</th:block>

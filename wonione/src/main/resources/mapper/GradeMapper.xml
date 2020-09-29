@@ -14,6 +14,7 @@
 		<result column="mr_name" 				property="mrName"/>
 		<result column="test_number" 			property="testNumber"/>	
 </resultMap>
+
 <!-- 성적조회 -->
 <select id="getGradeList" resultType="Grade" resultMap="gradeResultMap">
 	SELECT

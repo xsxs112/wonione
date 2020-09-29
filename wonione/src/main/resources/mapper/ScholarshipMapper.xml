@@ -14,15 +14,17 @@
 		<result column="pm_info_reg_date" 	property="pmInfoRegDate"/>
 		<result column="mr_name" 			property="mrName"/>
 		<result column="award_bm_price" 	property="awardBmPrice"/>	
+		<result column="pmInfoPayerName"    property="pmInfoPayerName"/>			
 </resultMap>
 
+<!-- 장학금지급내역 리스트 -->
 <select id="getScholarList" parameterType="ScholarShip" resultMap="ScholarShipResultMap">
 	
 	SELECT 
 		  wt_payments_information.pm_info_code
 		, wt_award_benchmark.award_bm_price 
-		, r1.mr_name
-		, r2.mr_name
+		, r1.mr_name 
+		, r2.mr_name AS pmInfoPayerName 
 		,  wt_payments_information.pm_info_reg_date
 	FROM 
 		wt_payments_information 
@@ -39,6 +41,111 @@
 	ON 
 		wt_payments_information.pm_info_Payer = r2.mr_id;		
 		
+</select>
+
+<!--장학금상세보기  -->
+
+<select id="ScholarDetailList" parameterType="String" resultType="Scholarship" resultMap="ScholarShipResultMap">
+	SELECT 
+		  wt_payments_information.pm_info_code   
+		, wt_award_benchmark.award_bm_price 
+		, r1.mr_name  
+		, r2.mr_name AS pmInfoPayerName
+		,  wt_payments_information.pm_info_reg_date
+	FROM 
+		wt_payments_information 
+	inner join
+		wt_award_benchmark 
+	on
+		wt_payments_information.award_bm_code =wt_award_benchmark.award_bm_code 
+	LEFT JOIN 
+		wt_member_registration AS r1
+	ON 
+		wt_payments_information.mr_id = r1.mr_id
+	LEFT JOIN 
+		wt_member_registration AS r2
+	ON 
+		wt_payments_information.pm_info_Payer = r2.mr_id
+	where
+		 wt_payments_information.pm_info_code = #{pmInfoCode};
+
+</select>
+
+<!--  자동증가 코드 쿼리  -->
+<select id="ScholarReCode" resultType="hashMap">
+SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt_payments_information),1) AS max;
+</select>
+
+
+<!--장학금 지급 내역 작성하기  -->
+<insert id="giveScholarShip" parameterType="Scholarship">
+	INSERT INTO
+	 	wt_payments_information
+			( pm_info_code
+			, award_bm_code
+			, mr_id
+			, pm_info_Payer
+			, pm_info_reg_date)
+	VALUES (
+			  #{pmInfoCode}
+			, #{awardBmPrice}
+			, #{mrName}
+			, #{pmInfoPayerName}
+			, NOW());
+</insert>
+
+<!-- 학생이름가져오기  -->
+<select id="sName" resultType="hashMap" >
+
+	SELECT 
+		 mr_id
+		,mr_pw
+		,mr_name
+		,level_num
+		,mr_phone
+		,mr_addr
+		,mr_target_score
+		,pm_r_code
+		,mr_account_num
+		,shuttle_num
+		,mr_join_date
+		,mr_reg_date
+	FROM 
+		wt_member_registration
+	WHERE
+		level_num = 4;	
+		
+</select>
+
+<select id="sMoney"  resultType="hashMap">
+	SELECT 
+		award_bm_code
+		,award_bm_price
+		,award_bm_member
+		,award_bm_etc
+	FROM 
+		wt_award_benchmark;
+
+</select>
+
+<!-- 장학금지급 검색  -->
+<select id="serchScholar" resultMap="ScholarShipResultMap"  resultType="Scholarship">
+	SELECT 
+			  pm_info_code
+			, award_bm_price 
+		 	, mr_name
+	FROM 
+		wt_payments_information
+		INNER join
+		wt_award_benchmark
+		on
+		wt_payments_information.award_bm_code = wt_award_benchmark.award_bm_code
+		LEFT join
+		wt_member_registration
+		on
+		wt_member_registration.mr_id = wt_payments_information.mr_id
+	WHERE	
+		${awaBp} LIKE CONCAT('%',#{awaBpSc},'%');
 </select>
 
 

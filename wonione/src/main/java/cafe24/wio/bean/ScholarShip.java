@@ -9,7 +9,8 @@ public class ScholarShip {
  private String pmInfoRegDate;
  private String awardBmPrice;
  private String mrName;
- 
+ private String pmInfoPayerName;
+
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
@@ -27,6 +28,8 @@ public String toString() {
 	builder.append(awardBmPrice);
 	builder.append(", mrName=");
 	builder.append(mrName);
+	builder.append(", pmInfoPayerName=");
+	builder.append(pmInfoPayerName);
 	builder.append("]");
 	return builder.toString();
 }
@@ -71,6 +74,12 @@ public String getMrName() {
 }
 public void setMrName(String mrName) {
 	this.mrName = mrName;
+}
+public String getPmInfoPayerName() {
+	return pmInfoPayerName;
+}
+public void setPmInfoPayerName(String pmInfoPayerName) {
+	this.pmInfoPayerName = pmInfoPayerName;
 }
 	
 }
