@@ -41,7 +41,17 @@ public class OfficersPay {
 	private String mrAccountNum;				//직원계좌번호
 	
 	private String pREct;						//급여자원테이블(비고)	
-		
+	
+	private String writer;						//작성자
+	
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	
+	
 	public String getOpcCode() {
 		return opcCode;
 	}
@@ -339,6 +349,7 @@ public class OfficersPay {
 		builder.append("===========자원관리비고 끝===========");
 		return builder.toString();
 	}
+
 
 	
 }
