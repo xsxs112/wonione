@@ -22,7 +22,7 @@
 		  		<tbody>
 	  				<tr th:each="q : ${QuestionList}">
 		  				<td style="text-align:center;" th:text="${#numbers.formatInteger(q.rowNum,0,'POINT')}"></td>
-		  				<td><input type="hidden" id="questionCodeName"  th:value="${q.qt_codename}"><a class="questionCodeName">[[${q.qt_title}]]</a></td>
+		  				<td><input type="hidden" id="questionCodeName"  th:value="${q.qt_codename}"><input type="hidden" th:value="${session.SID}" id="questionSid"><a class="questionCodeName">[[${q.qt_title}]]</a></td>
 		  				<td th:text="${q.mr_name}"></td>
 		  				<td th:text="${q.qt_date}"></td>
 		  			</tr>

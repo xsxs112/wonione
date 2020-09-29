@@ -80,7 +80,8 @@ public class ConsultingController {
 	//상담내역리스트에서 제목을 클릭후 해당정보를 삭제하는 ajax사용
 	
 	 @PostMapping(value = "/deleteConsulting",produces = "application/json")
-	 @ResponseBody public int deleteConsulting(int csCode){ 
+	 @ResponseBody 
+	 public int deleteConsulting(int csCode){ 
 		 int result = consultingService.deleteConsulting(csCode); 
 	 	return result; 
 	 }

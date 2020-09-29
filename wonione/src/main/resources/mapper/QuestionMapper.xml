@@ -5,6 +5,7 @@
 <mapper namespace="cafe24.wio.mapper.QuestionMapper">
 	<resultMap type="Question" id="QuestionMap">
 		<result column="qe_code" 		property="qeCode"/>
+		<result column="qc_student" 	property="qcStudent"/>
 		<result column="qt_codeName" 	property="qtCodeName"/>
 		<result column="mr_o_id" 		property="qeOid"/>
 		<result column="qe_data" 		property="qeData"/>
@@ -12,6 +13,78 @@
 		<result column="qe_answer" 		property="qeAnswer"/>
 		<result column="qe_date" 		property="qeDate"/>
 	</resultMap>
+	<select id="QuestionSidCheck" resultType="int">
+		SELECT
+			COUNT(1) AS num
+		FROM 
+			wt_questions_candidate AS qc
+			INNER JOIN
+			wt_questions_enrollment AS qe
+			on
+			qc.qe_code = qe.qe_code
+		WHERE
+			qe.qt_codeName = #{questionName}
+		AND
+			qc.qc_student = #{questionSid}; 
+	</select>
+	<select id="ScoreCheck" resultType="hashMap"  parameterType="map">
+		<![CDATA[
+			SELECT 
+			 	m.mr_name
+				,sum(qe_score) AS qe_score
+				,qc_date
+				,(CASE WHEN sum(qe_score) < 60 THEN '초급'
+						 WHEN (sum(qe_score) >= 60 AND sum(qe_score) <80) THEN '중급'
+						 WHEN (sum(qe_score) >= 80 AND sum(qe_score) <100) THEN '고급'
+						 ELSE '판단불가' 
+					END) AS 'scoreClass' 
+			FROM 
+				wt_questions_candidate AS qc
+				INNER join
+				wt_member_registration AS m
+				on
+				qc.qc_student = m.mr_id
+			WHERE 
+				qc.qc_student =#{scoreSid}
+			GROUP BY 
+				qc.qc_student;
+		 ]]>
+	</select>
+	<insert id="QuestionScoreCheck" parameterType="Question">
+		INSERT INTO 
+			wt_questions_candidate
+				(qc_code
+				,qc_student
+				,qe_answer
+				,qe_code
+				,qe_score
+				,qc_date)
+		VALUES 
+			(null
+			,#{studentName}
+			,#{qeAnswer}
+			,#{qeCode}
+			,(SELECT
+					S.qe_score
+				FROM
+				(
+					SELECT  
+						qe_score
+						,1 AS ORDERS
+						FROM wt_questions_enrollment
+						where
+						qe_code=#{qeCode} AND qe_answer=#{qeAnswer}
+						
+					UNION
+					
+					SELECT 0 AS qe_score, 0 AS ORDERS
+				) AS S
+				
+				ORDER BY S.ORDERS DESC
+				LIMIT 0, 1)
+				,NOW());
+	</insert>
+	
 	<select id="Question" resultType="hashMap" parameterType="map">
 		SELECT 
 		 	 qn.rowNum   AS rowNum

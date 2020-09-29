@@ -17,5 +17,12 @@ public interface QuestionMapper {
 
 	public List<Map<String, Object>> Question(Map<String, Object> parameterMap);
 
+	public int QuestionScoreCheck(String qeAnswer, int qeCode, String studentName);
+
+	public Map<String, Object> ScoreCheck(String scoreSid);
+
+	public int QuestionSidCheck(String questionSid, String questionName);
+
+
 
 }
