@@ -42,7 +42,12 @@
 				<tr>
 					<td>은행 코드</td>
 					<td>
-						<input type="text" name="pmRTitle" th:value="${member.pmRTitle}"><!--  th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}" -->
+						<select name="pmRCode">
+							<option>::::결제 수단 선택::::</option>
+							<th:block th:each="l:${pmResourceList}">		<!-- 정보 수정 클릭 시, 현재 결제 수단이 보여져야함. selected. 0929_12:43 -->
+								<option th:value="${l.pmResourceCode}" th:text="${l.pmResourceTitle}" th:selected="${l.pmResourceCode==member.pmRCode}"></option>
+							</th:block>
+						</select>
 					</td>
 				</tr>					
 				<tr>
@@ -50,13 +55,7 @@
 					<td>
 						<input type="text" name="mrAccountNum" th:value="${member.mrAccountNum}"><!--  th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}" -->
 					</td>
-				</tr>					
-				<tr>
-					<td>셔틀 탑승</td>
-					<td>
-						<input type="text" name="shuttleNum" th:value="${member.shuttleNum}" th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}">
-					</td>
-				</tr>					
+				</tr>										
 			
 			</table>
 			<td colsapn="2" style="text-align: center;">
