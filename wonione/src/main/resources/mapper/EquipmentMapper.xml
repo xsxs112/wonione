@@ -171,7 +171,6 @@ INSERT INTO wt_equipment
 	,	#{eqWriter}
 	,	CURRENT_TIME()
 	,	#{eqRemark})
-
 </insert>
 
 <!-- 비품정보 검색 -->
@@ -200,19 +199,28 @@ WHERE
 	GROUP BY eq_category
 </select>
 
+<!-- 페이징을 위한 비품정보카운팅 -->
+<select id="countEquipment" resultType="int">
+      SELECT
+         COUNT(*)
+      FROM
+         wt_equipment
+</select>
+
 <!-- 비품정보 보기 -->
- <select id="getEquipList" resultMap="equipmentResult">
+ <select id="getEquipList" resultType="Equipment" resultMap="equipmentResult">
 SELECT 
-		eq_code
-	, 	eq_category
-	, 	eq_name
-	, 	eq_model_name
-	, 	eq_writer
-	, 	eq_reg_date
-	, 	eq_remark
+		eq_code				
+	, 	eq_category			
+	, 	eq_name				
+	, 	eq_model_name		
+	, 	eq_writer			
+	, 	eq_reg_date			
+	, 	eq_remark			
 FROM 
 	wt_equipment
-
+	ORDER BY eq_code ASC
+	LIMIT #{startRow},#{rowPerPage};
 </select> 
 
 </mapper>

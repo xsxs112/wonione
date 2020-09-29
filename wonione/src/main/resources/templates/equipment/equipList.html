@@ -61,20 +61,39 @@
 							</th:block>
                                 </table>
                             </div>
-                            <div class="custom-pagination">
+							<div class="custom-pagination" th:if="${currentPage ne null}">
 								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#">이전</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">다음</a></li>
+									<li class="page-item">
+										<a class="page-link" th:href="@{/equipList}">처음</a>
+									</li>
+									<li class="page-item">
+										<span th:if="${currentPage > 1}">
+											<a class="page-link" th:href="@{/equipList(currentPage=(${currentPage}-1))}">이전</a>
+										</span>
+									</li>
+								</ul>
+								<ul class="pagination">
+									<li class="page-item">
+									<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/equipList(currentPage=${num})}"></a>
+									</th:block>
+									</li>
+								</ul>
+								<ul class="pagination">
+									<li class="page-item">
+										<span th:if="${currentPage ne lastPage}">
+											<a th:href="@{/equipList(currentPage=(${currentPage}+1))}">다음</a>
+										</span>
+		    						</li>
+		    						<li class="page-item">
+		    							<a th:href="@{/equipList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
+		    						</li>
 								</ul>
                             </div>
-                        	<div class="container-fluid" style="margin: 10px;">
-								<a href="/equipList" class="btn btn-default" role="button">전체리스트보기</a>
-							</div>		
-                            <div class="btn-group" style="margin: 10px;">
-								<a href="/equipmentManage" class="btn btn-default " role="button">관리 메인페이지</a>
+                            <div class="container-fluid" style="margin: 10px;">
+                            	<a th:if="${currentPage eq null}" href="/equipList" class="btn btn-default" role="button">전체리스트보기</a>                            </div>
+                            <div class="container-fluid" style="margin: 10px;">
+								<a href="/equipmentManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 								<a href="/equipListMain" class="btn btn-default " role="button">리스트메인페이지</a>
 							</div>
                         </div>

@@ -20,6 +20,7 @@
 					  <th>출판사</th>
 					  <th>저자</th>
 					  <th>작성자아이디</th>
+					  <th>작성자이름</th>
 					  <th>등록일자</th>		  
 					</tr>
 				</thead>
@@ -30,6 +31,7 @@
 					  <td th:text="${tbi.txbPublisher}"></td>
 					  <td th:text="${tbi.txbAuthor}"></td>
 					  <td th:text="${tbi.txbWriter}"></td>
+					  <td th:text="${sessionName}"></td>
 					  <td th:text="${tbi.txbRegDate}"></td>
 					</tr>
 				</tbody>

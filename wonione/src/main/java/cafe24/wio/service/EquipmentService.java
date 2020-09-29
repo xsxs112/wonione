@@ -1,11 +1,14 @@
 package cafe24.wio.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cafe24.wio.bean.Equipment;
+import cafe24.wio.bean.SupplyTextbook;
 import cafe24.wio.bean.WhEquipment;
 import cafe24.wio.mapper.EquipmentMapper;
 
@@ -100,11 +103,47 @@ public class EquipmentService {
 	}
 	
 	/**
-	 * 등록된 비품정보만 조회하기
-	 * @return List Equipment equipList
+	 * 등록된 비품정보 조회
+	 * @return Map String,Object resultMap
 	 */
-	public List<Equipment> getEquipList(){
-		List<Equipment> equipList = equipmentMapper.getEquipList();
-		return equipList;
+	public Map<String,Object> getEquipList(int currentPage){
+		final int ROW_PER_PAGE = 7;
+	      
+	      int startRow = 0;
+	      
+	      int startPageNum = 1;
+	      int lastPageNum = ROW_PER_PAGE;
+	      
+	      if(currentPage > (ROW_PER_PAGE/2)) {
+	         startPageNum = currentPage - ((lastPageNum/2)-1);
+	         lastPageNum += startPageNum;
+	      }
+	      
+	      startRow = (currentPage - 1) * ROW_PER_PAGE ;
+	      
+	      Map<String,Object> equipMap = new HashMap<String,Object>();
+	            
+	      equipMap.put("startRow", startRow);
+	      equipMap.put("rowPerPage", ROW_PER_PAGE);
+
+	      List<Equipment> equipList = equipmentMapper.getEquipList(equipMap);
+	      
+	      double totalRowCount = equipmentMapper.countEquipment();
+	      
+	      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
+		
+		
+	      if(currentPage >= (lastPage-4)) {
+		         lastPageNum = lastPage;
+		      }
+	      Map<String,Object> resultMap = new HashMap<String,Object>();
+	      
+	      resultMap.put("equipList", equipList);
+	      resultMap.put("lastPage", lastPage);
+	      resultMap.put("startPageNum", startPageNum);
+	      resultMap.put("lastPageNum", lastPageNum);
+		
+		return resultMap;
+	      
 	}
 }

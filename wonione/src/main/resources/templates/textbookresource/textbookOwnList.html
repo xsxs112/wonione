@@ -69,36 +69,37 @@
 							</th:block>
                                 </table>
                             </div>
-                            <div class="custom-pagination">
+                            <div class="custom-pagination" th:if="${currentPage ne null}">
 								<ul class="pagination">
 									<li class="page-item">
 										<a class="page-link" th:href="@{/textbookOwnList}">처음</a>
 									</li>
 									<li class="page-item">
-										<span th:if="${currentPage > 1}"><a class="page-link" th:href="@{/textbookOwnList(currentPage=(${currentPage}-1))}">이전</a></span>
-		    							<span th:unless="${currentPage > 1}" th:text="이전"></span>
+										<span th:if="${currentPage > 1}">
+											<a class="page-link" th:href="@{/textbookOwnList(currentPage=(${currentPage}-1))}">이전</a>
+										</span>
 									</li>
+								</ul>
+								<ul class="pagination">
 									<li class="page-item">
 									<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
-										<span th:if="${currentPage eq num}" th:text="${num}">
-											<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/textbookOwnList(currentPage=${num})}"></a>
-										</span>
+										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/textbookOwnList(currentPage=${num})}"></a>
 									</th:block>
 									</li>
-									
+								</ul>
+								<ul class="pagination">
 									<li class="page-item">
-										<span th:if="${currentPage != lastPage}">
+										<span th:if="${currentPage ne lastPage}">
 											<a th:href="@{/textbookOwnList(currentPage=(${currentPage}+1))}">다음</a>
 										</span>
-			    						<span th:unless="${currentPage != lastPage}" th:text="다음"></span>
 		    						</li>
 		    						<li class="page-item">
-		    							<a th:href="@{/textbookOwnList(currentPage=${lastPage})}">마지막</a>
+		    							<a th:href="@{/textbookOwnList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
 		    						</li>
 								</ul>
                             </div>
                             <div class="container-fluid" style="margin: 10px;">
-								<!-- <a href="/textbookOwnList" class="btn btn-default" role="button">전체리스트보기</a> -->
+								<a th:if="${currentPage eq null}" href="/textbookOwnList" class="btn btn-default" role="button">전체리스트보기</a>
 								<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 							</div>
                         </div>
@@ -124,6 +125,7 @@
 		}
 		searchForm.submit();
 	});
+
 	
 	</script>
 	</th:block>

@@ -27,7 +27,6 @@ public class TextbookController {
 	@Autowired
 	private TextbookService textbookService;
 	
-	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 	
 	//교재 지급내역 검색
@@ -36,7 +35,6 @@ public class TextbookController {
 			,@RequestParam(value="suppSk", required=false) String suppTxbSk
 			,@RequestParam(value="suppTxbSv", required=false) String suppTxbSv) {
 		List<SupplyTextbook> suppTxbSearchResult = textbookService.getSuppTxbSearch(suppTxbSk, suppTxbSv);
-		logger.info(suppTxbSearchResult.toString());
 		model.addAttribute("getTextbookSuppList", suppTxbSearchResult);
 		return "textbookresource/textbookSupplyList";
 	}
@@ -57,7 +55,9 @@ public class TextbookController {
 	public String getWhTxbSearch(Model model
 							,@RequestParam(value="whTxbSk", required=false) String whTxbSk
 							,@RequestParam(value="whTxbSv", required=false) String whTxbSv) {
-		List<TextbookBasicInfo> whTxbSearchResult= textbookService.getWhTxbSearch(whTxbSk, whTxbSv);
+		List<Map<String, Object>> whTxbSearchResult= textbookService.getWhTxbSearch(whTxbSk, whTxbSv);
+		model.addAttribute("title", "교재입고검색결과 페이지");
+		model.addAttribute("mainTitle", "검색하신내용은 아래와 같습니다.");
 		model.addAttribute("getTextbookList", whTxbSearchResult);
 		return "textbookresource/textbookOwnlist";
 	}
@@ -67,11 +67,7 @@ public class TextbookController {
 	@ResponseBody 
 	public int wahoTextbookCheck(Model model
 					,@RequestParam(value="txbCode", required = false)String txbCode	) { 
-		logger.info("==============================");
-		logger.info("입고내역체크 wahoTextbookCheck 포스트매핑!!!!");
-		logger.info("==============================");
-		TextbookBasicInfo whTxbCodeCheck = textbookService.wahoTextbookCheck(txbCode); 
-		
+		Map<String,Object> whTxbCodeCheck = textbookService.wahoTextbookCheck(txbCode); 
 		int result = 1;
 		if(whTxbCodeCheck == null) {
 			result = 0;
@@ -91,38 +87,42 @@ public class TextbookController {
 	//교재 지급내역 조회
 	@GetMapping("/textbookSupplyList")
 	public String getTextbookSuppList(Model model
-								,SupplyTextbook supplyTextbook) {
-		logger.info("==============================");
-		logger.info("교재지급내역페이지 getTextbookSuppList 포스트매핑!!!!");
-		logger.info("==============================");
+									, @RequestParam(
+													  value="currentPage"
+													, required = false
+													, defaultValue = "1") int currentPage) {
+		
+		Map<String,Object> getTextbookSuppList = textbookService.getTextbookSuppList(currentPage);
 		
 		model.addAttribute("title", "교재지급내역 페이지");
 		model.addAttribute("mainTitle", "교재지급내역 페이지");
-		List<SupplyTextbook> getTextbookSuppList = textbookService.getTextbookSuppList();
-		model.addAttribute("getTextbookSuppList", getTextbookSuppList);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("getTextbookSuppList", getTextbookSuppList.get("getTextbookSuppList"));
+		model.addAttribute("lastPage", getTextbookSuppList.get("lastPage"));
+		model.addAttribute("startPageNum", getTextbookSuppList.get("startPageNum"));
+		model.addAttribute("lastPageNum", getTextbookSuppList.get("lastPageNum"));	
+		
 		return "textbookresource/textbookSupplyList";
 	}
 	
 	//교재 기초정보 등록
 	@PostMapping("/textbookInfoRegister")
 	public String textbookInfoRegister(Model model
-									,TextbookBasicInfo txbBasicInfo) {
-		logger.info("==============================");
-		logger.info("교재정보등록페이지 textbookInfoRegister 포스트매핑!!!!");
-		logger.info("==============================");
+									,TextbookBasicInfo txbBasicInfo
+									,HttpSession session) {
 		
 		textbookService.addTextbookInfo(txbBasicInfo);
 		String txbInfoCode = textbookService.getAddTxbInfoCode();
 		TextbookBasicInfo textbookBasicInfo = textbookService.getOnlyTxbInfo(txbInfoCode);
-		logger.info("==============================");
+		String sessionName = session.getAttribute("SNAME").toString();
 		logger.info(txbInfoCode);
 		logger.info(textbookBasicInfo.toString());
-		logger.info("==============================");
 		model.addAttribute("title", "교재등록 완료  페이지");
 		model.addAttribute("mainTitle", "교재등록 완료 페이지");
 		model.addAttribute("regResult", "다음과 같은 정보로 등록되었습니다");
 		model.addAttribute("txbInfoCode", txbInfoCode);
 		model.addAttribute("textbookBasicInfo", textbookBasicInfo);
+		model.addAttribute("sessionName", sessionName);
 		return "textbookresource/textbookRegResult";
 	}
 	
@@ -131,17 +131,16 @@ public class TextbookController {
 	public String textbookInfoRegister(Model model
 									,HttpSession session) {
 		
-		logger.info("==============================");
-		logger.info("교재정보등록페이지 textbookInfoRegister 겟매핑!!!!");
-		logger.info("==============================");
 		String txbCode = textbookService.getTxbInfoMaxCode();
 		String sessionId = session.getAttribute("SID").toString();
+		String sessionName = session.getAttribute("SNAME").toString();
 		logger.info(txbCode + " < -- txbCode");
 		logger.info(sessionId + " < -- sessionId");
 		model.addAttribute("title", "교재기본정보등록  페이지");
 		model.addAttribute("mainTitle", "교재기본정보등록 페이지");
 		model.addAttribute("txbCode", txbCode);
 		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("sessionName", sessionName);
 		return "textbookresource/textbookInfoRegister";
 	}	
 	
@@ -218,7 +217,7 @@ public class TextbookController {
 		String sessionId = session.getAttribute("SID").toString();
 		logger.info(sessionId);
 		//교재 기본정보조회
-		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList();
+		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfo();
 		//교재입고목록 조회
 		List<WhTextbook> whTextbookList = textbookService.getWhTextbookList();
 		//코드자동증가
@@ -280,12 +279,19 @@ public class TextbookController {
 	
 	//교재기본정보 리스트
 	@GetMapping("/textbookInfoList")
-	public String getTextbookInfoList(Model model) {
-			List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfoList();
-			model.addAttribute("textbookInfoList", textbookinfolist);
-			System.out.println(textbookinfolist);
+	public String getTextbookInfoList(Model model
+								,@RequestParam(
+											  value="currentPage"
+											, required = false
+											, defaultValue = "1") int currentPage) {
+			Map<String,Object> textbookinfolist = textbookService.getTextbookInfoList(currentPage);
 			model.addAttribute("title", "교재목록페이지");
 			model.addAttribute("mainTitle", "교재목록페이지");
+			model.addAttribute("currentPage",currentPage);
+			model.addAttribute("textbookInfoList", textbookinfolist.get("textbookinfolist"));
+			model.addAttribute("lastPage", textbookinfolist.get("lastPage"));
+			model.addAttribute("startPageNum", textbookinfolist.get("startPageNum"));
+			model.addAttribute("lastPageNum", textbookinfolist.get("lastPageNum"));
 			
 		return "textbookresource/textbookInfoList";
 	}

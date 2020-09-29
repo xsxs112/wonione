@@ -1,6 +1,7 @@
 package cafe24.wio.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -24,8 +25,11 @@ public interface EquipmentMapper {
 	//비품 입고내역 조회
 	public List<WhEquipment> getEquipWhList();
 
-	//등록된 비품정보만 조회하기
-	public List<Equipment> getEquipList();
+	//페이징을 위한 비품정보카운팅 
+	public int countEquipment();
+	
+	//등록된 비품정보 조회
+	public List<Equipment> getEquipList(Map<String,Object> equipMap);
 	
 	//비품카테고리 조회
 	public List<Equipment> getEquipCategory();

@@ -66,17 +66,37 @@
                                     </th:block>
                                 </table>
                             </div>
-                            <div class="custom-pagination">
+                            <div class="custom-pagination" th:if="${currentPage ne null}">
 								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#">이전</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">다음</a></li>
+									<li class="page-item">
+										<a class="page-link" th:href="@{/textbookInfoList}">처음</a>
+									</li>
+									<li class="page-item">
+										<span th:if="${currentPage > 1}">
+											<a class="page-link" th:href="@{/textbookInfoList(currentPage=(${currentPage}-1))}">이전</a>
+										</span>
+									</li>
+								</ul>
+								<ul class="pagination">
+									<li class="page-item">
+									<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/textbookInfoList(currentPage=${num})}"></a>
+									</th:block>
+									</li>
+								</ul>
+								<ul class="pagination">
+									<li class="page-item">
+										<span th:if="${currentPage ne lastPage}">
+											<a th:href="@{/textbookInfoList(currentPage=(${currentPage}+1))}">다음</a>
+										</span>
+		    						</li>
+		    						<li class="page-item">
+		    							<a th:href="@{/textbookInfoList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
+		    						</li>
 								</ul>
                             </div>
                             <div class="container-fluid" style="margin: 10px;">
-								<a href="/textbookInfoList" class="btn btn-default" role="button">전체리스트보기</a>
+								<a th:if="${currentPage eq null}" href="/textbookInfoList" class="btn btn-default" role="button">전체리스트보기</a>
 								<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 							</div>
                         </div>
@@ -86,23 +106,23 @@
         </div>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script type="text/javascript">
-	$('#searchItBtn').click(function(){
-		var searchForm = $('#searchForm');
-		var selectItSk = $('#selectItSk').val();
-		var infoTxbSv = $('#infoTxbSv').val();
-		console.log(selectItSk + ' < -- selectItSk');
-		console.log(infoTxbSv + ' < -- infoTxbSv');
-		if(selectItSk == null || selectItSk == undefined){
-			alert('검색조건을 선택해주세요');
-			return;
-		}else if(infoTxbSv == null || infoTxbSv == ''){
-			alert('검색어를 입력해주세요');
-			$('#infoTxbSv').focus();
-			return;
-		}
-		searchForm.submit();
-	});
+		<script type="text/javascript">
+		$('#searchItBtn').click(function(){
+			var searchForm = $('#searchForm');
+			var selectItSk = $('#selectItSk').val();
+			var infoTxbSv = $('#infoTxbSv').val();
+			console.log(selectItSk + ' < -- selectItSk');
+			console.log(infoTxbSv + ' < -- infoTxbSv');
+			if(selectItSk == null || selectItSk == undefined){
+				alert('검색조건을 선택해주세요');
+				return;
+			}else if(infoTxbSv == null || infoTxbSv == ''){
+				alert('검색어를 입력해주세요');
+				$('#infoTxbSv').focus();
+				return;
+			}
+			searchForm.submit();
+		});
 	
 	</script>	
 	</th:block>

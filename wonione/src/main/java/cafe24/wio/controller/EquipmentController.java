@@ -1,6 +1,7 @@
 package cafe24.wio.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -63,12 +64,21 @@ public class EquipmentController {
 	
 	//비품 정보조회 view로 forward
 	@GetMapping("/equipList")
-	public String equipList(Model model) {
+	public String equipList(Model model
+						,@RequestParam
+						(	value="currentPage"
+						, 	required = false
+						, 	defaultValue = "1") int currentPage) {
+
+		Map<String,Object> equipList = equipmentService.getEquipList(currentPage);
 
 		model.addAttribute("title", "등록비품 조회");
 		model.addAttribute("mainTitle", "등록비품 조회");
-		List<Equipment> equipList = equipmentService.getEquipList();
-		model.addAttribute("equipList", equipList);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("equipList", equipList.get("equipList"));
+		model.addAttribute("lastPage", equipList.get("lastPage"));
+		model.addAttribute("startPageNum", equipList.get("startPageNum"));
+		model.addAttribute("lastPageNum", equipList.get("lastPageNum"));	
 		
 		return "equipment/equipList";
 	}

@@ -42,6 +42,14 @@
 <!-- ************************교재지급************************* -->
 <!-- *********************** START ************************* -->
 
+<!-- 페이징을 위한 지급내역카운팅 -->
+<select id="countSuppTxb" resultType="int">
+      SELECT
+         COUNT(*)
+      FROM
+         wt_supply_textbook;
+</select>
+
 <!-- 교재 지급내역 검색 -->
 <select id="getSuppTxbSearch" resultMap="resultSupplyTextbook">
 	SELECT 
@@ -58,7 +66,7 @@
 </select>
 
 <!-- 교재지급내역조회 -->
-<select id="getTextbookSuppList" resultMap="resultSupplyTextbook">
+<select id="getTextbookSupp" resultMap="resultSupplyTextbook">
 	SELECT 
 			sup_txb_code
 		,  txb_code
@@ -68,6 +76,21 @@
 		,  sup_txb_writer
 		,  sup_txb_reg_date
 	FROM wt_supply_textbook
+</select>
+
+<!-- 교재지급내역조회 페이징 -->
+<select id="getTextbookSuppList" resultType="SupplyTextbook"  resultMap="resultSupplyTextbook">
+	SELECT 
+			sup_txb_code
+		,  txb_code
+		,  sup_txb_quantity
+		,  txb_receiver_id
+		,  sup_txb_date
+		,  sup_txb_writer
+		,  sup_txb_reg_date
+	FROM wt_supply_textbook
+	ORDER BY sup_txb_code ASC
+	LIMIT #{startRow},#{rowPerPage};
 </select>
 
 <!-- 교재지급코드 자동증가를 위해 max에 +1을 한값 select -->
@@ -116,32 +139,34 @@
 </select>
 
 <!-- 교재 입고내역 검색 -->
-<select id="getWhTxbSearch" resultMap="resultTxbBasicInfo">
-SELECT
-		wt.wh_txb_code
-	,	wt.txb_code
-	,	wt.wh_txb_quantity
-	,	wt.wh_txb_date
-	,	wt.stock_txb_quantity
-	,	wt.wh_txb_writer
-	,	wt.wh_txb_reg_date
-	,	wt.wh_txb_remark
-	,	tbi.txb_code
-	,	tbi.txb_name
-	,	tbi.txb_publisher
-	,	tbi.txb_author
-	,	tbi.txb_writer
-	,	tbi.txb_reg_date
-FROM
-	wt_textbook_basic_information AS tbi
-	RIGHT JOIN
-	wt_warehousing_textbook AS wt
-	on
-	wt.txb_code
-	=
-	tbi.txb_code
-WHERE
-	${whTxbSk} LIKE(CONCAT('%',#{whTxbSv},'%'));
+<select id="getWhTxbSearch"  resultType="hashMap" parameterType="Map">
+	
+	SELECT
+			wt.wh_txb_code			AS	whTxbCode	
+		,	wt.txb_code				AS	txbCode
+		,	wt.wh_txb_quantity		AS	whTxbQuantity
+		,	wt.wh_txb_date			AS	whTxbDate
+		,	wt.stock_txb_quantity	AS	stockTxbQuantity
+		,	wt.wh_txb_writer		AS	whTxbWriter
+		,	wt.wh_txb_reg_date		AS	whTxbRegDate
+		,	wt.wh_txb_remark		AS	whTxbRemark
+		,	tbi.txb_code			AS	txbCode
+		,	tbi.txb_name			AS	txbName
+		,	tbi.txb_publisher		AS	txbPublisher
+		,	tbi.txb_author			AS	txbAuthor
+		,	tbi.txb_writer			AS	txbWriter
+		,	tbi.txb_reg_date		AS	txbRegDate
+	FROM
+		wt_textbook_basic_information AS tbi
+		RIGHT JOIN
+		wt_warehousing_textbook AS wt
+		on
+		wt.txb_code
+		=
+		tbi.txb_code
+	WHERE	
+	${whTxbSk} LIKE(CONCAT('%',#{whTxbSv},'%'))
+	ORDER BY wt.wh_txb_code ASC
 </select>
 
 <!-- 입고내역조회 -->
@@ -159,7 +184,7 @@ WHERE
 </select>
 
 <!-- 최초등록인지 체크 -->
-<select id="wahoTextbookCheck" resultMap="resultTxbBasicInfo">
+<select id="wahoTextbookCheck" resultType="hashMap">
 	SELECT
 			wt.txb_code
 		,	wt.stock_txb_quantity
@@ -246,6 +271,15 @@ WHERE
 <!-- ************************교재정보************************ -->
 <!-- *********************** START ************************ -->
 
+<!-- 페이징을 위한 교재정보 카운팅 -->
+<select id="countTxb" resultType="int">
+      SELECT
+         COUNT(*)
+      FROM
+      wt_textbook_basic_information;
+
+</select>
+
 <!-- 교재 정보 검색 -->
 <select id="getTxbInfoSearch" resultMap="resultTxbBasicInfo">
 	SELECT 
@@ -261,7 +295,7 @@ WHERE
 		${infoTxbSk} LIKE(CONCAT('%',#{infoTxbSv},'%'))
 </select>
 
-<!-- 교재정보조회 -->
+<!-- 교재정보리스트 페이징-->
 <select id="getTextbookInfoList" resultType="TextbookBasicInfo" resultMap="resultTxbBasicInfo">
 	SELECT 
 			txb_code
@@ -272,6 +306,22 @@ WHERE
 		,   txb_reg_date
 	FROM 
 		wt_textbook_basic_information
+	ORDER BY txb_code ASC
+	LIMIT #{startRow},#{rowPerPage};
+</select>
+
+<!-- 교재정보리스트 -->
+<select id="getTextbookInfo" resultType="TextbookBasicInfo" resultMap="resultTxbBasicInfo">
+	SELECT 
+			txb_code
+		,   txb_name
+		,   txb_publisher
+		,   txb_author
+		,   txb_writer
+		,   txb_reg_date
+	FROM 
+		wt_textbook_basic_information
+
 </select>
 
 <!-- 교재코드로 교재정보 가져오기 -->

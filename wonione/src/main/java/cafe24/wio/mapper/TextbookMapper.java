@@ -15,11 +15,17 @@ public interface TextbookMapper {
 	/************************************************
 	 * 교재지급
 	 *************************************************/
+	//페이징을 위한 지급내역 카운팅
+	public int countSuppTxb();
+		
 	//교재 지급내역 검색
 	public List<SupplyTextbook> getSuppTxbSearch(String suppTxbSk, String suppTxbSv);
 	
 	//교재 지급내역 조회
-	public List<SupplyTextbook> getTextbookSuppList();
+	public List<SupplyTextbook> getTextbookSupp();
+	
+	//교재 지급내역 페이징
+	public List<SupplyTextbook> getTextbookSuppList(Map<String,Object> txbMap);
 	
 	//교재지급코드 maxcount
 	public String getTxbSuppMaxCode();
@@ -41,13 +47,13 @@ public interface TextbookMapper {
 	public int addFirstWhTextbook(WhTextbook whTextbook);
 	
 	//교재 입고내역 검색
-	public List<TextbookBasicInfo> getWhTxbSearch(String whTxbSk, String whTxbSv);
+	public List<Map<String, Object>> getWhTxbSearch(String whTxbSk, String whTxbSv);
 	
 	//교재입고코드 maxcount
 	public String getTxbWhMaxCode();
 	
 	//교재입고내역 존재유무 체크
-	public TextbookBasicInfo wahoTextbookCheck(String txbCode);
+	public Map<String,Object> wahoTextbookCheck(String txbCode);
 	
 	//교재입고등록
 	public int addWhTextbook(WhTextbook whTextbook);
@@ -71,8 +77,14 @@ public interface TextbookMapper {
 	//교재정보등록시 삽입될 코드(PK) 가져오기 
 	public String getAddTxbInfoCode();
 	
+	//페이징을 위한 교재정보 카운팅
+	public int countTxb();
+	
 	//교재기초정보리스트
-	public List<TextbookBasicInfo> getTextbookInfoList();
+	public List<TextbookBasicInfo> getTextbookInfo();
+	
+	//교재기초정보리스트-페이징
+	public List<TextbookBasicInfo> getTextbookInfoList(Map<String,Object> txbMap);
 	
 	//교재기초정보등록
 	public int addTextbookInfo(TextbookBasicInfo txbBasicInfo);
