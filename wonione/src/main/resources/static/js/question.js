@@ -3,10 +3,31 @@
  * 수정일 2020-09-29
  */
 (function ($) {
-	$('#deleteQuestionTitle').click(function(){
-		window.close();
-		
+	
+	//삭제처리
+	$('.deleteQuestionTitle').click(function(){
+		var questionName = $(this).parents().children().children('#questionCodeName').val();
+		if(confirm('삭제하시겠습니까?')){
+			var request = $.ajax({
+				url: "/deleteQuestionTitle",
+				method: "POST",
+				data: { questionName : questionName },
+				dataType: "json"
+			});
+			request.done(function(data) {
+				alert('삭제되었습니다.');
+				
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				alert( "Request failed: " + textStatus );
+			});
+		}else{
+			alert('취소하셨습니다.');
+		}
 	});
+	
+	
+	//문제타이틀추가
 	$('#nextQuestion').click(function(){
 		var qtCodeName = $('input[name=qtCodeName]').val();
 		var qtTitle = $('input[name=qtTitle]').val();
@@ -18,7 +39,8 @@
 			  dataType: "json"
 		});
 		request.done(function(data) {
-			window.open('/insertQuestion','문제등록', 'width=600 height=650 left=600 top=100','status=no');
+			alert('등록되었습니다.');
+			location.href='secondsPage';
 		});
 		request.fail(function( jqXHR, textStatus ) {
 			alert( "Request failed: " + textStatus );
@@ -33,29 +55,12 @@
 	
 	//문제등록페이지 
 	$('#insertQuestion').click(function(){
-		
-		var questionSid = $('#questionSid').val();
 		if(questionSid != null && questionSid != undefined && questionSid != ''){
-			var request = $.ajax({
-				  url: "/selectIdQuestion",
-				  method: "POST",
-				  data: { questionSid : questionSid },
-				  dataType: "json"
-			});
-			request.done(function(data) {
-				if(data === 1){
-					if(confirm('등록하시겠습니까?')){
-						window.open('/insertQuestionTitle','문제등록', 'width=600, height=201 left=600 top=100','status=no');
-					}else{
-						alert('취소하셨습니다.');
-					}
-				}else{
-					alert('권한이 없습니다.');
-				}
-			});
-			request.fail(function( jqXHR, textStatus ) {
-				alert( "Request failed: " + textStatus );
-			});
+			if(confirm('등록하시겠습니까?')){
+				window.open('/insertQuestionTitle','문제등록', 'width=550, height=201 left=600 top=100','status=no');
+			}else{
+				alert('취소하셨습니다.');
+			}
 		}else{
 			alert('로그인을 해주세요.');
 			return false;

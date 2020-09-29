@@ -19,6 +19,13 @@
 		<result column="qe_C" 			property="qeC"/>
 		<result column="qe_D" 			property="qeD"/>
 	</resultMap>
+	<delete id="deleteQuestionTitle">
+		DELETE
+		FROM 
+			wt_question_taker 
+		WHERE 
+			qt_codename=#{questionName};
+	</delete>
 	<insert id="insertQuestionTitle">
 		INSERT INTO 
 			wt_question_taker
@@ -57,17 +64,6 @@
 			,#{qeC}
 			,#{qeD});
 	</insert>
-	<select id="selectIdQuestion" resultType="int">
-		SELECT 
-			COUNT(mr_id)
-			
-		FROM 
-			wt_member_registration
-		WHERE
-	 		(level_num = 1 OR level_num = 2 OR level_num = 3)
-	 		AND 
-	 			mr_id=#{questionSid};
-	</select>
 	<select id="QuestionSidCheck" resultType="int">
 		SELECT
 			COUNT(1) AS num

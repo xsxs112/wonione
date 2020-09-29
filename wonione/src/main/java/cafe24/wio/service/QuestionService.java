@@ -98,7 +98,6 @@ public class QuestionService {
 	}
 
 	public int QuestionScoreCheck(String qeAnswer, String studentName, int qeCode) {
-		System.out.println(studentName+"<--studentName");
 		int result= questionMapper.QuestionScoreCheck(qeAnswer,qeCode,studentName);
 		
 		return result;
@@ -114,16 +113,15 @@ public class QuestionService {
 		return result;
 	}
 
-	public int selectIdQuestion(String questionSid) {
-		int result = questionMapper.selectIdQuestion(questionSid);
-		return result;
+	
+
+	public int insertQuestionTitle(Question question) {
+		questionMapper.insertQuestionTitle(question);
+		return 0;
 	}
 
-	public int insertQuestion(Question question) {
-		System.out.println(question);
-		questionMapper.insertQuestionTitle(question);
-		//questionMapper.insertQuestion(question,teacherId);
-		return 0;
+	public void deleteQuestionTitle(String questionName) {
+		questionMapper.deleteQuestionTitle(questionName);
 	}
 
 	
