@@ -5,13 +5,24 @@
     
 <mapper namespace="cafe24.wio.mapper.MemberMapper">
 
+	<!-- 4-1. 구성원 정보 수정 시, 은행 코드 대신 은행명으로 업데이트 하도록 처리 -->
+	<select id="getPmResourceList" resultType="hashMap">
+		SELECT 
+			 pm_r_code 	AS pmResourceCode
+			,pm_r_title AS pmResourceTitle
+		FROM 
+			wt_payment_resource
+	
+	</select>
+
 	<!-- 4. 구성원 정보 수정 -->
 	<update id="modifyWIOMember" parameterType="Member">
 		UPDATE wt_member_registration
 		SET
 				mr_pw			=		#{mrPw}
 			,	mr_phone		=		#{mrPhone}
-			,	mr_addr			=		#{mrAddr}		<!-- pm_r_code 넣고 업데이트 처리되도록 해야함. 일단 오류만 해결.0928_16:40 -->
+			,	mr_addr			=		#{mrAddr}
+			,	pm_r_code		= 		#{pmRCode}
 			,	mr_account_num	=		#{mrAccountNum}
 			,	shuttle_num		=		#{shuttleNum} <!-- 화면 만들고 권한 관리자,일반 직원만 수정 가능하도록 해보쟈.0928 10:25 -->
 		WHERE 
@@ -113,6 +124,7 @@
 			,	m.mr_phone			AS mrPhone
 			,	m.mr_addr			AS mrAddr
 			,	m.mr_target_score	AS mrTargetScore
+			,	m.pm_r_code			AS pmRCode
 			,	m.mr_account_num	AS mrAccountNum
 			,	m.shuttle_num		AS shuttleNum
 			,	m.mr_join_date		AS mrJoinDate

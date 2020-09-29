@@ -28,6 +28,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private MemberMapper memberMapper;
 	
 	
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
@@ -44,6 +46,7 @@ public class MemberController {
 		
 		model.addAttribute("member", member);
 		model.addAttribute("title", "구성원 정보 수정");
+		model.addAttribute("pmResourceList", memberMapper.getPmResourceList());
 		
 		return "member/modifyWIOMember";
 
