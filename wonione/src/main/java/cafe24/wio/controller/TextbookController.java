@@ -29,6 +29,52 @@ public class TextbookController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 	
+	
+	//교재지급등록 시 교재명을 선택하면 현재 재고수량을 조회하는 ajax
+	@GetMapping(value="/getTxbStock", produces="application/json")
+	@ResponseBody
+	public int getTxbStock(@RequestParam
+							( value="txbCode"
+							, required = false)String txbCode) {
+		
+		int stockResult = textbookService.getStockTxbQuantity(txbCode);
+		
+		return stockResult;
+	}
+	
+	//교재지급등록
+	@PostMapping("/textbookSupplyRegister")
+	public String textbookSupplyRegister(Model model
+										,SupplyTextbook suppTxb) {
+		
+		textbookService.addTxbSupply(suppTxb);
+		
+		return "textbookresource/textbookRegResult";
+	}
+	
+	//교재지급등록
+	@GetMapping("/textbookSupplyRegister")
+	public String textbookSupplyRegister(Model model
+										,HttpSession session) {
+		List<Map<String,Object>> txbReceiverId = textbookService.selectStudent();
+		String sessionId = session.getAttribute("SID").toString();
+		String sessionName = session.getAttribute("SNAME").toString();
+		List<TextbookBasicInfo> textbookinfolist = textbookService.getTextbookInfo();
+		String supTxbCode = textbookService.getTxbSuppMaxCode();
+		
+		
+		model.addAttribute("title", "교재지급내역 등록페이지");
+		model.addAttribute("mainTitle", "교재지급내역 등록페이지");
+		model.addAttribute("txbReceiverId", txbReceiverId);
+		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("supTxbCode", supTxbCode);
+		model.addAttribute("textbookinfolist", textbookinfolist);
+		System.out.println(textbookinfolist.toString());
+		
+		return "textbookresource/textbookSupplyRegister";
+	}
+	
 	//교재 지급내역 검색
 	@GetMapping("/getSuppTxbSearch")
 	public String getSuppTxbSearch(Model model

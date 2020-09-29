@@ -15,6 +15,15 @@ public interface TextbookMapper {
 	/************************************************
 	 * 교재지급
 	 *************************************************/
+	//가장 최근날짜의 재고수량 조회
+	public int getStockTxbQuantity(String txbCode);
+	
+	//교재지급대상(학생)을 조회
+	public List<Map<String,Object>> selectStudent();
+	
+	//교재지급등록
+	public int addTxbSupply(SupplyTextbook suppTxb);
+	
 	//페이징을 위한 지급내역 카운팅
 	public int countSuppTxb();
 		

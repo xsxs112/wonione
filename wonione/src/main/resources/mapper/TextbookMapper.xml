@@ -42,6 +42,42 @@
 <!-- ************************교재지급************************* -->
 <!-- *********************** START ************************* -->
 
+<!-- 교재지급 등록 시 등록된 학생들을 조회하는 select쿼리 -->
+<select id="selectStudent" resultType="hashMap">
+	SELECT 
+			mr_id			AS mrId
+		,	mr_name			AS mrName
+		,	level_num		AS levelNum
+	FROM 
+		wt_member_registration
+	WHERE
+		mr_id LIKE CONCAT('%','s','%');
+</select>
+
+<!-- 교재지급 등록 -->
+<insert id="addTxbSupply" parameterType="SupplyTextbook">
+
+INSERT INTO wt_supply_textbook
+	(
+		sup_txb_code
+	,   txb_code
+	,   sup_txb_quantity
+	,   txb_receiver_id
+	,   sup_txb_date
+	,   sup_txb_writer
+	,   sup_txb_reg_date
+	,	sup_remark)VALUES(
+		#{supTxbCode}
+	,   #{txbCode}
+	,  ${supTxbQuantity}
+	,  #{txbReceiverId}
+	,  CURRENT_TIME()
+	,  #{supTxbWriter}
+	,  CURRENT_TIME()
+	, '');
+
+</insert>
+
 <!-- 페이징을 위한 지급내역카운팅 -->
 <select id="countSuppTxb" resultType="int">
       SELECT
@@ -112,6 +148,21 @@
 <!-- *********************** START ************************* -->
 <!-- ************************교재입고************************* -->
 <!-- *********************** START ************************* -->
+
+<!-- 가장최근날짜의 재고수량 조회 -->
+<select id="getStockTxbQuantity" resultType="int" parameterType="String">
+	SELECT 
+		stock_txb_quantity
+		
+	FROM 
+		wt_warehousing_textbook AS wt
+	WHERE
+		txb_code = #{txbCode}
+	GROUP BY
+		wt.wh_txb_date
+	ORDER BY wt.wh_txb_date DESC LIMIT 1
+
+</select>
 
 <!-- 페이징을 위한 입고내역카운팅 -->
 <select id="countWhTxb" resultType="int">
