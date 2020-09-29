@@ -22,6 +22,34 @@ public class TextbookService {
 	@Autowired
 	private TextbookMapper textbookMapper;
 
+	/**
+	 * 가장 최근날짜의 재고수량을 조회
+	 * @return int stockResult
+	 */
+	public int getStockTxbQuantity(String txbCode) {
+		int stockResult = textbookMapper.getStockTxbQuantity(txbCode);
+		return stockResult;
+	}
+	
+	/**
+	 * 교재지급대상(학생)을 조회
+	 * @return Map String,Object txbReceiverId
+	 */ 
+	public List<Map<String,Object>> selectStudent(){
+		List<Map<String,Object>> txbReceiverId = textbookMapper.selectStudent();
+		
+		return txbReceiverId;
+	}
+	
+	/**
+	 * 교재지급등록
+	 * @return int addSuppResult
+	 */
+	public int addTxbSupply(SupplyTextbook suppTxb) {
+		
+		int addSuppResult = textbookMapper.addTxbSupply(suppTxb);
+		return addSuppResult;
+	}
 	
 	
 	/**

@@ -9,6 +9,7 @@ public class SupplyTextbook {
 	private String supTxbDate;		//지급일자
 	private String supTxbWriter;	//작성자아이디
 	private String supTxbRegDate;	//등록일자
+	private String supRemark;		//비고
 	public String getSupTxbCode() {
 		return supTxbCode;
 	}
@@ -51,6 +52,12 @@ public class SupplyTextbook {
 	public void setSupTxbRegDate(String supTxbRegDate) {
 		this.supTxbRegDate = supTxbRegDate;
 	}
+	public String getSupRemark() {
+		return supRemark;
+	}
+	public void setSupRemark(String supRemark) {
+		this.supRemark = supRemark;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -68,10 +75,11 @@ public class SupplyTextbook {
 		builder.append(supTxbWriter);
 		builder.append(", supTxbRegDate=");
 		builder.append(supTxbRegDate);
+		builder.append(", supRemark=");
+		builder.append(supRemark);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 	
 }

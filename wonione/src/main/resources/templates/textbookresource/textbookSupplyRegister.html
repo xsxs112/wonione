@@ -21,16 +21,16 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="all-form-element-inner">
-                                        <form action="/textbookWahoRegister" method="post" id="addForm">
-									<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
-									<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
+                                        <form action="/textbookSupplyRegister" method="post" id="addForm">
+									<input type="hidden" th:value="${supTxbCode}" name="supTxbCode">
+									<input type="hidden" th:value="${sessionId}" name="supTxbWriter">
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">교재입고코드</label>
+                                                        <label class="login2 pull-right pull-right-pro">교재지급코드</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" disabled class="form-control" th:value="${whTxbCode}" name="whTxbCode" th:placeholder="${whTxbCode}" />
+                                                        <input type="text" disabled class="form-control" th:value="${supTxbCode}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -42,11 +42,11 @@
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                                         <div class="form-select-list">
                                                             <select class="form-control custom-select-value" id="txbCode" name ="txbCode">
-																<th:block th:each=" til : ${textbookInfoList} ">
-																	<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
-																</th:block>	
+                                                            <option disabled="disabled" selected="selected">::교재를 선택하세요::</option>
+	                                                            <th:block th:each="til : ${textbookinfolist}">
+	                                                            	<option th:value="${til.txbCode}">[[${til.txbName}]]</option>                                                       
+	                                                            </th:block>
 															</select>
-														<button type="button" id="whTxbCheckBtn" class="btn btn-block" >입고내역체크</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -54,20 +54,48 @@
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">입고수량</label>
+                                                        <label class="login2 pull-right pull-right-pro">지급수량</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="number" class="form-control" name="whTxbQuantity" id="whTxbQuantity" onFocus="this.value=0; return true;" placeholder="수량을 입력해주세요"/>
+                                                        <input type="number" class="form-control" name="supTxbQuantity" id="supTxbQuantity" onFocus="this.value=0; return true;" placeholder="수량을 입력해주세요"/>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">작성자아이디</label>
+                                                        <label class="login2 pull-right pull-right-pro">현재 재고수량</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" disabled class="form-control" th:value="${sessionId}" name="whTxbWriter" th:placeholder="${sessionId}"/>
+                                                        <input type="text" class="form-control" id="stockTxbQuantity"readonly="readonly"/>
+                                                        <input type="hidden" id="stockQuanTitySave" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">지급대상</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <div class="form-select-list">
+                                                            <select class="form-control custom-select-value" id="txbReceiverId" name ="txbReceiverId">
+                                                            	<option disabled="disabled" selected="selected">::지급대상을 선택하세요::</option>
+                                                            	<th:block th:each="r : ${txbReceiverId}">
+                                                            		<option th:value="${r.mrId}">[[${r.mrName}]]</option>
+                                                            	</th:block>
+															</select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>	                                              
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">작성자</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" disabled class="form-control" th:value="${sessionName}"  th:placeholder="${sessionName}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -77,11 +105,11 @@
                                                         <label class="login2 pull-right pull-right-pro">비고</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <textarea class="form-control" name="whTxbRemark" placeholder="비고사항을 입력하세요."></textarea>
+                                                        <textarea class="form-control" name="supRemark" placeholder="비고사항을 입력하세요."></textarea>
                                                     </div>
                                                 </div>
                                             </div>                                                    
-                        					<a href="/textbookOwnList" class="btn btn-default" role="button">취소</a>
+                        					<a href="/textbookSupplyList" class="btn btn-default" role="button">취소</a>
                                             <button class="btn btn-primary login-submit-cs" type="button" id="addBtn">등록</button>
                                         </form>
                                             </div>
@@ -98,71 +126,67 @@
                 </div>	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
-	var whTxbCheck = '';
 	$('#addBtn').click(function(){
 		console.log('addBtn');
 		var txbCode = $('#txbCode').val();
-		var whTxbQuantity = $('#whTxbQuantity').val();
-		var txbName =$('#txbName').val();
-		console.log(whTxbQuantity);
-		console.log(txbCode + ' < --txbCode 등록버튼 클릭 시');
-		console.log(txbName + ' < --txbName ');
-		console.log(whTxbCheck + ' < --whTxbCheck 등록버튼 클릭 시');
+		var supTxbQuantity = $('#supTxbQuantity').val();
+		var txbReceiverId = $('#txbReceiverId').val();
 		if(txbCode == null || txbCode == undefined){
 			alert('교재를 선택해주세요');
 			return ;
-		}else if(whTxbQuantity == undefined || whTxbQuantity == '' || whTxbQuantity == 0){
-			alert('입고수량을 입력해주세요');
-			$('#whTxbQuantity').focus();
+		}else if(supTxbQuantity == null || supTxbQuantity == undefined || supTxbQuantity == 0){
+			alert('지급수량을 입력해주세요.');
 			return ;
-		}else if(whTxbQuantity<1){
+		}else if(supTxbQuantity < 0){
 			alert('0보다 큰 값을 입력해주세요');
-			$('#whTxbQuantity').focus();
-			return ; 
-		}else if(whTxbCheck != txbCode || whTxbCheck == ''){
-			alert('입고내역체크를 해주세요');
+			return ;
+		}else if(txbReceiverId ==null || txbReceiverId == undefined || txbReceiverId == ''){
+			alert('지급대상을 선택해주세요');
 			return;
 		}
-		if(confirm('입고수량 ' + whTxbQuantity +'권이 맞습니까? 등록후엔 수정이 불가합니다.')){
+		if(confirm('등록하시겠습니까?')){
 			addForm.submit(); 
 		}
-	});
+	}); 
 	
-	$('#whTxbCheckBtn').click(function(){
-		console.log('입고내역체크');
+	$('#txbCode').change(function(){
+		console.log('재고수량가져오기');
 		var txbCode = $('#txbCode').val();
 		console.log(txbCode);
-		if(txbCode == null || txbCode == undefined){
-			alert('교재를 선택해주세요');
-			return ;
-		}
+	
   		var request = $.ajax({
-		  url: "/whTxbCheck",
-		  method:"POST",
+		  url: "/getTxbStock",
+		  method:"GET",
 		  data : { txbCode : txbCode },
 		  dataType: "json"
 		});
 		request.done(function( data ) {
 			console.log(data);
-			whTxbCheck = $('#txbCode').val();
-			console.log(whTxbCheck + ' < -- whTxbCheck 입고체크버튼');
-			if(data != undefined){
-				if(data == 0){
-					alert('해당교재의 입고내역이 존재하지 않습니다.');
-					 if(confirm('최초입고등록을 하시겠습니까?')){
-						 location.href = '/textbookFirstWahoRegister?txbCode='+txbCode;
-					}
-				}else{
-					alert('해당교재의 입고내역이 있습니다.');
-				}
-			}
-			
+			$('#stockTxbQuantity').val(data);
+			$('#stockQuanTitySave').val(data);
 		});
 		request.fail(function( jqXHR, textStatus ) {
 		  alert( "Request failed: " + textStatus );
-		});   
-		
+		});
 	});
+	$('#supTxbQuantity').change(function(){
+		var supTxbQuantity = parseInt($('#supTxbQuantity').val());
+		var stockTxbQuantity = parseInt($('#stockQuanTitySave').val());
+		var result = 0;
+		if(supTxbQuantity != 0 && supTxbQuantity>0){
+			result =(stockTxbQuantity - supTxbQuantity);
+			$('#stockTxbQuantity').val(result);
+			if(result<0){
+				alert('지급수량이 너무많습니다');
+				return;
+			}
+		}
+		$('#supTxbQuantity').focus(function(){
+			$('#stockTxbQuantity').val($('#stockQuanTitySave').val());
+		})
+		return false;
+	});
+	
 	</script>  		
 	</th:block>
 	<th:block layout:fragment="customJsScript">
