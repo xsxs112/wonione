@@ -21,25 +21,23 @@
 	SELECT 
 		  wt_payments_information.pm_info_code
 		, wt_award_benchmark.award_bm_price 
-		, (SELECT 
-			wt_member_registration.mr_name 
-			FROM 
-			wt_member_registration 
-			where
-			wt_member_registration.mr_id = wt_payments_information.mr_id )
-		, (SELECT 
-			wt_member_registration.mr_name 
-			FROM 
-			wt_member_registration 
-			where
-			wt_member_registration.mr_id = wt_payments_information.pm_info_Payer )
+		, r1.mr_name
+		, r2.mr_name
 		,  wt_payments_information.pm_info_reg_date
 	FROM 
 		wt_payments_information 
 	inner join
 		wt_award_benchmark 
 	on
-		wt_payments_information.award_bm_code =wt_award_benchmark.award_bm_code ;	
+		wt_payments_information.award_bm_code =wt_award_benchmark.award_bm_code 
+	LEFT JOIN 
+		wt_member_registration AS r1
+	ON 
+		wt_payments_information.mr_id = r1.mr_id
+	LEFT JOIN 
+		wt_member_registration AS r2
+	ON 
+		wt_payments_information.pm_info_Payer = r2.mr_id;		
 		
 </select>
 

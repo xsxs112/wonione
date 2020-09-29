@@ -17,7 +17,7 @@ public class ScholarshipController {
 	@Autowired
 	private ScholarshipService scholarshipService;
 	
-	//장학금지급내역 리스
+	//장학금지급내역 리스트
 	@GetMapping("/getScholarList")
 	public String getScholarList(Model model, ScholarShip  scholarship) {
 		List<ScholarShip> scholarshipList = scholarshipService.getScholarList(scholarship);
