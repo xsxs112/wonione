@@ -2,12 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="layout/defaultLogin">
-	  
+
   	<th:block layout:fragment="customTitle">
 		<title>테스트</title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-	<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>			
+	<style type="text/css">
+		html{
+			background-color: white;
+			overflow-y: hidden;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>		
 		  
 		    <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
 		        <span th:if="${currentPage == num}" th:text="${'●'}" style="font-size: x-large;"></span>
@@ -15,8 +21,8 @@
 		    </th:block>
 		<table th:each="q : ${Question}" class="table">
 			<tr>
-				
 				<td><h4 th:text="${q.qe_data}"></h4></td>
+				<td hidden=""><h4 th:text="${q.qe_code}" id="QuestionCode"></h4></td>
 			</tr>
 			<tr>
 				<td>
@@ -29,11 +35,11 @@
 					<input type="radio" name="QuestionCheckbox" class="QuestionScoreCheckbox" value="D"><label>&nbsp;&nbsp;D.</label><label th:text="${q.qe_D}"></label><br/>
 				</td>
 			</tr>
-			
-		<tr>
-		<td><span th:if="${currentPage ne lastPage}"><a th:href="@{/Question(currentPage=${currentPage}+1,questionName=${q.qt_codeName})}"><button type="button" class="btn btn-default">다음</button></a></span></td>
-		<td><span th:if="${currentPage eq lastPage}"><a href="#"><button type="button" class="btn btn-default" id="Questionbtn">완료</button></a></span></td>
-		</tr>
+			<tr>
+				<td><span th:if="${currentPage ne lastPage}"><a th:href="@{/Question(currentPage=${currentPage}+1,questionName=${q.qt_codeName})}"><button type="button" class="btn btn-default Questionbtn">다음</button></a></span>
+				<span th:if="${currentPage eq lastPage}"><a href="/scoreCheck"><button type="submit" class="btn btn-default Questionbtn">완료</button></a></span></td>
+			</tr>
 		</table>
+	<script src="js/question.js"></script>
 	</th:block>
 </html>
