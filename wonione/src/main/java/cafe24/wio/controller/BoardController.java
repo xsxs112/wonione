@@ -1,6 +1,9 @@
 package cafe24.wio.controller;
 
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +44,7 @@ public class BoardController {
 		  model.addAttribute("Board", board);
 		  model.addAttribute("readNotice", "공지사항 읽기");
 		  
-		  return "board/noticeRead";		  
+		  return "board/noticeRead";
 	  }
 	
 	  //공지사항 작성 @Post
@@ -67,21 +70,22 @@ public class BoardController {
 		  System.out.println("boardFile -> " + boardFile);
 		  boardService.addNotice(board);
 		  model.addAttribute("Board", board);
-		 model.addAttribute("BoardUpload", "/notice");
+		  model.addAttribute("BoardUpload", "/notice");
 		  return "redirect:/getNotice";
 	  }
 	  
 	  //공지사항 작성 @Get
 	   @GetMapping("/addNotice")
-	   public String insertNotice(Model model) {
-		  
+	   public String insertNotice(Model model, HttpSession session) {
+		
+		   session.getAttribute("SID");	//세션 아이디 받기
 		   String boardNum = boardService.getBoardNum();
 		   System.out.println(boardNum + " <-- boardNum");
 		   model.addAttribute("boardNum", boardNum);
 	      return "board/noticeAdd";
 	   }
 	  
-	// 공지사항 수정 (내용 칼럼에 기존에 저장된 값 가져오기 불가)
+	// 공지사항 수정
 	@PostMapping("/modifyNotice")
 	public String modifyNotice(Board board,Model model) {
 		boardService.modifyNotice(board);
