@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafe24.wio.bean.ApprovalRequest;
 import cafe24.wio.bean.AttManagement;
+import cafe24.wio.bean.AttTimeManage;
 import cafe24.wio.service.ApprRequestService;
 
 //황미현 - 출퇴근 컨트롤러
@@ -27,10 +28,31 @@ public class WorkController {
 	
 	
 	
+	@GetMapping("/attManageModify")
+	public String attManageModify(@RequestParam(value = "attTimeCode", required = false) String attTimeCode) {
+		
+
+		return "workmanagment/attManageModify";
+	}
+	
+	
+	@GetMapping("/addTimeManage")
+	public String addTimeManage() {
+		
+		
+		
+		
+		return "workmanagment/addTimeManage";
+	}
+	
+	
+	
+	
 	@GetMapping("/attManage")
-	public String goingOutEnd(Model model) {
+	public String attManage(Model model) {
 		
-		
+		List<AttTimeManage> timeManageList = apprRequestService.getTimeManageList();
+		model.addAttribute("timeManageList", timeManageList);
 
 		return "workmanagment/attManage";
 	}

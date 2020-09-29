@@ -7,13 +7,19 @@ import org.apache.ibatis.annotations.Mapper;
 
 import cafe24.wio.bean.ApprovalRequest;
 import cafe24.wio.bean.AttManagement;
+import cafe24.wio.bean.AttTimeManage;
 import cafe24.wio.bean.Member;
 
 @Mapper
 public interface ApprMapper {
 	
 	
+	
+	public List<AttTimeManage> getTimeManageList();
+	
+	
 	public int goingOutEnd(String attCode);
+	
 	
 	public int workAttendanceEnd(String attCode);
 	

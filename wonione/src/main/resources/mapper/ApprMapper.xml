@@ -8,6 +8,28 @@
 	
 	
 	
+	<select id="getTimeManageList" resultType="AttTimeManage">
+		
+		SELECT att_time_code as attTimeCode
+				, m.mr_name as mrId
+				, att_start_time as attStTime
+				, att_end_time as attEndTime
+				, meal_start_time as mealStTime
+				, meal_end_time as mealEndTime
+		FROM wt_attendance_time_manage AS a LEFT join
+				wt_member_registration AS m
+				ON a.mr_id = m.mr_id
+
+
+
+
+	</select>
+	
+	
+	
+	
+	
+	
 	<update id = "goingOutEnd" parameterType="string">
 		UPDATE wt_attendance_management
 		SET

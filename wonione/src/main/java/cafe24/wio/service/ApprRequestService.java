@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import cafe24.wio.bean.ApprovalRequest;
 import cafe24.wio.bean.AttManagement;
+import cafe24.wio.bean.AttTimeManage;
 import cafe24.wio.mapper.ApprMapper;
 
 @Service
@@ -17,6 +18,15 @@ public class ApprRequestService {
 	@Autowired
 	private ApprMapper apprMapper;
 	
+	
+	
+	public List<AttTimeManage> getTimeManageList() {
+		
+		List<AttTimeManage> timeManageList = apprMapper.getTimeManageList();
+		
+		
+		return timeManageList;
+	}
 	
 	
 	public int goingOutEnd(String attCode) {
