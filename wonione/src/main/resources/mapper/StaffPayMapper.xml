@@ -51,7 +51,7 @@
 				, #{spdCode}
 				, #{spPay}
 				, NOW()
-				, '')	
+				, #{writer})	
 	</insert>	
 	
 	<!-- 공제계 입력하기 -->
@@ -74,7 +74,7 @@
 				, #{spdTheBusinessTax}
 				, #{spdTotal}
 				, NOW()
-				, '')
+				, #{writer})
 	</insert>	
 	
 	<!-- 공제계구하기 -->
@@ -112,7 +112,7 @@
 					,#{spcIncentive}
 					,#{spcTotal}
 					, NOW()
-					,'');
+					,#{writer});
 	</insert>	
 	
 	<!-- 강사정보조회 -->

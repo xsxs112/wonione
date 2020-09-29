@@ -2,6 +2,8 @@ package cafe24.wio.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,11 @@ public class StaffPayController {
 	
 	//강사급여 입력하기
 	@PostMapping("/addStaffPay")
-	public String addStaffPay(StaffPay staffPay) {
+	public String addStaffPay(StaffPay staffPay, HttpSession session) {
+		
+		String writer = (String) session.getAttribute("SID");
+		staffPay.setWriter(writer);
+		
 		staffPayService.addStaffPay(staffPay);
 		
 		return "redirect:/getPayList";
@@ -37,7 +43,11 @@ public class StaffPayController {
 	//강사 공제계 입력하기
 	@PostMapping(value = "/addStaffDedupay",produces = "application/json")
 	@ResponseBody
-	public StaffPay addStaffDedupay(StaffPay staffPay) {
+	public StaffPay addStaffDedupay(StaffPay staffPay, HttpSession session) {
+		
+		String writer = (String) session.getAttribute("SID");
+		staffPay.setWriter(writer);
+		
 		staffPayService.addStaffDedupay(staffPay);
 		
 		return staffPay;
@@ -58,7 +68,10 @@ public class StaffPayController {
 	//강사 급여계 입력하기
 	@PostMapping(value = "/addStaffCalPay",produces = "application/json")
 	@ResponseBody
-	public StaffPay addStaffCalPay(StaffPay staffpay) {
+	public StaffPay addStaffCalPay(StaffPay staffpay, HttpSession session) {
+		
+		String writer = (String) session.getAttribute("SID");
+		staffpay.setWriter(writer);
 		
 		staffPayService.addStaffCalPay(staffpay);		
 		
@@ -86,7 +99,8 @@ public class StaffPayController {
 	}
 		
 	@RequestMapping(value = "/staffPayIndex", method = RequestMethod.GET)
-	public String getStaffList(Model model) {
+	public String getStaffList(Model model
+							,HttpSession session) {
 		//강사리스트조회
 		List<StaffPay> staffList = staffPayService.getStaffList();
 		model.addAttribute("staffList", staffList);
@@ -101,6 +115,10 @@ public class StaffPayController {
 		List<StaffPay> insuranceYear = staffPayService.insuranceYear();		
 		model.addAttribute("insuranceYear",insuranceYear);
 		model.addAttribute("title", "보험요율표");
+		
+		//세션확인
+		String writer = (String) session.getAttribute("SID");
+		model.addAttribute("writer",writer);
 		
 		return "pay/staffPay";		
 	}

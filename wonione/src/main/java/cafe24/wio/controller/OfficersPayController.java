@@ -2,6 +2,7 @@ package cafe24.wio.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +27,13 @@ public class OfficersPayController {
 	// log4j로 로그 찍기 위한 객체 삽입
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(OfficersPayController.class);
-	
+		
 	//직원급여 입력하기
 	@PostMapping("/addOfficersPay")
-	public String addOfficersPay(OfficersPay officersPay) {
+	public String addOfficersPay(OfficersPay officersPay, HttpSession session) {
+		
+		String writer = (String) session.getAttribute("SID");
+		officersPay.setWriter(writer);
 		officersPayService.addOfficersPay(officersPay);
 		
 		return "redirect:/getPayList";
@@ -37,7 +41,10 @@ public class OfficersPayController {
 	//직원 공제계 입력하기
 	@PostMapping(value = "/addOffiDedupay",produces = "application/json")
 	@ResponseBody
-	public OfficersPay addOffiDedupay(OfficersPay officersPay) { 
+	public OfficersPay addOffiDedupay(OfficersPay officersPay, HttpSession session) { 
+		
+		String writer = (String) session.getAttribute("SID");
+		officersPay.setWriter(writer);
 		
 		officersPayService.addOffiDedupay(officersPay);	
 		
@@ -61,7 +68,10 @@ public class OfficersPayController {
 	//직원급여계 입력하기
 	@PostMapping(value = "/addOffiCalpay",produces = "application/json")
 	@ResponseBody
-	public OfficersPay addOffiCalpay(OfficersPay officersPay) { 
+	public OfficersPay addOffiCalpay(OfficersPay officersPay, HttpSession session) { 
+		
+		String writer = (String) session.getAttribute("SID");
+		officersPay.setWriter(writer);
 		
 		officersPayService.addOffiCalpay(officersPay);	
 		
@@ -88,7 +98,8 @@ public class OfficersPayController {
 	}
 	
 	@RequestMapping(value = "/officersPayIndex", method = RequestMethod.GET)
-	public String getOfficersList(Model model) {
+	public String getOfficersList(Model model
+								,HttpSession session) {
 		//직원리스트조회
 		List<OfficersPay> OfficersList = officersPayService.getOfficersList();
 		model.addAttribute("OfficersList", OfficersList);
@@ -103,6 +114,9 @@ public class OfficersPayController {
 		List<OfficersPay> insuranceYear = officersPayService.insuranceYear();		
 		model.addAttribute("insuranceYear",insuranceYear);
 		model.addAttribute("title", "보험요율표");
+		
+		String writer = (String) session.getAttribute("SID");
+		model.addAttribute("writer",writer);
 		
 		return "pay/officersPay";		
 	}	

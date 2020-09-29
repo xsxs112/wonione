@@ -12,7 +12,7 @@ public class StaffPay {
 	private int spcIncentive;		//강사급여 인센티브
 	private int spcTotal;			//강사급여계산 총액
 	private String spcRegDate;		//강사급여계산 작성일자
-	private String spcWriter;		//강사급여계산 작성자	
+	private String spcWriter;			//강사급여계산 작성자	
 	
 	private String spdCode;						//강사급여공제번호
 	private int iyCode;							//보험 요율 시행년도
@@ -33,7 +33,16 @@ public class StaffPay {
 	
 	private String pREct;						//급여자원테이블(비고)	
 	
+	private String writer;						//작성자
 	
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+
 	public float getSpcIncentivePer() {
 		return spcIncentivePer;
 	}

@@ -39,6 +39,7 @@
 		<result column="op_writer"						property="opWriter"/>
 		<result column="mr_join_date"					property="mrJoinDate"/>
 		<result column="mr_account_num"					property="mrAccountNum"/>	
+		<result column="writer"							property="writer"/>	
 	</resultMap>
 	
 	<!-- 직원급여입력 -->
@@ -60,7 +61,7 @@
 				, #{opdCode}
 				, #{opPay}
 				, NOW()
-				, '')	
+				, #{writer})	
 	</insert>
 	<!-- 공제계 입력하기 -->
 	<insert id="addOffiDedupay" parameterType="OfficersPay">
@@ -91,7 +92,7 @@
 				, #{opdLongtermNursingInsurance}
 				, #{opdTotal}
 				, NOW()
-				, '');
+				, #{writer});
 	</insert>
 	<!-- 공제계구하기 -->
 	<select id="OfficersDedu" resultType="OfficersPay" parameterType="String">
@@ -149,7 +150,7 @@
 					,#{opcEct}
 					,#{opcTotal}
 					, NOW()
-					,'');
+					,#{writer});
 	</insert>
 	
 	<!-- 직원정보조회 -->
