@@ -1,6 +1,7 @@
 package cafe24.wio.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,6 +9,9 @@ import cafe24.wio.bean.Member;
 
 @Mapper
 public interface MemberMapper {
+	
+	// 6. 결제 정보 카테고리 조회
+	public List<Map<String, Object>> getPmResourceList();
 	
 	// 5. 구성원 정보 수정
 	public int modifyWIOMember(Member member);
