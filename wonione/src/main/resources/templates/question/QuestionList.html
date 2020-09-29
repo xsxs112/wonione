@@ -41,7 +41,7 @@
 			    
 			}
 		</style>
-		<div style="border: 1px; padding-left: 350px; padding-right: 350px;" class="container-fluid">
+		<div style="border: 1px;" class="container-fluid">
 		<div class="product-payment-inner-st" style="text-align: right;">
 		<h4>문제리스트</h4>
 			<table class="table QuestionTable">
@@ -52,6 +52,7 @@
 		  				<th>출제자</th>
 		  				<th>출제일</th>
 		  				<th th:if="${session.SLEVEL == 1}">삭제</th>
+		  				<th th:if="${session.SLEVEL == 1}">문제등록</th>
 		  			</tr>
 		  		</thead>	  
 		  		<tbody>
@@ -60,11 +61,12 @@
 		  				<td><input type="hidden" id="questionCodeName"  th:value="${q.qt_codename}"><input type="hidden" th:value="${session.SID}" id="questionSid"><a class="questionCodeName">[[${q.qt_title}]]</a></td>
 		  				<td th:text="${q.mr_name}"></td>
 		  				<td th:text="${q.qt_date}"></td>
-		  				<td th:if="${session.SLEVEL == 1}"><button class="btn btn-default">삭제</button> </td>
+		  				<td th:if="${session.SLEVEL == 1}"><button class="btn btn-default">문제등록</button></td>
+		  				<td th:if="${session.SLEVEL == 1}"><button class="btn btn-default deleteQuestionTitle">삭제</button></td>
 		  			</tr>
 		  		</tbody>	
 	  		</table>
-		  		<button type="button" class="btn btn-default" id="insertQuestion">문제등록</button>
+		  		<button th:if="${session.SLEVEL == 1}" type="button" class="btn btn-default" id="insertQuestion">타이틀등록</button>
   		</div>
   		<a th:href="@{/QuestionList}">처음</a>
 		    

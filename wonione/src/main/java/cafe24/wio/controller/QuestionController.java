@@ -71,31 +71,46 @@ public class QuestionController {
 	@PostMapping(value = "/QuestionSidCheck" ,produces = "application/json")
 	@ResponseBody
 	public int QuestionSidCheck(@RequestParam(value="questionSid",required = false) String questionSid
-			,@RequestParam(value="questionName",required = false) String questionName) {
+							   ,@RequestParam(value="questionName",required = false) String questionName) {
 		int result = questionService.QuestionSidCheck(questionSid,questionName);
 		return result;
 	}
+	//문제타이틀페이지
 	@GetMapping("/insertQuestionTitle")
 	public String insertQuestionTitle() {
 		
 		return "question/insertQuestionTitle";
 	}
+	//문제등록페이지
 	@GetMapping("/insertQuestion")
 	public String insertQuestion() {
 		
 		return "question/insertQuestion";
 	}
-	@PostMapping(value="/selectIdQuestion" , produces = "application/json")
-	@ResponseBody
-	public int selectIdQuestion(@RequestParam(value="questionSid",required = false) String questionSid) {
-		int result = questionService.selectIdQuestion(questionSid);
-		return result;
-	}
+	
+	//문제타이틀등록
 	@PostMapping(value="/insertQuestionTitle", produces = "application/json")
 	@ResponseBody
 	public int insertQuestionTitle(cafe24.wio.bean.Question question) {
-		questionService.insertQuestion(question);
+		questionService.insertQuestionTitle(question);
 		return 0; 
 	}
-
+	//0.3초간 있을 페이지
+	//바로 넘기면 값이 안넘어가기때문에 잠시동안 있을 페이지를 만든다.
+	@GetMapping("/secondsPage")
+	public String secondsPage() {
+		return "question/secondsPage";
+	}
+	//타이틀삭제
+	@PostMapping(value="/deleteQuestionTitle", produces = "application/json")
+	@ResponseBody
+	public int deleteQuestionTitle(@RequestParam(value="questionName",required = false) String questionName) {
+		questionService.deleteQuestionTitle(questionName);
+		return 0;
+	}
+	@GetMapping("/deleteQuestionTitle")
+	public String deleteQuestionTitle() {
+		
+		return "redirect:/QuestionList";
+	}
 }
