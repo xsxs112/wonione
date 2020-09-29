@@ -7,6 +7,39 @@
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
 	
+	<select id="dateCheck" parameterType="string" resultType = "int">
+	
+		select COUNT(*) 
+		FROM wt_attendance_management AS m
+		WHERE 
+			DATE_FORMAT(NOW(),'%Y-%m-%d') = m.attendance_date AND m.mr_id = #{SID};
+		
+	</select>
+
+	
+	
+	
+	
+	<update id = "goingStOut" parameterType="string">
+		UPDATE wt_attendance_management
+		SET
+			going_out_stTime=NOW()
+		WHERE 
+			attendance_code = #{attCode};
+	</update>
+	
+	
+	
+	<select id="getAttCode" parameterType="string" resultType = "string">
+	
+		SELECT attendance_code
+		FROM wt_attendance_management AS a
+		WHERE attendance_date = LEFT(NOW(),10) AND a.mr_id = #{SID}
+		
+	</select>
+	
+	
+	
 	
 	<!-- 출근 insert -->
 	<insert id="addAttendance" parameterType="AttManagement">
@@ -19,7 +52,7 @@
 
 
 
-	<select id = "getAttCode" resultType="hashMap">
+	<select id = "getAttMaxCode" resultType="hashMap">
 		SELECT IFNULL((SELECT max(CAST(substring(attendance_code,12) AS DECIMAL))+1 FROM wt_attendance_management),1) AS max;
 	</select>	
 	
@@ -34,13 +67,16 @@
 	
 	<select id = "getAttendanceList" parameterType="string" resultType="AttManagement">
 	
-		SELECT attendance_code AS attCode
-			, mr_id AS mrId
-			, attendance_date AS attDate
-			, attendance_start_time AS attStTime
-			, attendance_end_time AS attEndTime
-			, attendance_time AS attTime
-			, attendance_note AS attNote
+		SELECT attendance_code as attCode
+				, mr_id as mrId 
+				, attendance_date as attDate
+				, attendance_start_time as attStTime
+				, attendance_end_time as attEndTime
+				, attendance_time as attTime
+				, attendance_note as attNote
+				, going_out_time as goingOut
+				, going_out_stTime as goingOutStTime
+				, going_out_endTime as goingOutEndTime
 		FROM wt_attendance_management AS a
 		WHERE a.mr_id = #{SID};
 	

@@ -19,15 +19,33 @@ public class ApprRequestService {
 	
 	
 	
+	public int dateCheck(String sid) {
+		
+		return apprMapper.dateCheck(sid);
+	}
+	
+	
+	public int goingStOut(String attCode) {
+	
+		return apprMapper.goingStOut(attCode);
+	}
+	
+	
+	public String getAttCode(String SID) {
+		
+		return apprMapper.getAttCode(SID);
+	}
+	
+	
 	public int addAttendance(AttManagement attManagement) {
 		
 		return apprMapper.addAttendance(attManagement);
 	}
 	
 	
-	public String getAttCode() {
+	public String getAttMaxCode() {
 		
-		Map<String, Object> attCodeMax =  apprMapper.getAttCode();
+		Map<String, Object> attCodeMax =  apprMapper.getAttMaxCode();
 		String tempCode = "attendance_";
 		int getMax = Integer.parseInt(attCodeMax.get("max").toString());
 		if(getMax<10) {

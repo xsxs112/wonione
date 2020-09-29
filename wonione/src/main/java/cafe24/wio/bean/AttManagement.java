@@ -11,8 +11,11 @@ public class AttManagement {
 	String attTime;
 	String attNote;
 	String goingOut;
-	String gointOutStTime;
-	String gointOuEndTime;
+	String goingOutStTime;
+	String goingOutEndTime;
+	
+	
+	
 	public String getAttCode() {
 		return attCode;
 	}
@@ -61,30 +64,29 @@ public class AttManagement {
 	public void setGoingOut(String goingOut) {
 		this.goingOut = goingOut;
 	}
-	public String getGointOutStTime() {
-		return gointOutStTime;
+	public String getGoingOutStTime() {
+		return goingOutStTime;
 	}
-	public void setGointOutStTime(String gointOutStTime) {
-		this.gointOutStTime = gointOutStTime;
+	public void setGoingOutStTime(String goingOutStTime) {
+		this.goingOutStTime = goingOutStTime;
 	}
-	public String getGointOuEndTime() {
-		return gointOuEndTime;
+	public String getGoingOutEndTime() {
+		return goingOutEndTime;
 	}
-	public void setGointOuEndTime(String gointOuEndTime) {
-		this.gointOuEndTime = gointOuEndTime;
+	public void setGoingOutEndTime(String goingOuEndTime) {
+		this.goingOutEndTime = goingOuEndTime;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "AttManagement [attCode=" + attCode + ", attDate=" + attDate + ", mrId=" + mrId + ", attStTime="
 				+ attStTime + ", attEndTime=" + attEndTime + ", attTime=" + attTime + ", attNote=" + attNote
-				+ ", goingOut=" + goingOut + ", gointOutStTime=" + gointOutStTime + ", gointOuEndTime=" + gointOuEndTime
-				+ ", getAttCode()=" + getAttCode() + ", getAttDate()=" + getAttDate() + ", getMrId()=" + getMrId()
-				+ ", getAttStTime()=" + getAttStTime() + ", getAttEndTime()=" + getAttEndTime() + ", getAttTime()="
-				+ getAttTime() + ", getAttNote()=" + getAttNote() + ", getGoingOut()=" + getGoingOut()
-				+ ", getGointOutStTime()=" + getGointOutStTime() + ", getGointOuEndTime()=" + getGointOuEndTime()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ ", goingOut=" + goingOut + ", goingOutStTime=" + goingOutStTime + ", goingOuEndTime=" + goingOutEndTime
 				+ "]";
 	}
+	
+	
 	
 	
 

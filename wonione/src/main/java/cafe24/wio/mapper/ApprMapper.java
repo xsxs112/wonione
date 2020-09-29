@@ -13,9 +13,20 @@ import cafe24.wio.bean.Member;
 public interface ApprMapper {
 	
 	
+	
+	public int dateCheck(String sid);
+	
+	
+	public int goingStOut(String attCode);
+	
+	
+	public String getAttCode(String SID);
+	
+	
 	public int addAttendance(AttManagement attManagement);
 	
-	public Map<String, Object> getAttCode();
+	
+	public Map<String, Object> getAttMaxCode();
 	
 	
 	public float getGoingOutTime(String attCode);
