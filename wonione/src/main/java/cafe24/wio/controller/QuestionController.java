@@ -75,6 +75,27 @@ public class QuestionController {
 		int result = questionService.QuestionSidCheck(questionSid,questionName);
 		return result;
 	}
-	
+	@GetMapping("/insertQuestionTitle")
+	public String insertQuestionTitle() {
+		
+		return "question/insertQuestionTitle";
+	}
+	@GetMapping("/insertQuestion")
+	public String insertQuestion() {
+		
+		return "question/insertQuestion";
+	}
+	@PostMapping(value="/selectIdQuestion" , produces = "application/json")
+	@ResponseBody
+	public int selectIdQuestion(@RequestParam(value="questionSid",required = false) String questionSid) {
+		int result = questionService.selectIdQuestion(questionSid);
+		return result;
+	}
+	@PostMapping(value="/insertQuestionTitle", produces = "application/json")
+	@ResponseBody
+	public int insertQuestionTitle(cafe24.wio.bean.Question question) {
+		questionService.insertQuestion(question);
+		return 0; 
+	}
 
 }

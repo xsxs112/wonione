@@ -23,6 +23,12 @@ public interface QuestionMapper {
 
 	public int QuestionSidCheck(String questionSid, String questionName);
 
+	public int selectIdQuestion(String questionSid);
+
+	public int insertQuestion(cafe24.wio.bean.Question question, String teacherId);
+
+	public int insertQuestionTitle(cafe24.wio.bean.Question question);
+
 
 
 }
