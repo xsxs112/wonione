@@ -19,6 +19,66 @@
 		<result column="qe_C" 			property="qeC"/>
 		<result column="qe_D" 			property="qeD"/>
 	</resultMap>
+	<select id="modifyQuestionListView" resultType="hashMap" parameterType="map">
+		SELECT 
+			qe_code
+			,qt_codename
+			,qe_data
+			,qe_score
+			,qe_answer
+			,qe_date
+			,qe_A
+			,qe_B
+			,qe_C
+			,qe_D
+		FROM 
+			wt_questions_enrollment AS qe
+		WHERE 
+			qe.qe_code=#{qeCode};
+	</select>
+	<select id="modifyQuestionList" resultType="hashMap" parameterType="map">
+		SELECT 
+		 	 q.rowNum   AS rowNum
+			,qe_code
+			,qt_codename
+			,qe_data
+			,qe_score
+			,qe_answer
+			,mr_name
+    	FROM 
+        	(SELECT
+            	(@rowNum := @rowNum+1) AS rowNum
+            	,qe.qe_code
+            	,qe.qt_codename
+            	,qe.qe_data
+            	,qe.qe_score
+            	,qe.qe_answer
+            	,m.mr_name	
+        FROM
+				wt_questions_enrollment AS qe
+				INNER JOIN 
+				wt_question_taker AS qt
+				on
+				qe.qt_codename = qt.qt_codename
+				INNER join
+				wt_member_registration AS m
+				on
+				qt.qt_teacher = m.mr_id
+         	JOIN
+           	(SELECT @rowNum :=0 ) AS r
+      	WHERE
+       		qe.qt_codename = #{qtCodeName}   
+       		ORDER BY qe.qe_code  ASC) AS q
+       		LIMIT #{startRow},#{rowPerPage};
+	</select>
+	<select id="modifyQuestionListCount" resultType="int">
+       SELECT
+         COUNT(*)
+      FROM
+         wt_questions_enrollment AS qe
+         WHERE
+			qe.qt_codename=#{qtCodeName}; 
+    </select>
 	<delete id="deleteQuestionTitle">
 		DELETE
 		FROM 
@@ -176,7 +236,7 @@
 	       	) AS qn
 		WHERE
 			qn.qt_codeName = #{questionName}
-    	LIMIT #{startRow},#{rowPerPage};
+    		LIMIT #{startRow},#{rowPerPage};
 	</select>
 	<select id="QuestionCount" resultType="int">
       SELECT
@@ -192,15 +252,15 @@
 		 	,qt_teacher
 		 	,qt_date
 			,mr_name
-      FROM 
-         (SELECT
-            (@rowNum := @rowNum+1) AS rowNum
-            ,q.qt_codename
-        	,q.qt_title
-        	,q.qt_teacher
-        	,q.qt_date
-        	,m.mr_name
-         FROM
+    	FROM 
+        	(SELECT
+            	(@rowNum := @rowNum+1) AS rowNum
+            	,q.qt_codename
+        		,q.qt_title
+        		,q.qt_teacher
+        		,q.qt_date
+        		,m.mr_name
+        FROM
 			wt_question_taker AS q
          	INNER JOIN
            	wt_member_registration AS m

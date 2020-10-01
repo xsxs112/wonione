@@ -3,6 +3,78 @@
  * 수정일 2020-09-29
  */
 (function ($) {
+	//문제등록
+	$('#insertQuestion').click(function(){
+		var qtCodeName = $('#modifyQuestionListView').text();
+		if(confirm('등록하시겠습니까?')){
+			window.open('/insertQuestion?qtCodeName='+qtCodeName,'문제등록', 'width=540, height=610 left=600 top=100','status=no');
+		}else{
+			alert('취소하셨습니다.');
+		}
+	});
+	
+	//타이틀리스트 상세보기
+	$('.modifyQuestionListView').click(function(){
+		var qeCode = $(this).parents().children('input[name=qeCode]').val();
+		var request = $.ajax({
+			url: "/modifyQuestionListView",
+			method: "POST",
+			data: { qeCode : qeCode },
+			dataType: "json"
+		});
+		request.done(function(data) {
+			var html = '';
+			html += '<h4>문제상세보기</h4>';
+			html += '<table class="modifyQuestionViewTable">';
+			html += '<tr>';
+			html += '<th scope="row">타이틀</th>';
+			html += '<td><input type="text" class="form-control" value="'+data.qt_codename+'" readonly  style="inline-size: -webkit-fill-available;"></td>';
+			html += '</tr>';
+			html += '<tr>';
+			html += '<th scope="row">문제 내용</th>';
+			html += '<td><textarea style = "resize : none;">'+data.qe_data+'</textarea></td>';
+			html += '</tr>';
+			html += '<tr>';
+			html += '<th scope="row">답안</th>';
+			html += '<td><input type="text" class="form-control" value="'+data.qe_answer+'"  style="inline-size: -webkit-fill-available;"></td>';
+			html += '</tr>';
+			html += '<tr>';
+			html += '<th scope="row">A문항</th>';
+			html += '<td><input type="text" class="form-control" value="'+data.qe_A+'"  style="inline-size: -webkit-fill-available;"></td>';
+			html += '</tr>';
+			html += '<tr>';
+			html += '<th scope="row">B문항</th>';
+			html += '<td><input type="text" class="form-control" value="'+data.qe_B+'"  style="inline-size: -webkit-fill-available;"></td>';
+			html += '</tr>';
+			html += '<tr>';
+			html += '<th scope="row">C문항</th>';
+			html += '<td><input type="text" class="form-control" value="'+data.qe_C+'"  style="inline-size: -webkit-fill-available;"></td>';
+			html += '</tr>';
+			html += '<tr>';
+			html += '<th scope="row">D문항</th>';
+			html += '<td><input type="text" class="form-control" value="'+data.qe_D+'"  style="inline-size: -webkit-fill-available;"></td>';
+			html += '</tr>';
+			html += '<tr>';
+			html += '<th scope="row">점수</th>';
+			html += '<td><input type="number" class="form-control" value="'+data.qe_score+'"  style="inline-size: -webkit-fill-available;"></td>';
+			html += '</tr>';
+			html += '<tr>';
+			html += '<th scope="row">출제일</th>';
+			html += '<td><input type="text" class="form-control" value="'+data.qe_date+'"  style="inline-size: -webkit-fill-available;"></td>';
+			html += '</tr>';
+			html += '</table>';
+			html += '<div style="text-align: center;">';
+			html += '<input type="button" class="btn btn-defult" value="수정" style="margin-right: 50px;">';
+			html += '<input type="button" class="btn btn-defult" value="삭제" >';
+			html += '</div>';
+			$("#modifyViewForm").empty();
+			$("#modifyViewForm").append(html);
+			
+		});
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		});
+	});
 	
 	//삭제처리
 	$('.deleteQuestionTitle').click(function(){
@@ -53,11 +125,11 @@
 		
 	});
 	
-	//문제등록페이지 
-	$('#insertQuestion').click(function(){
+	//문제타이틀등록페이지 
+	$('#insertQuestionTitle').click(function(){
 		if(questionSid != null && questionSid != undefined && questionSid != ''){
 			if(confirm('등록하시겠습니까?')){
-				window.open('/insertQuestionTitle','문제등록', 'width=550, height=201 left=600 top=100','status=no');
+				window.open('/insertQuestionTitle','문제타이틀등록', 'width=550, height=201 left=600 top=100','status=no');
 			}else{
 				alert('취소하셨습니다.');
 			}
