@@ -78,13 +78,13 @@ public class QuestionService {
 	      parameterMap.put("rowPerPage", ROW_PER_PAGE);
 	      parameterMap.put("questionName", questionName);
 	      
-	      double totalRowCount = questionMapper.QuestionCount();
+	      double totalRowCount = questionMapper.QuestionCount(questionName);
 	      
 	      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
 	      
 	      List<Map<String,Object>> Question = questionMapper.Question(parameterMap);
 	      
-	      if(currentPage >= (lastPage-4)) {
+	      if(currentPage >= (lastPage-20)) {
 	         lastPageNum = lastPage;
 	      }
 	      
@@ -116,15 +116,15 @@ public class QuestionService {
 	
 
 	public int insertQuestionTitle(Question question) {
-		questionMapper.insertQuestionTitle(question);
-		return 0;
+		int insertQuestionTitleResultResult = questionMapper.insertQuestionTitle(question);
+		return insertQuestionTitleResultResult;
 	}
 
 	public void deleteQuestionTitle(String questionName) {
 		questionMapper.deleteQuestionTitle(questionName);
 	}
 
-	public Map<String, Object> modifyQuestionList(int currentPage, String qtCodeName) {
+	public Map<String, Object> titleQuestionList(int currentPage, String qtCodeName) {
 		//보여줄 행의 갯수
 	    final int ROW_PER_PAGE = 10;
 	      
@@ -145,18 +145,18 @@ public class QuestionService {
 	    parameterMap.put("rowPerPage", ROW_PER_PAGE);
 	    parameterMap.put("qtCodeName", qtCodeName);
 	    
-	    double totalRowCount = questionMapper.modifyQuestionListCount(qtCodeName);
+	    double totalRowCount = questionMapper.titleQuestionListCount(qtCodeName);
 	      
 	    int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
   
-	    List<Map<String,Object>> modifyQuestionList = questionMapper.modifyQuestionList(parameterMap);
+	    List<Map<String,Object>> titleQuestionList = questionMapper.titleQuestionList(parameterMap);
   
 		if(currentPage >= (lastPage-4)) {
 		lastPageNum = lastPage;
 		}
   
 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		resultMap.put("modifyQuestionList", modifyQuestionList);
+		resultMap.put("titleQuestionList", titleQuestionList);
 		resultMap.put("lastPage", lastPage);
 		resultMap.put("startPageNum", startPageNum);
 		resultMap.put("lastPageNum", lastPageNum);
@@ -164,9 +164,9 @@ public class QuestionService {
 		return resultMap;
 	}
 
-	public Map<String, Object> modifyQuestionListView(String qeCode) {
-		Map<String, Object> modifyQuestionListViewRsult = questionMapper.modifyQuestionListView(qeCode);
-		return modifyQuestionListViewRsult;
+	public Map<String, Object> titleQuestionListView(String qeCode) {
+		Map<String, Object> titleQuestionListViewRsult = questionMapper.titleQuestionListView(qeCode);
+		return titleQuestionListViewRsult;
 	}
 
 	public int insertQuestion(Question question) {
@@ -174,7 +174,14 @@ public class QuestionService {
 		return result;
 	}
 
-	
+	public void modifyQuestion(Question question) {
+		questionMapper.modifyQuestion(question);
+	}
+
+	public int deleteQuestion(int qeCode) {
+		int deleteQuestionResult = questionMapper.deleteQuestion(qeCode);
+		return deleteQuestionResult;
+	}
 
 	
 }
