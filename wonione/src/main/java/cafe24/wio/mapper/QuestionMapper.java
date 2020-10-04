@@ -8,32 +8,36 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface QuestionMapper {
-
+	//타이틀리스트
 	public List<Map<String, Object>> QuestionList(Map<String, Object> parameterMap);
-
+	//타이틀갯수
 	public int QuestionListCount();
-
-	public int QuestionCount();
-
+	//몇문제있는지 획인
+	public int QuestionCount(String questionName);
+	//문제표시
 	public List<Map<String, Object>> Question(Map<String, Object> parameterMap);
-
+	//점수등록
 	public int QuestionScoreCheck(String qeAnswer, int qeCode, String studentName);
-
+	//점수확인
 	public Map<String, Object> ScoreCheck(String scoreSid);
-
+	//해당문제 풀었던 인원인지 체크
 	public int QuestionSidCheck(String questionSid, String questionName);
-
+	//타이틀등록
 	public int insertQuestionTitle(cafe24.wio.bean.Question question);
 	//타이틀 삭제
 	public void deleteQuestionTitle(String questionName);
 	//타이틀안에 문제를 추가하기전 타이틀안에 속해있는 문제리스트출력
-	public List<Map<String, Object>> modifyQuestionList(Map<String, Object> parameterMap);
+	public List<Map<String, Object>> titleQuestionList(Map<String, Object> parameterMap);
 	//문제리스트출력시 안에 몇개의문제가있는지 확인하는 Mapper
-	public int modifyQuestionListCount(String qtCodeName);
-
-	public Map<String, Object> modifyQuestionListView(String qeCode);
-
+	public int titleQuestionListCount(String qtCodeName);
+	//문제자세히보기
+	public Map<String, Object> titleQuestionListView(String qeCode);
+	//문제등록
 	public int insertQuestion(cafe24.wio.bean.Question question);
+	//타이틀내 문제수정
+	public void modifyQuestion(cafe24.wio.bean.Question question);
+	//타이틀내 문제삭제
+	public int deleteQuestion(int qeCode);
 	
 
 

@@ -19,7 +19,28 @@
 		<result column="qe_C" 			property="qeC"/>
 		<result column="qe_D" 			property="qeD"/>
 	</resultMap>
-	<select id="modifyQuestionListView" resultType="hashMap" parameterType="map">
+	<delete id="deleteQuestion" parameterType="int">
+		DELETE 
+		FROM 
+			wt_questions_enrollment 
+		WHERE 
+			qe_code=#{qeCode};
+	</delete>
+	<update id="modifyQuestion"  parameterType="Consulting">
+		UPDATE 
+			wt_questions_enrollment
+		SET
+			qe_data=#{qeData},
+			qe_score=#{qeScore},
+			qe_answer=#{qeAnswer},
+			qe_A=#{qeA},
+			qe_B=#{qeB},
+			qe_C=#{qeC},
+			qe_D=#{qeD}
+		WHERE 
+			qe_code=#{qeCode};
+	</update>
+	<select id="titleQuestionListView" resultType="hashMap" parameterType="map">
 		SELECT 
 			qe_code
 			,qt_codename
@@ -36,7 +57,7 @@
 		WHERE 
 			qe.qe_code=#{qeCode};
 	</select>
-	<select id="modifyQuestionList" resultType="hashMap" parameterType="map">
+	<select id="titleQuestionList" resultType="hashMap" parameterType="map">
 		SELECT 
 		 	 q.rowNum   AS rowNum
 			,qe_code
@@ -71,7 +92,7 @@
        		ORDER BY qe.qe_code  ASC) AS q
        		LIMIT #{startRow},#{rowPerPage};
 	</select>
-	<select id="modifyQuestionListCount" resultType="int">
+	<select id="titleQuestionListCount" resultType="int">
        SELECT
          COUNT(*)
       FROM
@@ -239,10 +260,12 @@
     		LIMIT #{startRow},#{rowPerPage};
 	</select>
 	<select id="QuestionCount" resultType="int">
-      SELECT
-         COUNT(*)
-      FROM
-         wt_questions_enrollment;
+		SELECT
+			COUNT(*)
+		FROM
+			wt_questions_enrollment AS qe
+		WHERE
+			qe.qt_codename = #{questionName};
     </select>
 	<select id="QuestionList" resultType="hashMap" parameterType="map">
 		SELECT 
