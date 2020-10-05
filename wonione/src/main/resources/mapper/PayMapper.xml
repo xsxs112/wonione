@@ -69,6 +69,39 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>	
+	<!-- 직원급여정보 삭제 -->
+	<delete id="removeOP" parameterType="String"> <!-- 내가 받을 타입을 파라타입 -->
+	DELETE 
+	FROM 
+		wt_officers_pay 
+	WHERE  
+		op_code = #{opCode}
+	</delete>
+	<!-- 직원공제계 급여정보 삭제 -->
+	<delete id="removeOPD" parameterType="String"> <!-- 내가 받을 타입을 파라타입 -->
+	DELETE 
+	FROM 
+		wt_officers_pay_deduction 
+	WHERE  
+		opd_code = #{opCode}
+	</delete>
+	<!-- 직원급여계 급여정보 삭제 -->
+	<delete id="removeOPC" parameterType="String"> <!-- 내가 받을 타입을 파라타입 -->
+	DELETE 
+	FROM 
+		wt_officers_pay_calculate 
+	WHERE  
+		opc_code = #{opCode}
+	</delete>
+	<!-- 수정할 직원급여정보 가져오기 -->
+	<select id="getOPCode" parameterType="String" resultType="OfficersPay">
+	SELECT
+		*
+	FROM
+		wt_officers_pay
+	WHERE
+		op_code = #{opCode}
+	</select>
 	<!-- 수정할 직원 급여정보 불러오기 -->
 	<select id = "getMrById" parameterType="String" resultType="OfficersPay">
 		SELECT
@@ -139,7 +172,7 @@
 					wt_member_registration AS mr
 					on
 					sp.mr_id = mr.mr_id	
-		  ORDER BY spDate DESC
+		  ORDER BY spRegDate DESC
 		) AS A
 		WHERE 
 		 levelNum = 2
@@ -172,7 +205,7 @@
 					wt_member_registration AS mr
 					on
 					op.mr_id = mr.mr_id	
-		  ORDER BY opDate DESC
+		  ORDER BY opRegDate DESC
 		) AS A
 		WHERE 
 		 levelNum = 3

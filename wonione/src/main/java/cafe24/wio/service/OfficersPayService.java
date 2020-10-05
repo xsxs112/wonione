@@ -50,9 +50,9 @@ public class OfficersPayService {
 	}	
 
 	//직원 급여명세 조회
-	public List<OfficersPay> getOfficersPay(String mrId) {
+	public List<OfficersPay> getOfficersPay(String mrId, String opCode) {
 		
-		List<OfficersPay> officersPay = officersPayMapper.getOfficersPay(mrId);		
+		List<OfficersPay> officersPay = officersPayMapper.getOfficersPay(mrId, opCode);		
 		
 		return officersPay;
 	}

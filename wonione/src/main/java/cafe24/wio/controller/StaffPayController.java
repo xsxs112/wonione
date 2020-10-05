@@ -127,9 +127,10 @@ public class StaffPayController {
 	// 강사급여명세서조회
 	@RequestMapping(value = "/getStaffPay", method = RequestMethod.GET)
 	public String getStaffPay(Model model
-								,@RequestParam(value = "mrId", required = false) String mrId) {
+								,@RequestParam(value = "mrId", required = false) String mrId
+								,@RequestParam(value = "spCode", required = false) String spCode) {
 		System.out.println(mrId +" <-mrId");
-		List<StaffPay> staffPay = staffPayService.getStaffPay(mrId);
+		List<StaffPay> staffPay = staffPayService.getStaffPay(mrId, spCode);
 
 		model.addAttribute("staffPay", staffPay);
 		model.addAttribute("title", "강사급여목록조회");
