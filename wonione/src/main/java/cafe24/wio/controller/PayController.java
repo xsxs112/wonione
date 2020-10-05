@@ -46,7 +46,7 @@ public class PayController {
 		return null;
 	}
 	
-	/* //직원급여수정화면 아이디로 불러오기
+	//직원급여수정화면 아이디로 불러오기
 	@GetMapping("/modiFyOfficersPay")
 	public String modiFyOfficersPay(@RequestParam(value="mrId", required = false) String mrId 
 									,Model model) {
@@ -58,7 +58,7 @@ public class PayController {
 		model.addAttribute("title", "직원급여수정");
 
 		return "pay/modiFyOfficersPay";
-	}*/
+	}
 		
 	//아이디로 급여 리스트 가져오기
 	@RequestMapping(value = "/getIdPayList", method = RequestMethod.GET)
