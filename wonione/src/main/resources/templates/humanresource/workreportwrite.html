@@ -12,13 +12,11 @@
 	  $('#btnSubmit').click(function(){
 		  console.log('클릭 이벤트');
 		  	var lecName = $('#lecName').val();
-			var mrName = $('#mrName').val();
 			var reportForm = $('#reportForm');
 			var	lecTarget = $('#lecTarget').val();
 			var lecPlan = $('#lecPlan').val();
 			var lecEtc = $('#lecEtc').val();
 			console.log(lecName + '<--lecName');
-			console.log(mrName + '<--mrName');
 			console.log(lecTarget + '<--lecTarget');
 			console.log(lecPlan + '<--lecPlan');
 			console.log(lecEtc + '<--lecEtc');
@@ -38,9 +36,6 @@
 			}else if(lecName == undefined || lecName ==''){
 				alert('개설예정강의를 선택해주세요');
 				return;	
-			}else if(mrName == undefined || mrName =='' ){
-				alert('작성자를 선택해주세요');
-				return;
 			}
 			reportForm.submit();
 		}); 
@@ -95,12 +90,8 @@
 			                                          </div>
 			                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 			                                          <div class="form-select-list">
-			                                              <select name ="mrName" class="form-control" id="mrName">
-															 <option value="">::작성자::</option>
-																<th:block th:each="w : ${writeName}">
-																<option th:value="${w.mr_id}" th:name ="mrName">[[${w.mr_name}]]</option>
-																</th:block>
-															</select>
+															<input type="hidden" th:value="${sessionId}" name="mrName">
+															<input type="text" class="form-control" th:placeholder="${sessionName}">
 			                                           </div>
 			                                       	</div>
 			                                      </div>

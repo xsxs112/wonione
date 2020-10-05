@@ -3,6 +3,8 @@ package cafe24.wio.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +64,7 @@ public class WorkReportController {
 	//보고서작성
 	   @PostMapping("/workreportwrite")
 	   public String getReportWrite(Report report
-	                        ,Model model
+	                        ,Model model, HttpSession session
 	                        ,@RequestParam(value="lecOpenCode", required = false) String lecOpenCode
 	                        ,@RequestParam(value="lecOpenScheCode", required = false) String lecOpenScheCode
 	                        ,@RequestParam(value="lecName", required = false) String lecName
@@ -83,6 +85,10 @@ public class WorkReportController {
 		logger.info("lecPlan->" + lecPlan);
 		logger.info("lecEtc->" + lecEtc);
 		logger.info("openLecRegDate->" + openLecRegDate);
+		  String sessionName= session.getAttribute("SNAME").toString();
+		  String sessionId = session.getAttribute("SID").toString();
+		  model.addAttribute("sessionName", sessionName);
+		  model.addAttribute("sessionId", sessionId);
 	      reportService.getReportWrite(report);
 	      model.addAttribute("Report", report);
 	      model.addAttribute("Reportcomplete", "/workreport");
@@ -91,14 +97,18 @@ public class WorkReportController {
 	   
 	   //보고서작성
 	   @GetMapping("/workreportwrite")
-	   public String getReportwrite(Model model) {
+	   public String getReportwrite(Model model ,HttpSession session) {
 		  List<Map<String, Object>> clCode = reportService.classCode();
 		  List<Map<String, Object>> wName = reportService.writeName();
+		  String sessionName= session.getAttribute("SNAME").toString();
+		  String sessionId = session.getAttribute("SID").toString();
 	      String codeResult =  reportService.getReCode();
 	      logger.info("===============================");
 	      logger.info("@GetMapping workreportwrite");
 	      logger.info("===============================");
 	      logger.info(codeResult + " < -- codeResult");
+	      model.addAttribute("sessionName", sessionName);
+		  model.addAttribute("sessionId", sessionId);
 	      model.addAttribute("codeResult", codeResult);
 	      model.addAttribute("classCode", clCode);
 	      model.addAttribute("writeName", wName);

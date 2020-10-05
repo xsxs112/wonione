@@ -77,7 +77,7 @@
          , lec_etc
          , open_lec_reg_date)
    VALUES(
-          #{lecOpenCode}
+           #{lecOpenCode}
          , #{lecName}
          , #{mrName}
          , #{lecTarget}
