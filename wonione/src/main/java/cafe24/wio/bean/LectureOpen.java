@@ -5,8 +5,6 @@ public class LectureOpen {
 	private String lecOpCode;		//강의개설코드
 	private String lecOsCode;		//강의개설예정코드
 	private String lecStatus;		//강의상태
-	private int lecTuition;			//수강료
-	private int claCapacity;		//수강정원
 	private int claPeople;			//수강인원
 	private int claLack;			//미달인원
 	private String lecOpWriter;		//작성자아이디
@@ -29,18 +27,6 @@ public class LectureOpen {
 	}
 	public void setLecStatus(String lecStatus) {
 		this.lecStatus = lecStatus;
-	}
-	public int getLecTuition() {
-		return lecTuition;
-	}
-	public void setLecTuition(int lecTuition) {
-		this.lecTuition = lecTuition;
-	}
-	public int getClaCapacity() {
-		return claCapacity;
-	}
-	public void setClaCapacity(int claCapacity) {
-		this.claCapacity = claCapacity;
 	}
 	public int getClaPeople() {
 		return claPeople;
@@ -76,10 +62,6 @@ public class LectureOpen {
 		builder.append(lecOsCode);
 		builder.append(", lecStatus=");
 		builder.append(lecStatus);
-		builder.append(", lecTuition=");
-		builder.append(lecTuition);
-		builder.append(", claCapacity=");
-		builder.append(claCapacity);
 		builder.append(", claPeople=");
 		builder.append(claPeople);
 		builder.append(", claLack=");
