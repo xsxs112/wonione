@@ -147,6 +147,15 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 		${awaBp} LIKE CONCAT('%',#{awaBpSc},'%');
 </select>
 
+<!-- 장학금 내역 삭제  -->
+<delete id="deleteScholarShip" parameterType="String">
+	DELETE 
+	FROM 
+		wt_payments_information
+	WHERE 
+		pm_info_code= #{pmInfoCode};
+</delete>
+
 
 </mapper>  
     

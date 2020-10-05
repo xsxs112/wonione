@@ -31,4 +31,6 @@ public interface ScholarshipMapper {
 	//조건검색
 	public List<ScholarShip> serchScholar(String awaBp,String awaBpSc);
 	
+	//삭제처리
+	public int deleteScholarShip(String pmInfoCode);
 }

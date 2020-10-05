@@ -72,4 +72,9 @@ public class ScholarshipService {
 			return scholarSearch;
 		}
 		
+	//삭제처리
+		public int deleteScholarShip(String pmInfoCode) {
+			int deleteResult = scholarshipMapper.deleteScholarShip(pmInfoCode);
+			return deleteResult;
+		}
 }

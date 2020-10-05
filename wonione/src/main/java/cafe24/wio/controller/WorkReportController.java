@@ -117,8 +117,8 @@ public class WorkReportController {
 	   
 	   //보고서 삭제
 	   @GetMapping("/deleteCode")
-	   public String deleteCode(Model model  
-			   					,@RequestParam(value="lecOpenCode", required = false) String lecOpenCode) {
+	   public String deleteCode(  
+			   					@RequestParam(value="lecOpenCode", required = false) String lecOpenCode) {
 		  reportService.deleteCode(lecOpenCode);
 		  logger.info("===============================");
 	      logger.info("@GetMapping deleteCode");

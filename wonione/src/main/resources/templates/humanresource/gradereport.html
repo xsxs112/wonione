@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title></title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+	 <div class="product-status mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-status-wrap drp-lst">
+                            <h3>성적 업무 보고서</h3><br>
+			          <form id="searchForm" class="form-inline" action="/getGradeReportList" >  
+							<select class="form-control" name="graRe" id="graRe">
+						 		 <option value="test_number">시험회차</option>
+						  		 <option value="mr_name">작성자</option>
+						  		 <option value="grade_Average">평균점수</option>
+						  		 <option value="achievement_rate">달성률</option>
+							</select> 
+						
+						<div class="form-group">
+					  		<input type="text" class="form-control" name="graResult" placeholder="Search" id="graResult"/>
+						    <div class="input-group-btn pull-right">
+						        <button class="btn btn-default form-group" type="button" id="searchBtn">검색</button>
+						   </div>
+					    </div>
+						</form>
+						    <div class="add-product">
+                                <a href="#">보고서 작성하기</a>
+                            </div>
+						<br>
+                            <div class="asset-inner">
+                                <table>
+                                   <tr>
+										<th>업무보고서코드</th>
+										<th>강의명</th>
+										<th>시험 차수</th>
+										<th>작성자</th>
+										<th>평균점수</th>
+										<th>달성률</th>
+										<th>작성일자</th>
+										<th>상세보기</th>
+									</tr>
+                                  	<tr th:each="g : ${reportGrade}">
+										<td th:text=${g.reportLecCode}></td>
+										<td th:text=${g.openLecCode}></td>
+										<td th:text=${g.testNumber}></td>
+										<td th:text=${g.mrName}></td>
+										<td th:text=${g.gradeAverage}></td>
+										<td th:text=${g.achievementRate}></td>
+										<td th:text=${g.finLecRegDate}></td>
+										<td>
+											<a th:href="@{/GradeReportDetailList(reportLecCode=${g.reportLecCode})}">상세보기</a>
+										</td>	
+									</tr>
+                                </table>
+                            </div>
+                            <div class="custom-pagination">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    </ul>
+                                </nav>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
+	<script type="text/javascript"> 
+	
+	 $(function(){
+			 $('#searchBtn').click(function(){
+				 var graRe = $('#graRe').val();
+				 var graResult = $('#graResult').val();
+				 var searchForm = $('#searchForm');
+				 console.log(graRe + ' < -- graRe');
+				 console.log(graResult + ' < -- graResult');
+				
+					var request = $.ajax({
+					  url: "/gradereport",  
+					  method: "GET", 
+					  data: { graRe : graRe , graResult : graResult  }, 
+					  dataType: "json"  
+					});
+					request.done(function(data) {   
+					console.log(data);
+					console.log(data.graRe);
+					console.log(data.graResult);
+					
+					if(data == undefined || data == ''){
+						alert('검색되는 내용이 없습니다.');
+					}
+					});
+		
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+					searchForm.submit();
+			 });
+		 });
+	
+		</script>
+		 
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	</th:block>
+</html>
