@@ -6,13 +6,124 @@
 	<resultMap type="Question" id="QuestionMap">
 		<result column="qe_code" 		property="qeCode"/>
 		<result column="qc_student" 	property="qcStudent"/>
+		<result column="qt_teacher" 	property="qtTeacher"/>
 		<result column="qt_codeName" 	property="qtCodeName"/>
+		<result column="qt_title" 		property="qtTitle"/>
 		<result column="mr_o_id" 		property="qeOid"/>
 		<result column="qe_data" 		property="qeData"/>
 		<result column="qe_score" 		property="qeScore"/>
 		<result column="qe_answer" 		property="qeAnswer"/>
 		<result column="qe_date" 		property="qeDate"/>
+		<result column="qe_A" 			property="qeA"/>
+		<result column="qe_B" 			property="qeB"/>
+		<result column="qe_C" 			property="qeC"/>
+		<result column="qe_D" 			property="qeD"/>
 	</resultMap>
+	<select id="modifyQuestionListView" resultType="hashMap" parameterType="map">
+		SELECT 
+			qe_code
+			,qt_codename
+			,qe_data
+			,qe_score
+			,qe_answer
+			,qe_date
+			,qe_A
+			,qe_B
+			,qe_C
+			,qe_D
+		FROM 
+			wt_questions_enrollment AS qe
+		WHERE 
+			qe.qe_code=#{qeCode};
+	</select>
+	<select id="modifyQuestionList" resultType="hashMap" parameterType="map">
+		SELECT 
+		 	 q.rowNum   AS rowNum
+			,qe_code
+			,qt_codename
+			,qe_data
+			,qe_score
+			,qe_answer
+			,mr_name
+    	FROM 
+        	(SELECT
+            	(@rowNum := @rowNum+1) AS rowNum
+            	,qe.qe_code
+            	,qe.qt_codename
+            	,qe.qe_data
+            	,qe.qe_score
+            	,qe.qe_answer
+            	,m.mr_name	
+        FROM
+				wt_questions_enrollment AS qe
+				INNER JOIN 
+				wt_question_taker AS qt
+				on
+				qe.qt_codename = qt.qt_codename
+				INNER join
+				wt_member_registration AS m
+				on
+				qt.qt_teacher = m.mr_id
+         	JOIN
+           	(SELECT @rowNum :=0 ) AS r
+      	WHERE
+       		qe.qt_codename = #{qtCodeName}   
+       		ORDER BY qe.qe_code  ASC) AS q
+       		LIMIT #{startRow},#{rowPerPage};
+	</select>
+	<select id="modifyQuestionListCount" resultType="int">
+       SELECT
+         COUNT(*)
+      FROM
+         wt_questions_enrollment AS qe
+         WHERE
+			qe.qt_codename=#{qtCodeName}; 
+    </select>
+	<delete id="deleteQuestionTitle">
+		DELETE
+		FROM 
+			wt_question_taker 
+		WHERE 
+			qt_codename=#{questionName};
+	</delete>
+	<insert id="insertQuestionTitle">
+		INSERT INTO 
+			wt_question_taker
+			(qt_codename
+			,qt_title
+			,qt_teacher
+			,qt_date)
+		VALUES 
+		(#{qtCodeName}
+		,#{qtTitle} 
+		,#{qtTeacher}
+		,NOW());
+	</insert>
+	<insert id="insertQuestion">
+		INSERT INTO 
+			wt_questions_enrollment
+			(qe_code
+			,qt_codeName
+			,qe_data
+			,qe_score
+			,qe_answer
+			,qe_date
+			,qe_A
+			,qe_B
+			,qe_C
+			,qe_D)
+		VALUES 
+			(NULL
+			,#{qtCodeName}
+			,#{qeData}
+			,#{qeScore}
+			,#{qeAnswer}
+			,NOW()
+			,#{qeA}
+			,#{qeB}
+			,#{qeC}
+			,#{qeD});
+	</insert>
 	<select id="QuestionSidCheck" resultType="int">
 		SELECT
 			COUNT(1) AS num
@@ -125,7 +236,7 @@
 	       	) AS qn
 		WHERE
 			qn.qt_codeName = #{questionName}
-    	LIMIT #{startRow},#{rowPerPage};
+    		LIMIT #{startRow},#{rowPerPage};
 	</select>
 	<select id="QuestionCount" resultType="int">
       SELECT
@@ -141,15 +252,15 @@
 		 	,qt_teacher
 		 	,qt_date
 			,mr_name
-      FROM 
-         (SELECT
-            (@rowNum := @rowNum+1) AS rowNum
-            ,q.qt_codename
-        	,q.qt_title
-        	,q.qt_teacher
-        	,q.qt_date
-        	,m.mr_name
-         FROM
+    	FROM 
+        	(SELECT
+            	(@rowNum := @rowNum+1) AS rowNum
+            	,q.qt_codename
+        		,q.qt_title
+        		,q.qt_teacher
+        		,q.qt_date
+        		,m.mr_name
+        FROM
 			wt_question_taker AS q
          	INNER JOIN
            	wt_member_registration AS m
