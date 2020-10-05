@@ -23,7 +23,7 @@
 				<th>작성자</th>
 				<th>작성날짜</th>
 			</tr>
-			<tr>	
+			<tr>
 				<td align="left" th:text="${Board.boardNum}"></td>
 				<td align="left" th:text="${Board.boardWriterId}" id="boardWriterId"></td>
 				<td align="left" th:text="${Board.boardWriterName}"></td>
@@ -61,7 +61,7 @@
 			<a th:href="@{/removeNotice(boardNum=${b.boardNum})}" class="btn btn-default btn-danger">삭제</a>
 		</div>
 	
-	</form>	
+	</form>
 	</th:block>
 	
 	<th:block layout:fragment="customJsScript">
