@@ -61,13 +61,33 @@
 							</th:block>
                                 </table>
                             </div>
-                            <div class="custom-pagination">
+                            <div class="custom-pagination" th:if="${currentPage ne null}">
 								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#">이전</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">다음</a></li>
+									<li class="page-item">
+										<a class="page-link" th:href="@{/textbookSupplyList}">처음</a>
+									</li>
+									<li class="page-item">
+										<span th:if="${currentPage > 1}">
+											<a class="page-link" th:href="@{/textbookSupplyList(currentPage=(${currentPage}-1))}">이전</a>
+										</span>
+									</li>
+								</ul>
+								<ul class="pagination">
+									<li class="page-item">
+									<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/textbookSupplyList(currentPage=${num})}"></a>
+									</th:block>
+									</li>
+								</ul>
+								<ul class="pagination">
+									<li class="page-item">
+										<span th:if="${currentPage ne lastPage}">
+											<a th:href="@{/textbookSupplyList(currentPage=(${currentPage}+1))}">다음</a>
+										</span>
+		    						</li>
+		    						<li class="page-item">
+		    							<a th:href="@{/textbookSupplyList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
+		    						</li>
 								</ul>
                             </div>
                             <div class="container-fluid" style="margin: 10px;">
