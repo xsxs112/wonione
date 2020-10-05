@@ -13,6 +13,8 @@
 		<result column="grade_man_reg_date" 	property="gradeManRegDate"/>
 		<result column="mr_name" 				property="mrName"/>
 		<result column="test_number" 			property="testNumber"/>	
+		<result column="lec_name" 			    property="lecName"/>	
+		
 </resultMap>
 
 <!-- 성적조회 -->
@@ -40,6 +42,7 @@
 
 <!-- 상세조회 -->
 <select id="getGradeDetailList" resultType="Grade" parameterType="String" resultMap="gradeResultMap">
+	
 	SELECT
 		 grade_man_code
 		, mr_name
