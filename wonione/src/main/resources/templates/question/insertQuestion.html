@@ -47,49 +47,49 @@
 	<div class="container-fluid" style="text-align: center;">
 		<h4 style="font-weight: 700;">문제등록</h4>
 		<form action="/insertQuestion" method="POST">
-		<table class="insertQuestion">
-		    <tr>
-		        <th scope="row">문제이름</th>
-		        <td><input type="text" name="qtCodeName" th:value="${qtCodeName}"></td>
-		    </tr>
-		    <tr>
-		        <th scope="row">문제내용</th>
-		        <td><textarea style="resize: none; overflow-y:scroll;" cols="45" rows="5" name="qeData"></textarea></td>
-		    </tr>
-		    <tr>
-		        <th scope="row">답안</th>
-		        <td>
-			        <select name="qeAnswer" class="form-control" style="inline-size: max-content;">
-			        	<option value="A" class="insertQuestionAnswer">A</option>
-			        	<option value="B" class="insertQuestionAnswer">B</option>
-			        	<option value="C" class="insertQuestionAnswer">C</option>
-			        	<option value="D" class="insertQuestionAnswer">D</option>
-			        </select>
-		        </td>
-		    </tr>
-		    <tr>
-		        <th scope="row">A보기</th>
-		        <td><input type="text" name="qeA"></td>
-		    </tr>
-		    <tr>
-		        <th scope="row">B보기</th>
-		        <td><input type="text" name="qeB"></td>
-		    </tr>
-		    <tr>
-		        <th scope="row">C보기</th>
-		        <td><input type="text" name="qeC"></td>
-		    </tr>
-		    <tr>
-		        <th scope="row">D보기</th>
-		        <td><input type="text" name="qeD"></td>
-		    </tr>
-		    <tr>
-		        <th scope="row">문제점수</th>
-		        <td><input type="number" name="qeScore" style="width: 50px;"></td>
-		        <td hidden=""><input name="qtTeacher" th:value="${session.SID}"></td>
-		    </tr>
-		</table>
-		<button type="submit" class="btn btn-default">등록</button>
+			<table class="insertQuestion">
+			    <tr>
+			        <th scope="row">문제이름</th>
+			        <td><input type="text" name="qtCodeName" th:value="${qtCodeName}" readonly></td>
+			    </tr>
+			    <tr>
+			        <th scope="row">문제내용</th>
+			        <td><textarea style="resize: none; overflow-y:scroll;" cols="45" rows="5" name="qeData"></textarea></td>
+			    </tr>
+			    <tr>
+			        <th scope="row">답안</th>
+			        <td>
+				        <select name="qeAnswer" class="form-control" style="inline-size: max-content;">
+				        	<option value="A" class="insertQuestionAnswer">A</option>
+				        	<option value="B" class="insertQuestionAnswer">B</option>
+				        	<option value="C" class="insertQuestionAnswer">C</option>
+				        	<option value="D" class="insertQuestionAnswer">D</option>
+				        </select>
+			        </td>
+			    </tr>
+			    <tr>
+			        <th scope="row">A보기</th>
+			        <td><input type="text" name="qeA"></td>
+			    </tr>
+			    <tr>
+			        <th scope="row">B보기</th>
+			        <td><input type="text" name="qeB"></td>
+			    </tr>
+			    <tr>
+			        <th scope="row">C보기</th>
+			        <td><input type="text" name="qeC"></td>
+			    </tr>
+			    <tr>
+			        <th scope="row">D보기</th>
+			        <td><input type="text" name="qeD"></td>
+			    </tr>
+			    <tr>
+			        <th scope="row">문제점수</th>
+			        <td><input type="number" name="qeScore" style="width: 50px;"></td>
+			        <td hidden=""><input name="qtTeacher" th:value="${session.SID}"></td>
+			    </tr>
+			</table>
+			<button type="submit" class="btn btn-default" id="insertQuestionbtn">등록</button>
 		</form>
 	</div>
 	<script src="js/question.js"></script>

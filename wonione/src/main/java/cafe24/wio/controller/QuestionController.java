@@ -26,7 +26,7 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 	
-	
+	//문제리스트
 	@GetMapping("/QuestionList")
 	public String QuestionList(Model model
 								,@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
@@ -39,6 +39,7 @@ public class QuestionController {
 		
 		return "question/QuestionList";
 	}
+	//문제출제페이지
 	@GetMapping("/Question")
 	public String Question(Model model
 							,@RequestParam(value="questionName", required = false) String questionName
@@ -52,6 +53,7 @@ public class QuestionController {
 			model.addAttribute("currentPage",currentPage);         
 		return "question/Question";
 	}
+	//정답체크ajax
 	@GetMapping(value= "/QuestionScoreCheckdate" ,produces = "application/json")
 	@ResponseBody
 	public int QuestionScoreCheckdate(@RequestParam(value="qeAnswer",required = false) String qeAnswer
@@ -61,23 +63,25 @@ public class QuestionController {
 		questionService.QuestionScoreCheck(qeAnswer,StudentName,qeCode);
 		return 0;
 	}
+	//점수체크페이지
 	@GetMapping("/scoreCheck")
 	public String scoreCheck() {
 		return "question/scoreCheck";
 		
 	}
+	//점수확인을 위한 아이디확인
 	@PostMapping(value = "/ScoreCheck" ,produces = "application/json")
 	@ResponseBody
 	public Map<String, Object> ScoreCheck(@RequestParam(value="scoreSid",required = false) String scoreSid) {
 		Map<String,Object>scoreSidMap = questionService.ScoreCheck(scoreSid);
 		return scoreSidMap;
 	}
-	
+	//한번푼문제에 대한 권한처리
 	@PostMapping(value = "/QuestionSidCheck" ,produces = "application/json")
 	@ResponseBody
-	public int QuestionSidCheck(@RequestParam(value="questionSid",required = false) String questionSid
+	public String QuestionSidCheck(@RequestParam(value="questionSid",required = false) String questionSid
 							   ,@RequestParam(value="questionName",required = false) String questionName) {
-		int result = questionService.QuestionSidCheck(questionSid,questionName);
+		String result = questionService.QuestionSidCheck(questionSid,questionName);
 		return result;
 	}
 	//문제타이틀페이지
@@ -113,7 +117,7 @@ public class QuestionController {
 		questionService.insertQuestion(question);
 		response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-        out.println("<script>alert('등록되었습니다.'); location.href='secondsPage';</script>");
+        out.println("<script>alert('등록되었습니다.');opener.document.location.reload();self.close();</script>");
         out.flush();
 	}
 	//0.3초간 있을 페이지
@@ -129,12 +133,13 @@ public class QuestionController {
 		questionService.deleteQuestionTitle(questionName);
 		return 0;
 	}
-	//타이틀안 문제등록전 리스트
+	//타이틀내 문제등록전 리스트
 	@RequestMapping(value="/titleQuestionList", method=RequestMethod.GET)
 	public String modifyQuestionList(Model model
 									,@RequestParam(value="qtCodeName",required = false) String qtCodeName
 									,@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		Map<String,Object> titleQuestionListMap = questionService.titleQuestionList(currentPage, qtCodeName);
+		model.addAttribute("qtCodeName",qtCodeName);
 		model.addAttribute("lastPage", titleQuestionListMap.get("lastPage"));
 		model.addAttribute("titleQuestionList", titleQuestionListMap.get("titleQuestionList"));
 		model.addAttribute("startPageNum", titleQuestionListMap.get("startPageNum"));
@@ -162,6 +167,31 @@ public class QuestionController {
 	public int deleteQuestion(@RequestParam(value="deleteQeCode",required = false) int qeCode){
 		int deleteQuestionResult = questionService.deleteQuestion(qeCode);
 		return deleteQuestionResult;
+	}
+	//타이틀수정 ajax
+	@PostMapping(value="/modifyQuestionTitle",produces = "application/json")
+	@ResponseBody
+	public int modifyQuestionTitle(@RequestParam(value="qtCodeName",required = false) String questionCodeName
+								  ,@RequestParam(value="qtTitle",required = false) String questionTitle
+							  	  ,@RequestParam(value="qtCodeSubName",required = false) String qtCodeSubName){
+		int modifyQuestionTitleResult = questionService.modifyQuestionTitle(questionCodeName,questionTitle,qtCodeSubName);
+		return modifyQuestionTitleResult;
+	}
+	//타이틀수정페이지
+	@GetMapping("/modifyQuestionTitle")
+	public String modifyQuestionTitle(Model model
+									,@RequestParam(value="questionCodeName",required = false) String questionCodeName
+									,@RequestParam(value="questionTitle",required = false) String questionTitle) {
+		model.addAttribute("questionCodeName",questionCodeName);
+		model.addAttribute("questionTitle",questionTitle);
+		return "question/modifyQuestionTitle";
+	}
+	//타이틀수정전 이름체크
+	@PostMapping(value="/QuestionTitleNameCheck",produces = "application/json")
+	@ResponseBody
+	public int QuestionTitleNameCheck(@RequestParam(value="qtCodeName",required = false) String questionCodeName){
+		int QuestionTitleNameCheckResult = questionService.QuestionTitleNameCheck(questionCodeName);
+		return QuestionTitleNameCheckResult;
 	}
 	
 }

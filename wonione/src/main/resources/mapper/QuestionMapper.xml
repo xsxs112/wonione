@@ -19,6 +19,23 @@
 		<result column="qe_C" 			property="qeC"/>
 		<result column="qe_D" 			property="qeD"/>
 	</resultMap>
+	<select id="QuestionTitleNameCheck" resultType="int">
+		SELECT 
+			COUNT(qt_codename)
+		FROM 
+			wt_question_taker AS qt
+		WHERE
+			qt.qt_codename = #{questionCodeName};
+	</select>
+	<update id="modifyQuestionTitle">
+		UPDATE 
+			wt_question_taker
+		SET
+			qt_codename=#{questionCodeName},
+			qt_title=#{questionTitle}
+		WHERE 
+			qt_codename=#{qtCodeSubName};
+	</update>
 	<delete id="deleteQuestion" parameterType="int">
 		DELETE 
 		FROM 
@@ -61,6 +78,7 @@
 		SELECT 
 		 	 q.rowNum   AS rowNum
 			,qe_code
+			,qt_title
 			,qt_codename
 			,qe_data
 			,qe_score
@@ -70,6 +88,7 @@
         	(SELECT
             	(@rowNum := @rowNum+1) AS rowNum
             	,qe.qe_code
+            	,qt.qt_title
             	,qe.qt_codename
             	,qe.qe_data
             	,qe.qe_score
@@ -145,7 +164,7 @@
 			,#{qeC}
 			,#{qeD});
 	</insert>
-	<select id="QuestionSidCheck" resultType="int">
+	<select id="QuestionSidCheck" resultType="String">
 		SELECT
 			COUNT(1) AS num
 		FROM 

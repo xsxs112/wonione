@@ -108,8 +108,8 @@ public class QuestionService {
 		return scoreSidMap;
 	}
 
-	public int QuestionSidCheck(String questionSid, String questionName) {
-		int result = questionMapper.QuestionSidCheck(questionSid,questionName);
+	public String QuestionSidCheck(String questionSid, String questionName) {
+		String result = questionMapper.QuestionSidCheck(questionSid,questionName);
 		return result;
 	}
 
@@ -126,7 +126,7 @@ public class QuestionService {
 
 	public Map<String, Object> titleQuestionList(int currentPage, String qtCodeName) {
 		//보여줄 행의 갯수
-	    final int ROW_PER_PAGE = 10;
+	    final int ROW_PER_PAGE = 5;
 	      
 	    //보여줄 행의 시작점 초기화
 	    int startRow = 0;
@@ -181,6 +181,16 @@ public class QuestionService {
 	public int deleteQuestion(int qeCode) {
 		int deleteQuestionResult = questionMapper.deleteQuestion(qeCode);
 		return deleteQuestionResult;
+	}
+
+	public int modifyQuestionTitle(String questionCodeName, String questionTitle, String qtCodeSubName) {
+		int modifyQuestionTitleResult = questionMapper.modifyQuestionTitle(questionCodeName,questionTitle,qtCodeSubName);
+		return modifyQuestionTitleResult;
+	}
+
+	public int QuestionTitleNameCheck(String questionCodeName) {
+		int QuestionTitleNameCheckResult = questionMapper.QuestionTitleNameCheck(questionCodeName);
+		return QuestionTitleNameCheckResult;
 	}
 
 	
