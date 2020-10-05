@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+			<!-- 입고목록 조회해서 해당교재의 입고내역이 없으면(ajax)
+				 팝업창띄워서 최초입고등록으로 이동시켜주기 -->
+	<div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="sparkline12-list">
+                    <div class="sparkline12-hd">
+                        <div class="main-sparkline12-hd">
+                            <h1 th:text="${mainTitle}"></h1>
+                        </div>
+                    </div>
+                    <div class="sparkline12-graph">
+                        <div class="basic-login-form-ad">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="all-form-element-inner">
+                                        <form action="/textbookSupplyRegister" method="post" id="addForm">
+									<input type="hidden" th:value="${sessionId}" name="lecOsWriter">
+									<input type="hidden" th:value="${lecOsCode}" name="lecOsCode">
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">강의개설예정코드</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" disabled class="form-control" th:value="${lecOsCode}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">강의명</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" class="form-control" id="lecName" name="lecName" placeholder="강의명을 입력해주세요"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">강사명</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <div class="form-select-list">
+                                                            <select class="form-control custom-select-value" id="mrTeacherId" name ="mrTeacherId">
+                                                            <option disabled="disabled" selected="selected">::강사를 선택하세요::</option>
+	                                                            <th:block th:each=" tl : ${teacherList}">
+	                                                            	<option th:value="${tl.mrTeacherId}">[[${tl.mrTeacherName}]]</option>                                                       
+	                                                            </th:block>
+															</select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>	                                                  
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">강의실</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <div class="form-select-list">
+                                                            <select class="form-control custom-select-value" id="lecRoomCode" name ="lecRoomCode">
+                                                            <option disabled="disabled" selected="selected">::강의실을 선택하세요::</option>
+	                                                            <th:block th:each="lr : ${lectureRoom}">
+	                                                            	<option th:value="${lr.lecRoom}">[[${lr.lecRoomName}]]</option>                                                       
+	                                                            </th:block>
+															</select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">강의요일</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" class="form-control" name="lecDay" placeholder="강의요일을 입력해주세요"/>
+                                                    </div>
+                                                </div>
+                                            </div>                                            	                                                  
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">강의수준</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <div class="form-select-list">
+                                                            <select class="form-control custom-select-value" id="lecLevelCode" name ="lecLevelCode">
+                                                            <option disabled="disabled" selected="selected">::강의수준을 선택하세요::</option>
+	                                                            <th:block th:each="ll : ${lectureLevel}">
+	                                                            	<option th:value="${ll.lecLevel}">[[${ll.lecLevelName}]]</option>                                                       
+	                                                            </th:block>
+															</select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>	                                                  
+                                                  
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">수강정원</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="number" class="form-control" name="claCapacity" 
+                                                        id="claCapacity" onFocus="this.value=0; return true;" placeholder="수강정원을 입력해주세요"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">수강료</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" class="form-control" name="lecTuition" 
+                                                        id="lecTuition" onFocus="this.value=0; return true;" placeholder="수강료를 입력해주세요"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">강의기간</label>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                                                        <label class="login2 pull-center pull-center-pro">개강일자</label>
+                                                        <input type="date" class="form-control" name="lecStartDate" 
+                                                        id="lecStartDate"/>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                                                    	<label class="login2 pull-center pull-center-pro">종강일자</label>
+                                                        <input type="date"class="form-control"  name="lecFinalDate" id="lecFinalDate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">작성자</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" disabled class="form-control" th:value="${sessionName}"  th:placeholder="${sessionName}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                        					<a href="/textbookSupplyList" class="btn btn-default" role="button">취소</a>
+                                            <button class="btn btn-primary login-submit-cs" type="button" id="addBtn">등록</button>
+                                        </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        		<div class="container-fluid" style="margin: 10px;">
+									<a href="/lecOsList" class="btn btn-default" role="button">강의관리 메인페이지로</a>
+								</div>        
+                            </div>
+                        </div>
+                    </div>
+                </div>	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	</script>  		
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	</th:block>
+</html>

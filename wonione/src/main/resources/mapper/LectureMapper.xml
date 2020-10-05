@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cafe24.wio.mapper.LectureMapper">
+
+<resultMap type="LectureOpenSchedule" id="resultLectureOS">
+	<result column="lec_os_code" 		property="lecOsCode"/>
+	<result column="lec_name" 			property="lecName"/>
+	<result column="mr_teacher_id" 		property="mrTeacherId"/>
+	<result column="mr_name" 			property="mrTeacherName"/>
+	<result column="lec_time_code" 		property="lecTime"/>
+	<result column="lec_room_code" 		property="lecRoom"/>
+	<result column="lec_day" 			property="lecDay"/>
+	<result column="lec_level_code" 	property="lecLevel"/>
+	<result column="lec_tuition" 		property="lecTuition"/>
+	<result column="cla_capacity" 		property="claCapacity"/>
+	<result column="lec_st_date" 		property="lecStartDate"/>
+	<result column="lec_fin_date" 		property="lecFinalDate"/>
+	<result column="lec_os_reg_date" 	property="lecOsRegDate"/>
+</resultMap>
+
+<!-- *********************** START ************************* -->
+<!-- ************************************************* -->
+<!-- *********************** START ************************* -->
+
+<!-- 강의 신청인원 조회 -->
+<select id="getApplyCount" resultType="int">
+SELECT 
+	COUNT(c.lec_os_code)
+FROM
+	 wt_course AS c
+WHERE
+	c.lec_os_code = #{lecOsCode};
+
+</select>
+
+<!-- 강의코드만 가져오기 -->
+<select id="getLecOsCode" resultType="LectureOpenSchedule" resultMap="resultLectureOS">
+SELECT 
+	lec_os_code
+FROM wt_lecture_open_schedule
+</select>
+
+<!-- 강의예정 리스트 조회 -->
+<select id="getLectureOsList" resultType="hashMap">
+SELECT
+	los.lec_os_code				AS	'lecOsCode'
+	,los.lec_name				AS	'lecName'
+	,los.mr_teacher_id			AS	'mrTeacherId'
+	,mr.mr_name					AS	'mrTeacherName'
+	,lrt.lec_starttime			AS	'lecStartTime'
+	,lrt.lec_endtime			AS	'lecEndTime'
+	,lrt.lec_designation		AS 	'lecTimeName'
+	,lrr.lec_designation		AS	'lecRoom'
+	,los.lec_day				AS	'lecDay'
+	,lrl.lec_designation		AS	'lecLevel'
+	,los.lec_tuition			AS	'lecTuition'
+	,
+	(SELECT COUNT(c.lec_os_code)
+		FROM wt_course AS c
+		WHERE c.lec_os_code = #{lecOsCode})
+								AS	'lecApplyCount'
+	,los.cla_capacity			AS	'lecClaCapacity'
+	,los.lec_st_date			AS	'lecStartDate'
+	,los.lec_fin_date			AS	'lecFinalDate'
+	,los.lec_os_writer			AS 	'lecOsWriter'
+	,los.lec_os_reg_date		AS	'lecOsRegDate'
+FROM
+	wt_lecture_open_schedule AS los
+	INNER JOIN
+	wt_member_registration AS mr
+	ON
+	los.mr_teacher_id = mr.mr_id
+	LEFT JOIN
+	wt_lec_resource AS lrt
+	ON
+	los.lec_time_code = lrt.lec_number
+	LEFT JOIN
+	wt_lec_resource AS lrr
+	ON
+	los.lec_room_code = lrr.lec_number
+	LEFT join
+	wt_lec_resource AS lrl
+	ON
+	los.lec_level_code = lrl.lec_number
+</select>
+
+<!-- 회원중 시간강사만 조회 -->
+<select id="getTeacherList" resultType="hashMap">
+SELECT 
+	mr.mr_id		AS mrTeacherId
+	,mr.mr_name		AS mrTeacherName
+FROM 
+	wt_member_registration AS mr
+WHERE 
+	mr.level_num = 2;
+</select>
+
+<!-- 강의수준조회 -->
+<select id="getLectureLevel" resultType="hashMap">
+SELECT
+	lr.lec_number			AS	'lecLevel'
+	,lr.lec_designation		AS	'lecLevelName'
+FROM
+	wt_lec_resource AS lr 
+WHERE
+	lr.lec_number LIKE CONCAT('%','level','%');
+</select>
+
+<!-- 강의실조회 -->
+<select id="getLectureRoom" resultType="hashMap">
+SELECT
+	lr.lec_number			AS	'lecRoom'
+	,lr.lec_designation		AS	'lecRoomName'
+FROM
+	wt_lec_resource AS lr 
+WHERE
+	lr.lec_number LIKE CONCAT('%','room','%');
+
+</select>
+
+<!-- 강의시간조회 -->
+<select id="getLectureTime" resultType="hashMap">
+SELECT
+	lr.lec_number			AS	'lecTime'
+	,lr.lec_designation		AS	'lecTimeName'	
+	,lr.lec_starttime		AS	'lecStartTime'
+	,lr.lec_endtime			AS	'lecEndTime'
+FROM
+	wt_lec_resource AS lr 
+WHERE
+	lr.lec_number LIKE CONCAT('%','time','%');
+</select>
+
+<!-- 강의개설 신청하기 -->
+<insert id="applyLectureOpen">
+INSERT INTO wt_lecture_open_schedule
+	(lec_os_code
+	, lec_name
+	, mr_teacher_id
+	, lec_time_code
+	, lec_room_code
+	, lec_day
+	, lec_level_code
+	, lec_tuition
+	, cla_capacity
+	, lec_st_date
+	, lec_fin_date
+	, lec_os_writer
+	, lec_os_reg_date)VALUES(
+	#{lecOsCode}
+	, #{lecName}
+	, #{mrTeacherId}
+	, #{lecTimeCode}
+	, #{lecRoomCode}
+	, #{lecDay}
+	, #{lecLevelCode}
+	, ${lecTuition}
+	, ${claCapacity}
+	, #{lecStartDate}
+	, #{lecFinalDate}
+	, #{lecOsWriter}
+	, CURRENT_TIME());
+
+</insert>
+
+
+<!-- *********************** END ************************* -->
+<!-- *********************************************** -->
+<!-- *********************** END ************************* -->
+
+
+</mapper>
+    
