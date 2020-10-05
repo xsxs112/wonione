@@ -1,5 +1,8 @@
 (function ($) {
  "use strict";
+	$('#boardContents').summernote({
+		height: 200,
+	});
 	$('#summernote1').summernote({
 		height: 200,
 	});
