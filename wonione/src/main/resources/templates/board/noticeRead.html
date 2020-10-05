@@ -33,25 +33,25 @@
 				<th colspan="6">제목</th>
 			</tr>
 			<tr th:each="b : ${Board}">	
-				<td colspan="6" align="left" th:text=${b.boardTitle}></td>
+				<td colspan="6" align="left" th:text="${b.boardTitle}"></td>
 			</tr>
 			<tr class="info">
 				<th colspan="6">내용</th>
 			</tr>
 			<tr th:each="b : ${Board}">	
-				<td colspan="6" align="left" th:text=${b.boardContents}></td>
+				<td colspan="6" align="left" th:utext="${b.boardContents}"></td>
 			</tr>								
 			<tr class="info">
 				<th colspan="6">사진(미구현)</th>
 			</tr>
 			<tr th:each="b : ${Board}">	
-				<td colspan="6" align="left" th:text=${b.boardPicture}></td>
+				<td colspan="6" align="left" th:text="${b.boardPicture}"></td>
 			</tr>
 			<tr class="info">
 				<th colspan="6">첨부파일(다운로드 불가)</th>
 			</tr>
 			<tr th:each="b : ${Board}">	
-				<td colspan="6" align="left" th:text=${b.boardFile}></td>
+				<td colspan="6" align="left" th:text="${b.boardFile}"></td>
 			</tr>
 		</table>
 		

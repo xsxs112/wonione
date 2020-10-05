@@ -18,7 +18,7 @@
       	<result column="board_file"   		property="boardFile"/>
 	</resultMap>
 	
-	<!-- 공지사항 리스트 조회 쿼리  -->
+	<!-- 공지사항 리스트 조회  -->
 	<select id="getNotice" resultType="Board" parameterType="Board" resultMap="boardResultMap">
 		SELECT
 			b.board_num,
@@ -36,7 +36,7 @@
 			board_menu = '공지사항';
 	</select>
 	
-	<!-- 공지사항 등록 쿼리 -->
+	<!-- 공지사항 등록  -->
 	<insert id="addNotice" parameterType="Board">
 		INSERT INTO wt_board(
 			board_num,
@@ -66,7 +66,7 @@
 			wt_board
 	</select>
 	
-	<!-- 자료게시판 리스트 조회 쿼리  -->
+	<!-- 자료게시판 리스트 조회-->
 	<select id="getDataLibrary" resultType="Board" parameterType="Board" resultMap="boardResultMap">
 		SELECT
 			b.board_num,
@@ -84,7 +84,7 @@
 			board_menu = '자료게시판';
 	</select>
 
-	<!-- 게시물 읽기 쿼리 -->
+	<!-- 게시물 읽기 -->
 	<select id="readBoard" resultType="Board" parameterType="String" resultMap="boardResultMap">
 		SELECT
 			b.board_num,
@@ -105,7 +105,7 @@
 			b.board_num = #{boardNum};
 	</select>
 	
-	<!-- 게시물 수정 쿼리 -->
+	<!-- 게시물 수정 -->
 	<update id="modifyBoard" parameterType="Board">
 		UPDATE
 			wt_board
@@ -118,7 +118,7 @@
 			board_num = #{boardNum};
 	</update>
 	
-	<!-- 게시물 삭제 쿼리 -->
+	<!-- 게시물 삭제 -->
 	<delete id="removeBoard" parameterType="String">
 	DELETE
 	FROM
@@ -126,6 +126,25 @@
 	WHERE
 		board_num = #{boardNum};
 	</delete>
+
+
+	<!-- 검색  -->
+	<select id="getSearchList" resultType="Board"  resultMap="boardResultMap">
+	SELECT 
+		board_num,
+		board_title,
+		board_writer_id,
+		mr_name,
+		board_reg_date
+	FROM 
+		wt_board
+	INNER JOIN
+		wt_member_registration 
+	ON
+		wt_member_registration.mr_id = wt_board.board_writer_id
+	WHERE
+		${bdSk} LIKE CONCAT('%',#{bdSv},'%');
+	</select>
 
 </mapper>
     

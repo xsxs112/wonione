@@ -53,7 +53,7 @@ public class BoardService {
 		}
 		String boardNum = tempCode + String.valueOf(boardNumMax.get("max"));
 		
-		return boardNum;		
+		return boardNum;
 	}
 	
 	//공지사항 수정
@@ -68,6 +68,12 @@ public class BoardService {
 		return remove;
 	}
 
+	//공지사항 검색
+	public List<Board> getSearchList(String bdSk, String bdSv){
+		List<Board> noticeList = boardMapper.getSearchList(bdSk, bdSv);
+		return noticeList;
+	}	
+
 	//자료게시판 조회
 	public List<Board> getDataLibrary(Board board){
 		System.out.println(board + " <-- board");
@@ -81,5 +87,4 @@ public class BoardService {
 		return board;
 	}
 	
-
 }

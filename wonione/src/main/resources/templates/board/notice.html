@@ -7,10 +7,29 @@
 		<title>공지사항</title> 
 	</th:block>
 	
-	<th:block layout:fragment="customContent">	
+	<th:block layout:fragment="customContent">
+			
 		<form action="addNotice" class="container-fluid">
 			
 			<h2>공지사항 목록</h2>
+			<!-- 검색창 미구현
+			<form id="searchForm" class="form-inline" action="/searchList" method="post">
+				<h5>검색</h5>
+				<select class="form-control" name="bdSk" id="bdSk">
+					<option value="board_title">제목</option>
+					<option value="board_contents">내용</option>
+					<option value="board_writer_id">작성자 아이디</option>
+					<option value="mr_name">작성자 이름</option>
+				</select> 
+									
+				<div class="form-group">
+					<input type="text" class="form-control" name="bdSv" placeholder="검색 키워드" id="bdSv"/>
+					<div class="input-group-btn pull-right">
+						<button class="btn btn-default form-group" type="button" id="searchBtn">검색</button>
+					</div>
+				</div>
+			</form>
+			 -->
 			<button type="submit" class="btn btn-default btn-success">공지사항 등록</button>
 
 			<table class ="table table-striped">
@@ -34,43 +53,45 @@
 				</tbody>			
 			</table>
 		</form>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
+		<script type="text/javascript"> 
+		
+		 $(function(){
+				 $('#searchBtn').click(function(){
+					 var bdSk = $('#bdSk').val();
+					 var bdSv = $('#bdSv').val();
+					 var searchForm = $('#searchForm');
+					 console.log(bdSk + ' < -- bdSk');
+					 console.log(bdSv + ' < -- bdSv');
+					
+						var request = $.ajax({
+						  url: "/notice",
+						  method: "GET",
+						  data: { bdSk : bdSk , bdSv : bdSv  },
+						  dataType: "json"
+						});
+						request.done(function(data) {
+						console.log(data);
+						console.log(data.bdSk);
+						console.log(data.bdSv);
+						
+						if(data == undefined || data == ''){
+							alert('검색되는 내용이 없습니다.');
+						}
+						});
+			
+						request.fail(function( jqXHR, textStatus ) {
+						  alert( "Request failed: " + textStatus );
+						});
+						searchForm.submit();
+				 });
+			 });
+		
+		</script>
+
 	</th:block>
 	
 	<th:block layout:fragment="customJsScript">
-	    <!-- jquery
-		============================================ -->
-	    <script src="js/vendor/jquery-1.12.4.min.js"></script>
-	    <!-- bootstrap JS
-			============================================ -->
-	    <script src="js/bootstrap.min.js"></script>
-	    <!-- wow JS
-			============================================ -->
-	    <script src="js/wow.min.js"></script>
-	    <!-- price-slider JS
-			============================================ -->
-	    <script src="js/jquery-price-slider.js"></script>
-	    <!-- meanmenu JS
-			============================================ -->
-	    <script src="js/jquery.meanmenu.js"></script>
-	    <!-- owl.carousel JS
-		============================================ -->
-    	<script src="js/owl.carousel.min.js"></script>
-	     <!-- sticky JS
-		============================================ -->
-    	<script src="js/jquery.sticky.js"></script>
-	    <!-- scrollUp JS
-			============================================ -->
-	    <script src="js/jquery.scrollUp.min.js"></script>
-	    <!-- mCustomScrollbar JS
-			============================================ -->
-	    <script src="js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-	    <script src="js/scrollbar/mCustomScrollbar-active.js"></script>
-	    <!-- metisMenu JS
-			============================================ -->
-	    <script src="js/metisMenu/metisMenu.min.js"></script>
-	    <script src="js/metisMenu/metisMenu-active.js"></script>
-	    <!-- main JS
-			============================================ -->
-	    <script src="js/main.js"></script>
 	</th:block>
 </html>
