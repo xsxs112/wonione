@@ -61,12 +61,12 @@
 		  				<td><input type="hidden" id="questionCodeName"  th:value="${q.qt_codename}"><input type="hidden" th:value="${session.SID}" id="questionSid"><a class="questionCodeName">[[${q.qt_title}]]</a></td>
 		  				<td th:text="${q.mr_name}"></td>
 		  				<td th:text="${q.qt_date}"></td>
-		  				<td th:if="${session.SLEVEL == 1}"><a th:href="@{/modifyQuestionList(qtCodeName=${q.qt_codename})}"><button class="btn btn-default">문제등록</button></a></td>
+		  				<td th:if="${session.SLEVEL == 1}"><a th:href="@{/titleQuestionList(qtCodeName=${q.qt_codename})}"><button class="btn btn-default">문제등록</button></a></td>
 		  				<td th:if="${session.SLEVEL == 1}"><button class="btn btn-default deleteQuestionTitle">삭제</button></td>
 		  			</tr>
 		  		</tbody>	
 	  		</table>
-		  		<button th:if="${session.SLEVEL == 1}" type="button" class="btn btn-default" id="insertQuestionTitle">타이틀등록</button>
+		  		<button th:if="${session.SLEVEL == 1}" type="button" class="btn btn-default" id="insertQuestionTitlePage">타이틀등록</button>
   		</div>
   		<a th:href="@{/QuestionList}">처음</a>
 		    

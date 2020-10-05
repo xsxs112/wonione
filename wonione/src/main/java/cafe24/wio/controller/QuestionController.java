@@ -98,8 +98,13 @@ public class QuestionController {
 	@PostMapping(value="/insertQuestionTitle", produces = "application/json")
 	@ResponseBody
 	public int insertQuestionTitle(cafe24.wio.bean.Question question) {
-		questionService.insertQuestionTitle(question);
-		return 0; 
+		int result = 0;
+		if(question != null){
+			int insertQuestionTitleResult = questionService.insertQuestionTitle(question);
+			return insertQuestionTitleResult; 
+		}else{
+			return result;
+		}
 	}
 	//문제등록
 	@PostMapping("/insertQuestion")
@@ -124,30 +129,39 @@ public class QuestionController {
 		questionService.deleteQuestionTitle(questionName);
 		return 0;
 	}
-	@GetMapping("/deleteQuestionTitle")
-	public String deleteQuestionTitle() {
-		
-		return "redirect:/QuestionList";
-	}
 	//타이틀안 문제등록전 리스트
-	@RequestMapping(value="/modifyQuestionList", method=RequestMethod.GET)
+	@RequestMapping(value="/titleQuestionList", method=RequestMethod.GET)
 	public String modifyQuestionList(Model model
 									,@RequestParam(value="qtCodeName",required = false) String qtCodeName
 									,@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
-		Map<String,Object> modifyQuestionMap = questionService.modifyQuestionList(currentPage, qtCodeName);
-		model.addAttribute("lastPage", modifyQuestionMap.get("lastPage"));
-		model.addAttribute("modifyQuestionList", modifyQuestionMap.get("modifyQuestionList"));
-		model.addAttribute("startPageNum", modifyQuestionMap.get("startPageNum"));
-		model.addAttribute("lastPageNum", modifyQuestionMap.get("lastPageNum"));
+		Map<String,Object> titleQuestionListMap = questionService.titleQuestionList(currentPage, qtCodeName);
+		model.addAttribute("lastPage", titleQuestionListMap.get("lastPage"));
+		model.addAttribute("titleQuestionList", titleQuestionListMap.get("titleQuestionList"));
+		model.addAttribute("startPageNum", titleQuestionListMap.get("startPageNum"));
+		model.addAttribute("lastPageNum", titleQuestionListMap.get("lastPageNum"));
 		model.addAttribute("currentPage",currentPage); 
-		return "question/modifyQuestionList";
+		return "question/titleQuestionList";
 	}
 	//문제등록전 리스트상세보기
-	@PostMapping(value="/modifyQuestionListView",produces = "application/json")
+	@PostMapping(value="/titleQuestionListView",produces = "application/json")
 	@ResponseBody
-	public Map<String, Object> modifyQuestionListView(@RequestParam(value="qeCode",required = false) String qeCode){
-		Map<String, Object> modifyQuestionListViewResult = questionService.modifyQuestionListView(qeCode);
-		return modifyQuestionListViewResult;
+	public Map<String, Object> titleQuestionListView(@RequestParam(value="qeCode",required = false) String qeCode){
+		Map<String, Object> titleQuestionListViewViewResult = questionService.titleQuestionListView(qeCode);
+		return titleQuestionListViewViewResult;
+	}
+	//타이틀내 문제수정
+	@PostMapping("/modifyQuestion")
+	public String modifyQuestion(cafe24.wio.bean.Question question
+								,@RequestParam(value="qtCodeName",required = false) String qtCodeName){
+		questionService.modifyQuestion(question);
+		return "redirect:/titleQuestionList?qtCodeName="+qtCodeName;
+	}
+	//타이틀내 문제삭제
+	@PostMapping(value="/deleteQuestion",produces = "application/json")
+	@ResponseBody
+	public int deleteQuestion(@RequestParam(value="deleteQeCode",required = false) int qeCode){
+		int deleteQuestionResult = questionService.deleteQuestion(qeCode);
+		return deleteQuestionResult;
 	}
 	
 }
