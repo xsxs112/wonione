@@ -30,4 +30,7 @@ public interface BoardMapper {
 	
 	//게시물 삭제
 	public int removeBoard(String boardNum);
+	
+	//검색
+	public List<Board> getSearchList(String bdSk, String bdSv);
 }

@@ -5,6 +5,33 @@
 	
 	<th:block layout:fragment="customTitle">
 		<title>공지사항 작성</title> 
+	<!-- 유효성 검사 start -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
+	<script type="text/javascript">
+		$(function(){			
+			$('#btnSubmit').click(function(){
+				console.log('클릭 이벤트');
+				var noticeForm = $('#noticeForm');
+				var boardTitle = $('#boardTitle').val();
+				var boardContents = $('#boardContents').val();
+				console.log(boardTitle + '<--boardTitle');
+				console.log(boardContents + '<--boardContents');
+				
+				
+				if(boardTitle == ''){
+					alert('제목을 입력해주세요.');
+					$('#boardTitle').focus();
+					return;
+				}else if(boardContents == ''){
+					alert('공지할 내용을 입력해주세요.');
+					$('#boardContents').focus();
+					return;
+				}								
+				noticeForm.submit();
+			});
+		});
+	</script>
+	<!-- 유효성 검사 end -->
 	</th:block>
 	
 	<th:block layout:fragment="customContent">
@@ -15,7 +42,7 @@
 	<!-- 썸머노트 스크립트 end -->
 	
 	<form action="/addNotice" class="container-fluid" method="post" id="noticeForm">
-	<!-- 글번호 자동생성 성공, 세션 아이디 받기 실패
+	<!-- 글번호 자동생성, 세션 아이디 받기 히든타입
 	<input type="hidden" th:value="${boardNum}" name="boardNum">
 	<input type="hidden" class="form-control" name="boardWriterId" th:value="${sessionId}">
 	-->
@@ -73,34 +100,6 @@
 	        $('#boardContents').summernote();
 	    });
 	    </script>
-<!-- 유효성 검사 start -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
-	<script type="text/javascript">
-		$(function(){
-			
-			$('#btnSubmit').click(function(){
-				
-				var noticeForm = $('#noticeForm');
-				var boardTitle = $('#boardTitle');
-				var boardContents = $('#boardContents');
-				
-				if(boardTitle.val() == ''){
-					alert('제목을 입력해주세요.');
-					boardTitle.focus();
-					return;
-				}
-				if(boardContents.val() == ''){
-					alert('공지할 내용을 입력해주세요.');
-					boardContents.focus();
-					return;
-				}
-								
-				noticeForm.attr('action', '/addNotice');
-				noticeForm.submit();
-			});
-		});
-	</script> -->
-<!-- 유효성 검사 end -->
 	</th:block>
 		
 	<th:block layout:fragment="customJsScript">    
