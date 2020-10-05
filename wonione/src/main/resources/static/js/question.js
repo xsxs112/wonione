@@ -3,6 +3,113 @@
  * 수정일 2020-10-04
  */
 (function ($) {
+	//타이틀수정ajax
+	$('#modifyQuestionTitlebtn').click(function(){
+		var qtCodeName = $('input[name=qtCodeName]').val();
+		var qtCodeSubName = $('input[name=qtCodeSubName]').val();
+		var qtTitle = $('input[name=qtTitle]').val();
+		var request = $.ajax({
+			url: "/QuestionTitleNameCheck",
+			method: "POST",
+			data: { qtCodeName : qtCodeName},
+			dataType: "json"
+		});
+		request.done(function(data) {
+			if(data == 0){
+				var request = $.ajax({
+					url: "/modifyQuestionTitle",
+					method: "POST",
+					data: { qtCodeName : qtCodeName , qtTitle : qtTitle , qtCodeSubName : qtCodeSubName },
+					dataType: "json"
+				});
+				request.done(function(data) {
+					alert('수정되었습니다.');
+					opener.parent.location.reload();
+					window.close();
+					
+				});
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				});
+				
+			}else{
+				alert('이름이 중복입니다.');
+			}
+			
+		});
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		});
+		
+	});
+	
+	//타이틀수정
+	$('.modifyQuestionTitle').click(function(){
+		var questionCodeName = $(this).parents().children('#questionCodeName').val();
+		var questionTitle = $(this).parents().children('#questionCodeTitle').text();
+		if(confirm('타이틀수정 하시겠습니까?')){
+			window.open('/modifyQuestionTitle?questionCodeName='+questionCodeName+'&questionTitle='+questionTitle,'타이틀수정', 'width=550, height=201 left=600 top=100','status=no');
+		}else{
+			alert('취소하셨습니다.');
+		}
+		
+	});
+	
+	//문제등록유효성검사
+	$('#insertQuestionbtn').click(function(){
+		var qeA = $('input[name=qeA]');
+		var qeB = $('input[name=qeB]');
+		var qeC = $('input[name=qeC]');
+		var qeD = $('input[name=qeD]');
+		var qeScore = $('input[name=qeScore]');
+		if(qeA.val() == ''){
+			alert('A보기 값을 넣어주세요.');
+			qeA.focus();
+			return false;
+		}
+		if(qeA.val().replace(/\s|　/gi, "").length == 0){
+			alert('공백이 들어갔습니다.');
+			qeA.focus();
+			return false;
+		}
+		if(qeB.val() == ''){
+			alert('B보기 값을 넣어주세요.');
+			qeB.focus();
+			return false;
+		}
+		if(qeB.val().replace(/\s|　/gi, "").length == 0){
+			alert('공백이 들어갔습니다.');
+			qeB.focus();
+			return false;
+		}
+		if(qeC.val() == ''){
+			alert('C보기 값을 넣어주세요.');
+			qeC.focus();
+			return false;
+		}
+		if(qeC.val().replace(/\s|　/gi, "").length == 0){
+			alert('공백이 들어갔습니다.');
+			qeC.focus();
+			return false;
+		}
+		if(qeD.val() == ''){
+			alert('D보기 값을 넣어주세요.');
+			qeD.focus();
+			return false;
+		}
+		if(qeD.val().replace(/\s|　/gi, "").length == 0){
+			alert('공백이 들어갔습니다.');
+			qeD.focus();
+			return false;
+		}
+		if(qeScore.val() == ''){
+			alert('문제점수를 작성해주세요.');
+			qeScore.focus();
+			return false;
+		}
+	});
+	
+	
 	//삭제처리
 	$(document).on('click','.deleteQuestion',function(){
 		var deleteQeCode = $('#qeCode').val();
@@ -38,7 +145,7 @@
 	});
 	//문제등록
 	$('#insertQuestion').click(function(){
-		var qtCodeName = $('#titleQuestionListView').text();
+		var qtCodeName = $('.titleQuestionListCodeName').val();
 		if(confirm('등록하시겠습니까?')){
 			window.open('/insertQuestion?qtCodeName='+qtCodeName,'문제등록', 'width=540, height=610 left=600 top=100','status=no');
 		}else{
@@ -139,25 +246,40 @@
 		var qtTitle = $('input[name=qtTitle]').val();
 		var qtTeacher = $('input[name=qtTeacher]').val();
 		if(confirm('등록하시겠습니까?')){
-			if(qtCodeName != '' && qtTitle != ''){
-				var request = $.ajax({
-					url: "/insertQuestionTitle",
-					method: "POST",
-					data: { qtCodeName : qtCodeName , qtTitle : qtTitle , qtTeacher : qtTeacher },
-					dataType: "json"
-				});
-				request.done(function(data) {
-					alert('등록되었습니다.');
-					opener.parent.location.reload();
-					window.close();
-					
-				});
-				request.fail(function( jqXHR, textStatus ) {
-					alert( "Request failed: " + textStatus );
-				});
+		var request = $.ajax({
+			url: "/QuestionTitleNameCheck",
+			method: "POST",
+			data: { qtCodeName : qtCodeName},
+			dataType: "json"
+		});
+		request.done(function(data) {
+			if(data == 0){
+				if(qtCodeName != '' && qtTitle != ''){
+					var request = $.ajax({
+						url: "/insertQuestionTitle",
+						method: "POST",
+						data: { qtCodeName : qtCodeName , qtTitle : qtTitle , qtTeacher : qtTeacher },
+						dataType: "json"
+					});
+					request.done(function(data) {
+						alert('등록되었습니다.');
+						opener.parent.location.reload();
+						window.close();
+						
+					});
+					request.fail(function( jqXHR, textStatus ) {
+						alert( "Request failed: " + textStatus );
+					});
+				}else{
+					alert('값을 입력해주세요.');
+				}
 			}else{
-				alert('값을 입력해주세요.');
+				alert('이름이 중복입니다.');
 			}
+		});
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		});
 		}else{
 			alert('취소하셨습니다.');
 		}
@@ -236,7 +358,7 @@
 				dataType: "json"
 			});
 			request.done(function(data) {
-				if(data === 0){
+				if(data == 0){
 					window.open('/Question?questionName='+questionName,'문제출제', 'width=600, height=285 left=600 top=100');
 				}else{
 					alert('해당 문제를 완료했던 아이디입니다.');

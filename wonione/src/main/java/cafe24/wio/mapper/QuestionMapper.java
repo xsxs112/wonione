@@ -21,7 +21,7 @@ public interface QuestionMapper {
 	//점수확인
 	public Map<String, Object> ScoreCheck(String scoreSid);
 	//해당문제 풀었던 인원인지 체크
-	public int QuestionSidCheck(String questionSid, String questionName);
+	public String QuestionSidCheck(String questionSid, String questionName);
 	//타이틀등록
 	public int insertQuestionTitle(cafe24.wio.bean.Question question);
 	//타이틀 삭제
@@ -38,6 +38,10 @@ public interface QuestionMapper {
 	public void modifyQuestion(cafe24.wio.bean.Question question);
 	//타이틀내 문제삭제
 	public int deleteQuestion(int qeCode);
+	//타이틀 수정
+	public int modifyQuestionTitle(String questionCodeName, String questionTitle, String qtCodeSubName);
+	//타이틀 수정전 이름체크
+	public int QuestionTitleNameCheck(String questionCodeName);
 	
 
 
