@@ -10,7 +10,7 @@ import cafe24.wio.bean.OfficersPay;
 public interface OfficersPayMapper {
 
 	//직원급여명세서 조회
-	public List<OfficersPay> getOfficersPay(String mrId);
+	public List<OfficersPay> getOfficersPay(String mrId, String opCode);
 
 	//직원 목록 조회
 	public List<OfficersPay> getOfficersList();

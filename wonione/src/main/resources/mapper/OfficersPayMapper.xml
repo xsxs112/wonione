@@ -252,7 +252,8 @@
 			ON 
 			p.p_r_title = pr.p_r_title
 		WHERE 
-			p.mr_id = #{mrId};	
+			p.mr_id = #{mrId} 
+			AND p.op_code = #{opCode};	
 			<!-- p.mr_id = '수정하기'; -->	
 	</select>
 </mapper>

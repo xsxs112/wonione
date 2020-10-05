@@ -10,7 +10,7 @@ import cafe24.wio.bean.StaffPay;
 public interface StaffPayMapper {
 
 	//강사급여명세서 조회
-	public List<StaffPay> getStaffPay(String mrId);
+	public List<StaffPay> getStaffPay(String mrId, String spCode);
 
 	//강사 목록 조회
 	public List<StaffPay> getStaffList();

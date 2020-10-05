@@ -37,9 +37,9 @@ public class StaffPayService {
 	}
 		
 	//강사 급여명세 조회
-	public List<StaffPay> getStaffPay(String mrId) {
+	public List<StaffPay> getStaffPay(String mrId, String spCode) {
 		
-		List<StaffPay> staffPay = staffPayMapper.getStaffPay(mrId);		
+		List<StaffPay> staffPay = staffPayMapper.getStaffPay(mrId, spCode);		
 		return staffPay;
 	}
 

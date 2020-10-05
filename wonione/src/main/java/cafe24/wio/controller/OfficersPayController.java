@@ -124,8 +124,9 @@ public class OfficersPayController {
 	// 직원급여명세서조회
 	@RequestMapping(value = "/getOfficersPay", method = RequestMethod.GET)
 	public String getOfficersPay(Model model
-								,@RequestParam(value = "mrId", required = false) String mrId) {
-		List<OfficersPay> officersPay = officersPayService.getOfficersPay(mrId);
+								,@RequestParam(value = "mrId", required = false) String mrId
+								,@RequestParam(value = "opCode", required = false) String opCode) {
+		List<OfficersPay> officersPay = officersPayService.getOfficersPay(mrId, opCode);
 
 		model.addAttribute("officersPay", officersPay);
 		model.addAttribute("title", "직원급여목록조회");
