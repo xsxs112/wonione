@@ -69,38 +69,79 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>	
+	<!-- 선택한 강사 급여목록 불러오기 -->
+	<select id = "getStaIdPayList" resultType="StaffPay">
+		SELECT 
+			 sp.sp_code 					AS spCode
+			,sp.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,ifnull(sp.sp_date, '미지급')		AS spDate
+			,sp.sp_pay						AS spPay
+			,sp.sp_reg_date					AS spRegDate
+			,sp.sp_writer	  				AS spWriter	
+			,mr.level_num 			 
+		FROM
+			wt_staff_pay 	AS sp
+			LEFT JOIN 
+			wt_member_registration AS mr
+			on
+			sp.mr_id = mr.mr_id	 
+		WHERE	
+			sp.mr_id = #{mrId};	
+	</select>
+	<!-- 선택한 직원 급여목록 불러오기 -->
+	<select id = "getOffiIdPayList" resultType="OfficersPay">
+		SELECT 
+			 op.op_code 					AS opCode
+			,op.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,ifnull(op.op_date, '미지급')		AS opDate
+			,op.op_pay						AS opPay
+			,op.op_reg_date					AS opRegDate
+			,op.op_writer	  				AS opWriter	
+			,mr.level_num 
+		FROM
+			wt_officers_pay 	AS op
+			LEFT JOIN 
+			wt_member_registration AS mr
+			on
+			op.mr_id = mr.mr_id	 
+		WHERE 
+		   op.mr_id = #{mrId};
+	</select>
+	
 	<!-- 직원급여정보 삭제 -->
 	<delete id="removeOP" parameterType="String"> <!-- 내가 받을 타입을 파라타입 -->
-	DELETE 
-	FROM 
-		wt_officers_pay 
-	WHERE  
-		op_code = #{opCode}
+		DELETE 
+		FROM 
+			wt_officers_pay 
+		WHERE  
+			op_code = #{opCode}
 	</delete>
 	<!-- 직원공제계 급여정보 삭제 -->
 	<delete id="removeOPD" parameterType="String"> <!-- 내가 받을 타입을 파라타입 -->
-	DELETE 
-	FROM 
-		wt_officers_pay_deduction 
-	WHERE  
-		opd_code = #{opCode}
+		DELETE 
+		FROM 
+			wt_officers_pay_deduction 
+		WHERE  
+			opd_code = #{opCode}
 	</delete>
 	<!-- 직원급여계 급여정보 삭제 -->
 	<delete id="removeOPC" parameterType="String"> <!-- 내가 받을 타입을 파라타입 -->
-	DELETE 
-	FROM 
-		wt_officers_pay_calculate 
-	WHERE  
-		opc_code = #{opCode}
+		DELETE 
+		FROM 
+			wt_officers_pay_calculate 
+		WHERE  
+			opc_code = #{opCode}
 	</delete>
 	<!-- 수정할 직원급여정보 가져오기 -->
 	<select id="getOPCode" parameterType="String" resultType="OfficersPay">
-	SELECT
-		*
-	FROM
-		wt_officers_pay
-	WHERE
-		op_code = #{opCode}
+		SELECT
+			*
+		FROM
+			wt_officers_pay
+		WHERE
+			op_code = #{opCode}
 	</select>
 	<!-- 수정할 직원 급여정보 불러오기 -->
 	<select id = "getMrById" parameterType="String" resultType="OfficersPay">
@@ -149,66 +190,55 @@
 	<!-- 강사급여목록조회  [최근것만 받아오게 쿼리문 수정완] -->
 	<select id = "getStaffPayList" resultType="StaffPay" >
 		SELECT 
-			spCode
-			,mrId
-			,mrName
-			,spDate
-			,spPay
-			,spRegDate
-			,spWriter	
-		FROM(
-				SELECT
-					sp.sp_code 			AS spCode
-					,sp.mr_id 			AS mrId
-					,mr.mr_name			AS mrName
-					,sp.sp_date			AS spDate
-					,sp.sp_pay			AS spPay
-					,sp.sp_reg_date		AS spRegDate
-					,sp.sp_writer	  	AS spWriter	
-					,mr.level_num    	AS levelNum
-				FROM
-					wt_staff_pay 	AS sp
-					INNER JOIN 
-					wt_member_registration AS mr
-					on
-					sp.mr_id = mr.mr_id	
-		  ORDER BY spRegDate DESC
-		) AS A
-		WHERE 
-		 levelNum = 2
-		GROUP BY mrId;  		
+			 sp.sp_code 					AS spCode
+			,sp.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,ifnull(sp.sp_date, '미지급')		AS spDate
+			,sp.sp_pay						AS spPay
+			,sp.sp_reg_date					AS spRegDate
+			,sp.sp_writer	  				AS spWriter	
+			,mr.level_num 			 
+		FROM
+			wt_staff_pay 	AS sp
+			LEFT JOIN 
+			wt_member_registration AS mr
+			on
+			sp.mr_id = mr.mr_id	 
+		WHERE (sp.mr_id, sp.sp_reg_date) IN (
+											SELECT
+												 wsp.mr_id
+												,Max(wsp.sp_reg_date) AS sp_reg_date	
+											FROM
+												wt_staff_pay 	AS wsp
+											GROUP BY wsp.mr_id
+										);		
+
 	</select> 
 	
 	<!-- 직원급여목록조회  [최근것만 받아오게 쿼리문 수정완]-->
 	<select id = "getOfficersPayList" resultType="OfficersPay" >
 		SELECT 
-			opCode
-			,mrId
-			,mrName
-			,opDate
-			,opPay
-			,opRegDate
-			,opWriter	
-		FROM(
-				SELECT
-					op.op_code 			AS opCode
-					,op.mr_id 			AS mrId
-					,mr.mr_name			AS mrName
-					,op.op_date			AS opDate
-					,op.op_pay			AS opPay
-					,op.op_reg_date		AS opRegDate
-					,op.op_writer	  	AS opWriter	
-					,mr.level_num    	AS levelNum
-				FROM
-					wt_officers_pay 	AS op
-					INNER JOIN 
-					wt_member_registration AS mr
-					on
-					op.mr_id = mr.mr_id	
-		  ORDER BY opRegDate DESC
-		) AS A
-		WHERE 
-		 levelNum = 3
-		GROUP BY mrId;		
+			 op.op_code 					AS opCode
+			,op.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,ifnull(op.op_date, '미지급')		AS opDate
+			,op.op_pay						AS opPay
+			,op.op_reg_date					AS opRegDate
+			,op.op_writer	  				AS opWriter	
+			,mr.level_num 
+		FROM
+			wt_officers_pay 	AS op
+			LEFT JOIN 
+			wt_member_registration AS mr
+			on
+			op.mr_id = mr.mr_id	 
+		WHERE (op.mr_id, op.op_reg_date) IN (
+											SELECT
+												 wop.mr_id
+												,Max(wop.op_reg_date) AS op_reg_date	
+											FROM
+												wt_officers_pay 	AS wop
+											GROUP BY wop.mr_id
+										);		
 	</select>
 </mapper>

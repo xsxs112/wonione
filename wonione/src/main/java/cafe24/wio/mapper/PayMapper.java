@@ -28,6 +28,12 @@ public interface PayMapper {
 	
 	//수정, 삭제 할 직원 급여정보 가져오기
 	public OfficersPay getOPCode(String opCode);
+	
+	// 선택한 직원 급여정보 조회
+	public List<OfficersPay> getOffiIdPayList(String mrId);
+	
+	// 선택한 강사 급여정보 조회
+	public List<StaffPay> getStaIdPayList(String mrId);
 
 
 }
