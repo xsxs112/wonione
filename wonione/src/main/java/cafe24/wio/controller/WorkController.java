@@ -9,12 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafe24.wio.bean.ApprovalRequest;
 import cafe24.wio.bean.AttManagement;
 import cafe24.wio.bean.AttTimeManage;
+import cafe24.wio.bean.Member;
+import cafe24.wio.bean.OfficersPay;
 import cafe24.wio.service.ApprRequestService;
 
 //황미현 - 출퇴근 컨트롤러
@@ -28,31 +32,114 @@ public class WorkController {
 	
 	
 	
-	@GetMapping("/attManageModify")
-	public String attManageModify(@RequestParam(value = "attTimeCode", required = false) String attTimeCode) {
+	
+	
+	@PostMapping("/workTimeDelete")
+	public String workTimeDelete(@RequestParam(value = "mrId", required = false) String mrId) {
+		
+		apprRequestService.workTimeDelete(mrId);
 		
 
-		return "workmanagment/attManageModify";
-	}
-	
-	
-	@GetMapping("/addTimeManage")
-	public String addTimeManage() {
-		
-		
-		
-		
-		return "workmanagment/addTimeManage";
+		return "redirect:/attManage";
 	}
 	
 	
 	
 	
-	@GetMapping("/attManage")
-	public String attManage(Model model) {
+	
+	@PostMapping("/workTimeModify")
+	public String workTimeModify(AttTimeManage attTimeManage,@RequestParam(value = "mrId", required = false) String mrId
+															,@RequestParam(value = "workStTime", required = false) String workStTime
+															,@RequestParam(value = "workEndTime", required = false) String workEndTime
+															,@RequestParam(value = "mStTime", required = false) String mStTime
+															,@RequestParam(value = "mEndTime", required = false) String mEndTime
+															,@RequestParam(value = "note", required = false) String note) {
 		
-		List<AttTimeManage> timeManageList = apprRequestService.getTimeManageList();
-		model.addAttribute("timeManageList", timeManageList);
+		
+		attTimeManage.setMrId(mrId);
+		attTimeManage.setWorkStTime(workStTime);
+		attTimeManage.setWorkEndTime(workEndTime);
+		attTimeManage.setmStTime(mStTime);
+		attTimeManage.setmEndTime(mEndTime);
+		
+		apprRequestService.workTimeModify(attTimeManage);
+	
+		
+		
+		return "redirect:/attManage";
+	}
+	
+	@PostMapping("/workTimeStorage")
+	public String workTimeStorage(AttTimeManage attTimeManage,@RequestParam(value = "mrId", required = false) String mrId
+															,@RequestParam(value = "workStTime", required = false) String workStTime
+															,@RequestParam(value = "workEndTime", required = false) String workEndTime
+															,@RequestParam(value = "mStTime", required = false) String mStTime
+															,@RequestParam(value = "mEndTime", required = false) String mEndTime
+															,@RequestParam(value = "note", required = false) String note) {
+		
+		
+		String getTimeCode = apprRequestService.getTimeCode();
+		
+		
+		if(mStTime == "" || mStTime == null ||mEndTime == "" || mEndTime == null ) {
+			attTimeManage.setmStTime(null);
+			attTimeManage.setmEndTime(null);
+		}else {
+			attTimeManage.setmStTime(mStTime);
+			attTimeManage.setmEndTime(mEndTime);
+		}
+		
+		attTimeManage.setAttTimeCode(getTimeCode);
+		attTimeManage.setMrId(mrId);
+		attTimeManage.setWorkStTime(workStTime);
+		attTimeManage.setWorkEndTime(workEndTime);
+	
+		
+		
+		
+		apprRequestService.addWorkTime(attTimeManage);
+		
+		
+		
+		
+		//"redirect:/holidayApproval"
+		return "redirect:/attManage";
+	}
+	
+	
+	@GetMapping(value = "/checkWorkTimeList",produces = "application/json")
+	@ResponseBody
+	public int checkWorkTimeList(@RequestParam(value = "mrId", required = false) String mrId) {
+		
+		int checkNum = apprRequestService.checkWorkTimeList(mrId);
+		
+		
+		
+		return checkNum;
+	}
+	
+	
+	
+	//직원 정보 불러오기
+	@GetMapping(value = "/workerListDetail",produces = "application/json")
+	@ResponseBody
+	public AttTimeManage workerListDetail(@RequestParam(value = "mrId", required = false) String mrId) {
+		AttTimeManage attTimeManage = apprRequestService.workerListDetail(mrId);
+		if(attTimeManage == null) {
+			attTimeManage = apprRequestService.nullList(mrId);
+		}
+		
+		
+		return attTimeManage;
+	}
+	
+	
+	
+	@RequestMapping(value="/attManage" , method = {RequestMethod.GET, RequestMethod.POST})
+	public String workAttendanceList2(Model model) {
+		
+		List<Member> workerList = apprRequestService.getWorkerList();
+		model.addAttribute("workerList", workerList);
 
 		return "workmanagment/attManage";
 	}

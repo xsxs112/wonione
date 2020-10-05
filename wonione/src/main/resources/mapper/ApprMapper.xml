@@ -7,6 +7,98 @@
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
 	
+	<delete id="workTimeDelete" parameterType="string">
+	
+		DELETE FROM wt_attendance_time_manage WHERE mr_id=#{mrId}
+	
+	
+	
+	</delete>
+	
+	<update id = "workTimeModify" parameterType="AttManagement">
+		UPDATE wt_attendance_time_manage
+		SET
+			att_start_time = #{workStTime},
+			att_end_time = #{workEndTime},
+			meal_start_time = #{mStTime},
+			meal_end_time = #{mEndTime}
+		WHERE mr_id = #{mrId}
+	</update>
+	
+	
+	
+	<insert id="addWorkTime" parameterType="AttManagement">
+	
+		INSERT INTO wt_attendance_time_manage
+			(att_time_code, mr_id, att_start_time, att_end_time, meal_start_time, meal_end_time, work_time)
+			VALUES (#{attTimeCode}, #{mrId}, #{workStTime}, #{workEndTime}, #{mStTime}, #{mEndTime}, #{workTime})
+		
+	</insert>
+	
+	
+	<select id="getTimeCode" resultType="hashMap">
+	
+		SELECT IFNULL((SELECT max(CAST(SUBSTRING(att_time_code,10) AS DECIMAL))+1 FROM wt_attendance_time_manage),1) AS max;	
+	
+	</select>
+
+	<select id="checkWorkTimeList" resultType="int">
+		
+		SELECT  COUNT(a.mr_id)
+		FROM wt_attendance_time_manage AS a
+		WHERE a.mr_id = #{mrId}
+
+
+	</select>
+	
+	
+	<!-- 출퇴근 상세보기가 없을 때 -->
+	<select id="nullList" resultType="AttTimeManage">
+		
+			SELECT m.mr_id AS mrId
+					, m.mr_name AS mrName
+					, l.level_name AS levelName
+			from wt_member_registration AS m
+					LEFT JOIN wt_level AS l
+					ON m.level_num = l.level_num
+			WHERE m.mr_id = #{mrId}
+
+	</select>
+	
+	<!-- 출퇴근 상세보기 -->
+	<select id="workerListDetail" resultType="AttTimeManage">
+		
+			SELECT att_time_code AS timeCode
+					, m.mr_id AS mrID
+					, m.mr_name AS mrName
+					, l.level_name AS levelName
+					, att_start_time AS workStTime
+					, att_end_time AS workEndTime
+					, meal_start_time AS mStTime
+					, meal_end_time AS mEndTime
+					, work_time AS workTime
+			FROM wt_attendance_time_manage AS a
+					LEFT JOIN 
+					wt_member_registration AS m
+					ON a.mr_id = m.mr_id
+					LEFT JOIN wt_level AS l
+					ON m.level_num = l.level_num
+
+			WHERE a.mr_id = #{mrId}
+
+	</select>
+	
+	<!-- 출퇴근 직원 리스트 -->
+	<select id="getWorkerList" resultType="Member">
+		
+		SELECT m.mr_id as mrId, m.mr_name as mrName, l.level_name as levelName
+		FROM wt_member_registration AS m
+			LEFT JOIN wt_level AS l
+			ON m.level_num = l.level_num 
+		WHERE m.level_num <![CDATA[ < ]]> 4;
+
+	</select>
+	
 	
 	<select id="getTimeManageList" resultType="AttTimeManage">
 		
@@ -19,9 +111,6 @@
 		FROM wt_attendance_time_manage AS a LEFT join
 				wt_member_registration AS m
 				ON a.mr_id = m.mr_id
-
-
-
 
 	</select>
 	
@@ -101,6 +190,8 @@
 		SELECT IFNULL((SELECT max(CAST(substring(attendance_code,12) AS DECIMAL))+1 FROM wt_attendance_management),1) AS max;
 	</select>	
 	
+	
+	
 	<select id = "getGoingOutTime" parameterType="string" resultType="int">
 	
 		SELECT (TIMESTAMPDIFF(minute, going_out_stTime, going_out_endTime)/60) AS goingOutTime
@@ -129,20 +220,12 @@
 	
 	
 	
-	
+	<!-- 핸드폰번호 가져오는거 -->
 	<select id = "getMemberPhone" parameterType="string" resultType="string">
-	
-	SELECT m.mr_phone
-	FROM wt_member_registration AS m
-	WHERE m.mr_id = #{oid001};
-
-	
-	
-	
+		SELECT m.mr_phone
+		FROM wt_member_registration AS m
+		WHERE m.mr_id = #{oid001};
 	</select>
-	
-	
-	
 	
 	
 	
