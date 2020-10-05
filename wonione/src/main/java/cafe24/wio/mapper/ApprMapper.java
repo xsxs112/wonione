@@ -15,7 +15,30 @@ public interface ApprMapper {
 	
 	
 	
-	public List<AttTimeManage> getTimeManageList();
+	
+	
+	public int workTimeDelete(String mrId);
+	
+	
+	public int workTimeModify(AttTimeManage attTimeManage);
+	
+	
+	public Map<String, Object> getTimeCode();
+
+	
+	public int addWorkTime(AttTimeManage attTimeManage);
+	
+	
+	public int checkWorkTimeList(String mId);
+	
+	
+	public AttTimeManage nullList(String mrId);
+	
+	
+	public AttTimeManage workerListDetail(String mrId);
+	
+	
+	public List<Member> getWorkerList();
 	
 	
 	public int goingOutEnd(String attCode);

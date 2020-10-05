@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import cafe24.wio.bean.ApprovalRequest;
 import cafe24.wio.bean.AttManagement;
 import cafe24.wio.bean.AttTimeManage;
+import cafe24.wio.bean.Member;
 import cafe24.wio.mapper.ApprMapper;
 
 @Service
@@ -19,13 +20,80 @@ public class ApprRequestService {
 	private ApprMapper apprMapper;
 	
 	
+	public int workTimeDelete(String mrId) {
+		
+		
+		return apprMapper.workTimeDelete(mrId);
+		
+	}
 	
-	public List<AttTimeManage> getTimeManageList() {
-		
-		List<AttTimeManage> timeManageList = apprMapper.getTimeManageList();
+	public int workTimeModify(AttTimeManage attTimeManage) {
 		
 		
-		return timeManageList;
+		return apprMapper.workTimeModify(attTimeManage);
+		
+	}
+	
+	public String getTimeCode() {
+		
+		Map<String, Object> timeCodeMax =  apprMapper.getTimeCode();
+		
+		String tempCode = "att_time_";
+		int getMax = Integer.parseInt(timeCodeMax.get("max").toString());
+		if(getMax<10) {
+			tempCode = "att_time_0";
+		}
+		String timeCode = tempCode + String.valueOf(timeCodeMax.get("max"));
+		
+		return timeCode;
+		
+	}
+	
+	public int addWorkTime(AttTimeManage attTimeManage) {
+		
+		int checkNum = apprMapper.addWorkTime(attTimeManage);
+		
+		
+		return checkNum;
+		
+	}
+	
+	
+	public int checkWorkTimeList(String mrId) {
+		
+		int checkNum = apprMapper.checkWorkTimeList(mrId);
+		
+		
+		return checkNum;
+		
+	}
+	
+	
+	public AttTimeManage nullList(String mrId) {
+		
+		AttTimeManage attTimeManage = apprMapper.nullList(mrId);
+		
+		
+		return attTimeManage;
+		
+	}
+	
+	public AttTimeManage workerListDetail(String mrId) {
+		
+		AttTimeManage attTimeManage = apprMapper.workerListDetail(mrId);
+		
+		
+		return attTimeManage;
+		
+	}
+	
+	
+	public List<Member> getWorkerList() {
+		
+		List<Member> getWorkerList = apprMapper.getWorkerList();
+		
+		
+		return getWorkerList;
 	}
 	
 	

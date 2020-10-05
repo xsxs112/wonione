@@ -54,6 +54,18 @@ public class PayService {
 		return modiOfficersPay;
 	}
 	
+	// 선택한 직원 급여정보 조회
+	public List<OfficersPay> getOffiIdPayList(String mrId) {
+		List<OfficersPay> officersPayList = payMapper.getOffiIdPayList(mrId);
+		return officersPayList;
+	}
+
+	// 선택한 강사 급여정보 조회
+	public List<StaffPay> getStaIdPayList(String mrId) {
+		List<StaffPay> staffPayList = payMapper.getStaIdPayList(mrId);
+		return staffPayList;
+	}
+	
 
 
 }

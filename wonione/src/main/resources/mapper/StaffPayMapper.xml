@@ -189,14 +189,14 @@
 			,m.mr_account_num					AS mrAccountNum
 		FROM
 			wt_staff_pay AS p
-			INNER JOIN 
+			LEFT JOIN 
 			wt_staff_pay_calculate AS c
 			ON 
-			p.mr_id=c.mr_id
+			p.sp_code=c.spc_code
 			LEFT join
 			wt_staff_pay_deduction AS d
 			ON 
-			p.mr_id = d.mr_id
+			p.sp_code = d.spd_code
 			LEFT JOIN 
 			wt_member_registration AS m
 			ON 
@@ -210,6 +210,7 @@
 			ON 
 			p.p_r_title = pr.p_r_title
 		WHERE 
-			p.mr_id = #{mrId};	
+			p.mr_id = #{mrId}	
+			AND p.sp_code = #{spCode};
 	</select>
 </mapper>
