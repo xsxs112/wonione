@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cafe24.wio.mapper.GradeReportMapper">
+
+<resultMap type="GradeReport" id="gradeReportResultMap">
+		<result column="report_lec_code" 		property="reportLecCode"/>
+		<result column="open_lec_code" 			property="openLecCode"/>
+		<result column="grade_test_num" 		property="gradeTestNum"/>
+		<result column="mr_id" 					property="mrId"/>
+		<result column="work_report" 			property="workReport"/>
+		<result column="grade_Average" 			property="gradeAverage"/>
+		<result column="achievement_rate" 		property="achievementRate"/>	
+		<result column="fin_lec_reg_date" 		property="finLecRegDate"/>	
+		<result column="test_number" 			property="testNumber"/>	
+		<result column="mr_name" 				property="mrName"/>
+</resultMap>
+
+<!-- 성적업무보고서 조회 -->
+<select id="getGradeReportList" resultType="GradeReport" resultMap="gradeReportResultMap">
+	SELECT 
+		report_lec_code
+		, open_lec_code
+		, test_number
+		, mr_name
+		, work_report
+		, grade_Average
+		, achievement_rate
+		, fin_lec_reg_date
+	FROM 
+		wt_report_lecture
+		inner join
+		wt_grade_num
+		on
+		wt_report_lecture.grade_test_num = wt_grade_num.grade_test_num
+		LEFT join
+		wt_member_registration
+		on
+		wt_member_registration.mr_id = wt_report_lecture.mr_id;
+</select>
+
+<!-- 성적업무보고서 상세조회 -->
+<select id="GradeReportDetailList" resultType="GradeReport" resultMap="gradeReportResultMap" parameterType="String">
+	SELECT 
+		  report_lec_code
+		, open_lec_code
+		, test_number
+		, mr_name
+		, work_report
+		, grade_Average
+		, achievement_rate
+		, fin_lec_reg_date
+	FROM 
+		wt_report_lecture
+		inner join
+		wt_grade_num
+		on
+		wt_report_lecture.grade_test_num = wt_grade_num.grade_test_num
+		LEFT join
+		wt_member_registration
+		on
+		wt_member_registration.mr_id = wt_report_lecture.mr_id
+	where
+		report_lec_code = #{reportLecCode};
+
+</select>
+
+<!-- 조건검색  -->
+<select id="searchGradeReport" resultType="GradeReport" resultMap="gradeReportResultMap">
+	SELECT 
+		  report_lec_code
+		, open_lec_code
+		, test_number
+		, mr_name
+		, work_report
+		, grade_Average
+		, achievement_rate
+		, fin_lec_reg_date
+	FROM 
+		wt_report_lecture
+		inner join
+		wt_grade_num
+		on
+		wt_report_lecture.grade_test_num = wt_grade_num.grade_test_num
+		LEFT join
+		wt_member_registration
+		on
+		wt_member_registration.mr_id = wt_report_lecture.mr_id
+	where
+		${graRe} LIKE CONCAT('%',#{graResult},'%');
+
+</select>
+
+
+</mapper>   
+

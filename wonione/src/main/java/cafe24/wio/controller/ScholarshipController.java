@@ -111,7 +111,16 @@ public class ScholarshipController {
 		List<ScholarShip>  ScholarShipResult = scholarshipService.serchScholar(awaBp, awaBpSc);
 		model.addAttribute("ScholarShipResult", ScholarShipResult);
 		return ScholarShipResult;
-
+	}
+	
+	//삭제처리
+	@GetMapping("deleteScholarShip")
+	public String deleteScholarShip(
+									@RequestParam(value = "pmInfoCode", required = false) String pmInfoCode) {
+		scholarshipService.deleteScholarShip(pmInfoCode);
+		return "redirect:/getScholarList";
+		
+		
 	}
 	
 }
