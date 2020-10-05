@@ -231,14 +231,14 @@
 			,m.mr_account_num					AS mrAccountNum
 		FROM
 			wt_officers_pay AS p
-			INNER JOIN 
+			LEFT JOIN 
 			wt_officers_pay_calculate AS c
 			ON 
-			p.mr_id=c.mr_id
+			p.op_code=c.opc_code
 			LEFT join
 			wt_officers_pay_deduction AS d
 			ON 
-			p.mr_id = d.mr_id
+			p.op_code = d.opd_code
 			LEFT JOIN 
 			wt_member_registration AS m
 			ON 

@@ -7,8 +7,8 @@
 		<title th:text="${title}">급여목록</title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-	<div class="container-fluid">
-	  	<table class ="table table-striped">
+	<div class="container-fluid"  >
+	  	<table class ="table table-striped" > 
 	  		<thead>
 	  			<tr class="info">
 	  				<th style="text-align: center;">직원급여지급코드</th>
@@ -24,7 +24,7 @@
 	  			<tr th:each="l : ${officersPayList}">
 	  				<!-- get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음) -->	  				
 	  				<td style="text-align: center;"><a th:href="@{/getOfficersPay(mrId=${l.mrId}, opCode=${l.opCode})}" th:text="${l.opCode}"></a></td>
-	  				<td style="text-align: center;"><a th:href="@{/getIdPayList(mrId=${l.mrId})}" th:text="${l.mrId}"></a></td>
+	  				<td style="text-align: center;"><a th:href="@{#}" th:text="${l.mrId}"></a></td>
 	  				<td style="text-align: center;" th:text="${l.mrName}"></td>
 	  				<td style="text-align: center;" th:text="${l.opDate}"></td>
 	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(l.opPay, 0, 'COMMA')}+'원'" ></td>
@@ -35,7 +35,7 @@
 	  	</table>
 	</div>
 	<div class="container-fluid">
-	  	<table class ="table table-striped">
+	  	<table class ="table table-striped" > 
 	  		<thead>
 	  			<tr class="info">
 	  				<th style="text-align: center;">강사급여지급코드</th>
@@ -50,7 +50,7 @@
 	  		<tbody>
 	  			<tr th:each="s : ${staffPayList}">
 	  				<td style="text-align: center;"><a th:href="@{/getStaffPay(mrId=${s.mrId}, spCode=${s.spCode})}" th:text="${s.spCode}"></a></td>
-	  				<td style="text-align: center;"><a th:href="@{/getIdPayList(mrId=${s.mrId})}" th:text="${s.mrId}"></a></td>
+	  				<td style="text-align: center;" th:text="${s.mrId}"></td>
 	  				<td style="text-align: center;" th:text="${s.mrName}"></td>
 	  				<td style="text-align: center;" th:text="${s.spDate}"></td>
 	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(s.spPay, 0, 'COMMA')}+'원'" ></td>
@@ -60,7 +60,7 @@
 	  		</tbody>	
 	  	</table>
 	</div>
-		
+		<h4><a th:href="@{/getPayList}">목록으로</a></h4>
 	</th:block>
 
 	<th:block layout:fragment="customJsScript">

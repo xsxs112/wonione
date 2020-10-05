@@ -59,7 +59,27 @@ public class PayController {
 
 		return "pay/modiFyOfficersPay";
 	}*/
-	
+		
+	//아이디로 급여 리스트 가져오기
+	@RequestMapping(value = "/getIdPayList", method = RequestMethod.GET)
+	public String getIdPayList(	@RequestParam(value="mrId", required = false) String mrId 
+								,Model model) {
+		// 직원급여목록조회	
+		List<OfficersPay> officersPayList = payService.getOffiIdPayList(mrId);
+		
+		model.addAttribute("officersPayList", officersPayList);
+		model.addAttribute("title", "직원급여목록조회");
+		
+		// 강사급여목록조회
+		List<StaffPay> staffPayList = payService.getStaIdPayList(mrId);
+		System.out.println(staffPayList + "<- staffPayList 확인");		
+		
+		model.addAttribute("staffPayList", staffPayList);
+		model.addAttribute("title", "강사급여목록조회");
+		
+		return "pay/payIdList";
+		
+	}
 	@RequestMapping(value = "/getPayList", method = RequestMethod.GET)
 	public String getPayList(Model model) {
 		
