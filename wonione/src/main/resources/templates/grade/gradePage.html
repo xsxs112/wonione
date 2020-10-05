@@ -27,6 +27,16 @@
 				                                          </div>
 				                                     </div>
 				                                </div>
+				                               <div class="form-group-inner">
+				                                    <div class="row">
+				                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				                                             <label class="login2 pull-right-pro">작성일자</label>
+				                                          </div>
+				                                          <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+				                                              <label  th:text="${g.gradeManRegDate}" class="form-control"  th:name="gradeManRegDate"></label>
+				                                          </div>
+				                                     </div>
+				                                </div>
 				                          <div class="form-group-inner">
 				                               <div class="row">
 				                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -47,7 +57,7 @@
 				                                            </div>
 				                                       </div>
 				                                 </div>
-				                                 <div class="form-group-inner input-with-error">
+				                                <div class="form-group-inner input-with-error">
 				                                       <div class="row">
 				                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 				                                                 <label class="login2 pull-right-pro">시험점수</label>
@@ -57,44 +67,22 @@
 				                                             </div>
 				                                        </div>
 				                                  </div>
-				                                  <div class="form-group-inner">
+				                                <div class="form-group-inner">
 				                                      <div class="row">
 				                                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 				                                               <label class="login2 pull-right-pro">수강과목</label>
 				                                          </div>
 				                                          <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-				                                                <label class="form-control"></label>
+				                                                <label class="form-control" th:text="${g.lecName}" th:name="lecName"></label>
 				                                           </div>
 				                                      </div>
 				                                   </div>
-				                                 <div class="form-group-inner">
-				                                    <div class="row">
-				                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-				                                            <label class="login2  pull-right-pro">수강교실</label>
-				                                        </div>
-				                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-				                                            <div class="form-select-list">
-				                                                <label class="form-control"></label>
-				                                            </div>
-				                                        </div>
-				                                    </div>
-				                                </div>
-				                             <div class="form-group-inner">
-				                                 <div class="row">
-				                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-				                                         <label class="login2 pull-right-pro">업무계획</label>
-				                                     </div>
-				                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
- 														<label class="form-control"></label>		
- 													</div>
-				                                 </div>
-				                             </div>
-				                          <div class="form-group-inner">
-				                              <div class="row">
-				                                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-				                                      <label class="login2  pull-right-pro">과정상태</label>
-				                                  </div>
-				                                  <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+				                         		 <div class="form-group-inner">
+				                              		<div class="row">
+				                                  		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				                                     		 <label class="login2  pull-right-pro">과정상태</label>
+				                                 		 </div>
+				                                 		 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 				                                      <label class="form-control"></label>
 				                                  </div>
 				                              </div>
