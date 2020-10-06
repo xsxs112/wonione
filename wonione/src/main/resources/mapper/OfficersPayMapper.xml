@@ -161,11 +161,11 @@
 			,m.mr_join_date		AS mrJoinDate
 			,r.pm_r_title		AS pmRTitle
 			,m.mr_account_num	AS mrAccountNum
-			,CONCAT('OP_',(
-				SELECT 
-			LPAD(COUNT(*)+1, 4, '0') 
-				FROM 
-					wt_officers_pay_calculate)) AS opcCode 					
+			,IFNULL(
+					(SELECT 
+						MAX(CAST(SUBSTRING(opc_code,7) AS DECIMAL))+1 
+					FROM 
+						wt_officers_pay_calculate),1) as opcCode 					
 		FROM
 			wt_member_registration AS m
 			INNER JOIN 

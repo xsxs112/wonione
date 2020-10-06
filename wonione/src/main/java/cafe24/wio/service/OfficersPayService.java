@@ -44,9 +44,26 @@ public class OfficersPayService {
 	
 	//직원 한명 정보 조회
 	public OfficersPay callOfficersInfo(String mrId) {
-		OfficersPay OfficersInfo = officersPayMapper.callOfficersInfo(mrId);
-				
-		return OfficersInfo;
+		OfficersPay officersInfo = officersPayMapper.callOfficersInfo(mrId);
+		
+		String opcMaxcode = officersInfo.getOpcCode();
+		String tempCode = null;
+		String supOpCode = null;
+		int maxCode = 0;
+		if(opcMaxcode != null && !"".equals(opcMaxcode)) {
+			maxCode = Integer.parseInt(opcMaxcode);
+			if(maxCode <10) {
+				tempCode = "OP_000";
+			}else if(10<=maxCode && maxCode <100) {
+				tempCode = "OP_00";
+			}else if(100<=maxCode && maxCode <1000) {
+				tempCode = "OP_0";
+			}
+		}
+		supOpCode = tempCode + maxCode;
+		officersInfo.setOpcCode(supOpCode);
+		
+		return officersInfo;
 	}	
 
 	//직원 급여명세 조회

@@ -33,6 +33,23 @@ public class StaffPayService {
 	public StaffPay callStaffInfo(String mrId) {
 		StaffPay staffInfo = staffPayMapper.callStaffInfo(mrId);
 		
+		String spcMaxcode = staffInfo.getSpcCode();
+		String tempCode = null;
+		String supSpCode = null;
+		int maxCode = 0;
+		if(spcMaxcode != null && !"".equals(spcMaxcode)) {
+			maxCode = Integer.parseInt(spcMaxcode);
+			if(maxCode <10) {
+				tempCode = "SP_000";
+			}else if(10<=maxCode && maxCode <100) {
+				tempCode = "SP_00";
+			}else if(100<=maxCode && maxCode <1000) {
+				tempCode = "SP_0";
+			}
+		}
+		supSpCode = tempCode + maxCode;
+		staffInfo.setSpcCode(supSpCode);
+		
 		return staffInfo;
 	}
 		

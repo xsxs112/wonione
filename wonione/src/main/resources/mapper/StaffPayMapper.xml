@@ -122,11 +122,11 @@
 			,m.mr_name			AS mrName
 			,r.pm_r_title		AS pmRTitle
 			,m.mr_account_num	AS mrAccountNum
-			,CONCAT('SP_',(
-				SELECT 
-			LPAD(COUNT(*)+1, 4, '0') 
-				FROM 
-					wt_staff_pay_calculate)) AS spcCode
+			,IFNULL(
+					(SELECT 
+						MAX(CAST(SUBSTRING(spc_code,7) AS DECIMAL))+1 
+					FROM 
+						wt_staff_pay_calculate),1) as spcCode 
 		FROM
 			wt_member_registration AS m
 			INNER JOIN 

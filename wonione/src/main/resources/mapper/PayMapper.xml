@@ -241,7 +241,7 @@
 			 sp.sp_code 					AS spCode
 			,sp.mr_id 						AS mrId
 			,mr.mr_name						AS mrName
-			,ifnull(sp.sp_date, '미지급')		AS spDate
+			,IFNULL(sp.sp_date, '미지급')		AS spDate
 			,sp.sp_pay						AS spPay
 			,sp.sp_reg_date					AS spRegDate
 			,sp.sp_writer	  				AS spWriter	
@@ -269,7 +269,7 @@
 			 op.op_code 					AS opCode
 			,op.mr_id 						AS mrId
 			,mr.mr_name						AS mrName
-			,ifnull(op.op_date, '미지급')		AS opDate
+			,IFNULL(op.op_date, '미지급')		AS opDate
 			,op.op_pay						AS opPay
 			,op.op_reg_date					AS opRegDate
 			,op.op_writer	  				AS opWriter	
