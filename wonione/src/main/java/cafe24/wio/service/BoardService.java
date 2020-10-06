@@ -69,8 +69,8 @@ public class BoardService {
 	}
 
 	//공지사항 검색
-	public List<Board> getSearchList(String bdSk, String bdSv){
-		List<Board> noticeList = boardMapper.getSearchList(bdSk, bdSv);
+	public List<Board> getNoticeSearch(String bdSk, String bdSv){
+		List<Board> noticeList = boardMapper.getSearch(bdSk, bdSv);
 		return noticeList;
 	}	
 

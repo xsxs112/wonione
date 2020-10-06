@@ -33,7 +33,9 @@
 		ON
 			m.mr_id = b.board_writer_id
 		WHERE
-			board_menu = '공지사항';
+			board_menu = '공지사항'
+		ORDER BY 
+			board_reg_date DESC;
 	</select>
 	
 	<!-- 공지사항 등록  -->
@@ -58,14 +60,6 @@
 			, #{boardFile});
 	</insert>
 	
-	<!-- 게시글 번호 자동증가 -->
-	<select id="getBoardNum" resultType="hashMap">
-		SELECT 
-			(max(CAST(SUBSTRING(board_num,7) AS DECIMAL))+1)as max 
-		FROM 
-			wt_board
-	</select>
-	
 	<!-- 자료게시판 리스트 조회-->
 	<select id="getDataLibrary" resultType="Board" parameterType="Board" resultMap="boardResultMap">
 		SELECT
@@ -83,6 +77,28 @@
 		WHERE
 			board_menu = '자료게시판';
 	</select>
+
+	<!-- 자료게시판 등록  -->
+	<insert id="addDataLibrary" parameterType="Board">
+		INSERT INTO wt_board(
+			board_num,
+			board_menu,
+			board_title,
+			board_writer_id,
+			board_reg_date,
+			board_contents,
+			board_picture,
+			board_file
+		)VALUES(
+			#{boardNum}
+			, '자료게시판'
+			, #{boardTitle}
+			, #{boardWriterId}
+			, NOW()
+			, #{boardContents}
+			, #{boardPicture}
+			, #{boardFile});
+	</insert>
 
 	<!-- 게시물 읽기 -->
 	<select id="readBoard" resultType="Board" parameterType="String" resultMap="boardResultMap">
@@ -103,6 +119,14 @@
 			m.mr_id = b.board_writer_id
 		WHERE
 			b.board_num = #{boardNum};
+	</select>
+	
+	<!-- 게시글 번호 자동증가 -->
+	<select id="getBoardNum" resultType="hashMap">
+		SELECT 
+			(max(CAST(SUBSTRING(board_num,7) AS DECIMAL))+1)as max 
+		FROM 
+			wt_board
 	</select>
 	
 	<!-- 게시물 수정 -->
@@ -129,21 +153,21 @@
 
 
 	<!-- 검색  -->
-	<select id="getSearchList" resultType="Board"  resultMap="boardResultMap">
+	<select id="getSearch" resultType="Board" resultMap="boardResultMap">
 	SELECT 
 		board_num,
 		board_title,
 		board_writer_id,
 		mr_name,
 		board_reg_date
-	FROM 
+	FROM
 		wt_board
 	INNER JOIN
 		wt_member_registration 
 	ON
 		wt_member_registration.mr_id = wt_board.board_writer_id
 	WHERE
-		${bdSk} LIKE CONCAT('%',#{bdSv},'%');
+		${bdSk} LIKE (CONCAT('%',#{bdSv},'%'))
 	</select>
 
 </mapper>

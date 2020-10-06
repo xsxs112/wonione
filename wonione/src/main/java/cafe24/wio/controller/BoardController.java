@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import cafe24.wio.bean.Board;
 import cafe24.wio.service.BoardService;
 
@@ -114,32 +112,17 @@ public class BoardController {
 		System.out.println(boardNum + "boardNum");
 		return "redirect:/getNotice";
 	}
-
-	/*
-	 * //공지사항 검색조건
-	 * 
-	 * @GetMapping(value="/notice", produces="application/json")
-	 * 
-	 * @ResponseBody public List<Board> memberList(Model model
-	 * ,@RequestParam(value="bdSk", required = false) String bdSk
-	 * ,@RequestParam(value="bdSv", required = false) String bdSv) { List<Board>
-	 * noticeList = boardService.getSearchList(bdSk, bdSv);
-	 * logger.info("===============================");
-	 * logger.info("@GetMapping notice");
-	 * logger.info("==============================="); logger.info(noticeList
-	 * +"noticeList"); model.addAttribute("noticeList", noticeList); return
-	 * noticeList; } //공지사항 조건검색
-	 * 
-	 * @PostMapping("/searchList") public String searchList(Model model
-	 * ,@RequestParam(value="bdSk", required = false) String bdSk
-	 * ,@RequestParam(value="bdSv", required = false) String bdSv) {
-	 * logger.info("===============================");
-	 * logger.info("@PostMapping searchList");
-	 * logger.info("==============================="); List<Board> noticeList =
-	 * boardService.getSearchList(bdSk, bdSv); logger.info(noticeList
-	 * +"noticeList"); model.addAttribute("noticeList", noticeList); return
-	 * "board/notice"; }
-	 */
+	
+	//공지사항 조건 검색
+	@GetMapping("/getSearchNotice")
+	public String getSearchNotice(Model model
+			,@RequestParam(value="bdSk", required=false) String bdSk
+			,@RequestParam(value="bdSv", required=false) String bdSv) {
+		List<Board> noticeList = boardService.getNoticeSearch(bdSk, bdSv);
+		logger.info(noticeList.toString());
+		model.addAttribute("noticeList", noticeList);
+		return "board/notice";
+	}
 	
 	//자료게시판 조회
 	@RequestMapping(value = "/getDataLibrary", method = RequestMethod.GET)
