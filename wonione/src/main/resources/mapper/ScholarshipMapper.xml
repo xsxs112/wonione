@@ -98,7 +98,6 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 
 	SELECT 
 		 mr_id
-		,mr_pw
 		,mr_name
 		,level_num
 		,mr_phone
@@ -106,8 +105,6 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 		,mr_target_score
 		,pm_r_code
 		,mr_account_num
-		,shuttle_num
-		,mr_join_date
 		,mr_reg_date
 	FROM 
 		wt_member_registration
@@ -116,6 +113,27 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 		
 </select>
 
+<!-- 지급자가져오기  -->
+<select id="tName" resultType="hashMap" >
+
+	SELECT 
+		 mr_id
+		,mr_name
+		,level_num
+		,mr_phone
+		,mr_addr
+		,mr_target_score
+		,pm_r_code
+		,mr_account_num
+		,mr_reg_date
+	FROM 
+		wt_member_registration
+	WHERE
+		level_num = 1;	
+		
+</select>
+
+ 
 <select id="sMoney"  resultType="hashMap">
 	SELECT 
 		award_bm_code
@@ -130,9 +148,11 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 <!-- 장학금지급 검색  -->
 <select id="serchScholar" resultMap="ScholarShipResultMap"  resultType="Scholarship">
 	SELECT 
-			  pm_info_code
-			, award_bm_price 
-		 	, mr_name
+			  wt_payments_information.pm_info_code
+			, wt_award_benchmark.award_bm_price 
+		 	, r1.mr_name 
+		 	, r2.mr_name as pmInfoPayerName
+		 	, wt_payments_information.pm_info_reg_date
 	FROM 
 		wt_payments_information
 		INNER join
@@ -140,9 +160,13 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 		on
 		wt_payments_information.award_bm_code = wt_award_benchmark.award_bm_code
 		LEFT join
-		wt_member_registration
+		wt_member_registration AS r1
 		on
-		wt_member_registration.mr_id = wt_payments_information.mr_id
+		r1.mr_id = wt_payments_information.mr_id
+		LEFT JOIN 
+		wt_member_registration AS r2
+	ON 
+		wt_payments_information.pm_info_Payer = r2.mr_id
 	WHERE	
 		${awaBp} LIKE CONCAT('%',#{awaBpSc},'%');
 </select>

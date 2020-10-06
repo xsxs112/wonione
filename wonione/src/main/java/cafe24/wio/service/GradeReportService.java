@@ -38,6 +38,21 @@ public class GradeReportService {
 		return reportGrade;
 	}
 	
+	//성적보고서 작성하기
+	public int GradeReportInsert(GradeReport gradeReport) {
+		int insertGradeReport = gradeReportMapper.GradeReportWrite(gradeReport);
+		return insertGradeReport;
+		
+	}
+	
+	//강의예정코드조회	
+	public List<Map<String, Object>> classCode() {
+		List<Map<String, Object>> clCode = gradeReportMapper.classCode();
+		System.out.println(clCode);
+		return clCode;
+	}	
+
+	
 	//조건검색
 	public List<GradeReport> searchGradeReport(String graRe, String graResult){
 		List<GradeReport> gradeReport = gradeReportMapper.searchGradeReport(graRe, graResult);
@@ -45,5 +60,43 @@ public class GradeReportService {
 		return gradeReport;
 	}
 	
+	//수정처리
+	public int gradeReportDelete(String reportLecCode) {
+		int reportGrade = gradeReportMapper.gradeReportDelete(reportLecCode);
+		return reportGrade;
+	}
+	
+	 //회차가져오기
+	public List<Map<String,Object>> testNum(){
+		List<Map<String,Object>> testList = gradeReportMapper.testNum(); 
+		return testList; 
+		}
+	
+	
+	//자동증가코드가져오기
+	 public String gradeCode() {
+		 
+	      Map<String, Object> reCodeMax =  gradeReportMapper.gradeCode();
+	      
+	      System.out.println("reCodeMax ------------> " + reCodeMax);
+	      String tempCode = "report_lec_";
+	      
+	      int getMax = Integer.parseInt(reCodeMax.get("max").toString());
+
+	      if(getMax<10) {
+	         tempCode = "report_lec_0";
+	      }
+	      String reCode = tempCode + String.valueOf(reCodeMax.get("max"));
+	      
+	      System.out.println("reCode ------------> " + reCode);
+	      
+	      return reCode;
+	   }
+	//업무목표점수가져오기
+	 public  List< Map<String, Object>> targetScore() {
+		 List< Map<String, Object> > targetScore = gradeReportMapper.targetScore();
+		return targetScore;
+	 }
+		 
 	
 }

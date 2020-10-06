@@ -4,8 +4,8 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
-		<title></title> 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
+		<title th:text="title"></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
 	<script type="text/javascript"> 
 	
 	$(function() {
@@ -40,6 +40,7 @@
 			reportForm.submit();
 		}); 
 	});
+	
 	</script>
 	</th:block>
 	<th:block layout:fragment="customContent">
@@ -91,7 +92,7 @@
 			                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 			                                          <div class="form-select-list">
 															<input type="hidden" th:value="${sessionId}" name="mrName">
-															<input type="text" class="form-control" th:placeholder="${sessionName}">
+															<input type="text" class="form-control" th:placeholder="${sessionName}" readonly="readonly">
 			                                           </div>
 			                                       	</div>
 			                                      </div>
