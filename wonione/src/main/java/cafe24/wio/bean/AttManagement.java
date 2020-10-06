@@ -6,6 +6,7 @@ public class AttManagement {
 	String attCode;
 	String attDate;
 	String mrId;
+	String mrName;
 	String attStTime;
 	String attEndTime;
 	String attTime;
@@ -13,6 +14,22 @@ public class AttManagement {
 	String goingOut;
 	String goingOutStTime;
 	String goingOutEndTime;
+	String levelName;
+	
+	
+	
+	public String getLevelName() {
+		return levelName;
+	}
+	public void setLevelName(String levelName) {
+		this.levelName = levelName;
+	}
+	public String getMrName() {
+		return mrName;
+	}
+	public void setMrName(String mrName) {
+		this.mrName = mrName;
+	}
 	public String getAttCode() {
 		return attCode;
 	}
@@ -75,13 +92,12 @@ public class AttManagement {
 	}
 	@Override
 	public String toString() {
-		return "AttManagement [attCode=" + attCode + ", attDate=" + attDate + ", mrId=" + mrId + ", attStTime="
-				+ attStTime + ", attEndTime=" + attEndTime + ", attTime=" + attTime + ", attNote=" + attNote
-				+ ", goingOut=" + goingOut + ", goingOutStTime=" + goingOutStTime + ", goingOutEndTime="
-				+ goingOutEndTime + "]";
+		return "AttManagement [attCode=" + attCode + ", attDate=" + attDate + ", mrId=" + mrId + ", mrName=" + mrName
+				+ ", attStTime=" + attStTime + ", attEndTime=" + attEndTime + ", attTime=" + attTime + ", attNote="
+				+ attNote + ", goingOut=" + goingOut + ", goingOutStTime=" + goingOutStTime + ", goingOutEndTime="
+				+ goingOutEndTime + ", levelName=" + levelName + "]";
 	}
-	
-	
+
 	
 	
 	

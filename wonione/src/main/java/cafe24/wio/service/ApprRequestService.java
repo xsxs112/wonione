@@ -20,6 +20,16 @@ public class ApprRequestService {
 	private ApprMapper apprMapper;
 	
 	
+	public List<AttManagement> allAttendanceList() {
+		
+		List<AttManagement> allAttendanceList = apprMapper.allAttendanceList();
+		
+		
+		return allAttendanceList;
+	}
+	
+	
+	
 	public int workTimeDelete(String mrId) {
 		
 		
