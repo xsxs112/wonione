@@ -175,6 +175,37 @@
 
 </select>
 
+<!-- 페이징 카운트-->
+<select id="countReport" resultType="int">
+      SELECT
+         COUNT(*)
+      FROM
+         wt_open_lecture;
+</select>
+
+<!-- 페이징 -->
+<select id="countReportList" resultType="Report"  resultMap="reportResultMap">
+
+	SELECT 
+		  lec_open_code
+		, lec_open_sche_code
+		, mr_name
+		, lec_target
+		, lec_plan
+		, lec_etc
+		, open_lec_reg_date
+	FROM 
+		wt_open_lecture 
+	INNER JOIN
+		wt_member_registration 
+	ON
+		wt_member_registration.mr_id = wt_open_lecture.mr_id
+	ORDER by
+		wt_open_lecture.lec_open_code DESC
+	LIMIT #{startRow}, #{rowPerPage};
+
+</select>
+
 
 </mapper>
     

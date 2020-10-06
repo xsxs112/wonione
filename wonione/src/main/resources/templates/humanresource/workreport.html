@@ -41,7 +41,7 @@
 										<th>작성일자</th>
 										<th>상세보기</th>
 									</tr>
-                                  	<tr th:each="r : ${reportList}">
+                                  	<tr th:each="r : ${listReport}">
 										<td th:text=${r.lecOpenCode}></td>
 										<td th:text=${r.lecOpenScheCode}></td>
 										<td th:text=${r.lecTarget}></td>
@@ -53,16 +53,34 @@
 									</tr>
                                 </table>
                             </div>
-                            <div class="custom-pagination">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                    </ul>
-                                </nav>
+                            <div class="custom-pagination" th:if="${currentPage ne null}">
+								<ul class="pagination">
+									<li class="page-item">
+										<a class="page-link" th:href="@{/getReportList}">처음</a>
+									</li>
+									<li class="page-item">
+										<span th:if="${currentPage > 1}">
+											<a class="page-link" th:href="@{/getReportList(currentPage=(${currentPage}-1))}">이전</a>
+										</span>
+									</li>
+								</ul>
+								<ul class="pagination">
+									<li class="page-item">
+									<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/getReportList(currentPage=${num})}"></a>
+									</th:block>
+									</li>
+								</ul>
+								<ul class="pagination">
+									<li class="page-item">
+										<span th:if="${currentPage ne lastPage}">
+											<a th:href="@{/getReportList(currentPage=(${currentPage}+1))}">다음</a>
+										</span>
+		    						</li>
+		    						<li class="page-item">
+		    							<a th:href="@{/getReportList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
+		    						</li>
+								</ul>
                             </div>
                         </div>
                     </div>

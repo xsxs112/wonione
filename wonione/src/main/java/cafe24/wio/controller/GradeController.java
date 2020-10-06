@@ -27,22 +27,24 @@ public class GradeController {
 
 	// 성적리스트조회
 	@RequestMapping(value = "/getGradeList", method = RequestMethod.GET)
-	public String getGradeList(Grade grade, Model model) {
-		List<Grade> gradeList = gradeService.getGradeList(grade);
+	public String getGradeList(Grade grade, Model model
+								,@RequestParam( value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		List<Map<String, Object>> sName = gradeService.sName();
 		List<Map<String, Object>> testNum = gradeService.testNum();
 		String gradeCode = gradeService.gradeCode();
 
-		logger.info("gradeList-->" + gradeList);
-		logger.info("sName-->" + sName);
-		logger.info("testNum-->" + testNum);
+		Map<String,Object> countGradeList = gradeService.countGradeList(currentPage);
 
-		model.addAttribute("gradeList", gradeList);
 		model.addAttribute("title", "성적리스트조회");
 		model.addAttribute("sName", sName);
 		model.addAttribute("testNum", testNum);
 		model.addAttribute("gradeCode", gradeCode);
-
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("countGradeList",countGradeList.get("listGrade"));
+		model.addAttribute("lastPage", countGradeList.get("lastPage"));
+		model.addAttribute("lastPageNum", countGradeList.get("lastPageNum"));
+		model.addAttribute("listGrade",countGradeList.get("listGrade"));
+		
 		return "grade/gradeList";
 
 	}

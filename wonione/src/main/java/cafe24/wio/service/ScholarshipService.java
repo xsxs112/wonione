@@ -1,11 +1,13 @@
 package cafe24.wio.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cafe24.wio.bean.Report;
 import cafe24.wio.bean.ScholarShip;
 import cafe24.wio.mapper.ScholarshipMapper;
 
@@ -82,4 +84,51 @@ public class ScholarshipService {
 			int deleteResult = scholarshipMapper.deleteScholarShip(pmInfoCode);
 			return deleteResult;
 		}
+	
+
+	//페이징
+	public Map<String,Object> countScholarShipList(int currentPage){
+		
+		final int ROW_PER_PAGE = 5;
+	      
+	      int startRow = 0;
+	      
+	      int startPageNum = 1;
+	      int lastPageNum = ROW_PER_PAGE;
+	      
+	      if(currentPage > (ROW_PER_PAGE/2)) {
+	         startPageNum = currentPage - ((lastPageNum/2)-1);
+	         lastPageNum += startPageNum;
+	      }
+	      
+	      startRow = (currentPage - 1) * ROW_PER_PAGE ;
+	      
+	      Map<String,Object> scholarMap = new HashMap<String,Object>();
+	            
+	      scholarMap.put("startRow", startRow);
+	      scholarMap.put("rowPerPage", ROW_PER_PAGE);
+
+	      List<Report> scholarshipList = scholarshipMapper.countScholarShipList(scholarMap) ;
+	      double totalRowCount = scholarshipMapper.countScholarShip();
+	      
+	      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
+		
+		
+	      if(currentPage >= (lastPage-4)) {
+		         lastPageNum = lastPage;
+		      }
+		      
+		      Map<String,Object> scholarList = new HashMap<String,Object>();
+		      scholarList.put("scholarshipList", scholarshipList);
+		      scholarList.put("lastPage", lastPage);
+		      scholarList.put("startPageNum", startPageNum);
+		      scholarList.put("lastPageNum", lastPageNum);
+		
+		return scholarList;
+		
+	}
+		
+		
+		
+		
 }

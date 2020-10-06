@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import cafe24.wio.bean.Report;
 import cafe24.wio.bean.ScholarShip;
 
 @Mapper
@@ -36,4 +37,10 @@ public interface ScholarshipMapper {
 	
 	//삭제처리
 	public int deleteScholarShip(String pmInfoCode);
+	
+	//페이징을 위한 카운팅
+	public int countScholarShip();
+	
+	//보고서 리스트 페이징
+	public List<Report> countScholarShipList(Map<String,Object> scholarMap);
 }

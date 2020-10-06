@@ -177,5 +177,39 @@ INSERT INTO
 </update>
 
 
+<!-- 페이징 카운트-->
+<select id="countGrade" resultType="int">
+      SELECT
+         COUNT(*)
+      FROM
+        wt_grade_management;
+</select>
+
+<!-- 페이징 -->
+<select id="countGradeList" resultType="Grade"  resultMap="gradeResultMap">
+SELECT
+		 grade_man_code
+		, mr_name
+		, test_number
+		, grade_man_score
+		, grade_man_reg_date
+	FROM
+		wt_member_registration 
+		INNER join
+		wt_grade_management 
+		on
+		wt_member_registration.mr_id = wt_grade_management.mr_id
+		INNER JOIN
+		wt_grade_num 
+		ON.
+		wt_grade_num.grade_test_num = wt_grade_management.test_round
+	ORDER by
+		wt_grade_management.grade_man_code ASC
+	LIMIT #{startRow}, #{rowPerPage};
+
+</select>
+
+
+
 </mapper>   
 

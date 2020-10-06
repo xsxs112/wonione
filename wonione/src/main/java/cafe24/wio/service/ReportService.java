@@ -1,5 +1,6 @@
 package cafe24.wio.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cafe24.wio.bean.Report;
+import cafe24.wio.bean.SupplyTextbook;
 import cafe24.wio.mapper.ReportMapper;
 @Service
 public class ReportService {
@@ -87,5 +89,48 @@ public class ReportService {
 		return reportList;
 		
 	}	
+	
+	//페이징
+	public Map<String,Object> countReportList(int currentPage){
+		
+		final int ROW_PER_PAGE = 5;
+	      
+	      int startRow = 0;
+	      
+	      int startPageNum = 1;
+	      int lastPageNum = ROW_PER_PAGE;
+	      
+	      if(currentPage > (ROW_PER_PAGE/2)) {
+	         startPageNum = currentPage - ((lastPageNum/2)-1);
+	         lastPageNum += startPageNum;
+	      }
+	      
+	      startRow = (currentPage - 1) * ROW_PER_PAGE ;
+	      
+	      Map<String,Object> reportMap = new HashMap<String,Object>();
+	            
+	      reportMap.put("startRow", startRow);
+	      reportMap.put("rowPerPage", ROW_PER_PAGE);
+
+	      List<Report> listReport = reportMapper.countReportList(reportMap) ;
+	      double totalRowCount = reportMapper.countReport();
+	      
+	      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
+		
+		
+	      if(currentPage >= (lastPage-4)) {
+		         lastPageNum = lastPage;
+		      }
+		      
+		      Map<String,Object> reportList = new HashMap<String,Object>();
+		      reportList.put("listReport", listReport);
+		      reportList.put("lastPage", lastPage);
+		      reportList.put("startPageNum", startPageNum);
+		      reportList.put("lastPageNum", lastPageNum);
+		
+		return reportList;
+		
+	}
+
 	
 }

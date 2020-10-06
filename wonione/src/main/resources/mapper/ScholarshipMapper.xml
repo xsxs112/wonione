@@ -181,5 +181,43 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 </delete>
 
 
+<!-- 페이징 카운트-->
+<select id="countScholarShip" resultType="int">
+      SELECT
+         COUNT(*)
+      FROM
+        wt_payments_information;
+</select>
+
+<!-- 페이징 -->
+<select id="countScholarShipList" resultType="Scholarship"  resultMap="ScholarShipResultMap">
+
+	SELECT 
+		  wt_payments_information.pm_info_code
+		, wt_award_benchmark.award_bm_price 
+		, r1.mr_name 
+		, r2.mr_name AS pmInfoPayerName 
+		,  wt_payments_information.pm_info_reg_date
+	FROM 
+		wt_payments_information 
+	inner join
+		wt_award_benchmark 
+	on
+		wt_payments_information.award_bm_code =wt_award_benchmark.award_bm_code 
+	LEFT JOIN 
+		wt_member_registration AS r1
+	ON 
+		wt_payments_information.mr_id = r1.mr_id
+	LEFT JOIN 
+		wt_member_registration AS r2
+	ON 
+		wt_payments_information.pm_info_Payer = r2.mr_id			
+	LIMIT #{startRow}, #{rowPerPage};
+
+</select>
+
+
+
+
 </mapper>  
     

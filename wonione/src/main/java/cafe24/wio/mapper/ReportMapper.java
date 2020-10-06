@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import cafe24.wio.bean.Report;
+import cafe24.wio.bean.SupplyTextbook;
 
 @Mapper
 public interface ReportMapper {
@@ -36,5 +37,11 @@ public interface ReportMapper {
 	
 	//자동증가
 	public Map<String, Object> getReCode();
+	
+	//페이징을 위한 카운팅
+	public int countReport();
+	
+	//보고서 리스트 페이징
+	public List<Report> countReportList(Map<String,Object> reportMap);
 
 }

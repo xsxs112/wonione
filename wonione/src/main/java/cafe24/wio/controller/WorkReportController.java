@@ -29,18 +29,21 @@ public class WorkReportController {
 
 	//보고서목록조회
 	@RequestMapping(value="/getReportList", method= RequestMethod.GET)
-	public String getReportList(Report report, Model model) {
+	public String getReportList(Report report, Model model,
+								@RequestParam( value="currentPage", required = false, defaultValue = "1") int currentPage) {
+		
+		Map<String,Object> countReportList =reportService.countReportList(currentPage);
 		
 		logger.info("===============================");
 		logger.info("@GetMapping getReportList");
 		logger.info("===============================");
 		
-		List<Report> reportList = reportService.getReportList(report);
-		System.out.println(reportList + "reportList");
-		
-		model.addAttribute("reportList", reportList);
 		model.addAttribute("title", "보고서리스트");
-		
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("listReport", countReportList.get("listReport"));
+		model.addAttribute("lastPage", countReportList.get("lastPage"));
+		model.addAttribute("startPageNum", countReportList.get("startPageNum"));
+		model.addAttribute("lastPageNum", countReportList.get("lastPageNum"));	
 		return "humanresource/workreport";
 		
 	}

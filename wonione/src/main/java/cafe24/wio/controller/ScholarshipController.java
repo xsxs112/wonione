@@ -32,20 +32,25 @@ public class ScholarshipController {
 	
 	//장학금지급내역 리스트
 	@RequestMapping(value="/getScholarList", method= RequestMethod.GET)
-	public String getScholarList(Model model, ScholarShip  scholarship ,HttpSession session) {
+	public String getScholarList(Model model, ScholarShip  scholarship ,HttpSession session
+								,@RequestParam( value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		logger.info("===============================");
 		logger.info("@RequestMapping getScholarList");
 		logger.info("===============================");
-		List<ScholarShip> scholarshipList = scholarshipService.getScholarList(scholarship);
+		
+		Map<String,Object> countScholarShipList =scholarshipService.countScholarShipList(currentPage);
+		
 		String scholarCode = scholarshipService.ScholarReCode();
 		String sessionName= session.getAttribute("SNAME").toString();
 		String sessionId = session.getAttribute("SID").toString();
-		logger.info(sessionName);
-		logger.info(sessionId);
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("sessionId", sessionId);
-		model.addAttribute("scholarshipList", scholarshipList);
 		model.addAttribute("scholarCode", scholarCode);
+		model.addAttribute("countScholarShipList", countScholarShipList.get("scholarshipList"));
+		model.addAttribute("lastPage", countScholarShipList.get("lastPage"));
+		model.addAttribute("startPageNum", countScholarShipList.get("startPageNum"));
+		model.addAttribute("lastPageNum", countScholarShipList.get("lastPageNum"));	
+		model.addAttribute("currentPage", currentPage);
 		List<Map<String,Object>> sName = scholarshipService.sName();
 		List<Map<String,Object>> sMoney = scholarshipService.sMoney();
 		model.addAttribute("sName", sName);
