@@ -133,7 +133,7 @@ INSERT INTO wt_supply_textbook
 <select id="getTxbSuppMaxCode" resultType="String">
 	SELECT IFNULL(
 		(SELECT 
-			MAX(CAST(substring(sup_txb_code,9) AS DECIMAL))+1 
+			MAX(CAST(substring(sup_txb_code,8) AS DECIMAL))+1 
 		FROM 
 			wt_supply_textbook),1) AS max;
 </select>
@@ -306,7 +306,7 @@ INSERT INTO wt_supply_textbook
 <select id="getTxbWhMaxCode" resultType="String">
 	SELECT IFNULL(
 		(SELECT 
-			MAX(CAST(SUBSTRING(wh_txb_code,15) AS DECIMAL))+1 
+			MAX(CAST(SUBSTRING(wh_txb_code,12) AS DECIMAL))+1 
 		FROM 
 			wt_warehousing_textbook),1) AS max;
 </select>
@@ -394,7 +394,7 @@ INSERT INTO wt_supply_textbook
 <select id="getTxbInfoMaxCode" resultType="String">
 	SELECT IFNULL(
 		(SELECT 
-			MAX(CAST(substring(txb_code,8) AS DECIMAL))+1 
+			MAX(CAST(substring(txb_code,5) AS DECIMAL))+1 
 		FROM 
 			wt_textbook_basic_information),1) AS max;
 </select>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title>
+	</th:block>
+	<th:block layout:fragment="customContent">
+	        <div class="product-status mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="product-status-wrap">
+                            <h4 th:text="${mainTitle}"></h4>
+                            <th:block th:each="lec : ${lectureList}">
+                            <input type="hidden" id="lecOpCode" th:value="${lec.lecOpCode}">
+                            </th:block>
+                            
+                            <div class="asset-inner">
+                                <table class="table border-table">
+                                    <tr>
+                                        <th>강의개설코드</th>
+                                        <th>강의예정코드</th>
+                                        <th>강의상태코드</th>
+                                        <th>강의상태구분</th>
+                                        <th>미달인원</th>
+                                        <th>수강인원</th>
+                                        <th>작성자아이디</th>
+                                        <th>등록일자</th>
+                                        <th>강의상태변경</th>
+                                    </tr>
+                                    <th:block th:each="lec : ${lectureList}">
+	                                    <tr>
+											  <td th:text="${lec.lecOpCode}" style="text-align: center;"></td>
+											  <td>
+						                        <div class="modal-bootstrap shadow-inner responsive-mg-b-0">
+						                            <div class="modal-area-button">
+						                                <a class="lecOsCodeBtn" href="#" th:value="${lec.lecOsCode}" data-toggle="modal" data-target="#PrimaryModalalert" role="button">[[${lec.lecOsCode}]]</a>
+						                                <input class="lecOsCode" type="hidden" th:value="${lec.lecOsCode}">
+						                            </div>
+						                        </div>												  
+											  </td>
+											  <td th:text="${lec.lecStatus}" ></td>
+											  <td th:text="${lec.lecStatusName}" ></td>
+											  <td th:text="${lec.claLack}" ></td>
+											  <td th:text="${lec.claPeople}" ></td>
+											  <td th:text="${lec.lecOpWriter}" ></td>
+											  <td th:text="${lec.lecOpRegDate}" ></td>
+	                                        <td>
+	                                        	<div class="container-fluid">
+	                                            <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+	                                            </div>
+	                                        </td>
+	                                    </tr>
+	                                    <div class="login-form-area edu-pd mg-b-15">
+						                        <div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+						                            <div class="modal-dialog">
+						                                <div class="modal-content">
+						                                    <div class="modal-body" id="check">
+						                                    </div>
+						                                    <div class="modal-footer">
+						                                        <a data-dismiss="modal" href="#">닫기</a>
+						                                    </div>
+						                                </div>
+						                            </div>
+						                        </div>
+						                    </div>	                                    
+										</th:block>
+                             	   </table>
+	                                </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	$('.lecOsCodeBtn').click(function(){
+		console.log('check');
+		var lecOsCode = $(this).parents().children('.lecOsCode').val();
+		console.log(lecOsCode);
+		 var request = $.ajax({
+			  url: "/getLecOsListOnly",
+			  method: "POST",
+			  data: { lecOsCode : lecOsCode },
+			  dataType: "json"
+			});
+			 
+			request.done(function(data) {
+				for(var i=0; i<data.length; i++){
+					console.log(data[i]);
+					html ='';
+					html +='<h3>강의예정상세보기</h3>'
+					$('#check').empty();
+					$('#check').append(html);
+				}
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			}); 
+			
+	});	
+	</script>
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	 
+	</th:block>
+</html>

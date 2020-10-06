@@ -16,6 +16,7 @@ public class LectureOpenSchedule {
 	private String lecFinalDate;	//수업종료일자
 	private String lecOsWriter;		//작성자아이디
 	private String lecOsRegDate;	//등록일자
+	private String lecOsRemark;	//등록일자
 	public String getLecOsCode() {
 		return lecOsCode;
 	}
@@ -100,6 +101,13 @@ public class LectureOpenSchedule {
 	public void setLecOsRegDate(String lecOsRegDate) {
 		this.lecOsRegDate = lecOsRegDate;
 	}
+	
+	public String getLecOsRemark() {
+		return lecOsRemark;
+	}
+	public void setLecOsRemark(String lecOsRemark) {
+		this.lecOsRemark = lecOsRemark;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -131,6 +139,8 @@ public class LectureOpenSchedule {
 		builder.append(lecOsWriter);
 		builder.append(", lecOsRegDate=");
 		builder.append(lecOsRegDate);
+		builder.append(", lecOsRemark=");
+		builder.append(lecOsRemark);
 		builder.append("]");
 		return builder.toString();
 	}
