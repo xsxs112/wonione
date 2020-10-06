@@ -19,7 +19,7 @@ public interface QuestionMapper {
 	//점수등록
 	public int QuestionScoreCheck(String qeAnswer, int qeCode, String studentName);
 	//점수확인
-	public Map<String, Object> ScoreCheck(String scoreSid);
+	public Map<String, Object> ScoreCheck(String scoreSid, String scoreCheckQuestionName);
 	//해당문제 풀었던 인원인지 체크
 	public String QuestionSidCheck(String questionSid, String questionName);
 	//타이틀등록
@@ -48,6 +48,12 @@ public interface QuestionMapper {
 	public List<Map<String, Object>> candidateQuestionList(Map<String, Object> parameterMap);
 	//학생시점 점수확인
 	public Map<String, Object> questionScoreCheck(String questionSid, String questionCodeName);
+	//응시인원초기화
+	public int candidateQuestionInitialization(String candidateQuestionCodeName);
+	//인원검색
+	public List<Map<String, Object>> selectcandidateQuestionId(String selectcandidateQuestionId, String candidateQuestionCodeName);
+	//인원삭제
+	public int deleteCandidateQuestion(String candidateQuestionId, String candidateQuestionCodeName);
 	
 
 

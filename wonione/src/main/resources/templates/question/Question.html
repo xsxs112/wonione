@@ -22,7 +22,7 @@
 		<table class="table"  th:each="q : ${Question}" >
 			<tr>
 				<td><h4 th:text="${q.qe_data}"></h4></td>
-				<td hidden=""><h4 th:text="${q.qe_code}" id="QuestionCode"></h4></td>
+				<td hidden="" th:text="${q.qe_code}" id="QuestionCode"></td>
 			</tr>
 			<tr>
 				<td>
@@ -37,7 +37,7 @@
 			</tr>
 			<tr>
 				<td><span th:if="${currentPage ne lastPage}"><a th:href="@{/Question(currentPage=${currentPage}+1,questionName=${q.qt_codeName})}"><button type="button" class="btn btn-default Questionbtn">다음</button></a></span>
-				<span th:if="${currentPage eq lastPage}"><a href="/scoreCheck"><button type="submit" class="btn btn-default Questionbtn">완료</button></a></span></td>
+				<span th:if="${currentPage eq lastPage}"><a th:href="@{/scoreCheck(questionName=${q.qt_codeName})}"><button type="submit" class="btn btn-default Questionbtn">완료</button></a></span></td>
 			</tr>
 		</table>
 	</th:block>

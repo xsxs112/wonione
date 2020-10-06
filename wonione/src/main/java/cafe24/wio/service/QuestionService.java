@@ -103,8 +103,8 @@ public class QuestionService {
 		return result;
 	}
 
-	public Map<String, Object> ScoreCheck(String scoreSid) {
-		Map<String, Object> scoreSidMap = questionMapper.ScoreCheck(scoreSid);
+	public Map<String, Object> ScoreCheck(String scoreSid, String scoreCheckQuestionName) {
+		Map<String, Object> scoreSidMap = questionMapper.ScoreCheck(scoreSid,scoreCheckQuestionName);
 		return scoreSidMap;
 	}
 
@@ -237,6 +237,21 @@ public class QuestionService {
 	public Map<String, Object> questionScoreCheck(String questionSid, String questionCodeName) {
 		Map<String, Object> questionScoreCheckResult = questionMapper.questionScoreCheck(questionSid,questionCodeName);
 		return questionScoreCheckResult;
+	}
+
+	public int candidateQuestionInitialization(String candidateQuestionCodeName) {
+		int candidateQuestionInitializationResult = questionMapper.candidateQuestionInitialization(candidateQuestionCodeName);
+		return candidateQuestionInitializationResult;
+	}
+	//인원검색
+	public List<Map<String, Object>> selectcandidateQuestionId(String selectcandidateQuestionId, String candidateQuestionCodeName) {
+		List<Map<String, Object>> selectcandidateQuestionIdResult = questionMapper.selectcandidateQuestionId(selectcandidateQuestionId , candidateQuestionCodeName);
+		return selectcandidateQuestionIdResult;
+	}
+	//인원삭제
+	public int deleteCandidateQuestion(String candidateQuestionId, String candidateQuestionCodeName) {
+		int deleteCandidateQuestionResult = questionMapper.deleteCandidateQuestion(candidateQuestionId , candidateQuestionCodeName);
+		return deleteCandidateQuestionResult;
 	}
 
 	

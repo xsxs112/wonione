@@ -1,8 +1,98 @@
 /**
  * question 스크립트
- * 수정일 2020-10-04
+ * 수정일 2020-10-06
  */
 (function ($) {
+	//인원확인에서 삭제버튼
+	$(document).on('click','.deleteCandidateQuestion',function(){
+		var candidateQuestionId = $(this).parents().children('#candidateQuestionId').text();
+		var candidateQuestionCodeName = $(this).parents().children('#candidateQuestionCodeName').text();
+		if(confirm('삭제 하시겠습니까?')){
+			var request = $.ajax({
+				url: "/deleteCandidateQuestion",
+				method: "POST",
+				data: {candidateQuestionId : candidateQuestionId , candidateQuestionCodeName : candidateQuestionCodeName},
+				dataType: "json"
+			});
+			request.done(function(data) {
+				alert('삭제되었습니다.');
+				location.href='candidateQuestionList?qtCodeName='+candidateQuestionCodeName;
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				alert( "Request failed: " + textStatus );
+			});
+			
+		}else{
+			alert('취소하셨습니다.');
+		}
+		
+	});
+	//검색기능
+	$('#selectcandidateQuestionId').click(function(){
+		var candidateQuestionCodeName = $('#candidateQuestionCodeName').text();
+		var selectcandidateQuestionId = $('input[name=selectcandidateQuestionId]').val();
+		var selectcandidateQuestionIdCheck = $('input[name=selectcandidateQuestionId]');
+		
+		if(candidateQuestionCodeName == ''){
+			alert('응시자가 없습니다.');
+		}else if(selectcandidateQuestionId == ''){
+			alert('검색값을 입력해주세요.');
+			selectcandidateQuestionIdCheck.focus();
+		}else{
+			var request = $.ajax({
+				url: "/selectcandidateQuestionId",
+				method: "POST",
+				data: {selectcandidateQuestionId : selectcandidateQuestionId , candidateQuestionCodeName : candidateQuestionCodeName},
+				dataType: "json"
+			});
+			request.done(function(data) {
+				html = '';
+				for(var i=0; i<data.length; i++){
+					html += '<tr>';
+					html += '<td>'+data[i].rowNum+'</td>';
+					html += '<td hidden="" id="candidateQuestionId">'+data[i].qc_student+'</td>';
+					html += '<td>'+data[i].mr_name+'</td>';
+					html += '<td id="candidateQuestionCodeName">'+data[i].qt_codename+'</td>';
+					html += '<td>'+data[i].qe_score+'</td>';
+					html += '<td>'+data[i].qc_date+'</td>';
+					html += '<td><button type="button" class="btn btn-default deleteCandidateQuestion">삭제</button></td>';
+					html += '</tr>';
+				}
+				$("#changeDataCandidateQuestionList").empty();
+				$("#changeDataCandidateQuestionList").append(html);
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				alert( "Request failed: " + textStatus );
+			});
+		}
+		
+	});
+	//응시초기화
+	$('#candidateQuestionInitialization').click(function(){
+		var candidateQuestionCodeName = $('#candidateQuestionCodeName').text();
+		if(candidateQuestionCodeName == ''){
+			alert('응시자가 없습니다.');
+		}else{
+			if(confirm('정말삭제하시겠습니까?\n*해당 문제를 응시했던 모든인원이 삭제됩니다.')){
+				var request = $.ajax({
+					url: "/candidateQuestionInitialization",
+					method: "POST",
+					data: { candidateQuestionCodeName : candidateQuestionCodeName},
+					dataType: "json"
+				});
+				request.done(function(data) {
+					alert('삭제되었습니다.');
+					location.href='candidateQuestionList?qtCodeName='+candidateQuestionCodeName;
+				});
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				});
+			}else{
+				alert('취소하셨습니다.');
+			}
+		}
+	});
+	
 	//학생화면의 점수확인
 	$('.questionScoreCheck').click(function(){
 		var questionSid = $(this).parents().children().children('#questionSid').val();
@@ -14,9 +104,8 @@
 			dataType: "json"
 		});
 		request.done(function(data) {
-			console.log(data);
 			if(data.qc_date == null){
-				alert('해당 시험을 응시하지않았습니다.');
+				swal('해당 시험을 응시하지않았습니다.');
 			}else{
 				var html = '';
 				html += '수고하셨습니다.\n';
@@ -24,7 +113,7 @@
 				html += '점수 : '+data.qe_score+'\n';
 				html += '응시일 : '+data.qc_date+'\n';
 				html += '추천반 : '+data.scoreClass;
-				alert(html);
+				swal(html);
 			}
 		});
 		request.fail(function( jqXHR, textStatus ) {
@@ -346,11 +435,11 @@
 	//점수확인페이지
 	$('#scoreCheck').click(function(){
 		var scoreSid = $('#scoreCheckSid').val();
-	
+		var scoreCheckQuestionName = $('#scoreCheckQuestionName').val();
 		var request = $.ajax({
 			  url: "/ScoreCheck",
 			  method: "POST",
-			  data: { scoreSid : scoreSid },
+			  data: { scoreSid : scoreSid , scoreCheckQuestionName : scoreCheckQuestionName},
 			  dataType: "json"
 			});
 			request.done(function(data) {
@@ -422,7 +511,7 @@
 				dataType: "json"
 			});
 			request.done(function(data) {
-				alert('고생하셨습니다.');
+				
 			});
 			request.fail(function( jqXHR, textStatus ) {
 				alert( "Request failed: " + textStatus );
