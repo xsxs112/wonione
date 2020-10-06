@@ -15,6 +15,7 @@ public class Question {
 	private String qeB;
 	private String qeC;
 	private String qeD;
+	private String qeProblemSolving;
 	
 	
 	
@@ -28,7 +29,13 @@ public class Question {
 		return "Question [qeCode=" + qeCode + ", qtCodeName=" + qtCodeName + ", qtTitle=" + qtTitle + ", qcStudent="
 				+ qcStudent + ", qtTeacher=" + qtTeacher + ", qeOid=" + qeOid + ", qeData=" + qeData + ", qeScore="
 				+ qeScore + ", qeAnswer=" + qeAnswer + ", qeDate=" + qeDate + ", qeA=" + qeA + ", qeB=" + qeB + ", qeC="
-				+ qeC + ", qeD=" + qeD + "]";
+				+ qeC + ", qeD=" + qeD + ", qeProblemSolving=" + qeProblemSolving + "]";
+	}
+	public String getQeProblemSolving() {
+		return qeProblemSolving;
+	}
+	public void setQeProblemSolving(String qeProblemSolving) {
+		this.qeProblemSolving = qeProblemSolving;
 	}
 	public String getQtTeacher() {
 		return qtTeacher;

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	  
+  	<th:block layout:fragment="customTitle">
+		<title>문제리스트</title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+		<style>
+			table.QuestionTable {
+			    border-collapse: collapse;
+			    text-align: left;
+			    line-height: 1.5;
+			    text-align: center;
+			
+			}
+			table.QuestionTable thead th {
+			    padding: 10px;
+			    font-weight: bold;
+			    vertical-align: top;
+			    color: #369;
+			    border-bottom: 3px solid #036;
+			    text-align: center;
+			}
+			table.QuestionTable tbody th {
+			    width: 150px;
+			    padding: 10px;
+			    font-weight: bold;
+			    vertical-align: top;
+			    border-bottom: 1px solid #ccc;
+			    background: #f3f6f7;
+			    text-align: center;
+			}
+			table.QuestionTable td {
+			    width: 350px;
+			    padding: 10px;
+			    vertical-align: top;
+			    border-bottom: 1px solid #ccc;
+			    text-align: center;
+			    
+			}
+		</style>
+		<div style="border: 1px;" class="container-fluid">
+		<div class="product-payment-inner-st" style="text-align: right;">
+			<h4>문제리스트</h4>
+			<table class="table QuestionTable">
+		  		<thead>
+		  			<tr>
+		  				<th>순번</th>
+		  				
+		  			</tr>
+		  		</thead>	  
+		  		<tbody>
+	  				<tr th:each="c : ${candidateQuestionList}">
+		  				<td th:text="${#numbers.formatInteger(c.rowNum,0,'POINT')}"></td>
+		  				<td th:text="${c.qc_student}"></td>
+		  				<td><input th:value="${c.qc_student}"></td>
+		  			</tr>
+		  		</tbody>	
+	  		</table>
+  		</div>
+  		<a th:href="@{/candidateQuestionList}">처음</a>
+		    
+		    <span th:if="${currentPage > 1}"><a th:href="@{/candidateQuestionList(currentPage=(${currentPage}-1))}">이전</a></span>
+		    <span th:unless="${currentPage > 1}" th:text="이전"></span>
+		    
+		    <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+		        <span th:if="${currentPage == num}" th:text="${'【'+ num + '】'}"></span>
+		        <a th:unless="${currentPage == num}" th:text="${'【'+ num + '】'}" th:href="@{/candidateQuestionList(currentPage=${num})}"></a>
+		    </th:block>
+		    
+		    <span th:if="${currentPage != lastPage}"><a th:href="@{/candidateQuestionList(currentPage=(${currentPage}+1))}">다음</a></span>
+		    <span th:unless="${currentPage != lastPage}" th:text="다음"></span>
+		    <a th:href="@{/candidateQuestionList(currentPage=${lastPage})}">마지막</a>
+  	</div>
+	<script src="js/question.js"></script>
+	</th:block>
+</html>

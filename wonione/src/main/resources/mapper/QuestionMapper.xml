@@ -4,21 +4,96 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cafe24.wio.mapper.QuestionMapper">
 	<resultMap type="Question" id="QuestionMap">
-		<result column="qe_code" 		property="qeCode"/>
-		<result column="qc_student" 	property="qcStudent"/>
-		<result column="qt_teacher" 	property="qtTeacher"/>
-		<result column="qt_codeName" 	property="qtCodeName"/>
-		<result column="qt_title" 		property="qtTitle"/>
-		<result column="mr_o_id" 		property="qeOid"/>
-		<result column="qe_data" 		property="qeData"/>
-		<result column="qe_score" 		property="qeScore"/>
-		<result column="qe_answer" 		property="qeAnswer"/>
-		<result column="qe_date" 		property="qeDate"/>
-		<result column="qe_A" 			property="qeA"/>
-		<result column="qe_B" 			property="qeB"/>
-		<result column="qe_C" 			property="qeC"/>
-		<result column="qe_D" 			property="qeD"/>
+		<result column="qe_code" 			property="qeCode"/>
+		<result column="qc_student" 		property="qcStudent"/>
+		<result column="qt_teacher" 		property="qtTeacher"/>
+		<result column="qt_codeName" 		property="qtCodeName"/>
+		<result column="qt_title" 			property="qtTitle"/>
+		<result column="mr_o_id" 			property="qeOid"/>
+		<result column="qe_data" 			property="qeData"/>
+		<result column="qe_score" 			property="qeScore"/>
+		<result column="qe_answer" 			property="qeAnswer"/>
+		<result column="qe_date" 			property="qeDate"/>
+		<result column="qe_A" 				property="qeA"/>
+		<result column="qe_B" 				property="qeB"/>
+		<result column="qe_C" 				property="qeC"/>
+		<result column="qe_D" 				property="qeD"/>
+		<result column="qe_problem_solving" property="qeProblemSolving"/>
 	</resultMap>
+	<select id="questionScoreCheck" resultType="hashMap" parameterType="map">
+		<![CDATA[
+			SELECT 
+				c.qc_student
+				,m.mr_name
+				,SUM(c.qe_score) AS qe_score
+				,c.qc_date
+				,(CASE WHEN SUM(c.qe_score) < 60 THEN '초급'
+									 WHEN (SUM(c.qe_score) >= 60 AND SUM(c.qe_score) <80) THEN '중급'
+									 WHEN (SUM(c.qe_score) >= 80 AND SUM(c.qe_score) <100) THEN '고급'
+									 ELSE '판단불가' 
+								END) AS scoreClass 
+			FROM
+				wt_questions_candidate AS c
+				INNER JOIN 
+				wt_questions_enrollment AS e
+				ON 
+				c.qe_code = e.qe_code
+				INNER JOIN 
+				wt_member_registration AS m
+				on
+				c.qc_student = m.mr_id
+			WHERE 
+				c.qc_student = #{questionSid} && e.qt_codename= #{questionCodeName};	
+		]]>
+	</select>
+	<select id="candidateQuestionListCount" resultType="int">
+		SELECT
+			COUNT(DISTINCT qc.qc_student)
+		FROM
+			wt_questions_candidate AS qc
+			INNER JOIN
+			wt_questions_enrollment AS qe
+			ON 
+			qe.qe_code = qc.qe_code
+			INNER JOIN 
+			wt_question_taker AS qt
+			ON 
+			qe.qt_codename = qt.qt_codename
+		WHERE
+			qt.qt_codename = #{qtCodeName};
+	
+	</select>
+	<select id="candidateQuestionList" resultType="hashMap" parameterType="map">
+		SELECT
+			q.rowNum   AS rowNum
+			,qc_student
+			,qe_score
+			,qc_date
+			,qt_codename
+		FROM
+			(SELECT
+			(@rowNum := @rowNum+1) AS rowNum
+			,c.qc_student
+			,SUM(c.qe_score) AS qe_score
+			,c.qc_date
+			,t.qt_codename
+		FROM
+			wt_questions_candidate AS c
+			LEFT JOIN 
+			wt_questions_enrollment AS e
+			ON
+			c.qe_code = e.qe_code
+			LEFT JOIN 
+			wt_question_taker AS t
+			ON 
+			e.qt_codename = t.qt_codename
+			JOIN
+			(SELECT @rowNum :=0 ) AS r
+		WHERE
+			t.qt_codename = #{qtCodeName}
+			GROUP BY c.qc_student
+			ORDER BY c.qc_code ASC) AS q
+	</select>
 	<select id="QuestionTitleNameCheck" resultType="int">
 		SELECT 
 			COUNT(qt_codename)
@@ -69,6 +144,7 @@
 			,qe_B
 			,qe_C
 			,qe_D
+			,qe_problem_solving
 		FROM 
 			wt_questions_enrollment AS qe
 		WHERE 
@@ -151,7 +227,8 @@
 			,qe_A
 			,qe_B
 			,qe_C
-			,qe_D)
+			,qe_D
+			,qe_problem_solving)
 		VALUES 
 			(NULL
 			,#{qtCodeName}
@@ -162,7 +239,8 @@
 			,#{qeA}
 			,#{qeB}
 			,#{qeC}
-			,#{qeD});
+			,#{qeD}
+			,#{qeProblemSolving});
 	</insert>
 	<select id="QuestionSidCheck" resultType="String">
 		SELECT

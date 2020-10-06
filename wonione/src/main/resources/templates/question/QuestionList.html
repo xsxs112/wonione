@@ -52,6 +52,8 @@
 		  				<th>출제자</th>
 		  				<th>출제일</th>
 		  				<th th:if="${session.SLEVEL == 1}">문제등록</th>
+		  				<th th:if="${session.SLEVEL == 1}">인원확인</th>
+		  				<th>점수확인</th>
 		  				<th th:if="${session.SLEVEL == 1}">삭제</th>
 		  			</tr>
 		  		</thead>	  
@@ -59,11 +61,11 @@
 	  				<tr th:each="q : ${QuestionList}">
 		  				<td th:text="${#numbers.formatInteger(q.rowNum,0,'POINT')}"></td>
 		  				<td>
-		  					<input type="hidden" id="questionCodeName"  th:value="${q.qt_codename}">
+		  					<input type="hidden" th:value="${q.qt_codename}" id="questionCodeName">
 			  				<input type="hidden" th:value="${session.SID}" id="questionSid">
 			  				<input type="hidden" th:value="${q.qt_title}" id="questionCodeTitle">
 			  				<a class="questionCodeName" id="questionCodeTitle">[[${q.qt_title}]]</a>
-			  				<span class="glyphicon glyphicon-wrench modifyQuestionTitle" style="margin-left: 20px;"></span>
+			  				<span th:if="${session.SLEVEL == 1}" class="glyphicon glyphicon-wrench modifyQuestionTitle" style="margin-left: 10px;"></span>
 		  				</td>
 		  				<td th:text="${q.mr_name}"></td>
 		  				<td th:text="${q.qt_date}"></td>
@@ -71,6 +73,11 @@
 		  					<a th:href="@{/titleQuestionList(qtCodeName=${q.qt_codename})}">
 		  					<button class="btn btn-default">문제등록</button></a>
 	  					</td>
+		  				<td th:if="${session.SLEVEL == 1}">
+		  					<a th:href="@{/candidateQuestionList(qtCodeName=${q.qt_codename})}">
+		  					<button class="btn btn-default">인원확인</button></a>
+	  					</td>
+	  					<th><button class="btn btn-default questionScoreCheck">점수확인</button></th>
 		  				<td th:if="${session.SLEVEL == 1}">
 		  					<button class="btn btn-default deleteQuestionTitle">삭제</button>
 	  					</td>
