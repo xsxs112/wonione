@@ -25,7 +25,7 @@ public interface QuestionMapper {
 	//타이틀등록
 	public int insertQuestionTitle(cafe24.wio.bean.Question question);
 	//타이틀 삭제
-	public void deleteQuestionTitle(String questionName);
+	public int deleteQuestionTitle(String questionName);
 	//타이틀안에 문제를 추가하기전 타이틀안에 속해있는 문제리스트출력
 	public List<Map<String, Object>> titleQuestionList(Map<String, Object> parameterMap);
 	//문제리스트출력시 안에 몇개의문제가있는지 확인하는 Mapper
