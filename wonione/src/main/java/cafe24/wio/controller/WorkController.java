@@ -55,12 +55,40 @@ public class WorkController {
 															,@RequestParam(value = "mEndTime", required = false) String mEndTime
 															,@RequestParam(value = "note", required = false) String note) {
 		
-		
 		attTimeManage.setMrId(mrId);
 		attTimeManage.setWorkStTime(workStTime);
 		attTimeManage.setWorkEndTime(workEndTime);
-		attTimeManage.setmStTime(mStTime);
-		attTimeManage.setmEndTime(mEndTime);
+
+		
+		workStTime= workStTime.replace(":", "");
+		workStTime=workStTime.substring(0,4);
+		workEndTime = workEndTime.replace(":", "");
+		workEndTime = workEndTime.substring(0,4);
+		
+		int numWorkTime = Integer.parseInt(workEndTime) - Integer.parseInt(workStTime);
+		int intMealTime = 0;
+		
+		
+		if(mStTime == "" || mStTime == null ||mEndTime == "" || mEndTime == null ) {
+			attTimeManage.setmStTime(null);
+			attTimeManage.setmEndTime(null);
+		}else {
+			attTimeManage.setmStTime(mStTime);
+			attTimeManage.setmEndTime(mEndTime);
+			
+			mStTime= mStTime.replace(":", "");
+			mStTime=mStTime.substring(0,4);
+			
+			mEndTime = mEndTime.replace(":", "");
+			mEndTime = mEndTime.substring(0,4);
+			
+			intMealTime = Integer.parseInt(mEndTime) - Integer.parseInt(mStTime);
+		}
+		
+		numWorkTime = (numWorkTime-intMealTime)/100;
+		
+		String workTime = Integer.toString(numWorkTime) + "시간";
+		attTimeManage.setWorkTime(workTime);
 		
 		apprRequestService.workTimeModify(attTimeManage);
 	

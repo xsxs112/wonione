@@ -21,7 +21,8 @@
 			att_start_time = #{workStTime},
 			att_end_time = #{workEndTime},
 			meal_start_time = #{mStTime},
-			meal_end_time = #{mEndTime}
+			meal_end_time = #{mEndTime},
+			work_time = #{workTime}
 		WHERE mr_id = #{mrId}
 	</update>
 	

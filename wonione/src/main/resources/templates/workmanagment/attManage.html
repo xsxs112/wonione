@@ -58,32 +58,47 @@
 			
 	 		$('#modifyBtn').click(function(){
 	 			var mrId = $('#mrId').val();
+	 			var workStTime = $('#workStTime').val();
+	 			var workEndTime = $('#workEndTime').val();
 				if(mrId == null || mrId == "" || mrId == 'undefined'){
 					alert("직원을 선택해주세요");
 					return;
 				}
+				if(workStTime == null || workStTime == '' || workStTime == 'undefined'){
+ 					alert("출근시간을 입력해주세요");
+ 					return;
+ 				}
+ 				
+ 				if(workEndTime == null || workEndTime == '' || workEndTime == 'undefined'){
+ 					alert("퇴근시간을 입력해주세요");
+ 					return;
+ 					
+ 				}else{
+		 			var request = $.ajax({
+						  url: "/checkWorkTimeList",
+						  method: "GET",
+						  data: { mrId : mrId },
+						  dataType: "text"
+						});
+						request.done(function(data) {
+							
+							if(data==0){
+								alert('저장되었습니다');
+								$('form').attr("action",'/workTimeStorage');
+								$('form').submit();
+							}else{
+								alert('수정되었습니다');
+								$('form').attr("action",'/workTimeModify');
+								$('form').submit();
+							}
+						});
+						request.fail(function( jqXHR, textStatus ) {
+							alert( "Request failed: " + textStatus );
+						});	
+ 					
+ 					
+ 				}
 	 			
-	 			var request = $.ajax({
-					  url: "/checkWorkTimeList",
-					  method: "GET",
-					  data: { mrId : mrId },
-					  dataType: "text"
-					});
-					request.done(function(data) {
-						
-						if(data==0){
-							alert('저장되었습니다');
-							$('form').attr("action",'/workTimeStorage');
-							$('form').submit();
-						}else{
-							alert('수정되었습니다');
-							$('form').attr("action",'/workTimeModify');
-							$('form').submit();
-						}
-					});
-					request.fail(function( jqXHR, textStatus ) {
-						alert( "Request failed: " + textStatus );
-					});	
 	 			
 	 			
 	 			
