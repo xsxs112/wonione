@@ -148,16 +148,19 @@ public class MemberController {
 			member.setMrJoinDate(null);
 		}
 		
-		
 		memberService.addWIOMember(member);
 		
-		return "redirect:/WIOMemberList";
+		
+		return "redirect:/getWIOMemberList";
 	}
 
 	@GetMapping("/addWIOMember")
 	public String addWIOMember(Model model) {
 		
 		model.addAttribute("title", "구성원 정보 입력");
+		
+		// 구성원 등록 시, 결제 코드 입력창에 결제 수단이 보이도록.
+		model.addAttribute("pmResourceList", memberMapper.getPmResourceList());
 		
 		return "member/addWIOMember";
 	}
