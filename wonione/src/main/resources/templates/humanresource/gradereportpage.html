@@ -4,6 +4,7 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
+	<title th:text="title"></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
 
@@ -97,7 +98,6 @@
                                                      <div class="col-lg-9">
                                                          <div class="login-horizental cancel-wp  form-bc-ele">
 															<div style= "margin-bottom:10px" th:each="g : ${gradeReport}">
-															<a class="btn btn-default btn-danger" th:href="@{/gradeReportUpdate(reportLecCode=${g.reportLecCode})}" role="button">수정하기</a>
 															<button type="submit" class="btn btn-default">리스트로 돌아가기</button>
 															<a class="btn btn-default btn-danger" th:href="@{/gradeReportDelete(reportLecCode=${g.reportLecCode})}" role="button" >삭제하기</a>
 															</div>	

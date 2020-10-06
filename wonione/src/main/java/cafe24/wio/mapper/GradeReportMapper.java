@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import cafe24.wio.bean.GradeReport;
 import cafe24.wio.bean.Report;
+import cafe24.wio.bean.ScholarShip;
 
 @Mapper
 public interface GradeReportMapper {
@@ -20,4 +21,21 @@ public interface GradeReportMapper {
 	//조건검색
 	public List<GradeReport> searchGradeReport(String graRe, String graResult);
 	
+	//삭제처리
+	public int gradeReportDelete(String reportLecCode);
+	
+	//회차 불러오기
+	public List<Map<String, Object>> testNum();
+	
+	//성적보고서 작성하기
+	public int GradeReportWrite(GradeReport gradeReport);
+	
+	//자동증가코드
+	public Map<String, Object> gradeCode();
+	
+	//강의코드불러오기
+	public List<Map<String, Object>> classCode();
+	
+	//업무목표점수가져오기
+	public List<Map<String, Object>> targetScore();
 }

@@ -39,7 +39,7 @@ public class WorkReportController {
 		System.out.println(reportList + "reportList");
 		
 		model.addAttribute("reportList", reportList);
-		model.addAttribute("titleList", "보고서리스트");
+		model.addAttribute("title", "보고서리스트");
 		
 		return "humanresource/workreport";
 		
@@ -53,9 +53,8 @@ public class WorkReportController {
 		logger.info("@GetMapping workreportpage");
 		logger.info("===============================");
 		Report report = reportService.getReportDetailList(lecOpenCode);
-		logger.info("Report" + report);
 		model.addAttribute("Report", report);
-		model.addAttribute("reportSangse", "보고서 상세보기");
+		model.addAttribute("title", "보고서 상세보기");
 		
 		return "humanresource/workreportpage";
 		
@@ -77,14 +76,6 @@ public class WorkReportController {
 		logger.info("===============================");
 		logger.info("@PostMapping workreportwrite");
 		logger.info("===============================");
-		logger.info("lecOpenCode");
-		logger.info("lecOpenCode->" + lecOpenCode);
-		logger.info("lecOpenScheCode->" + lecOpenScheCode);
-		logger.info("lecName->" + lecName);
-		logger.info("lecTarget->" + lecTarget);
-		logger.info("lecPlan->" + lecPlan);
-		logger.info("lecEtc->" + lecEtc);
-		logger.info("openLecRegDate->" + openLecRegDate);
 		  String sessionName= session.getAttribute("SNAME").toString();
 		  String sessionId = session.getAttribute("SID").toString();
 		  model.addAttribute("sessionName", sessionName);
@@ -106,12 +97,12 @@ public class WorkReportController {
 	      logger.info("===============================");
 	      logger.info("@GetMapping workreportwrite");
 	      logger.info("===============================");
-	      logger.info(codeResult + " < -- codeResult");
 	      model.addAttribute("sessionName", sessionName);
 		  model.addAttribute("sessionId", sessionId);
 	      model.addAttribute("codeResult", codeResult);
 	      model.addAttribute("classCode", clCode);
 	      model.addAttribute("writeName", wName);
+	      model.addAttribute("title", "보고서 작성하기");
 	      return "humanresource/workreportwrite";
 	   }
 	   
@@ -123,7 +114,6 @@ public class WorkReportController {
 		  logger.info("===============================");
 	      logger.info("@GetMapping deleteCode");
 	      logger.info("===============================");
-		  logger.info(lecOpenCode + "lecOpenCode");
 		   return "redirect:/getReportList";
 	   }
 	   
@@ -134,7 +124,6 @@ public class WorkReportController {
 		  logger.info("===============================");
 		  logger.info("@PostMapping updateCode");
 		  logger.info("===============================");
-		  logger.info("보고서수정" + report);
 		   reportService.updateCode(report);
 		   model.addAttribute("Report", report);
 		   return "redirect:/getReportList";
@@ -149,13 +138,11 @@ public class WorkReportController {
 		  logger.info("===============================");
 		  logger.info("@GetMapping updateCode");
 		  logger.info("===============================");
-		  logger.info(lecOpenCode + " < -- lecOpenCode");
-		  logger.info(report+"<--report");
 		   model.addAttribute("Report", report);
 		   return "humanresource/updateworkreport";
 	   }
 	   
-	   //검색조건
+	   //조건검색
 		@GetMapping(value="/workreport", produces="application/json")
 		@ResponseBody
 		public List<Report> memberList(Model model
@@ -165,7 +152,6 @@ public class WorkReportController {
 			logger.info("===============================");
 			logger.info("@GetMapping workreport");
 			logger.info("===============================");
-			logger.info(reportList +"reportList");
 			model.addAttribute("reportList", reportList);
 			return reportList;
 }
@@ -178,7 +164,6 @@ public class WorkReportController {
 			logger.info("@PostMapping searchList");
 			logger.info("===============================");
 			List<Report> reportList = reportService.getSearchList(lecSk, lecSv);
-			logger.info(reportList +"reportList");
 			model.addAttribute("reportList", reportList);
 			return "humanresource/workreport";
 		}

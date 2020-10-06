@@ -25,6 +25,9 @@ public interface ScholarshipMapper {
 	//학생이름가져오기
 	public List<Map<String, Object>> sName();
 	
+	//학생이름가져오기
+	public List<Map<String, Object>> tName();
+	
 	//장학금액가져오기
 	public List<Map<String, Object>> sMoney();
 	

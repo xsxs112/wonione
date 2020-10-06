@@ -91,14 +91,15 @@ public class ScholarshipController {
 	public String serchScholar(Model model,
 								@RequestParam(value = "awaBp", required = false) String awaBp,
 								@RequestParam(value = "awaBpSc", required = false) String awaBpSc) {
-		List<ScholarShip> serchScholarList = scholarshipService.serchScholar(awaBp, awaBpSc);
+		if(awaBp.equals("mr_name")) awaBp = "r1." + awaBp;
+		List<ScholarShip> scholarshipList = scholarshipService.serchScholar(awaBp, awaBpSc);
 		List<Map<String,Object>> sName = scholarshipService.sName();
 		List<Map<String,Object>> sMoney = scholarshipService.sMoney();
 		String scholarCode = scholarshipService.ScholarReCode();
-
 		model.addAttribute("sName", sName);
 		model.addAttribute("sMoney", sMoney);
 		model.addAttribute("scholarCode", scholarCode);
+		model.addAttribute("scholarshipList", scholarshipList);
 		return "grade/scholarship";
 	}
 	
@@ -119,7 +120,6 @@ public class ScholarshipController {
 									@RequestParam(value = "pmInfoCode", required = false) String pmInfoCode) {
 		scholarshipService.deleteScholarShip(pmInfoCode);
 		return "redirect:/getScholarList";
-		
 		
 	}
 	

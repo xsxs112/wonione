@@ -102,6 +102,7 @@ public class GradeController {
 		String gradeCode = gradeService.gradeCode();
 		model.addAttribute("gradeCode", gradeCode);
 		model.addAttribute("result", result);
+		model.addAttribute("title", "성적입력하기");
 		return "redirect:/getGradeList";
 	}
 	
