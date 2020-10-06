@@ -37,7 +37,7 @@
 			</tr>
 			<tr>
 				<td><span th:if="${currentPage ne lastPage}"><a th:href="@{/Question(currentPage=${currentPage}+1,questionName=${q.qt_codeName})}"><button type="button" class="btn btn-default Questionbtn">다음</button></a></span>
-				<span th:if="${currentPage eq lastPage}"><a th:href="@{/scoreCheck(questionName=${q.qt_codeName})}"><button type="submit" class="btn btn-default Questionbtn">완료</button></a></span></td>
+				<span th:if="${currentPage eq lastPage}"><button type="submit" class="btn btn-default Questionbtn" id="QuestionbtnCompletion">완료</button></span></td>
 			</tr>
 		</table>
 	</th:block>

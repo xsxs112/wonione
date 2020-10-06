@@ -184,8 +184,8 @@ public class QuestionService {
 		return deleteQuestionResult;
 	}
 
-	public int modifyQuestionTitle(String questionCodeName, String questionTitle, String qtCodeSubName) {
-		int modifyQuestionTitleResult = questionMapper.modifyQuestionTitle(questionCodeName,questionTitle,qtCodeSubName);
+	public int modifyQuestionTitle(String questionCodeName, String questionTitle) {
+		int modifyQuestionTitleResult = questionMapper.modifyQuestionTitle(questionCodeName,questionTitle);
 		return modifyQuestionTitleResult;
 	}
 

@@ -46,12 +46,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<div class="container-fluid" style="text-align: center;">
 		<h4 style="font-weight: 700;">타이틀수정</h4>
+        <input type="hidden" th:value="${questionCodeName}" name="qtCodeName">
 		<table class="insertQuestion">
-		    <tr>
-		        <th scope="row">문제이름</th>
-		        <td><input type="text" th:value="${questionCodeName}" name="qtCodeName"></td>
-		        <td hidden=""><input type="text" th:value="${questionCodeName}" name="qtCodeSubName"></td>
-		    </tr>
 		    <tr>
 		        <th scope="row">LIST TITLE</th>
 		        <td><input type="text" th:value="${questionTitle}" name="qtTitle"></td>

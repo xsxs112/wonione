@@ -175,9 +175,8 @@ public class QuestionController {
 	@PostMapping(value="/modifyQuestionTitle",produces = "application/json")
 	@ResponseBody
 	public int modifyQuestionTitle(@RequestParam(value="qtCodeName",required = false) String questionCodeName
-								  ,@RequestParam(value="qtTitle",required = false) String questionTitle
-							  	  ,@RequestParam(value="qtCodeSubName",required = false) String qtCodeSubName){
-		int modifyQuestionTitleResult = questionService.modifyQuestionTitle(questionCodeName,questionTitle,qtCodeSubName);
+								  ,@RequestParam(value="qtTitle",required = false) String questionTitle){
+		int modifyQuestionTitleResult = questionService.modifyQuestionTitle(questionCodeName,questionTitle);
 		return modifyQuestionTitleResult;
 	}
 	//타이틀수정페이지

@@ -54,6 +54,7 @@
 				<div style="text-align: center;">
 					<input type="text" value="회원이름" readonly class="form-control">
 					<input type="text" name="selectcandidateQuestionId" class="form-control">
+					<input type="hidden" class="candidateQuestionCodeName" th:value="${qtCodeName}">
 					<button type="submit" class="btn btn-default" id="selectcandidateQuestionId">검색</button>
 				</div>
 			</div>
@@ -70,10 +71,10 @@
 		  		</thead>	  
 		  		<tbody id="changeDataCandidateQuestionList">
 	  				<tr th:each="c : ${candidateQuestionList}">
-		  				<td th:text="${#numbers.formatInteger(c.rowNum,0,'POINT')}"></td>
+		  				<td th:text="${#numbers.formatInteger(c.rowNum,0,'POINT')}" id="effectivenessNumber"></td>
 		  				<td hidden="" th:text="${c.qc_student}" id="candidateQuestionId"></td>
 		  				<td th:text="${c.mr_name}"></td>
-		  				<td th:text="${c.qt_codename}" id="candidateQuestionCodeName"></td>
+		  				<td th:text="${c.qt_codename}"></td>
 		  				<td th:text="${c.qe_score}"></td>
 		  				<td th:text="${c.qc_date}"></td>
 		  				<td><button type="button" class="btn btn-default deleteCandidateQuestion">삭제</button></td>

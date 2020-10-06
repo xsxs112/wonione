@@ -28,14 +28,11 @@
 		
 	});
 	//검색기능
-	$('#selectcandidateQuestionId').click(function(){
-		var candidateQuestionCodeName = $('#candidateQuestionCodeName').text();
+	$(document).on('click','#selectcandidateQuestionId',function(){
+		var candidateQuestionCodeName = $('.candidateQuestionCodeName').val();
 		var selectcandidateQuestionId = $('input[name=selectcandidateQuestionId]').val();
 		var selectcandidateQuestionIdCheck = $('input[name=selectcandidateQuestionId]');
-		
-		if(candidateQuestionCodeName == ''){
-			alert('응시자가 없습니다.');
-		}else if(selectcandidateQuestionId == ''){
+		if(selectcandidateQuestionId == ''){
 			alert('검색값을 입력해주세요.');
 			selectcandidateQuestionIdCheck.focus();
 		}else{
@@ -46,26 +43,35 @@
 				dataType: "json"
 			});
 			request.done(function(data) {
-				html = '';
-				for(var i=0; i<data.length; i++){
-					html += '<tr>';
-					html += '<td>'+data[i].rowNum+'</td>';
-					html += '<td hidden="" id="candidateQuestionId">'+data[i].qc_student+'</td>';
-					html += '<td>'+data[i].mr_name+'</td>';
-					html += '<td id="candidateQuestionCodeName">'+data[i].qt_codename+'</td>';
-					html += '<td>'+data[i].qe_score+'</td>';
-					html += '<td>'+data[i].qc_date+'</td>';
-					html += '<td><button type="button" class="btn btn-default deleteCandidateQuestion">삭제</button></td>';
-					html += '</tr>';
+				if(data != 0){
+					html = '';
+					for(var i=0; i<data.length; i++){
+						html += '<tr>';
+						html += '<td>'+data[i].rowNum+'</td>';
+						html += '<td hidden="" id="candidateQuestionId">'+data[i].qc_student+'</td>';
+						html += '<td>'+data[i].mr_name+'</td>';
+						html += '<td id="candidateQuestionCodeName">'+data[i].qt_codename+'</td>';
+						html += '<td>'+data[i].qe_score+'</td>';
+						html += '<td>'+data[i].qc_date+'</td>';
+						html += '<td><button type="button" class="btn btn-default deleteCandidateQuestion">삭제</button></td>';
+						html += '</tr>';
+					}
+					$("#changeDataCandidateQuestionList").empty();
+					$("#changeDataCandidateQuestionList").append(html);
+				}else{
+					Writing = '';
+					Writing += '<tr>';
+					Writing += '<td colspan="6">검색값이 없습니다.</td>';
+					Writing += '</tr>';
+					
+					$("#changeDataCandidateQuestionList").empty();
+					$("#changeDataCandidateQuestionList").append(Writing);
 				}
-				$("#changeDataCandidateQuestionList").empty();
-				$("#changeDataCandidateQuestionList").append(html);
 			});
 			request.fail(function( jqXHR, textStatus ) {
 				alert( "Request failed: " + textStatus );
 			});
 		}
-		
 	});
 	//응시초기화
 	$('#candidateQuestionInitialization').click(function(){
@@ -125,41 +131,29 @@
 	
 	//타이틀수정ajax
 	$('#modifyQuestionTitlebtn').click(function(){
-		var qtCodeName = $('input[name=qtCodeName]').val();
-		var qtCodeSubName = $('input[name=qtCodeSubName]').val();
+		var qtCodeName = $(this).parents().children('input[name=qtCodeName]').val();
 		var qtTitle = $('input[name=qtTitle]').val();
-		var request = $.ajax({
-			url: "/QuestionTitleNameCheck",
-			method: "POST",
-			data: { qtCodeName : qtCodeName},
-			dataType: "json"
-		});
-		request.done(function(data) {
-			if(data == 0){
-				var request = $.ajax({
-					url: "/modifyQuestionTitle",
-					method: "POST",
-					data: { qtCodeName : qtCodeName , qtTitle : qtTitle , qtCodeSubName : qtCodeSubName },
-					dataType: "json"
-				});
-				request.done(function(data) {
-					alert('수정되었습니다.');
-					opener.parent.location.reload();
-					window.close();
-					
-				});
-				request.fail(function( jqXHR, textStatus ) {
-					alert( "Request failed: " + textStatus );
-				});
+		var qtTitleFocus = $('input[name=qtTitle]');
+		if(qtTitle != ''){
+			var request = $.ajax({
+				url: "/modifyQuestionTitle",
+				method: "POST",
+				data: { qtCodeName : qtCodeName , qtTitle : qtTitle },
+				dataType: "json"
+			});
+			request.done(function(data) {
+				alert('수정되었습니다.');
+				opener.parent.location.reload();
+				window.close();
 				
-			}else{
-				alert('이름이 중복입니다.');
-			}
-			
-		});
-		request.fail(function( jqXHR, textStatus ) {
-			alert( "Request failed: " + textStatus );
-		});
+			});
+			request.fail(function( jqXHR, textStatus ) {
+				alert( "Request failed: " + textStatus );
+			});
+		}else{
+			alert('수정값을 입력해주세요.');
+			qtTitleFocus.focus();
+		}
 		
 	});
 	
@@ -430,46 +424,6 @@
 		
 	});
 	
-	
-	
-	//점수확인페이지
-	$('#scoreCheck').click(function(){
-		var scoreSid = $('#scoreCheckSid').val();
-		var scoreCheckQuestionName = $('#scoreCheckQuestionName').val();
-		var request = $.ajax({
-			  url: "/ScoreCheck",
-			  method: "POST",
-			  data: { scoreSid : scoreSid , scoreCheckQuestionName : scoreCheckQuestionName},
-			  dataType: "json"
-			});
-			request.done(function(data) {
-				
-				var html = '';
-				html += '<tr>';
-				html += '<th scope="row">응시자</th>';
-				html += '<td>'+data.mr_name+'</td>';
-				html += '</tr>';
-				html += '<tr>';
-				html += '<th scope="row">점수</th>';
-				html += '<td>'+data.qe_score+'</td>';
-				html += '</tr>';
-				html += '<tr>';
-				html += '<th scope="row">응시일자</th>';
-				html += '<td>'+data.qc_date+'</td>';
-				html += '</tr>';
-				html += '<tr>';
-				html += '<th scope="row">추천반</th>';
-				html += '<td>'+data.scoreClass+'</td>';
-				html += '</tr>';
-			
-				$("#scoreCheckTable").empty();
-				$("#scoreCheckTable").append(html);
-			});
-			request.fail(function( jqXHR, textStatus ) {
-				 alert( "Request failed: " + textStatus );
-			});
-	});
-	
 	//리스트유효성검사및 페이지이동
 	$(document).on('click','.questionCodeName',function(){
 		var questionSid = $('#questionSid').val();
@@ -510,15 +464,14 @@
 				data: { qeAnswer : qeAnswer , qeCode : qeCode},
 				dataType: "json"
 			});
-			request.done(function(data) {
-				
-			});
-			request.fail(function( jqXHR, textStatus ) {
-				alert( "Request failed: " + textStatus );
-			});
 		}else{
 			alert('답을 체크해주세요.');
 			return false;
 		}
+	});
+	$('#QuestionbtnCompletion').click(function(){
+		alert('고생하셨습니다.\n점수확인해주세요.');
+		opener.parent.location.reload();
+		window.close();
 	});
 })(jQuery); 
