@@ -47,7 +47,10 @@
 		SELECT
 			p.op_code									AS opCode
 			,p.mr_id									AS mrId			
-			,mr.mr_name									AS mrName			
+			,mr.mr_name									AS mrName
+			,mr.mr_join_date							AS mrJoinDate
+			,r.pm_r_title								AS pmRTitle
+			,mr.mr_account_num							AS mrAccountNum	
 			,p.op_pay									AS opPay
 			,pd.opd_code								AS opdCode
 			,pd.iy_code									AS iyCode
@@ -68,9 +71,10 @@
 			,pc.opc_bonus								AS opcBonus
 			,pc.opc_ect									AS opcEct
 			,pc.opc_total								AS opcTotal
+			,pr.p_r_title						AS pRTitle
 		FROM
 			wt_officers_pay AS p
-			INNER JOIN 
+			LEFT JOIN 
 			wt_officers_pay_deduction AS pd
 			ON 
 			p.op_code = pd.opd_code
@@ -81,7 +85,15 @@
 			LEFT JOIN 
 			wt_member_registration AS mr
 			ON
-			p.mr_id = mr.mr_id	
+			p.mr_id = mr.mr_id
+			LEFT JOIN 
+			wt_payment_resource AS r
+			ON 
+			mr.pm_r_code = r.pm_r_code
+			LEFT JOIN 
+			wt_pay_resource AS pr
+			ON 
+			p.p_r_title = pr.p_r_title
 		WHERE
 			p.op_code = #{opCode};
 	</select>
