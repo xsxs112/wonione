@@ -176,7 +176,7 @@
 			qt_codename=#{questionCodeName},
 			qt_title=#{questionTitle}
 		WHERE 
-			qt_codename=#{qtCodeSubName};
+			qt_codename=#{questionCodeName};
 	</update>
 	<delete id="deleteQuestion" parameterType="int">
 		DELETE 

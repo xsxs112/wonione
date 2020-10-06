@@ -12,6 +12,9 @@ public class GradeReport {
 	private int achievementRate;
 	private String finLecRegDate;
 	private String testNumber;
+	private String lecName;
+	private String lecTarget;
+	
 	
 	@Override
 	public String toString() {
@@ -36,6 +39,10 @@ public class GradeReport {
 		builder.append(finLecRegDate);
 		builder.append(", testNumber=");
 		builder.append(testNumber);
+		builder.append(", lecName=");
+		builder.append(lecName);
+		builder.append(", lecTarget=");
+		builder.append(lecTarget);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -98,6 +105,19 @@ public class GradeReport {
 	}
 	public void setTestNumber(String testNumber) {
 		this.testNumber = testNumber;
+	}
+	public String getLecName() {
+		return lecName;
+	}
+	public void setLecName(String lecName) {
+		this.lecName = lecName;
+	}
+	public String getLecTarget() {
+		return lecTarget;
+	}
+
+	public void setLecTarget(String lecTarget) {
+		this.lecTarget = lecTarget;
 	}
 	
 

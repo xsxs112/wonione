@@ -17,6 +17,8 @@
 		<result column="fin_lec_reg_date" 		property="finLecRegDate"/>	
 		<result column="test_number" 			property="testNumber"/>	
 		<result column="mr_name" 				property="mrName"/>
+		<result column="lec_target" 			property="lecTarget"/>
+		
 </resultMap>
 
 <!-- 성적업무보고서 조회 -->
@@ -92,6 +94,98 @@
 	where
 		${graRe} LIKE CONCAT('%',#{graResult},'%');
 
+</select>
+
+<!-- 회차가져오기  -->
+<select id="testNum" resultType="hashMap" >
+
+	SELECT 
+		 grade_test_num
+		,test_number
+		,grade_test_reg_date
+	FROM 
+		wt_grade_num;
+		
+</select> 
+
+<!--삭제처리  -->
+<delete id="gradeReportDelete" parameterType="String">
+
+	DELETE 
+	FROM 
+		wt_report_lecture
+	WHERE 
+		report_lec_code=#{reportLecCode};
+
+</delete>
+
+<!-- 자동증가코드  -->
+<select id="gradeCode" resultType="hashMap">
+	SELECT IFNULL((SELECT max(CAST(SUBSTRING(report_lec_code,11) AS DECIMAL))+1 FROM wt_report_lecture),1) AS max;
+</select>
+
+<!--보고서작성쿼리문  -->
+<insert id="GradeReportWrite" parameterType="GradeReport">
+   
+   INSERT INTO
+		wt_report_lecture
+		(report_lec_code
+		, open_lec_code
+		, grade_test_num
+		, mr_id
+		, work_report
+		, grade_Average
+		, achievement_rate
+		, fin_lec_reg_date)
+   VALUES
+		(
+		 #{reportLecCode}
+		, #{lecName}
+		, #{testNumber}
+		, #{mrName}
+		, #{workReport}
+		, #{gradeAverage}
+		, #{achievementRate}
+		, NOW()
+		);
+ 
+</insert>
+
+
+<!-- 수업명가져오기   -->
+
+<select id="classCode" resultType="hashMap"  parameterType="String">
+
+	SELECT
+		   lec_os_code
+		 , lec_name
+		 , mr_teacher_id
+		 , lec_time_code
+		 , lec_room_code
+		 , lec_day
+		 , lec_level_code
+		 , lec_st_date
+		 , lec_fin_date
+		 , lec_os_reg_date
+	FROM 
+		wt_lecture_open_schedule;
+
+</select>
+
+
+<!-- 업무목표점수가져오기  -->
+<select id="targetScore" resultType="hashMap" parameterType="String">
+	
+	SELECT 
+		  lec_open_code
+		, lec_open_sche_code
+		, mr_id
+		, lec_target
+		, lec_plan
+		, lec_etc
+		, open_lec_reg_date
+	FROM 
+		wt_open_lecture;
 </select>
 
 

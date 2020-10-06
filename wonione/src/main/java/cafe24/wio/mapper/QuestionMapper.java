@@ -39,7 +39,7 @@ public interface QuestionMapper {
 	//타이틀내 문제삭제
 	public int deleteQuestion(int qeCode);
 	//타이틀 수정
-	public int modifyQuestionTitle(String questionCodeName, String questionTitle, String qtCodeSubName);
+	public int modifyQuestionTitle(String questionCodeName, String questionTitle);
 	//타이틀 수정전 이름체크
 	public int QuestionTitleNameCheck(String questionCodeName);
 	//인원확인숫자

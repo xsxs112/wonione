@@ -121,7 +121,6 @@ INSERT INTO
 		,pm_r_code
 		,mr_account_num
 		,shuttle_num
-		,mr_join_date
 		,mr_reg_date
 	FROM 
 		wt_member_registration

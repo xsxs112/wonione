@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+	<title th:text="title"></title>  
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
+	<script type="text/javascript"> 
+	
+	$(function() {
+	  $('#reportSubmit').click(function(){
+		  console.log('클릭 이벤트');
+			var gradeReportForm 	= $('#gradeReportForm');
+		  	var lecName 			= $('#lecName').val();
+			var	testNumber 			= $('#testNumber').val();
+			var gradeSum 			= $('#gradeSum').val();
+			var lecTarget 			= $('#lecTarget').val();
+			var achievementRate 	= $('#achievementRate').val();
+			var workReport 			= $('#workReport').val();
+			console.log(lecName + '<--lecName');
+			console.log(testNumber + '<--testNumber');
+			console.log(gradeSum + '<--gradeSum');
+			console.log(lecTarget + '<--lecTarget');
+			console.log(achievementRate + '<--achievementRate');
+			console.log(workReport + '<--workReport');
+			
+			if(lecName == undefined || lecName ==''){
+				alert('강의를 선택해주세요');
+				$('#lecName').focus();
+				return;
+			}else if(testNumber == undefined || testNumber ==''){
+				alert('시험차수를 입력해주세요');
+				$('#testNumber').focus();
+				return;	
+			}else if(gradeSum == ''){
+				alert('총합을 구해주세요');
+				$('#gradeSum').focus();
+				return;
+			}else if(lecTarget == undefined || lecTarget ==''){
+				alert('목표점수를 선택해주세요');
+				$('#lecTarget').focus();
+				return;	
+			}else if(achievementRate == ''){
+				alert('달성률을 구해주세요');
+				$('#achievementRate').focus();
+				return;	
+			}else if(workReport == ''){
+				alert('업무보고내용을 작성해주세요');
+				$('#workReport').focus();
+				return;	
+			gradeReportForm.submit();
+		}); 
+	});
+	
+	</script>
+	</th:block>
+	<th:block layout:fragment="customContent">
+
+	<form action="/GradeReportWrite" class="container-fluid" style="text-align:center" id="gradeReportForm">
+	<h3 style="color: grey;" >성적 업무 보고서 작성하기</h3><br>
+		<div class="row">
+	            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                <div class="sparkline12-list">
+	                    <div class="sparkline12-graph">
+	                            <div class="row">
+	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                                    <div class="all-form-element-inner">
+	                                         <div class="form-group-inner">
+	                                                <div class="row">
+	                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+	                                                        <label class="login2 pull-right-pro">업무보고서 코드</label>
+	                                                    </div>
+	                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+	                                                        <label th:text="${codeResult}" class="form-control"  th:name="reportLecCode" ></label>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+                                              <div class="form-group-inner">
+                                               	<div class="row">
+                                                  		 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                       	<label class="login2 pull-right-pro">작성자</label>
+                                                   	</div>
+                                                   <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                       <input type="hidden" th:value="${sessionId}" name="mrName">
+													<input type="text" class="form-control" th:placeholder="${sessionName}" readonly="readonly">
+                                                   </div>
+                                               	</div>
+                                           	</div>
+	                                             <div class="form-group-inner">
+	                                                <div class="row">
+	                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+	                                                        <label class="login2 pull-right-pro">강의명</label>
+	                                                    </div>
+	                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+	                                                    	<select name ="lecName" class="form-control custom-select-value" id="lecName" >
+															<option value="">::강의::</option>
+															<th:block th:each="c : ${classCode}">
+																<option th:value="${c.lec_os_code}" th:name ="lecName">[[${c.lec_name}]]</option>
+															</th:block>
+															</select>
+	                                                    </div>
+	                                                </div>
+	                                            </div>  
+	                                         <div class="form-group-inner">
+	                                                <div class="row">
+	                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+	                                                        <label class="login2 pull-right-pro">시험회차</label>
+	                                                    </div>
+	                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+	                                                    <select name ="testNumber" class="form-control" id="testNumber">
+															<option value="">::회차::</option>
+																<th:block th:each="t : ${testNum}">
+																	<option th:value="${t.grade_test_num}">[[${t.test_number}]]</option>
+																</th:block>
+														</select> 
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+			                                 <div class="form-group-inner">
+			                                    <div class="row">
+			                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+			                                            <label class="login2  pull-right-pro">총점</label>
+			                                        </div>
+			                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+			                                            <div class="form-inline">
+			                                                <input type="text" class="form-control" id="gradeSum" placeholder="총점"> 
+			                                                <button type="button" class="btn btn-default">총점계산하기</button>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+		                                 <div class="form-group-inner">
+		                                    <div class="row">
+		                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+		                                            <label class="login2  pull-right-pro">평균</label>
+		                                        </div>
+		                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+		                                            <div class="form-inline">
+		                                                <input type="text" class="form-control"  th:name="gradeAverage" id="gradeSum" placeholder="평균">
+		                                           		<button type="button" class="btn btn-default">평균계산하기</button>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            <div class="form-group-inner input-with-error">
+		                                    <div class="row">
+		                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+		                                            <label class="login2  pull-right-pro">달성률</label>
+		                                        </div>
+		                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+		                                            <div class="form-inline">
+		                                             <select name =lecTarget class="form-control custom-select-value" id="lecTarget" >
+																<option>::업무목표점수::</option>
+																<th:block th:each="t : ${targetScore}">
+																	<option th:value="${t.lec_target}" th:name ="lecTarget">[[${t.lec_target}]]</option>
+																</th:block>
+																</select>   
+		                                            <input type="text" class="form-control"  th:name="achievementRate" id="achievementRate" placeholder="달성률">
+		                                           		<button type="button" class="btn btn-default">달성률 계산하기</button>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                          <div class="form-group-inner">
+		                              <div class="row">
+		                                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+		                                      <label class="login2  pull-right-pro">성적업무 보고내용</label>
+		                                  </div>
+		                                  <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+		                                      <textarea class="form-control" rows="5"  th:name="workReport" id="workReport"></textarea>
+		                                  </div>
+		                              </div>
+		                          </div>
+                                        <div class="form-group-inner">
+                                            <div class="login-btn-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3"></div>
+                                                    <div class="col-lg-9">
+                                                        <div class="login-horizental cancel-wp  form-bc-ele">
+														<button type="button" class="btn btn-default" id="reportSubmit">저장하기</button>
+														</div>	
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+		</form>	
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	</th:block>
+</html>
+
+
