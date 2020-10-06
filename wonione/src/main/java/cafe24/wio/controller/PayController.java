@@ -33,7 +33,7 @@ public class PayController {
 		if(officersPay.getOpCode() !=null && "".equals(officersPay.getOpCode())) {
 			payService.removeOffiPayDocu(officersPay.getOpCode());
 		}
-		return "redirect:/payList";
+		return "redirect:/getIdPayList";
 	}
 	
 	// 삭제할 직원급여 가져오기
@@ -43,7 +43,7 @@ public class PayController {
 			model.addAttribute("삭제화면", "급여삭제화면");
 			model.addAttribute("getOpCode", officersPay.getOpCode());
 		}
-		return null;
+		return "pay/payIdList";
 	}
 	
 	//직원급여수정화면 아이디로 불러오기
