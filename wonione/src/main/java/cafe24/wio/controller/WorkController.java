@@ -29,149 +29,125 @@ public class WorkController {
 	@Autowired
 	private ApprRequestService apprRequestService;
 
-	
-	
-	
-	
-	
 	@PostMapping("/workTimeDelete")
 	public String workTimeDelete(@RequestParam(value = "mrId", required = false) String mrId) {
-		
+
 		apprRequestService.workTimeDelete(mrId);
-		
 
 		return "redirect:/attManage";
 	}
-	
-	
-	
-	
-	
+
 	@PostMapping("/workTimeModify")
-	public String workTimeModify(AttTimeManage attTimeManage,@RequestParam(value = "mrId", required = false) String mrId
-															,@RequestParam(value = "workStTime", required = false) String workStTime
-															,@RequestParam(value = "workEndTime", required = false) String workEndTime
-															,@RequestParam(value = "mStTime", required = false) String mStTime
-															,@RequestParam(value = "mEndTime", required = false) String mEndTime
-															,@RequestParam(value = "note", required = false) String note) {
-		
+	public String workTimeModify(AttTimeManage attTimeManage,
+			@RequestParam(value = "mrId", required = false) String mrId,
+			@RequestParam(value = "workStTime", required = false) String workStTime,
+			@RequestParam(value = "workEndTime", required = false) String workEndTime,
+			@RequestParam(value = "mStTime", required = false) String mStTime,
+			@RequestParam(value = "mEndTime", required = false) String mEndTime,
+			@RequestParam(value = "note", required = false) String note) {
+
 		attTimeManage.setMrId(mrId);
 		attTimeManage.setWorkStTime(workStTime);
 		attTimeManage.setWorkEndTime(workEndTime);
 
-		
-		workStTime= workStTime.replace(":", "");
-		workStTime=workStTime.substring(0,4);
+		workStTime = workStTime.replace(":", "");
+		workStTime = workStTime.substring(0, 4);
 		workEndTime = workEndTime.replace(":", "");
-		workEndTime = workEndTime.substring(0,4);
-		
+		workEndTime = workEndTime.substring(0, 4);
+
 		int numWorkTime = Integer.parseInt(workEndTime) - Integer.parseInt(workStTime);
 		int intMealTime = 0;
-		
-		
-		if(mStTime == "" || mStTime == null ||mEndTime == "" || mEndTime == null ) {
+
+		if (mStTime == "" || mStTime == null || mEndTime == "" || mEndTime == null) {
 			attTimeManage.setmStTime(null);
 			attTimeManage.setmEndTime(null);
-		}else {
+		} else {
 			attTimeManage.setmStTime(mStTime);
 			attTimeManage.setmEndTime(mEndTime);
-			
-			mStTime= mStTime.replace(":", "");
-			mStTime=mStTime.substring(0,4);
-			
+
+			mStTime = mStTime.replace(":", "");
+			mStTime = mStTime.substring(0, 4);
+
 			mEndTime = mEndTime.replace(":", "");
-			mEndTime = mEndTime.substring(0,4);
-			
+			mEndTime = mEndTime.substring(0, 4);
+
 			intMealTime = Integer.parseInt(mEndTime) - Integer.parseInt(mStTime);
 		}
-		
-		numWorkTime = (numWorkTime-intMealTime)/100;
-		
+
+		numWorkTime = (numWorkTime - intMealTime) / 100;
+
 		String workTime = Integer.toString(numWorkTime) + "시간";
 		attTimeManage.setWorkTime(workTime);
-		
+
 		apprRequestService.workTimeModify(attTimeManage);
-	
-		
-		
+
 		return "redirect:/attManage";
 	}
-	
+
 	@PostMapping("/workTimeStorage")
-	public String workTimeStorage(AttTimeManage attTimeManage,@RequestParam(value = "mrId", required = false) String mrId
-															,@RequestParam(value = "workStTime", required = false) String workStTime
-															,@RequestParam(value = "workEndTime", required = false) String workEndTime
-															,@RequestParam(value = "mStTime", required = false) String mStTime
-															,@RequestParam(value = "mEndTime", required = false) String mEndTime
-															,@RequestParam(value = "note", required = false) String note) {
-		
-		
+	public String workTimeStorage(AttTimeManage attTimeManage,
+			@RequestParam(value = "mrId", required = false) String mrId,
+			@RequestParam(value = "workStTime", required = false) String workStTime,
+			@RequestParam(value = "workEndTime", required = false) String workEndTime,
+			@RequestParam(value = "mStTime", required = false) String mStTime,
+			@RequestParam(value = "mEndTime", required = false) String mEndTime,
+			@RequestParam(value = "note", required = false) String note) {
+
 		String getTimeCode = apprRequestService.getTimeCode();
-		
-		
-		if(mStTime == "" || mStTime == null ||mEndTime == "" || mEndTime == null ) {
+
+		if (mStTime == "" || mStTime == null || mEndTime == "" || mEndTime == null) {
 			attTimeManage.setmStTime(null);
 			attTimeManage.setmEndTime(null);
-		}else {
+		} else {
 			attTimeManage.setmStTime(mStTime);
 			attTimeManage.setmEndTime(mEndTime);
 		}
-		
+
 		attTimeManage.setAttTimeCode(getTimeCode);
 		attTimeManage.setMrId(mrId);
 		attTimeManage.setWorkStTime(workStTime);
 		attTimeManage.setWorkEndTime(workEndTime);
-	
-		
-		
-		
+
 		apprRequestService.addWorkTime(attTimeManage);
-		
-		
-		
-		
-		//"redirect:/holidayApproval"
+
+		// "redirect:/holidayApproval"
 		return "redirect:/attManage";
 	}
-	
-	
-	@GetMapping(value = "/checkWorkTimeList",produces = "application/json")
+
+	@GetMapping(value = "/checkWorkTimeList", produces = "application/json")
 	@ResponseBody
 	public int checkWorkTimeList(@RequestParam(value = "mrId", required = false) String mrId) {
-		
+
 		int checkNum = apprRequestService.checkWorkTimeList(mrId);
-		
-		
-		
+
 		return checkNum;
 	}
-	
-	
-	
-	//직원 정보 불러오기
-	@GetMapping(value = "/workerListDetail",produces = "application/json")
+
+	// 직원 정보 불러오기
+	@GetMapping(value = "/workerListDetail", produces = "application/json")
 	@ResponseBody
 	public AttTimeManage workerListDetail(@RequestParam(value = "mrId", required = false) String mrId) {
 		AttTimeManage attTimeManage = apprRequestService.workerListDetail(mrId);
-		if(attTimeManage == null) {
+		if (attTimeManage == null) {
 			attTimeManage = apprRequestService.nullList(mrId);
 		}
-		
-		
+
 		return attTimeManage;
 	}
-	
-	
-	
-	@RequestMapping(value="/attManage" , method = {RequestMethod.GET, RequestMethod.POST})
-	public String workAttendanceList2(Model model) {
-		
+
+	@RequestMapping(value = "/attManage", method = { RequestMethod.GET, RequestMethod.POST })
+	public String attManage(Model model) {
+
 		List<Member> workerList = apprRequestService.getWorkerList();
 		model.addAttribute("workerList", workerList);
-
+		List<AttManagement> allAttendanceList = apprRequestService.allAttendanceList();
+		
+		model.addAttribute("allAttendanceList", allAttendanceList);
 		return "workmanagment/attManage";
 	}
 	
+	
+
 	@GetMapping("/goingOutEnd")
 	public String goingOutEnd(AttManagement attManagement, HttpSession session) {
 		String SID = (String) session.getAttribute("SID");
@@ -180,21 +156,17 @@ public class WorkController {
 
 		return "redirect:/workAttendanceList";
 	}
-	
-	
-	
+
 	@GetMapping("/workAttendanceEnd")
 	public String workAttendanceEnd(AttManagement attManagement, HttpSession session) {
 		String SID = (String) session.getAttribute("SID");
 		String attCode = apprRequestService.getAttCode(SID);
-		
+
 		apprRequestService.workAttendanceEnd(attCode);
 
 		return "redirect:/workAttendanceList";
 	}
-	
-	
-	
+
 	@ResponseBody
 	@GetMapping("/dateCheck")
 	public int dateCheck(HttpSession session, @RequestParam(value = "sid", required = false) String sid) {
@@ -236,20 +208,6 @@ public class WorkController {
 		model.addAttribute("getAttendanceList", getAttendanceList);
 
 		return "workmanagment/workAttendance";
-	}
-
-	@GetMapping("/holiRequest")
-	public String holiRequest(ApprovalRequest approvalRequest, Model model,
-			@RequestParam(value = "reCode", required = false) String reCode) {
-
-		String now = apprRequestService.getNow();
-		now = now.substring(0, 10);
-		System.out.println(now);
-		approvalRequest.setReDate(now);
-		String getPhone = apprRequestService.getMemberPhone(reCode);
-		model.addAttribute("getPhone", getPhone);
-
-		return "workmanagment/holidayRequest";
 	}
 
 	// 상세보기
@@ -337,10 +295,6 @@ public class WorkController {
 			@RequestParam(value = "holidaySt", required = false) String holidaySt) {
 
 		// approvalRequest에 입력받은 값들을 셋팅한다
-		String sname = (String) session.getAttribute("SNAME");
-		System.out.println(sname + "snamedndndsnfkjdsh");
-		System.out.println(mrName + "mrNamesssssssssss");
-		System.out.println(mrId + "mrId");
 
 		approvalRequest.setMrId(mrId);
 		approvalRequest.setReStartDate(reStartDate);
@@ -355,10 +309,31 @@ public class WorkController {
 	}
 
 	// 휴가요청 리스트
+	/*
+	 * @GetMapping("/holidayApproval")
+	 * 
+	 * @PostMapping("/holidayApproval")
+	 * 
+	 * public String getHolidayList(Model model) {
+	 * 
+	 * List<ApprovalRequest> holidayList = apprRequestService.getHolidayList();
+	 * model.addAttribute("holidayList", holidayList);
+	 * 
+	 * return "workmanagment/holidayApproval"; }
+	 */
+
+	
 	@GetMapping("/holidayApproval")
 	@PostMapping("/holidayApproval")
-	public String getHolidayList(Model model) {
+	public String holiRequest(ApprovalRequest approvalRequest, Model model, HttpSession session) {
 
+		String now = apprRequestService.getNow();
+		now = now.substring(0, 10);
+		System.out.println(now);
+		approvalRequest.setReDate(now);
+		String SID = (String) session.getAttribute("SID");
+		String getPhone = apprRequestService.getMemberPhone(SID);
+		model.addAttribute("getPhone", getPhone);
 		List<ApprovalRequest> holidayList = apprRequestService.getHolidayList();
 		model.addAttribute("holidayList", holidayList);
 

@@ -16,6 +16,8 @@ public interface ApprMapper {
 	
 	
 	
+	public List<AttManagement> allAttendanceList();
+	
 	
 	public int workTimeDelete(String mrId);
 	
