@@ -3,6 +3,37 @@
  * 수정일 2020-10-04
  */
 (function ($) {
+	//학생화면의 점수확인
+	$('.questionScoreCheck').click(function(){
+		var questionSid = $(this).parents().children().children('#questionSid').val();
+		var questionCodeName = $(this).parents().children().children('#questionCodeName').val();
+		var request = $.ajax({
+			url: "/questionScoreCheck",
+			method: "POST",
+			data: { questionSid : questionSid , questionCodeName : questionCodeName},
+			dataType: "json"
+		});
+		request.done(function(data) {
+			console.log(data);
+			if(data.qc_date == null){
+				alert('해당 시험을 응시하지않았습니다.');
+			}else{
+				var html = '';
+				html += '수고하셨습니다.\n';
+				html += '이름 : '+data.mr_name+'\n';
+				html += '점수 : '+data.qe_score+'\n';
+				html += '응시일 : '+data.qc_date+'\n';
+				html += '추천반 : '+data.scoreClass;
+				alert(html);
+			}
+		});
+		request.fail(function( jqXHR, textStatus ) {
+			alert( "Request failed: " + textStatus );
+		});
+		
+	});
+	
+	
 	//타이틀수정ajax
 	$('#modifyQuestionTitlebtn').click(function(){
 		var qtCodeName = $('input[name=qtCodeName]').val();
@@ -147,7 +178,7 @@
 	$('#insertQuestion').click(function(){
 		var qtCodeName = $('.titleQuestionListCodeName').val();
 		if(confirm('등록하시겠습니까?')){
-			window.open('/insertQuestion?qtCodeName='+qtCodeName,'문제등록', 'width=540, height=610 left=600 top=100','status=no');
+			window.open('/insertQuestion?qtCodeName='+qtCodeName,'문제등록', 'width=540, height=725 left=600 top=100','status=no');
 		}else{
 			alert('취소하셨습니다.');
 		}
@@ -194,6 +225,10 @@
 			html += '<tr>';
 			html += '<th scope="row">D문항</th>';
 			html += '<td><input type="text" class="form-control" value="'+data.qe_D+'"  style="inline-size: -webkit-fill-available;" name="qeD"></td>';
+			html += '</tr>';
+			html += '<tr>';
+			html += '<th scope="row">문제 풀이</th>';
+			html += '<td><textarea style = "resize : none;" name="qeData">'+data.qe_problem_solving+'</textarea></td>';
 			html += '</tr>';
 			html += '<tr>';
 			html += '<th scope="row">점수</th>';
@@ -387,7 +422,7 @@
 				dataType: "json"
 			});
 			request.done(function(data) {
-				
+				alert('고생하셨습니다.');
 			});
 			request.fail(function( jqXHR, textStatus ) {
 				alert( "Request failed: " + textStatus );

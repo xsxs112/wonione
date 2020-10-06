@@ -130,8 +130,8 @@ public class QuestionController {
 	@PostMapping(value="/deleteQuestionTitle", produces = "application/json")
 	@ResponseBody
 	public int deleteQuestionTitle(@RequestParam(value="questionName",required = false) String questionName) {
-		questionService.deleteQuestionTitle(questionName);
-		return 0;
+		int deleteQuestionTitleResult = questionService.deleteQuestionTitle(questionName);
+		return deleteQuestionTitleResult;
 	}
 	//타이틀내 문제등록전 리스트
 	@RequestMapping(value="/titleQuestionList", method=RequestMethod.GET)
@@ -192,6 +192,28 @@ public class QuestionController {
 	public int QuestionTitleNameCheck(@RequestParam(value="qtCodeName",required = false) String questionCodeName){
 		int QuestionTitleNameCheckResult = questionService.QuestionTitleNameCheck(questionCodeName);
 		return QuestionTitleNameCheckResult;
+	}
+	//인원확인
+	@GetMapping("/candidateQuestionList")
+	public String candidateQuestionList(Model model
+										,@RequestParam(value="qtCodeName", required = false) String qtCodeName
+										,@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
+
+		Map<String,Object> candidateQuestionListMap = questionService.candidateQuestionList(currentPage, qtCodeName);
+		model.addAttribute("lastPage", candidateQuestionListMap.get("lastPage"));
+		model.addAttribute("candidateQuestionList", candidateQuestionListMap.get("candidateQuestionList"));
+		model.addAttribute("startPageNum", candidateQuestionListMap.get("startPageNum"));
+		model.addAttribute("lastPageNum", candidateQuestionListMap.get("lastPageNum"));
+		model.addAttribute("currentPage",currentPage);
+		return "question/candidateQuestionList";
+	}
+	//학생시점 점수확인
+	@PostMapping(value="/questionScoreCheck",produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> questionScoreCheck(@RequestParam(value="questionSid",required = false) String questionSid
+												 ,@RequestParam(value="questionCodeName",required = false) String questionCodeName){
+		Map<String, Object> questionScoreCheckResult = questionService.questionScoreCheck(questionSid,questionCodeName);
+		return questionScoreCheckResult;
 	}
 	
 }
