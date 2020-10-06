@@ -17,6 +17,20 @@ public interface PayMapper {
 	//3. 직원급여 급여계 테이블 삭제
 	public int removeOPC(String opCode);
 	
+	//수정, 삭제 할 직원 급여정보 가져오기
+	public OfficersPay getOPCode(String opCode);
+	
+	//1. 강사급여 테이블 삭제
+	public int removeSP(String spCode);
+	//2. 강사급여 공제계 테이블 삭제
+	public int removeSPD(String spCode);
+	//3. 강사급여 급여계 테이블 삭제
+	public int removeSPC(String spCode);
+	
+	//수정, 삭제 할 강사 급여정보 가져오기
+	public StaffPay getSPCode(String spCode);
+
+	
 	//강사 급여 목록 조회
 	public List<StaffPay> getStaffPayList();
 
@@ -24,10 +38,7 @@ public interface PayMapper {
 	public List<OfficersPay> getOfficersPayList();
 
 	//수정할 직원정보 불러오기
-	public OfficersPay getMrById(String mrId);
-	
-	//수정, 삭제 할 직원 급여정보 가져오기
-	public OfficersPay getOPCode(String opCode);
+	public OfficersPay getMrByOId(String mrId);
 	
 	// 선택한 직원 급여정보 조회
 	public List<OfficersPay> getOffiIdPayList(String mrId);

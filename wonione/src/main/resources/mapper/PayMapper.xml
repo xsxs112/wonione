@@ -110,8 +110,49 @@
 		   op.mr_id = #{mrId};
 	</select>
 	
+	<!-- 강사급여정보 삭제 -->
+	<delete id="removeSP" parameterType="String"> 
+		DELETE 
+		FROM 
+			wt_staff_pay 
+		WHERE  
+			sp_code = #{spCode}
+	</delete>
+	<!-- 강사공제계 급여정보 삭제 -->
+	<delete id="removeSPD" parameterType="String"> 
+		DELETE 
+		FROM 
+			wt_staff_pay_deduction 
+		WHERE  
+			spd_code = #{spCode}
+	</delete>
+	<!-- 강사급여계 급여정보 삭제 -->
+	<delete id="removeSPC" parameterType="String"> 
+		DELETE 
+		FROM 
+			wt_staff_pay_calculate 
+		WHERE  
+			spc_code = #{spCode}
+	</delete>
+	<!-- 수정할 강사급여정보 가져오기 -->
+	<select id="getSPCode" parameterType="String" resultType="StaffPay">
+		SELECT
+			  sp_code		AS spCode
+			, mr_id			AS mrId
+			, p_r_title		AS pRTitle
+			, sp_date		AS spDate
+			, spd_code		AS spdCode
+			, sp_pay		AS spPay
+			, sp_reg_date	AS spRegDate
+			, sp_writer		AS spWriter
+		FROM
+			wt_staff_pay
+		WHERE
+			sp_code = #{spCode}
+	</select>
+	
 	<!-- 직원급여정보 삭제 -->
-	<delete id="removeOP" parameterType="String"> <!-- 내가 받을 타입을 파라타입 -->
+	<delete id="removeOP" parameterType="String"> 
 		DELETE 
 		FROM 
 			wt_officers_pay 
@@ -119,7 +160,7 @@
 			op_code = #{opCode}
 	</delete>
 	<!-- 직원공제계 급여정보 삭제 -->
-	<delete id="removeOPD" parameterType="String"> <!-- 내가 받을 타입을 파라타입 -->
+	<delete id="removeOPD" parameterType="String"> 
 		DELETE 
 		FROM 
 			wt_officers_pay_deduction 
@@ -127,7 +168,7 @@
 			opd_code = #{opCode}
 	</delete>
 	<!-- 직원급여계 급여정보 삭제 -->
-	<delete id="removeOPC" parameterType="String"> <!-- 내가 받을 타입을 파라타입 -->
+	<delete id="removeOPC" parameterType="String"> 
 		DELETE 
 		FROM 
 			wt_officers_pay_calculate 
@@ -137,14 +178,21 @@
 	<!-- 수정할 직원급여정보 가져오기 -->
 	<select id="getOPCode" parameterType="String" resultType="OfficersPay">
 		SELECT
-			*
+			  op_code		AS opCode
+			, mr_id			AS mrId
+			, p_r_title		AS pRTitle
+			, op_date		AS opDate
+			, opd_code		AS opdCode
+			, op_pay		AS opPay
+			, op_reg_date	AS opRegDate
+			, op_writer		AS opWriter
 		FROM
 			wt_officers_pay
 		WHERE
 			op_code = #{opCode}
 	</select>
 	<!-- 수정할 직원 급여정보 불러오기 -->
-	<select id = "getMrById" parameterType="String" resultType="OfficersPay">
+	<select id = "getMrByOId" parameterType="String" resultType="OfficersPay">
 		SELECT
 			p.op_code									AS opCode
 			,p.mr_id									AS mrId			

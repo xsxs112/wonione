@@ -14,7 +14,20 @@ public class PayService {
 	
 	@Autowired
 	private PayMapper payMapper;
-		
+	
+	public int removeStaffPayDocu(String spCode) {
+		int result = 0;
+		StaffPay staffpay = payMapper.getSPCode(spCode);
+		if(staffpay != null) {
+			//1. 강사급여 테이블 삭제
+			result += payMapper.removeSP(spCode);
+			//2. 강사급여 공제계 테이블 삭제
+			result += payMapper.removeSPD(spCode);		
+			//3. 강사급여 급여계 테이블 삭제
+			result += payMapper.removeSPC(spCode);
+		}
+		return result;
+	}
 	
 	//직원급여삭제
 	public int removeOffiPayDocu(String opCode) {
@@ -48,8 +61,8 @@ public class PayService {
 	}
 
 	//수정할 직원급여정보 불러오기
-	public OfficersPay getMrById(String mrId) {
-		OfficersPay modiOfficersPay = payMapper.getMrById(mrId);
+	public OfficersPay getMrByOId(String mrId) {
+		OfficersPay modiOfficersPay = payMapper.getMrByOId(mrId);
 		
 		return modiOfficersPay;
 	}
@@ -65,7 +78,5 @@ public class PayService {
 		List<StaffPay> staffPayList = payMapper.getStaIdPayList(mrId);
 		return staffPayList;
 	}
-	
-
 
 }
