@@ -20,6 +20,66 @@
 		<result column="qe_D" 				property="qeD"/>
 		<result column="qe_problem_solving" property="qeProblemSolving"/>
 	</resultMap>
+	<delete id="deleteCandidateQuestion">
+		DELETE 
+			c
+		FROM 
+			wt_questions_candidate AS c
+			INNER JOIN 
+			wt_questions_enrollment AS e
+			ON 
+			c.qe_code = e.qe_code
+		WHERE 
+			c.qc_student= #{candidateQuestionId} AND e.qt_codename = #{candidateQuestionCodeName};
+	</delete>
+	<select id="selectcandidateQuestionId" resultType="hashMap" parameterType="map">
+		SELECT 
+		 	 q.rowNum   AS rowNum
+			,qe_code
+			,qt_codename
+			,qe_score
+			,mr_name
+			,qc_date
+			,qc_student	
+    	FROM 
+        	(SELECT
+            	(@rowNum := @rowNum+1) AS rowNum
+            	,c.qe_code
+            	,e.qt_codename
+            	,SUM(c.qe_score) AS qe_score
+            	,m.mr_name
+				,c.qc_date
+				,c.qc_student		
+        FROM
+				wt_questions_candidate AS c
+				INNER JOIN 
+				wt_member_registration AS m
+				ON
+				c.qc_student = m.mr_id
+				INNER JOIN
+ 				wt_questions_enrollment AS e
+ 				ON
+ 				c.qe_code = e.qe_code
+         	JOIN
+           	(SELECT @rowNum :=0 ) AS r
+      	WHERE
+       			m.mr_name LIKE CONCAT('%', #{selectcandidateQuestionId}, '%') AND e.qt_codename = #{candidateQuestionCodeName}
+       			GROUP BY c.qc_student
+       			ORDER BY c.qc_code ASC) AS q
+				
+	</select>
+	<delete id="candidateQuestionInitialization">
+		DELETE 
+			c
+		FROM 
+			wt_questions_candidate AS c
+			INNER JOIN
+			wt_questions_enrollment AS e
+			ON
+			c.qe_code = e.qe_code
+		WHERE 
+			e.qt_codename = #{candidateQuestionCodeName};
+	</delete>
 	<select id="questionScoreCheck" resultType="hashMap" parameterType="map">
 		<![CDATA[
 			SELECT 
@@ -70,6 +130,7 @@
 			,qe_score
 			,qc_date
 			,qt_codename
+			,mr_name
 		FROM
 			(SELECT
 			(@rowNum := @rowNum+1) AS rowNum
@@ -77,6 +138,7 @@
 			,SUM(c.qe_score) AS qe_score
 			,c.qc_date
 			,t.qt_codename
+			,m.mr_name
 		FROM
 			wt_questions_candidate AS c
 			LEFT JOIN 
@@ -87,12 +149,17 @@
 			wt_question_taker AS t
 			ON 
 			e.qt_codename = t.qt_codename
+			INNER JOIN 
+			wt_member_registration AS m
+			ON 
+			c.qc_student = m.mr_id
 			JOIN
 			(SELECT @rowNum :=0 ) AS r
 		WHERE
 			t.qt_codename = #{qtCodeName}
 			GROUP BY c.qc_student
 			ORDER BY c.qc_code ASC) AS q
+			LIMIT #{startRow},#{rowPerPage};
 	</select>
 	<select id="QuestionTitleNameCheck" resultType="int">
 		SELECT 
@@ -260,21 +327,25 @@
 		<![CDATA[
 			SELECT 
 			 	m.mr_name
-				,sum(qe_score) AS qe_score
+				,sum(qc.qe_score) AS qe_score
 				,qc_date
-				,(CASE WHEN sum(qe_score) < 60 THEN '초급'
-						 WHEN (sum(qe_score) >= 60 AND sum(qe_score) <80) THEN '중급'
-						 WHEN (sum(qe_score) >= 80 AND sum(qe_score) <100) THEN '고급'
+				,(CASE WHEN sum(qc.qe_score) < 60 THEN '초급'
+						 WHEN (SUM(qc.qe_score) >= 60 AND SUM(qc.qe_score) <80) THEN '중급'
+						 WHEN (SUM(qc.qe_score) >= 80 AND sum(qc.qe_score) <100) THEN '고급'
 						 ELSE '판단불가' 
-					END) AS 'scoreClass' 
+					END) AS scoreClass 
 			FROM 
 				wt_questions_candidate AS qc
 				INNER join
 				wt_member_registration AS m
 				on
 				qc.qc_student = m.mr_id
+				INNER JOIN 
+				wt_questions_enrollment AS e
+				ON 
+				qc.qe_code = e.qe_code
 			WHERE 
-				qc.qc_student =#{scoreSid}
+				qc.qc_student =#{scoreSid} && e.qt_codename = #{scoreCheckQuestionName}
 			GROUP BY 
 				qc.qc_student;
 		 ]]>

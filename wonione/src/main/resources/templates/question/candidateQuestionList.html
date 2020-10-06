@@ -4,7 +4,7 @@
 	  layout:decorate="layout/default">
 	  
   	<th:block layout:fragment="customTitle">
-		<title>문제리스트</title> 
+		<title>인원확인</title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
 		<style>
@@ -43,36 +43,57 @@
 		</style>
 		<div style="border: 1px;" class="container-fluid">
 		<div class="product-payment-inner-st" style="text-align: right;">
-			<h4>문제리스트</h4>
+			<h4>인원확인</h4>
+			<div style="text-align: right; margin-right: 50px; margin-bottom: 10px;">
+				<a href="/QuestionList"><button type="button" class="btn btn-default">타이틀로</button></a>
+			</div>
+			<div style="margin-right: 50px;">
+				<button type="button" class="btn btn-default" id="candidateQuestionInitialization">응시 초기화</button>
+			</div>
+			<div class="form-inline">
+				<div style="text-align: center;">
+					<input type="text" value="회원이름" readonly class="form-control">
+					<input type="text" name="selectcandidateQuestionId" class="form-control">
+					<button type="submit" class="btn btn-default" id="selectcandidateQuestionId">검색</button>
+				</div>
+			</div>
 			<table class="table QuestionTable">
 		  		<thead>
 		  			<tr>
 		  				<th>순번</th>
-		  				
+		  				<th>이름</th>
+		  				<th>문제TITLE</th>
+		  				<th>점수</th>
+		  				<th>응시일</th>
+		  				<th>삭제</th>
 		  			</tr>
 		  		</thead>	  
-		  		<tbody>
+		  		<tbody id="changeDataCandidateQuestionList">
 	  				<tr th:each="c : ${candidateQuestionList}">
 		  				<td th:text="${#numbers.formatInteger(c.rowNum,0,'POINT')}"></td>
-		  				<td th:text="${c.qc_student}"></td>
-		  				<td><input th:value="${c.qc_student}"></td>
+		  				<td hidden="" th:text="${c.qc_student}" id="candidateQuestionId"></td>
+		  				<td th:text="${c.mr_name}"></td>
+		  				<td th:text="${c.qt_codename}" id="candidateQuestionCodeName"></td>
+		  				<td th:text="${c.qe_score}"></td>
+		  				<td th:text="${c.qc_date}"></td>
+		  				<td><button type="button" class="btn btn-default deleteCandidateQuestion">삭제</button></td>
 		  			</tr>
 		  		</tbody>	
 	  		</table>
   		</div>
-  		<a th:href="@{/candidateQuestionList}">처음</a>
+  		<a th:href="@{/candidateQuestionList(qtCodeName=(${qtCodeName}))}">처음</a>
 		    
-		    <span th:if="${currentPage > 1}"><a th:href="@{/candidateQuestionList(currentPage=(${currentPage}-1))}">이전</a></span>
+		    <span th:if="${currentPage > 1}"><a th:href="@{/candidateQuestionList(currentPage=(${currentPage}-1),qtCodeName=(${qtCodeName})}">이전</a></span>
 		    <span th:unless="${currentPage > 1}" th:text="이전"></span>
 		    
 		    <th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
 		        <span th:if="${currentPage == num}" th:text="${'【'+ num + '】'}"></span>
-		        <a th:unless="${currentPage == num}" th:text="${'【'+ num + '】'}" th:href="@{/candidateQuestionList(currentPage=${num})}"></a>
+		        <a th:unless="${currentPage == num}" th:text="${'【'+ num + '】'}" th:href="@{/candidateQuestionList(currentPage=${num},qtCodeName=(${qtCodeName}))}"></a>
 		    </th:block>
 		    
-		    <span th:if="${currentPage != lastPage}"><a th:href="@{/candidateQuestionList(currentPage=(${currentPage}+1))}">다음</a></span>
+		    <span th:if="${currentPage != lastPage}"><a th:href="@{/candidateQuestionList(currentPage=(${currentPage}+1),qtCodeName=(${qtCodeName}))}">다음</a></span>
 		    <span th:unless="${currentPage != lastPage}" th:text="다음"></span>
-		    <a th:href="@{/candidateQuestionList(currentPage=${lastPage})}">마지막</a>
+		    <a th:href="@{/candidateQuestionList(currentPage=${lastPage},qtCodeName=(${qtCodeName}))}">마지막</a>
   	</div>
 	<script src="js/question.js"></script>
 	</th:block>

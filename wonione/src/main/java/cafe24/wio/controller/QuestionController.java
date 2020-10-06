@@ -2,6 +2,7 @@ package cafe24.wio.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -65,15 +66,17 @@ public class QuestionController {
 	}
 	//점수체크페이지
 	@GetMapping("/scoreCheck")
-	public String scoreCheck() {
+	public String scoreCheck(Model model,@RequestParam(value="questionName", required = false) String questionName) {
+		model.addAttribute("questionName",questionName);
 		return "question/scoreCheck";
 		
 	}
-	//점수확인을 위한 아이디확인
+	//점수확인을 위한 아이디및 문제이름확인
 	@PostMapping(value = "/ScoreCheck" ,produces = "application/json")
 	@ResponseBody
-	public Map<String, Object> ScoreCheck(@RequestParam(value="scoreSid",required = false) String scoreSid) {
-		Map<String,Object>scoreSidMap = questionService.ScoreCheck(scoreSid);
+	public Map<String, Object> ScoreCheck(@RequestParam(value="scoreSid",required = false) String scoreSid
+										 ,@RequestParam(value="scoreCheckQuestionName",required = false) String scoreCheckQuestionName	) {
+		Map<String,Object>scoreSidMap = questionService.ScoreCheck(scoreSid,scoreCheckQuestionName);
 		return scoreSidMap;
 	}
 	//한번푼문제에 대한 권한처리
@@ -200,6 +203,7 @@ public class QuestionController {
 										,@RequestParam(value="currentPage", required = false, defaultValue = "1") int currentPage) {
 
 		Map<String,Object> candidateQuestionListMap = questionService.candidateQuestionList(currentPage, qtCodeName);
+		model.addAttribute("qtCodeName",qtCodeName);
 		model.addAttribute("lastPage", candidateQuestionListMap.get("lastPage"));
 		model.addAttribute("candidateQuestionList", candidateQuestionListMap.get("candidateQuestionList"));
 		model.addAttribute("startPageNum", candidateQuestionListMap.get("startPageNum"));
@@ -215,5 +219,27 @@ public class QuestionController {
 		Map<String, Object> questionScoreCheckResult = questionService.questionScoreCheck(questionSid,questionCodeName);
 		return questionScoreCheckResult;
 	}
-	
+	//응시초기화
+	@PostMapping(value="/candidateQuestionInitialization",produces = "application/json")
+	@ResponseBody
+	public int candidateQuestionInitialization(@RequestParam(value="candidateQuestionCodeName",required = false) String candidateQuestionCodeName){
+		int candidateQuestionInitializationResult = questionService.candidateQuestionInitialization(candidateQuestionCodeName);
+		return candidateQuestionInitializationResult;
+	}
+	//인원검색기능
+	@PostMapping(value="/selectcandidateQuestionId",produces = "application/json")
+	@ResponseBody
+	public List<Map<String ,Object>> selectcandidateQuestionId(@RequestParam(value="selectcandidateQuestionId",required = false) String selectcandidateQuestionId
+														,@RequestParam(value="candidateQuestionCodeName",required = false) String candidateQuestionCodeName) {
+		List<Map<String ,Object>> selectcandidateQuestionIdResult = questionService.selectcandidateQuestionId(selectcandidateQuestionId,candidateQuestionCodeName);
+		return selectcandidateQuestionIdResult;
+	}
+	//인원삭제
+	@PostMapping(value="/deleteCandidateQuestion",produces = "application/json")
+	@ResponseBody
+	public int deleteCandidateQuestion(@RequestParam(value="candidateQuestionId",required = false) String candidateQuestionId
+									  ,@RequestParam(value="candidateQuestionCodeName",required = false) String candidateQuestionCodeName) {
+		int deleteCandidateQuestionResult = questionService.deleteCandidateQuestion(candidateQuestionId,candidateQuestionCodeName);
+		return deleteCandidateQuestionResult;
+	}
 }
