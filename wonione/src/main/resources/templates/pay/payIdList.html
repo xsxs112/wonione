@@ -66,7 +66,7 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<div class="container-fluid"  >
-	<form action="/removeOffiPayDocu" id="opfoinForm" method="post">
+	<form action="/modiFyOfficersPay" id="opfoinForm" method="get">
 	  	<table class ="table table-striped"> 
 	  		<thead>
 	  			<tr class="info">
@@ -91,15 +91,19 @@
 	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(l.opPay, 0, 'COMMA')}+'원'" ></td>
 	  				<td style="text-align: center;" th:text="${l.opRegDate}"></td>
 	  				<td style="text-align: center;" th:text="${l.opWriter}"></td>
-	  				<td style="text-align: center;"><button type="button" class="modifyOPBtn btn btn-custon-two btn-success" th:href="@{/modiFyOfficersPay(opCode=${l.opCode})}">수정</button></td>
-					<td style="text-align: center;"><button type="button" class="deleteOPBtn btn btn-custon-two btn-danger">삭제</button></td>
+	  				<td style="text-align: center;">
+	  					<a class="modifyOPBtn btn btn-custon-two btn-success" th:href="@{/modiFyOfficersPay(opCode=${l.opCode})}">수정</a>
+	  				</td>
+					<td style="text-align: center;">
+						<button type="button" class="deleteOPBtn btn btn-custon-two btn-danger">삭제</button>
+					</td>
 	  			</tr>
 	  		</tbody>	
 	  	</table>
 	</form>
 	</div>	
 	<div class="container-fluid">
-	<form action="/removeStaffPayDocu" id="spfoinForm" method="post">
+	<form action="/" id="spfoinForm" method="post">
 	  	<table class ="table table-striped"> 
 	  		<thead>
 	  			<tr class="info">
@@ -123,8 +127,12 @@
 	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(s.spPay, 0, 'COMMA')}+'원'" ></td>
 	  				<td style="text-align: center;" th:text="${s.spRegDate}"></td>
 	  				<td style="text-align: center;" th:text="${s.spWriter}"></td>
-	  				<td style="text-align: center;"><button type="button" class="modifySPBtn btn btn-custon-two btn-success">수정</button></td>
-					<td style="text-align: center;"><button type="button" class="deleteSPBtn btn btn-custon-two btn-danger" >삭제</button></td>
+	  				<td style="text-align: center;">
+	  					<a class="modifySPBtn btn btn-custon-two btn-success">수정</a>
+	  				</td>
+					<td style="text-align: center;">
+						<button type="button" class="deleteSPBtn btn btn-custon-two btn-danger" >삭제</button>
+					</td>
 	  			</tr>
 	  		</tbody>	
 	  	</table>

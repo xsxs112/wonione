@@ -59,13 +59,6 @@ public class PayService {
 		List<StaffPay> staffPayList = payMapper.getStaffPayList();	
 		return staffPayList;
 	}
-
-	//수정할 직원급여정보 불러오기
-	public OfficersPay getMrByOId(String mrId) {
-		OfficersPay modiOfficersPay = payMapper.getMrByOId(mrId);
-		
-		return modiOfficersPay;
-	}
 	
 	// 선택한 직원 급여정보 조회
 	public List<OfficersPay> getOffiIdPayList(String mrId) {

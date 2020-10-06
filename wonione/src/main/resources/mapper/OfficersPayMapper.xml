@@ -41,6 +41,50 @@
 		<result column="mr_account_num"					property="mrAccountNum"/>	
 		<result column="writer"							property="writer"/>	
 	</resultMap>
+		
+	<!-- 수정할 직원 급여정보 불러오기 -->
+	<select id = "getMrByOId" parameterType="String" resultType="OfficersPay">
+		SELECT
+			p.op_code									AS opCode
+			,p.mr_id									AS mrId			
+			,mr.mr_name									AS mrName			
+			,p.op_pay									AS opPay
+			,pd.opd_code								AS opdCode
+			,pd.iy_code									AS iyCode
+			,pd.opd_income_tax							AS opdIncomeTax
+			,pd.opd_resident_income_tax					AS opdResidentIncomTax
+			,pd.opd_employment_insurance				AS opdEmploymentInsurance
+			,pd.opd_national_pension					AS opdNationalPension
+			,pd.opd_health_insurance					AS opdHealthInsurance
+			,pd.opd_longterm_nursing_insurance			AS opdLongtermNursingInsurance
+			,pd.opd_total								AS opdTotal
+			,pc.opc_code								AS opcCode
+			,pc.opc_hourly_wage							AS opcHourlyWage
+			,pc.opc_total_hour							AS opcTotalHour
+			,pc.opc_base_pay							AS opcBasePay
+			,pc.opc_food_expenses						AS opcFoodExpenses
+			,pc.opc_transportation						AS opcTransportation
+			,pc.opc_welfare								AS opcWelfare
+			,pc.opc_bonus								AS opcBonus
+			,pc.opc_ect									AS opcEct
+			,pc.opc_total								AS opcTotal
+		FROM
+			wt_officers_pay AS p
+			INNER JOIN 
+			wt_officers_pay_deduction AS pd
+			ON 
+			p.op_code = pd.opd_code
+			LEFT JOIN 
+			wt_officers_pay_calculate AS pc
+			ON 
+			p.op_code = pc.opc_code
+			LEFT JOIN 
+			wt_member_registration AS mr
+			ON
+			p.mr_id = mr.mr_id	
+		WHERE
+			p.op_code = #{opCode};
+	</select>
 	
 	<!-- 직원급여입력 -->
 	<insert id="addOfficersPay" parameterType="OfficersPay">
@@ -161,11 +205,11 @@
 			,m.mr_join_date		AS mrJoinDate
 			,r.pm_r_title		AS pmRTitle
 			,m.mr_account_num	AS mrAccountNum
-			,CONCAT('OP_',(
-				SELECT 
-			LPAD(COUNT(*)+1, 4, '0') 
-				FROM 
-					wt_officers_pay_calculate)) AS opcCode 					
+			,IFNULL(
+					(SELECT 
+						MAX(CAST(SUBSTRING(opc_code,7) AS DECIMAL))+1 
+					FROM 
+						wt_officers_pay_calculate),1) as opcCode 					
 		FROM
 			wt_member_registration AS m
 			INNER JOIN 
@@ -254,6 +298,5 @@
 		WHERE 
 			p.mr_id = #{mrId} 
 			AND p.op_code = #{opCode};	
-			<!-- p.mr_id = '수정하기'; -->	
 	</select>
 </mapper>

@@ -69,13 +69,18 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>	
+	<!-- 수정할 강사급여정보 가져오기 -->
+	<select id="getMrBySId" parameterType="String" resultType="StaffPay">
+
+	</select>
+
 	<!-- 선택한 강사 급여목록 불러오기 -->
 	<select id = "getStaIdPayList" resultType="StaffPay">
 		SELECT 
 			 sp.sp_code 					AS spCode
 			,sp.mr_id 						AS mrId
 			,mr.mr_name						AS mrName
-			,ifnull(sp.sp_date, '미지급')		AS spDate
+			,IFNULL(sp.sp_date, '미지급')		AS spDate
 			,sp.sp_pay						AS spPay
 			,sp.sp_reg_date					AS spRegDate
 			,sp.sp_writer	  				AS spWriter	
@@ -89,13 +94,14 @@
 		WHERE	
 			sp.mr_id = #{mrId};	
 	</select>
+	
 	<!-- 선택한 직원 급여목록 불러오기 -->
 	<select id = "getOffiIdPayList" resultType="OfficersPay">
 		SELECT 
 			 op.op_code 					AS opCode
 			,op.mr_id 						AS mrId
 			,mr.mr_name						AS mrName
-			,ifnull(op.op_date, '미지급')		AS opDate
+			,IFNULL(op.op_date, '미지급')		AS opDate
 			,op.op_pay						AS opPay
 			,op.op_reg_date					AS opRegDate
 			,op.op_writer	  				AS opWriter	
@@ -134,22 +140,6 @@
 		WHERE  
 			spc_code = #{spCode}
 	</delete>
-	<!-- 수정할 강사급여정보 가져오기 -->
-	<select id="getSPCode" parameterType="String" resultType="StaffPay">
-		SELECT
-			  sp_code		AS spCode
-			, mr_id			AS mrId
-			, p_r_title		AS pRTitle
-			, sp_date		AS spDate
-			, spd_code		AS spdCode
-			, sp_pay		AS spPay
-			, sp_reg_date	AS spRegDate
-			, sp_writer		AS spWriter
-		FROM
-			wt_staff_pay
-		WHERE
-			sp_code = #{spCode}
-	</select>
 	
 	<!-- 직원급여정보 삭제 -->
 	<delete id="removeOP" parameterType="String"> 
@@ -191,49 +181,6 @@
 		WHERE
 			op_code = #{opCode}
 	</select>
-	<!-- 수정할 직원 급여정보 불러오기 -->
-	<select id = "getMrByOId" parameterType="String" resultType="OfficersPay">
-		SELECT
-			p.op_code									AS opCode
-			,p.mr_id									AS mrId			
-			,mr.mr_name									AS mrName			
-			,p.op_pay									AS opPay
-			,pd.opd_code								AS opCode
-			,pd.iy_code									AS iyCode
-			,pd.opd_income_tax							AS opdIncomeTax
-			,pd.opd_resident_income_tax					AS opdResidentIncomTax
-			,pd.opd_employment_insurance				AS opdEmploymentInsurance
-			,pd.opd_national_pension					AS opdNationalPension
-			,pd.opd_health_insurance					AS opdHealthInsurance
-			,pd.opd_longterm_nursing_insurance			AS opdLongtermNursingInsurance
-			,pd.opd_total								AS opdTotal
-			,pc.opc_code								AS opcCode
-			,pc.opc_hourly_wage							AS opcHourlyWage
-			,pc.opc_total_hour							AS opcTotalHour
-			,pc.opc_base_pay							AS opcBasePay
-			,pc.opc_food_expenses						AS opcFoodExpenses
-			,pc.opc_transportation						AS opcTransportation
-			,pc.opc_welfare								AS opcWelfare
-			,pc.opc_bonus								AS opcBonus
-			,pc.opc_ect									AS opcEct
-			,pc.opc_total								AS opcTotal
-		FROM
-			wt_officers_pay AS p
-			INNER JOIN 
-			wt_officers_pay_deduction AS pd
-			ON 
-			p.mr_id = pd.mr_id
-			LEFT JOIN 
-			wt_officers_pay_calculate AS pc
-			ON 
-			p.mr_id = pc.mr_id
-			LEFT JOIN 
-			wt_member_registration AS mr
-			ON
-			p.mr_id = mr.mr_id	
-		WHERE
-			p.mr_id = #{mrId};
-	</select>
 		
 	<!-- 강사급여목록조회  [최근것만 받아오게 쿼리문 수정완] -->
 	<select id = "getStaffPayList" resultType="StaffPay" >
@@ -241,7 +188,7 @@
 			 sp.sp_code 					AS spCode
 			,sp.mr_id 						AS mrId
 			,mr.mr_name						AS mrName
-			,ifnull(sp.sp_date, '미지급')		AS spDate
+			,IFNULL(sp.sp_date, '미지급')		AS spDate
 			,sp.sp_pay						AS spPay
 			,sp.sp_reg_date					AS spRegDate
 			,sp.sp_writer	  				AS spWriter	
@@ -269,7 +216,7 @@
 			 op.op_code 					AS opCode
 			,op.mr_id 						AS mrId
 			,mr.mr_name						AS mrName
-			,ifnull(op.op_date, '미지급')		AS opDate
+			,IFNULL(op.op_date, '미지급')		AS opDate
 			,op.op_pay						AS opPay
 			,op.op_reg_date					AS opRegDate
 			,op.op_writer	  				AS opWriter	

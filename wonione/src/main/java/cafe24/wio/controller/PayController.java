@@ -27,19 +27,7 @@ public class PayController {
 	// log4j로 로그 찍기 위한 객체 삽입
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(PayController.class);
-	
-	// 직원급여수정화면 아이디로 불러오기
-	/*@GetMapping("/modiFyOfficersPay")
-	public String modiFyOfficersPay(@RequestParam(value = "mrId", required = false) String mrId, Model model) {
 
-		OfficersPay modiOfficersPay = payService.getMrByOId(mrId);
-
-		System.out.println(modiOfficersPay);
-		model.addAttribute("modiOfficersPay", modiOfficersPay);
-		model.addAttribute("title", "직원급여수정");
-
-		return "pay/modiFyOfficersPay";
-	}*/
 
 	// 강사급여 삭제하기
 	@PostMapping(value = "/removeStaffPayDocu", produces = "application/json")
