@@ -35,6 +35,9 @@ public interface OfficersPayMapper {
 
 	//직원급여 입력
 	public int addOfficersPay(OfficersPay officersPay);
+	
+	//수정할 직원정보 불러오기
+	public OfficersPay getMrByOId(String opCode);
 
 
 
