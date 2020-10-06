@@ -10,13 +10,55 @@
 	
 	$(function(){		
 		//직원급여 삭제 버튼
-		$('.deleteOPBtn').click(function(){			
-			var foinForm = $('#opfoinForm');
-			
-			alert('정말로 삭제하시겠습니까?');
-			
-			foinForm.attr('action', '/removeOffiPayDocu');
-			foinForm.submit();			
+		$('.deleteOPBtn').click(function(){
+			var tr = $(this).parent().parent();
+			var opCode = tr.children().eq(0).children('a').text();
+			/* console.log(opCode + '<--opCode'); */
+			var mrId = tr.children().eq(1).children('a').text();
+			/* console.log(mrId + '<--mrId');  */
+			if(confirm('삭제하시겠습니까?')){
+				var request = $.ajax({
+					url: "/removeOffiPayDocu",
+					method: "POST",
+					data: { opCode : opCode },
+					dataType: "json"
+				});
+				request.done(function(data) {
+					alert('삭제되었습니다.');
+					location.href='http://localhost/getIdPayList?mrId='+mrId
+				});
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				});
+			}else{
+				alert('취소하셨습니다.');
+			}	
+		}); 
+		
+		//강사급여 삭제 버튼
+		$('.deleteSPBtn').click(function(){
+			var tr = $(this).parent().parent();
+			var spCode = tr.children().eq(0).children('a').text();
+			/* console.log(spCode + '<--spCode'); */
+			var mrId = tr.children().eq(1).children('a').text();
+			/* console.log(mrId + '<--mrId');  */
+			if(confirm('삭제하시겠습니까?')){
+				var request = $.ajax({
+					url: "/removeStaffPayDocu",
+					method: "POST",
+					data: { spCode : spCode },
+					dataType: "json"
+				});
+				request.done(function(data) {
+					alert('삭제되었습니다.');
+					location.href='http://localhost/getIdPayList?mrId='+mrId
+				});
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				});
+			}else{
+				alert('취소하셨습니다.');
+			}	
 		}); 
 	});	
 			
@@ -43,7 +85,7 @@
 	  			<tr th:each="l : ${officersPayList}">
 	  				<!-- get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음) -->	  				
 	  				<td style="text-align: center;"><a th:href="@{/getOfficersPay(mrId=${l.mrId}, opCode=${l.opCode})}" th:text="${l.opCode}"></a></td>
-	  				<td style="text-align: center;"><a th:href="@{#}" th:text="${l.mrId}"></a></td>
+	  				<td style="text-align: center;"><a th:text="${l.mrId}"></a></td>
 	  				<td style="text-align: center;" th:text="${l.mrName}"></td>
 	  				<td style="text-align: center;" th:text="${l.opDate}"></td>
 	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(l.opPay, 0, 'COMMA')}+'원'" ></td>
@@ -75,7 +117,7 @@
 	  		<tbody>
 	  			<tr th:each="s : ${staffPayList}">
 	  				<td style="text-align: center;"><a th:href="@{/getStaffPay(mrId=${s.mrId}, spCode=${s.spCode})}" th:text="${s.spCode}"></a></td>
-	  				<td style="text-align: center;" th:text="${s.mrId}"></td>
+	  				<td style="text-align: center;"><a th:text="${s.mrId}"></a></td>
 	  				<td style="text-align: center;" th:text="${s.mrName}"></td>
 	  				<td style="text-align: center;" th:text="${s.spDate}"></td>
 	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(s.spPay, 0, 'COMMA')}+'원'" ></td>
