@@ -9,28 +9,29 @@
 	
 	<th:block layout:fragment="customContent">
 			
-		<form action="addNotice" class="container-fluid">
-			
-			<h2>공지사항 목록</h2>
-			<!-- 검색창 미구현
-			<form id="searchForm" class="form-inline" action="/searchList" method="post">
-				<h5>검색</h5>
-				<select class="form-control" name="bdSk" id="bdSk">
-					<option value="board_title">제목</option>
-					<option value="board_contents">내용</option>
-					<option value="board_writer_id">작성자 아이디</option>
-					<option value="mr_name">작성자 이름</option>
-				</select> 
-									
-				<div class="form-group">
-					<input type="text" class="form-control" name="bdSv" placeholder="검색 키워드" id="bdSv"/>
-					<div class="input-group-btn pull-right">
-						<button class="btn btn-default form-group" type="button" id="searchBtn">검색</button>
-					</div>
+		<h2>공지사항 목록</h2>
+		
+		<!-- 검색창 start -->
+		<form id="searchForm" class="form-inline" action="/getSearchNotice" method="GET">
+			<select class="form-control" name="bdSk" id="bdSk">
+				<option value="board_title">제목</option>
+				<option value="board_contents">내용</option>
+				<option value="board_writer_id">작성자 아이디</option>
+				<option value="mr_name">작성자 이름</option>
+			</select>
+								
+			<div class="form-group">
+				<input type="text" class="form-control" name="bdSv" id="bdSv" placeholder="검색 키워드"/>
+				<div class="input-group-btn pull-right">
+					<button class="btn btn-default form-group btn-info" type="button" id="searchBtn">검색</button>
 				</div>
-			</form>
-			 -->
-			<button type="submit" class="btn btn-default btn-success">공지사항 등록</button>
+			</div>
+		</form>
+		<!-- 검색창 end -->
+		
+		<form action="addNotice" class="container-fluid">		
+			 
+			<button type="submit" class="btn btn-default btn-success pull-right" style="margin-bottom:10px">게시물 등록</button>
 
 			<table class ="table table-striped">
 				<thead>
@@ -53,41 +54,36 @@
 				</tbody>			
 			</table>
 		</form>
+		
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination">
+		    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+		    <li class="page-item"><a class="page-link" href="/getNotice">1</a></li>
+		    <li class="page-item"><a class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    <li class="page-item"><a class="page-link" href="#">4</a></li>
+		    <li class="page-item"><a class="page-link" href="#">5</a></li>
+		    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+		  </ul>
+		</nav>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
 		<script type="text/javascript"> 
-		
-		 $(function(){
-				 $('#searchBtn').click(function(){
-					 var bdSk = $('#bdSk').val();
-					 var bdSv = $('#bdSv').val();
-					 var searchForm = $('#searchForm');
-					 console.log(bdSk + ' < -- bdSk');
-					 console.log(bdSv + ' < -- bdSv');
-					
-						var request = $.ajax({
-						  url: "/notice",
-						  method: "GET",
-						  data: { bdSk : bdSk , bdSv : bdSv  },
-						  dataType: "json"
-						});
-						request.done(function(data) {
-						console.log(data);
-						console.log(data.bdSk);
-						console.log(data.bdSv);
-						
-						if(data == undefined || data == ''){
-							alert('검색되는 내용이 없습니다.');
-						}
-						});
-			
-						request.fail(function( jqXHR, textStatus ) {
-						  alert( "Request failed: " + textStatus );
-						});
-						searchForm.submit();
-				 });
-			 });
-		
+		 
+		 $('#searchBtn').click(function(){
+			var searchForm = $('#searchForm');
+			var bdSk = $('#bdSk').val();
+			var bdSv = $('#bdSv').val();
+			console.log(bdSk + ' < -- bdSk');
+			console.log(bdSv + ' < -- bdSv');
+			if(bdSv == null || bdSv == ''){
+				alert('검색어를 입력해주세요');
+				$('#bdSv').focus();
+				return;
+			}
+			searchForm.submit();
+		});
+	 
 		</script>
 
 	</th:block>
