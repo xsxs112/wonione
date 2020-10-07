@@ -27,6 +27,7 @@
 <!-- ************************* START *************************** -->
 
 
+
 <!-- 강의예정리스트 상세보기 -->
 <select id="getLecOsListOnly" resultType="hashMap">
 SELECT
@@ -72,16 +73,37 @@ FROM
 	los.lec_level_code = lrl.lec_number
 	WHERE 
 	lec_os_code = #{lecOsCode};
-
-
 </select>
 
+<!-- 개설된 강의 상태변경 -->
+<update id="changeLecStatus">
+UPDATE wt_lecture_open
+	SET
+		lec_status=#{changeLecStatus}
+	WHERE 
+		lec_op_code= #{lecOpCode};
+</update>
+
 <!-- 강의리스트 조회 -->
-<select id="getLectureList"		resultType="hashMap">
+<select id="getLectureList"	resultType="hashMap">
 SELECT 
 	lo.lec_op_code			AS	'lecOpCode'
 	,lo.lec_os_code			AS	'lecOsCode'
 	,lo.lec_status			AS	'lecStatus'
+	,(SELECT 
+		COUNT(c.lec_os_code)
+	FROM 
+		wt_course AS c
+	WHERE 
+		lo.lec_os_code 
+			= c.lec_os_code)
+							AS	'lecApplyCount'
+	,(	SELECT
+			los.cla_capacity
+		FROM
+			wt_lecture_open_schedule AS los
+		where los.lec_os_code = lo.lec_os_code)
+							AS	'claCapacity'
 	,lo.cla_people			AS	'claPeople'
 	,lo.cla_lack			AS	'claLack'
 	,lo.lec_op_writer		AS	'lecOpWriter'
@@ -93,8 +115,6 @@ FROM
 	wt_lec_resource	AS lr
 	ON
 	lo.lec_status = lr.lec_number;
-
-
 </select>
 
 
@@ -118,13 +138,18 @@ FROM
 </select>
 
 <!-- 강의 신청인원 조회 -->
-<select id="getApplyCount" resultType="int">
-SELECT 
-	COUNT(c.lec_os_code)
+<select id="getApplyCount" resultType="hashMap">
+SELECT
+	(SELECT 
+		COUNT(c.lec_os_code)
+	FROM 
+		wt_course AS c
+	WHERE 
+		los.lec_os_code 
+			= c.lec_os_code)
+						AS	'lecApplyCount'
 FROM
-	 wt_course AS c
-WHERE
-	c.lec_os_code = #{lecOsCode};
+	wt_lecture_open_schedule AS los;
 
 </select>
 <!-- 강의코드만 가져오기 -->
@@ -211,6 +236,18 @@ FROM
 	wt_lec_resource AS lr 
 WHERE
 	lr.lec_number LIKE CONCAT('%','room','%');
+
+</select>
+
+<!-- 강의상태구분 조회 -->
+<select id="getLectureStatus" resultType="hashMap">
+SELECT
+	lr.lec_number			AS	'lecStatus'
+	,lr.lec_designation		AS	'lecStatusName'
+FROM
+	wt_lec_resource AS lr 
+WHERE
+	lr.lec_number LIKE CONCAT('%','status','%');
 
 </select>
 
