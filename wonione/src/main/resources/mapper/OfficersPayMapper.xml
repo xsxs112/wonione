@@ -47,7 +47,10 @@
 		SELECT
 			p.op_code									AS opCode
 			,p.mr_id									AS mrId			
-			,mr.mr_name									AS mrName			
+			,mr.mr_name									AS mrName
+			,mr.mr_join_date							AS mrJoinDate
+			,r.pm_r_title								AS pmRTitle
+			,mr.mr_account_num							AS mrAccountNum	
 			,p.op_pay									AS opPay
 			,pd.opd_code								AS opdCode
 			,pd.iy_code									AS iyCode
@@ -68,9 +71,10 @@
 			,pc.opc_bonus								AS opcBonus
 			,pc.opc_ect									AS opcEct
 			,pc.opc_total								AS opcTotal
+			,pr.p_r_title						AS pRTitle
 		FROM
 			wt_officers_pay AS p
-			INNER JOIN 
+			LEFT JOIN 
 			wt_officers_pay_deduction AS pd
 			ON 
 			p.op_code = pd.opd_code
@@ -81,86 +85,94 @@
 			LEFT JOIN 
 			wt_member_registration AS mr
 			ON
-			p.mr_id = mr.mr_id	
+			p.mr_id = mr.mr_id
+			LEFT JOIN 
+			wt_payment_resource AS r
+			ON 
+			mr.pm_r_code = r.pm_r_code
+			LEFT JOIN 
+			wt_pay_resource AS pr
+			ON 
+			p.p_r_title = pr.p_r_title
 		WHERE
 			p.op_code = #{opCode};
 	</select>
 	
 	<!-- 직원급여입력 -->
 	<insert id="addOfficersPay" parameterType="OfficersPay">
-	INSERT INTO wt_officers_pay
-		(op_code
-		, mr_id
-		, p_r_title
-		, op_date
-		, opd_code
-		, op_pay
-		, op_reg_date
-		, op_writer
-		)VALUES(
-				#{opdCode}
-				, #{mrId}
-				, #{pRTitle}
-				, #{opDate}
-				, #{opdCode}
-				, #{opPay}
-				, NOW()
-				, #{writer})	
+		INSERT INTO wt_officers_pay
+			(op_code
+			, mr_id
+			, p_r_title
+			, op_date
+			, opd_code
+			, op_pay
+			, op_reg_date
+			, op_writer
+			)VALUES(
+					#{opdCode}
+					, #{mrId}
+					, #{pRTitle}
+					, #{opDate}
+					, #{opdCode}
+					, #{opPay}
+					, NOW()
+					, #{writer})	
 	</insert>
 	<!-- 공제계 입력하기 -->
 	<insert id="addOffiDedupay" parameterType="OfficersPay">
-	INSERT INTO wt_officers_pay_deduction
-		(opd_code
-		, mr_id
-		, iy_code
-		, p_r_title
-		, opd_income_tax
-		, opd_resident_income_tax
-		, opc_code
-		, opd_employment_insurance
-		, opd_national_pension, opd_health_insurance
-		, opd_longterm_nursing_insurance, opd_total
-		, opd_reg_date
-		, opd_writer
-		)VALUES(
-				#{opdCode}
-				, #{mrId}
-				, #{iyCode}
-				, #{pRTitle}
-				, #{opdIncomeTax}
-				, #{opdResidentIncomTax}
-				, #{opcCode}
-				, #{opdEmploymentInsurance}
-				, #{opdNationalPension}
-				, #{opdHealthInsurance}
-				, #{opdLongtermNursingInsurance}
-				, #{opdTotal}
-				, NOW()
-				, #{writer});
+		INSERT INTO wt_officers_pay_deduction
+			(opd_code
+			, mr_id
+			, iy_code
+			, p_r_title
+			, opd_income_tax
+			, opd_resident_income_tax
+			, opc_code
+			, opd_employment_insurance
+			, opd_national_pension, opd_health_insurance
+			, opd_longterm_nursing_insurance, opd_total
+			, opd_reg_date
+			, opd_writer
+			)VALUES(
+					#{opdCode}
+					, #{mrId}
+					, #{iyCode}
+					, #{pRTitle}
+					, #{opdIncomeTax}
+					, #{opdResidentIncomTax}
+					, #{opcCode}
+					, #{opdEmploymentInsurance}
+					, #{opdNationalPension}
+					, #{opdHealthInsurance}
+					, #{opdLongtermNursingInsurance}
+					, #{opdTotal}
+					, NOW()
+					, #{writer});
 	</insert>
 	<!-- 공제계구하기 -->
 	<select id="OfficersDedu" resultType="OfficersPay" parameterType="String">
-	SELECT 
-		iy.iy_resident_income
-			* #{opdIncomeTax}
-		AS opdResidentIncomTax
-		,iy.iy_employment_insurance
-			* (SELECT pc.opc_total AS opcTotal FROM wt_officers_pay_calculate AS pc WHERE pc.opc_code = #{opdCode})					
-		AS opdEmploymentInsurance
-		,iy.iy_national_pension	
-			* (SELECT pc.opc_total AS opcTotal FROM wt_officers_pay_calculate AS pc WHERE pc.opc_code = #{opdCode})					
-		AS opdNationalPension
-		,iy.iy_health_insurance	
-			* (SELECT pc.opc_total AS opcTotal FROM wt_officers_pay_calculate AS pc WHERE pc.opc_code = #{opdCode})					
-		AS opdHealthInsurance
-		,iy.iy_longterm_nursing_insurance 
-			* iy.iy_health_insurance	
-			* (SELECT pc.opc_total AS opcTotal FROM wt_officers_pay_calculate AS pc WHERE pc.opc_code = #{opdCode})			
-		AS opdLongtermNursingInsurance
-	FROM 
-		wt_insurance_year AS iy
-	WHERE
-		iy.iy_code = #{iyCode};
+		SELECT 
+			iy.iy_resident_income
+				* #{opdIncomeTax}
+			AS opdResidentIncomTax
+			,iy.iy_employment_insurance
+				* (SELECT pc.opc_total AS opcTotal FROM wt_officers_pay_calculate AS pc WHERE pc.opc_code = #{opdCode})					
+			AS opdEmploymentInsurance
+			,iy.iy_national_pension	
+				* (SELECT pc.opc_total AS opcTotal FROM wt_officers_pay_calculate AS pc WHERE pc.opc_code = #{opdCode})					
+			AS opdNationalPension
+			,iy.iy_health_insurance	
+				* (SELECT pc.opc_total AS opcTotal FROM wt_officers_pay_calculate AS pc WHERE pc.opc_code = #{opdCode})					
+			AS opdHealthInsurance
+			,iy.iy_longterm_nursing_insurance 
+				* iy.iy_health_insurance	
+				* (SELECT pc.opc_total AS opcTotal FROM wt_officers_pay_calculate AS pc WHERE pc.opc_code = #{opdCode})			
+			AS opdLongtermNursingInsurance
+		FROM 
+			wt_insurance_year AS iy
+		WHERE
+			iy.iy_code = #{iyCode};
 		
 	</select>
 	<!-- 직원급여계 입력하기 -->

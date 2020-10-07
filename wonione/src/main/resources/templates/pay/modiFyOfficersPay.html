@@ -18,7 +18,7 @@
 	<!-- 급여계 수정폼 -->
 	<!--===================직원목록불러오기시작===================-->
 	<form action="/modiOffiCalpay" id="modiOffiCalFoinForm" method="post"> 
-	<div style="width:60%; float:left" class="container-fluid">
+	<div style="width:30%; float:left" class="container-fluid">
 		<table id="tb2" class ="table table-striped" th:each="m : ${modiOfficersPay}">
 			<tr>
 				<td colspan="4" style="text-align: center; vertical-align:middle;"> 직원정보 </td>
@@ -58,24 +58,22 @@
 	<!--===================직원목록불러오기끝===================-->
 	
 	<!--===================시급지급기준 시작===================-->
-	<div style="width:60%; float:left" class="container-fluid">	
-		<div id="tb3" class="container-fluid">		
-			<table class ="table table-striped" >
-				<tr>
-					<td colspan="3" style="text-align: center; vertical-align:middle;">지급기준표</td>
-				</tr>
-				<tr>
-					<td rowspan="5" style="text-align: center; vertical-align:middle;">시급기준</td>
-				</tr>
-				<tr th:if="${s.pRTitle} > 1000 " th:each="s : ${standardSheetHour}" style="text-align: center;">
-					<td th:text="${s.pREct}"></td>
-					<td th:text="${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}"></td>
-				</tr>
-			</table>			
-		</div>	
-	</div>
-	<div id="tb4" style="width:40%; float:left" class="container-fluid">		
-		<table class ="table table-striped" >
+	<div style="width:40%; float:left" class="container-fluid">		
+		<table id="tb3" class ="table table-striped" >
+			<tr>
+				<td colspan="3" style="text-align: center; vertical-align:middle;">지급기준표</td>
+			</tr>
+			<tr>
+				<td rowspan="5" style="text-align: center; vertical-align:middle;">시급기준</td>
+			</tr>
+			<tr th:if="${s.pRTitle} > 1000 " th:each="s : ${standardSheetHour}" style="text-align: center;">
+				<td th:text="${s.pREct}"></td>
+				<td th:text="${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}"></td>
+			</tr>
+		</table>			
+	</div>		
+	<div style="width:30%; float:right" class="container-fluid">		
+		<table id="tb4" class ="table table-striped" >
 			<tr>
 				<td colspan="4" style="text-align: center; vertical-align:middle;"> 지급기준 수정 </td>
 			</tr>
@@ -91,10 +89,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="text-align: center; vertical-align:middle;">시     급</td>
+				<td style="text-align: center; vertical-align:middle;">시 급</td>
 				<td colspan="3" style="text-align: left;">
 					<select name ="HourlyWage" class="form-control" >
-			  			<option>::시급::</option>
+			  			<option>::시  급::</option>
 			  			<th:block  th:if="${s.pRTitle} > 1000" th:each="s : ${standardSheetHour}">
 				  			<option id="HourlyWage" th:value="${#numbers.formatInteger(s.pRTitle, 0)}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}]]</option>
 			  			</th:block>
@@ -107,7 +105,7 @@
 				<input type="text" th:each="l : ${OfficersList}" th:href="@{/officersFoinForm(mrId=${l.mrId})}">
 				</td>
 				<td colspan="3">
-				<button type="button" id="OfficersCalformBtn" class="btn btn-primary btn-md btn-block">수정</button>	
+				<button type="button" id="modiOffiCalformBtn" class="btn btn-primary btn-md btn-block">수정</button>	
 				</td>
 			</tr>		
 		</table>
@@ -136,7 +134,7 @@
 					<input type="text" class="form-control" id="opcCode" name="opcCode" th:value="${m.opcCode}" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="cpRTitle" name="pRTitle" th:value="${#numbers.formatInteger(pRTitle, 0)}" readonly>
+					<input type="text" class="form-control" id="cpRTitle" name="pRTitle" th:value="${#numbers.formatInteger(m.pRTitle, 0)}" readonly>
 					</td>
 					<td>
 					<input type="text" class="form-control" id="cMrId" name="mrId" th:value="${m.mrId}" placeholder="아이디" readonly>
@@ -188,7 +186,7 @@
 					<td></td>
 					<td></td>
 					<td colspan="2" >
-					<button type="button" id="offiCalInsertBtn" class="btn btn-primary btn-sm btn-block">
+					<button type="button" id="modiOffiInsertBtn" class="btn btn-primary btn-sm btn-block">
 					급여계수정
 					</button>
 					</td>	
@@ -198,7 +196,7 @@
 	</form>
 	<!--===================지급계산끝===================-->	
 	<!-- 공제계 수정폼 -->
-	<form action="/addOffiDedupay" id="offiDeduFoinForm" method="post"> 
+	<form action="/modiOffiDedupay" id="modiOffiDeduFoinForm" method="post"> 
 	<!--===================공제계산시작===================-->
 	
 		<div class="container-fluid">
@@ -219,7 +217,7 @@
 					<input type="text" class="form-control" id="opdCode" name="opdCode" th:value="${m.opdCode}" readonly>
 					</td>
 					<td>
-					<input type="text" class="form-control" id="dpRTitle" name="pRTitle" th:value="${m.pRTitle}" readonly>
+					<input type="text" class="form-control" id="dpRTitle" name="pRTitle" th:value="${#numbers.formatInteger(m.pRTitle, 0)}" readonly>
 					</td>
 					<td>
 					<input type="text" class="form-control" id="dMrId" name="mrId" th:value="${m.mrId}" readonly>
@@ -268,8 +266,7 @@
 					</td>
 					<td>					
 					<input type="text" class="form-control" id="opdTotal" name="opdTotal" th:value="${m.opdTotal}" readonly>
-					</td>
-	
+					</td>	
 				</tr>
 				<tr style="text-align: center;">
 					<td></td>
@@ -278,7 +275,7 @@
 					<td></td>
 					<td></td>
 					<td colspan="2" >
-					<button type="button" id="offiDeduInsertBtn" class="btn btn-primary btn-sm btn-block">
+					<button type="button" id="modiOffiDeduInsertBtn" class="btn btn-primary btn-sm btn-block">
 					공제계수정
 					</button>
 					<td colspan="2" >
@@ -297,7 +294,7 @@
 				</tr>					
 			</table>			
 			<p>
-				<button type="button" id="offiPayInsertBtn" class="btn btn-success btn-lg">
+				<button type="button" id="modiOffiPayInsertBtn" class="btn btn-success btn-lg">
 				직원급여수정
 				</button>					
 			</p>

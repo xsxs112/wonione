@@ -32,61 +32,106 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>
-	
+	<!-- 수정할 강사 급여정보 불러오기 -->
+	<select id = "getMrBySId" parameterType="String" resultType="StaffPay">
+		SELECT
+			 c.mr_id						AS mrId
+			,p.sp_code						AS spCode
+			,m.mr_id						AS mrId
+			,c.spc_code						AS spcCode
+			,d.spd_code						AS spdCode
+			,c.spc_hourly_wage				AS spcHourlyWage
+			,m.mr_name						AS mrName
+			,c.spc_base_pay					AS spcBasePay
+			,c.spc_incentive				AS spcIncentive
+			,c.spc_total					AS spcTotal
+			,d.spd_the_business_tax			AS spdTheBusinessTax
+			,d.spd_total					AS spdTotal
+			,p.sp_pay						AS spPay
+			,c.spc_total_hour				AS spcTotalHour
+			,d.iy_code						AS iyCode
+			,pr.p_r_title					AS pRTitle
+			,r.pm_r_title					AS pmRTitle
+			,m.mr_account_num				AS mrAccountNum
+		FROM
+			wt_staff_pay AS p
+			LEFT JOIN 
+			wt_staff_pay_calculate AS c
+			ON 
+			p.sp_code=c.spc_code
+			LEFT join
+			wt_staff_pay_deduction AS d
+			ON 
+			p.sp_code = d.spd_code
+			LEFT JOIN 
+			wt_member_registration AS m
+			ON 
+			p.mr_id = m.mr_id 
+			LEFT JOIN 
+			wt_payment_resource AS r
+			ON 
+			m.pm_r_code = r.pm_r_code
+			LEFT JOIN 
+			wt_pay_resource AS pr
+			ON 
+			p.p_r_title = pr.p_r_title
+		WHERE 
+			p.sp_code = #{spCode};
+	</select>	
 	<!-- 강사급여 입력 -->
 	<insert id="addStaffPay" parameterType="StaffPay">
-	INSERT INTO wt_staff_pay
-		(sp_code
-		, mr_id
-		, p_r_title
-		, sp_date
-		, spd_code
-		, sp_pay
-		, sp_reg_date
-		, sp_writer
-		)VALUES(#{spdCode}
-				, #{mrId}
-				, #{pRTitle}
-				, #{spDate}
-				, #{spdCode}
-				, #{spPay}
-				, NOW()
-				, #{writer})	
-	</insert>	
+		INSERT INTO wt_staff_pay
+			(sp_code
+			, mr_id
+			, p_r_title
+			, sp_date
+			, spd_code
+			, sp_pay
+			, sp_reg_date
+			, sp_writer
+			)VALUES(#{spdCode}
+					, #{mrId}
+					, #{pRTitle}
+					, #{spDate}
+					, #{spdCode}
+					, #{spPay}
+					, NOW()
+					, #{writer})	
+		</insert>	
 	
 	<!-- 공제계 입력하기 -->
 	<insert id="addStaffDedupay" parameterType="StaffPay">
-	INSERT INTO wt_staff_pay_deduction
-		(spd_code
-		, mr_id
-		, p_r_title
-		, iy_code
-		, spc_code
-		, spd_the_business_tax
-		, spd_total
-		, spd_reg_date
-		, spd_writer
-		) VALUES (#{spdCode}
-				, #{mrId}
-				, #{pRTitle}
-				, #{iyCode}
-				, #{spcCode}
-				, #{spdTheBusinessTax}
-				, #{spdTotal}
-				, NOW()
-				, #{writer})
+		INSERT INTO wt_staff_pay_deduction
+			(spd_code
+			, mr_id
+			, p_r_title
+			, iy_code
+			, spc_code
+			, spd_the_business_tax
+			, spd_total
+			, spd_reg_date
+			, spd_writer
+			) VALUES (#{spdCode}
+					, #{mrId}
+					, #{pRTitle}
+					, #{iyCode}
+					, #{spcCode}
+					, #{spdTheBusinessTax}
+					, #{spdTotal}
+					, NOW()
+					, #{writer})
 	</insert>	
 	
 	<!-- 공제계구하기 -->
 	<select id="StaffPayDedu" resultType="StaffPay" parameterType="String">
-	SELECT 
-		iy.iy_the_business
-			* (SELECT pc.spc_total AS spcTotal FROM wt_staff_pay_calculate AS pc WHERE pc.spc_code = #{spdCode})
-			AS spdTheBusinessTax
-	FROM 
-		wt_insurance_year AS iy
-	WHERE
-		iy.iy_code = #{iyCode};		
+		SELECT 
+			iy.iy_the_business
+				* (SELECT pc.spc_total AS spcTotal FROM wt_staff_pay_calculate AS pc WHERE pc.spc_code = #{spdCode})
+				AS spdTheBusinessTax
+		FROM 
+			wt_insurance_year AS iy
+		WHERE
+			iy.iy_code = #{iyCode};		
 	</select>
 		
 	<!-- 강사급여계 입력하기 -->

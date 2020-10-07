@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +28,28 @@ public class StaffPayController {
 	// log4j로 로그 찍기 위한 객체 삽입
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(StaffPayController.class);
+	
+	//강사급여 수정화면 불러오기
+	@GetMapping("/modiFyStaffPay")
+	public String modiFyStaffPay(@RequestParam(value = "spCode", required = false) String spCode
+								,Model model) {
+		StaffPay modiStaffPay = staffPayService.getMrBySId(spCode)
+				;
+		model.addAttribute("modiStaffPay", modiStaffPay);
+		model.addAttribute("title", "강사급여수정");
+		
+		//자원관리 테이블 통해 기준표 출력
+		List<StaffPay> standardSheetHour = staffPayService.standardSheet();		
+		model.addAttribute("standardSheetHour",standardSheetHour);
+		model.addAttribute("title", "시급기준표");
+		
+		//자원관리 테이블 통해 요율표 가져오기
+		List<StaffPay> insuranceYear = staffPayService.insuranceYear();		
+		model.addAttribute("insuranceYear",insuranceYear);
+		model.addAttribute("title", "보험요율표");
+		
+		return "pay/modiFyStaffPay";
+	}
 	
 	//강사급여 입력하기
 	@PostMapping("/addStaffPay")

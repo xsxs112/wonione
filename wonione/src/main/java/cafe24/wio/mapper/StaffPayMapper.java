@@ -36,4 +36,7 @@ public interface StaffPayMapper {
 	//강사급여 입력
 	public int addStaffPay(StaffPay staffPay);
 
+	//수정할 강사정보 불러오기
+	public StaffPay getMrBySId(String spCode);
+
 }
