@@ -37,10 +37,11 @@ public class LectureController {
 	public String getLectureList(Model model) {
 		
 		List<Map<String, Object>> lectureList = lectureService.getLectureList();
-		
+		List<Map<String,Object>> lectureStatus = lectureService.getLectureStatus();
 		model.addAttribute("title", "강의 리스트");
 		model.addAttribute("mainTitle", "강의 리스트");
 		model.addAttribute("lectureList", lectureList);
+		model.addAttribute("lectureStatus", lectureStatus);
 		
 		return "lecture/lecList";
 	}

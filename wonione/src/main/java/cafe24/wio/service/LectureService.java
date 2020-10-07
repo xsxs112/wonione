@@ -16,7 +16,19 @@ public class LectureService {
 
 	@Autowired
 	private LectureMapper lectureMapper;
-
+	
+	/**
+	 * 개설된 강의 상태변경
+	 * @param changeLecStatus
+	 * @param lecOpCode
+	 * @return int changeResult
+	 */
+	public int changeLecStatus(String changeLecStatus
+								, String lecOpCode) {
+		int changeResult = lectureMapper.changeLecStatus(changeLecStatus, lecOpCode);
+		return changeResult;
+	}
+	
 	/**
 	 * 강의예정리스트 1개만 조회
 	 * @param lecOsCode
@@ -29,7 +41,7 @@ public class LectureService {
 	}
 	
 	/**
-	 * 강의리스트 조회하기
+	 * 개설된 강의리스트 조회하기
 	 * @return List<Map<String, Object>>  lectureList
 	 */
 	public List<Map<String,Object>> getLectureList(){
@@ -113,6 +125,16 @@ public class LectureService {
 	}
 	
 	/**
+	 * 강의상태구분 조회
+	 * @return List<Map<String,Object>> lectureStatus 
+	 */
+	public List<Map<String,Object>> getLectureStatus(){
+		List<Map<String,Object>> lectureStatus 
+							=lectureMapper.getLectureStatus();
+		return lectureStatus;
+	}
+	
+	/**
 	 * 강의수준 조회
 	 * @return List Map<String,Object> lectureLevel
 	 */
@@ -145,20 +167,12 @@ public class LectureService {
 	/**
 	 * 수강신청인원 조회하기
 	 * @param lecOsCode
-	 * @return int result
+	 * @return List<Map<String,Object>> lecApplyCount 
 	 */
-	public List<Object> getApplyCount() {
-		
-		List<LectureOpenSchedule> lecOsCodeArray = lectureMapper.getLecOsCode();
-		
-		int result = 0;
-		List<Object> lecApplyCount = new ArrayList<>();
-		for(int i=0; i<lecOsCodeArray.size(); i++) {
-			String lecOsCode = lecOsCodeArray.get(i).getLecOsCode();
-			result = lectureMapper.getApplyCount(lecOsCode);
-			lecApplyCount.add(result);
-		}
-		
+	public List<Map<String,Object>> getApplyCount() {
+	
+		List<Map<String,Object>> lecApplyCount 
+								= lectureMapper.getApplyCount();
 		return lecApplyCount;
 	}
 	

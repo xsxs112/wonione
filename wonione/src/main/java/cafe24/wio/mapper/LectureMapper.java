@@ -11,6 +11,10 @@ import cafe24.wio.bean.LectureOpenSchedule;
 @Mapper
 public interface LectureMapper {
 
+	//개설된 강의 상태변경
+	public int changeLecStatus(String changeLecStatus
+								, String lecOpCode);
+	
 	//강의예정리스트 1개만 조회
 	public List<Map<String,Object>> getLecOsListOnly(String lecOsCode);
 	
@@ -35,6 +39,9 @@ public interface LectureMapper {
 	//시간강사목록 조회
 	public List<Map<String,Object>> getTeacherList();
 	
+	//강의상태구분 조회
+	public List<Map<String,Object>> getLectureStatus();
+	
 	//강의수준 조회
 	public List<Map<String,Object>> getLectureLevel();
 	
@@ -45,5 +52,5 @@ public interface LectureMapper {
 	public List<Map<String,Object>> getLectureTime();
 	
 	//강의 신청인원 조회 
-	public int getApplyCount(String lecOsCode);
+	public List<Map<String,Object>> getApplyCount();
 }
