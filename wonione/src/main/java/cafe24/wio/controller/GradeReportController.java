@@ -32,10 +32,17 @@ private GradeReportService gradeReportService;
 
 	//성적업무보고서 리스트 
 	@RequestMapping(value="/getGradeReportList", method = RequestMethod.GET)
-	public String getGradeReportList(Model model, GradeReport gradeReport) {
+	public String getGradeReportList(Model model, GradeReport gradeReport
+									,@RequestParam( value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		List<GradeReport> reportGrade = gradeReportService.getGradeReportList(gradeReport);
+		Map<String,Object> countGradeReportList = gradeReportService.countGradeReportList(currentPage);
 		model.addAttribute("reportGrade", reportGrade);
 		model.addAttribute("title", "성적업무보고서");
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("countGradeReportList",countGradeReportList.get("listReportGrade"));
+		model.addAttribute("lastPage", countGradeReportList.get("lastPage"));
+		model.addAttribute("lastPageNum", countGradeReportList.get("lastPageNum"));
+		model.addAttribute("startPageNum", countGradeReportList.get("startPageNum"));
 		return "humanresource/gradereport";
 	}
 	

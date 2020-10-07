@@ -95,42 +95,43 @@
 								</tr>
 							</tbody>	
 						</table> 
-						<!-- <div class="custom-pagination" th:if="${currentPage ne null}">
-								<ul class="pagination">
-									<li class="page-item">
-										<a class="page-link" th:href="@{/getGradeList}">처음</a>
-									</li>
-									<li class="page-item">
-										<span th:if="${currentPage > 1}">
-											<a class="page-link" th:href="@{/getGradeList(currentPage=(${currentPage}-1))}">이전</a>
-										</span>
-									</li>
-								</ul>
-								<ul class="pagination">
-									<li class="page-item">
-									<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
-										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/getGradeList(currentPage=${num})}"></a>
-									</th:block>
-									</li>
-								</ul>
-								<ul class="pagination">
-									<li class="page-item">
-										<span th:if="${currentPage ne lastPage}">
-											<a th:href="@{/getGradeList(currentPage=(${currentPage}+1))}">다음</a>
-										</span>
-		    						</li>
-		    						<li class="page-item">
-		    							<a th:href="@{/getGradeList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
-		    						</li> 
-								</ul>
-                            </div>-->
+						<div class="custom-pagination" th:if="${currentPage ne null}">
+							<ul class="pagination">
+								<li class="page-item">
+									<a class="page-link" th:href="@{/getGradeList}">처음</a>
+								</li>
+								<li class="page-item">
+									<span th:if="${currentPage > 1}">
+										<a class="page-link" th:href="@{/getGradeList(currentPage=(${currentPage}-1))}">이전</a>
+									</span>
+								</li>
+							</ul>
+							<ul class="pagination">
+								<li class="page-item">
+								<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+									<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/getGradeList(currentPage=${num})}"></a>
+								</th:block>
+								</li>
+							</ul>
+							<ul class="pagination">
+								<li class="page-item">
+									<span th:if="${currentPage ne lastPage}">
+										<a th:href="@{/getGradeList(currentPage=(${currentPage}+1))}">다음</a>
+									</span>
+	    						</li>
+	    						<li class="page-item">
+	    							<a th:href="@{/getGradeList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
+	    						</li>
+							</ul>
+                         </div>
 					</div>
 	        	</div>
 			</div>
 		</div>
 	</div>
-		
-	 <script type="text/javascript"> 
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
+	<script type="text/javascript"> 
 	
 	$(function(){
 		$('#btnsearch').click(function(){

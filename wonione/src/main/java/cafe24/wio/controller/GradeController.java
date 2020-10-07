@@ -43,7 +43,8 @@ public class GradeController {
 		model.addAttribute("countGradeList",countGradeList.get("listGrade"));
 		model.addAttribute("lastPage", countGradeList.get("lastPage"));
 		model.addAttribute("lastPageNum", countGradeList.get("lastPageNum"));
-		model.addAttribute("listGrade",countGradeList.get("listGrade"));
+		model.addAttribute("startPageNum", countGradeList.get("startPageNum"));
+		
 		
 		return "grade/gradeList";
 

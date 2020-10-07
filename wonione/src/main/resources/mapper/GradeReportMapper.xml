@@ -188,6 +188,41 @@
 		wt_open_lecture;
 </select>
 
+<!-- 페이징 카운트-->
+<select id="countGradeReport" resultType="int">
+      SELECT
+         COUNT(*)
+      FROM
+        wt_report_lecture;
+</select>
+
+<!-- 페이징 -->
+<select id="countGradeReportList" resultType="GradeReport"  resultMap="gradeReportResultMap">
+	SELECT 
+		report_lec_code
+		, open_lec_code
+		, test_number
+		, mr_name
+		, work_report
+		, grade_Average
+		, achievement_rate
+		, fin_lec_reg_date
+	FROM 
+		wt_report_lecture
+		inner join
+		wt_grade_num
+		on
+		wt_report_lecture.grade_test_num = wt_grade_num.grade_test_num
+		LEFT join
+		wt_member_registration
+		on
+		wt_member_registration.mr_id = wt_report_lecture.mr_id
+	LIMIT #{startRow}, #{rowPerPage};
+
+</select>
+
+
+
 
 </mapper>   
 
