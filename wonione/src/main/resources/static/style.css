@@ -3663,13 +3663,13 @@ div#sparklinehome canvas {
     background: #848484;
 }
 .sidebar-nav .metismenu{
-	background-color: black;
+	background-color: white;
 }
 .sidebar-nav {
     background: #fff;
 }
 .sidebar-nav ul{
-	background-color: black;
+	background-color: white;
 }
 #sidebar.active .sidebar-nav ul.metismenu li ul.submenu-angle{
 	position: absolute;
@@ -3691,8 +3691,8 @@ div#sparklinehome canvas {
 	overflow:unset;
 }
 .sidebar-nav .metismenu a{
-	color:white;
-	font-weight: bolder;
+	color:#202e59;
+	background-color: white;
 }
 .sidebar-nav .metismenu a:hover, .sidebar-nav .metismenu a:focus, .sidebar-nav .metismenu a:active {
     background: #F6F6F6;
@@ -3713,7 +3713,7 @@ div#sparklinehome canvas {
     background: #fff;
 }
 #sidebar .sidebar-header {
-    background-color: black;
+    background-color: white;
 }
 #sidebar.active .sidebar-header {
     padding-top:10px;
