@@ -93,7 +93,7 @@ public class ReportService {
 	//페이징
 	public Map<String,Object> countReportList(int currentPage){
 		
-		final int ROW_PER_PAGE = 5;
+		  final int ROW_PER_PAGE = 5;
 	      
 	      int startRow = 0;
 	      

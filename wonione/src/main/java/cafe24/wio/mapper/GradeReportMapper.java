@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import cafe24.wio.bean.Grade;
 import cafe24.wio.bean.GradeReport;
 import cafe24.wio.bean.Report;
 import cafe24.wio.bean.ScholarShip;
@@ -38,4 +39,10 @@ public interface GradeReportMapper {
 	
 	//업무목표점수가져오기
 	public List<Map<String, Object>> targetScore();
+	
+	//페이징을 위한 카운팅
+	public int countGradeReport();
+	
+	//보고서 리스트 페이징
+	public List<Grade> countGradeReportList(Map<String,Object> gradeMap);
 }

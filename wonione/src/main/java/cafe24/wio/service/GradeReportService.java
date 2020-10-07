@@ -1,5 +1,6 @@
 package cafe24.wio.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -98,5 +99,47 @@ public class GradeReportService {
 		return targetScore;
 	 }
 		 
+	 
+		//페이징
+		public Map<String,Object> countGradeReportList(int currentPage){
+			
+			final int ROW_PER_PAGE = 5;
+		      
+		      int startRow = 0;
+		      
+		      int startPageNum = 1;
+		      int lastPageNum = ROW_PER_PAGE;
+		      
+		      if(currentPage > (ROW_PER_PAGE/2)) {
+		         startPageNum = currentPage - ((lastPageNum/2)-1);
+		         lastPageNum += startPageNum;
+		      }
+		      
+		      startRow = (currentPage - 1) * ROW_PER_PAGE ;
+		      
+		      Map<String,Object> gradeReportMap = new HashMap<String,Object>();
+		            
+		      gradeReportMap.put("startRow", startRow);
+		      gradeReportMap.put("rowPerPage", ROW_PER_PAGE);
+
+		      List<Grade> listReportGrade = gradeReportMapper.countGradeReportList(gradeReportMap) ;
+		      double totalRowCount = gradeReportMapper.countGradeReport();
+		      
+		      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
+			
+		      if(currentPage >= (lastPage-4)) {
+			         lastPageNum = lastPage;
+			      }
+			      
+			      Map<String,Object> gradeReportList = new HashMap<String,Object>();
+			      gradeReportList.put("listReportGrade", listReportGrade);
+			      gradeReportList.put("lastPage", lastPage);
+			      gradeReportList.put("startPageNum", startPageNum);
+			      gradeReportList.put("lastPageNum", lastPageNum);
+			
+			return gradeReportList;
+			
+		}
+	 
 	
 }
