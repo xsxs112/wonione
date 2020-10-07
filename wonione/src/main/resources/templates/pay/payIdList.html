@@ -128,7 +128,7 @@
 	  				<td style="text-align: center;" th:text="${s.spRegDate}"></td>
 	  				<td style="text-align: center;" th:text="${s.spWriter}"></td>
 	  				<td style="text-align: center;">
-	  					<a class="modifySPBtn btn btn-custon-two btn-success">수정</a>
+	  					<a class="modifySPBtn btn btn-custon-two btn-success" th:href="@{/modiFyStaffPay(spCode=${s.spCode})}">수정</a>
 	  				</td>
 					<td style="text-align: center;">
 						<button type="button" class="deleteSPBtn btn btn-custon-two btn-danger" >삭제</button>

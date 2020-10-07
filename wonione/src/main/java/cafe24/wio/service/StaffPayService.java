@@ -94,4 +94,11 @@ public class StaffPayService {
 		return result;		
 	}
 
+	//수정할 강사정보 불러오기
+	public StaffPay getMrBySId(String spCode) {
+		StaffPay modiStaffPay = staffPayMapper.getMrBySId(spCode);
+
+		return modiStaffPay;
+	}
+
 }

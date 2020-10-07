@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title></title> 
+	<script src="js/pay/staffPay.js"></script>		
+		<script type="text/javascript">
+	 	
+	$(function(){	
+		  	  
+	});
+		</script>	
+		
+	</th:block>
+	<th:block layout:fragment="customContent" >	
+	<!--===================강사목록불러오기시작===================-->
+	<!-- 급여계 수정폼 -->
+	<form action="/modiStaffCalpay" id="modiStaffCalFoinForm" method="post">
+	<div style="width:30%; float:left" class="container-fluid">
+		<table id="tb2" class ="table table-striped" th:each="m : ${modiStaffPay}">
+			<tr>
+				<td colspan="4" style="text-align: center; vertical-align:middle;"> 강사정보 </td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">아이디</td>
+				<td colspan="3" style="text-align: left;">
+				<input type="text" class="form-control" id="mrId"  name="mrId" th:value="${m.mrId}" readonly>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">이름</td>
+				<td colspan="3" style="text-align: left;">
+				<input type="text" class="form-control" id="mrName" name="mrName" th:value="${m.mrName}" readonly>
+				</td>			
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">은행</td>
+				<td colspan="3" style="text-align: left;">
+				<input type="text" class="form-control" id="pmRTitle" th:value="${m.pmRTitle}" readonly>
+				</td>		
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">계좌</td>
+				<td colspan="3" style="text-align: left;">
+				<input type="text" class="form-control" id="mrAccountNum" th:value="${m.mrAccountNum}" readonly>
+				</td>		
+			</tr>
+		</table>	
+	</div>
+	<!--===================강사목록불러오기끝===================-->
+	
+	<!--===================시급지급기준 시작===================-->
+	<div style="width:40%; float:left" class="container-fluid">		
+		<table id="tb3" class ="table table-striped" >
+			<tr>
+				<td colspan="3" style="text-align: center; vertical-align:middle;">지급기준표</td>
+			</tr>
+			<tr>
+				<td rowspan="5" style="text-align: center; vertical-align:middle;">시급기준</td>
+			</tr>
+			<tr th:if="${s.pRTitle} > 1000" th:each="s : ${standardSheetHour}" style="text-align: center;">
+				<td th:text="${s.pREct}"></td>
+				<td th:text="${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}"></td>
+			</tr> 
+			<tr>
+				<td rowspan="4" style="text-align: center; vertical-align:middle;">인센티브 기준</td>
+			</tr>
+			<tr th:if="${s.pRTitle} < 1" th:each="s : ${standardSheetHour}" style="text-align: center;">
+				<td th:text="${s.pREct}"></td>
+				<td th:text="${#numbers.formatInteger(s.pRTitle*100, 0, 'COMMA') +'%'}"></td>
+			</tr> 
+		</table>			
+	</div>
+	<div style="width:30%; float:right" class="container-fluid">		
+		<table id="tb4" class ="table table-striped"  th:each="m : ${modiStaffPay}">
+			<tr>
+				<td colspan="4" style="text-align: center; vertical-align:middle;"> 지급기준 수정 </td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">지 급 월</td>
+				<td colspan="3" style="text-align: left;">
+					<select name ="pRTitle" class="form-control" >
+			  			<option>::지급월::</option>
+			  			<th:block th:if="${s.pRTitle} >=1 and ${s.pRTitle} <=12" th:each="s : ${standardSheetHour}">
+				  			<option id ="pRTitle" th:value="${s.pRTitle}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
+			  			</th:block>
+			  		</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">시 급</td>
+				<td colspan="3" style="text-align: left;">
+					<select name ="HourlyWage" class="form-control" >
+			  			<option>::시  급::</option>
+			  			<th:block th:if="${s.pRTitle} > 1000" th:each="s : ${standardSheetHour}">
+				  			<option id="HourlyWage" th:value="${#numbers.formatInteger(s.pRTitle, 0)}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'원'}]]</option>
+			  			</th:block>
+			  		</select>
+				</td>			
+			</tr>
+			<tr>
+				<td style="text-align: center; vertical-align:middle;">인센티브</td>
+				<td colspan="3" style="text-align: left;">
+					<select name ="incentive" class="form-control" >
+			  			<option>::인센티브::</option>
+			  			<th:block th:if="${s.pRTitle} < 1" th:each="s : ${standardSheetHour}">
+				  			<option id="incentive" th:value="${s.pRTitle}">[[${#numbers.formatInteger(s.pRTitle*100, 0, 'COMMA') +'%'}]]</option>
+			  			</th:block>
+			  		</select>
+				</td>		
+			</tr>
+			<tr>
+				<td hidden="">
+				<input type="text" th:each="l : ${StaffList}" th:href="@{/staffFoinForm(mrId=${l.mrId})}">
+				</td>
+				<td colspan="3">
+				<button type="button" id="StaffCalformBtn" class="btn btn-primary btn-md btn-block">수정</button>	
+				</td>
+			</tr>				
+		</table>			
+	</div>
+	<!--===================시급지급기준 끝===================-->	
+		
+	<!--===================지급계산시작===================-->	
+		<div class="container-fluid">
+			<table class ="table table-striped" th:each="m : ${modiStaffPay}">
+				<tr>
+					<td rowspan="5" style="text-align: center; vertical-align:middle;">급여내역</td>
+				</tr>
+				<tr class="info" style="text-align: center;">	
+					<td>계산번호</td>
+					<td>지급월</td>
+					<td>아이디</td>
+					<td>시급</td>
+					<td>근무시간</td>	
+					<td>
+					<button type="button" id="StaffCalBaseBtn" class="btn btn-info btn-sm btn-block">기본급</button>
+					</td>				
+				</tr>
+				<tr style="text-align: center;">				
+					<td>
+					<input type="text" class="form-control" id="spcCode" name="spcCode" th:value="${m.spcCode}" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="cpRTitle" name="pRTitle" th:value="${#numbers.formatInteger(m.pRTitle, 0)}" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="cMrId" name="mrId" th:value="${m.mrId}" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="spcHourlyWage" name="spcHourlyWage" th:value="${m.spcHourlyWage}" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="spcTotalHour" name="spcTotalHour" th:value="${m.spcTotalHour}" >
+					</td>	
+					<td>
+					<input type="text" class="form-control" id="spcBasePay" name="spcBasePay" th:value="${m.spcBasePay}" readonly>
+					</td>
+				</tr>
+				<tr class="info" style="text-align: center;">
+					<td>인센티브 %</td>
+					<td>인센티브계산금액</td>
+					<td></td>
+					<td></td>
+					<td></td>				
+					<td colspan="2" >
+					<button type="button" id="StaffCalTotalBtn" class="btn btn-info btn-sm btn-block">급여계총액계산</button>
+					</td>
+				</tr>
+				<tr style="text-align: center;">
+					<td>
+					<input type="text" class="form-control" id="spcIncentivePer" name="spcIncentivePer" th:value="${m.spcIncentivePer}" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="spcIncentive" name="spcIncentive" th:value="${m.spcIncentive}" readonly>					
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+					<input type="text" class="form-control" id="spcTotal" name="spcTotal" th:value="${m.spcTotal}" placeholder="급여계총액" readonly >
+					</td>
+				</tr>
+				<tr style="text-align: center;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="2" >
+					<button type="button" id="modiStaffCalInsertBtn" class="btn btn-primary btn-sm btn-block">
+					급여계수정
+					</button>
+					</td>	
+				</tr>					
+			</table>
+		</div>
+	</form>
+	<!--===================지급계산끝===================-->	
+	<!-- 공제계 수정폼 -->
+	<form action="/modiStaffDedupay" id="modiStaffDeduFoinForm" method="post"> 
+	<!--===================공제계산시작===================-->	
+	
+		<div class="container-fluid">
+			<table class ="table table-striped" th:each="m : ${modiStaffPay}">
+				<tr>
+					<td rowspan="5" style="text-align: center; vertical-align:middle;">공제내역</td>
+				</tr>
+				<tr class="info" style="text-align: center;">	
+					<td>공제번호</td>
+					<td>공제월</td>
+					<td>아이디</td>
+					<td>요율시행년도</td>
+					<td>원천징수금액</td>	
+					<td>
+					<button type="button" id="StaffDeduTotalBtn" class="btn btn-info btn-sm btn-block">공제총액계산</button>	
+					</td>		
+				</tr>
+				<tr style="text-align: center;">
+					<td>
+					<input type="text" class="form-control" id="spdCode" name="spdCode" th:value="${m.spdCode}" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="dpRTitle" name="pRTitle" th:value="${#numbers.formatInteger(m.pRTitle, 0)}" readonly>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="dMrId" name="mrId" th:value="${m.mrId}" readonly>
+					</td>
+					<td>
+					<select name ="iyCode" class="form-control" >
+			  			<option>::시행년도::</option>
+			  			<th:block th:each="i : ${insuranceYear}">
+				  			<option id ="iyCode" th:value="${i.iyCode}" >[[${i.iyCode+'년'}]]</option>
+			  			</th:block>
+			  		</select>
+					</td>
+					<td>
+					<input type="text" class="form-control" id="spdTheBusinessTax" name="spdTheBusinessTax" th:value="${m.spdTheBusinessTax}" readonly>
+					</td>	
+					<td>
+					<input type="text" class="form-control" id="spdTotal" name="spdTotal" th:value="${m.spdTotal}" readonly>
+					</td>
+				</tr>
+				<tr style="text-align: center;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="2" >
+					<button type="button" id="modiStaffDeduInsertBtn" class="btn btn-primary btn-sm btn-block">
+					공제계수정
+					</button>
+					<td colspan="2" >
+					</td>	
+				</tr>					
+				<tr style="text-align: center;">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="2">
+					<button type="button" id="StaffPayTotalBtn" class="btn btn-info btn-sm btn-block">실지급액계산</button>					
+					</td>
+					<td colspan="2">
+					<input type="text" class="form-control" id="spPay" name="spPay" th:value="${m.spPay}" readonly>
+					</td>	
+				</tr>					
+			</table>			
+			<p>
+				<button type="button" id="modiStaffPayInsertBtn" class="btn btn-success btn-lg">
+				강사급여수정
+				</button>					
+			</p>
+			</div>	
+	</form>	
+	<!--===================공제계산끝===================-->
+
+	<br>
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	</th:block>
+</html>
