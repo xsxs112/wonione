@@ -88,7 +88,7 @@ public class MemberController {
 				session.setAttribute("SLEVEL", member.getLevelNum());
 				session.setAttribute("SLEVELNAME", member.getLevelName());
 				
-				return "login/login";
+				return "index";
 			}
 		}
 		

@@ -10,13 +10,8 @@
 			$(function(){
 				$('#loginBtn').click(function(){
 					
-					console.log('클릭 이벤트 걸리는지 확인');
-					
 					var mrId = $('input[name=mrId]').val();
 					var mrPw = $('input[name=mrPw]').val();
-					
-					console.log(mrId,'로그인 화면에 입력하는 mrId');
-					console.log(mrPw,'로그인 화면에 입력하는 mrPw');
 					
 					if(mrId === '' || mrId === undefined){
 						alert('아이디를 입력해 주세요');
@@ -72,20 +67,16 @@
 				<fieldset class='text-center'>
 					<legend>Login</legend>
 				<div class='form-group'>
-					<input class='form-control' placeholder='oid001' type='text'name="mrId">
+					<input class='form-control' type='text'name="mrId" value="oid001">
 				</div>
 				<div class='form-group'>
-					<input class='form-control' placeholder='opw001' type='password' name="mrPw">
+					<input class='form-control' type='password' name="mrPw" value='opw001'>
 				</div>
 				<div class='text-center'>
 					<button type="button" id="loginBtn" class="btn btn-default">로그인</button>
 				</div>
 				</fieldset>
 			</form>
-			<h3 th:if="${session.SID ne null}"><span th:text="${session.SNAME + '님 환영합니다.'}"></span></h3>
-			<button type="button" th:if="${session.SID ne null}" onclick= "location.href='/index'">
-				HOME
-			</button>
 		</div>
 		</div>
 		</div>
