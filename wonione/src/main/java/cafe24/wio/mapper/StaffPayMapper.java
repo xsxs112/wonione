@@ -39,4 +39,13 @@ public interface StaffPayMapper {
 	//수정할 강사정보 불러오기
 	public StaffPay getMrBySId(String spCode);
 
+	//강사 급여계 수정
+	public int modiStaffCal(StaffPay staffpay);
+
+	//강사 공제계 수정
+	public int modiStaffDedu(StaffPay staffPay);
+
+	//강사 급여 수정
+	public int modiStaffPay(StaffPay staffPay);
+
 }
