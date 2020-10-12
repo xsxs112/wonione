@@ -14,6 +14,19 @@ import cafe24.wio.bean.Member;
 public interface ApprMapper {
 	
 	
+	public float getWorkTime(AttTimeManage attTimeManage);
+	
+	public float getMealTime(AttTimeManage attTimeManage);
+	
+	
+	public int setWorkTime(AttManagement attManagement);
+	
+	public float getAttEndTime(String attCode);
+	
+	
+	public int setGoingOut(AttManagement attManagement);
+	
+	
 	public int manageConfirm(String attCode);
 	
 	

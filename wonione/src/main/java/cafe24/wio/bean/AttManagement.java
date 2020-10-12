@@ -9,13 +9,23 @@ public class AttManagement {
 	String mrName;
 	String attStTime;
 	String attEndTime;
-	String attTime;
+	float attTime;
 	String attNote;
-	String goingOut;
+	float goingOut;
 	String goingOutStTime;
 	String goingOutEndTime;
 	String levelName;
 	String confirm;
+	float mealTime;
+	
+	
+	
+	public float getMealTime() {
+		return mealTime;
+	}
+	public void setMealTime(float mealTime) {
+		this.mealTime = mealTime;
+	}
 	public String getAttCode() {
 		return attCode;
 	}
@@ -52,10 +62,10 @@ public class AttManagement {
 	public void setAttEndTime(String attEndTime) {
 		this.attEndTime = attEndTime;
 	}
-	public String getAttTime() {
+	public float getAttTime() {
 		return attTime;
 	}
-	public void setAttTime(String attTime) {
+	public void setAttTime(float attTime) {
 		this.attTime = attTime;
 	}
 	public String getAttNote() {
@@ -64,10 +74,10 @@ public class AttManagement {
 	public void setAttNote(String attNote) {
 		this.attNote = attNote;
 	}
-	public String getGoingOut() {
+	public float getGoingOut() {
 		return goingOut;
 	}
-	public void setGoingOut(String goingOut) {
+	public void setGoingOut(float goingOut) {
 		this.goingOut = goingOut;
 	}
 	public String getGoingOutStTime() {
@@ -99,13 +109,13 @@ public class AttManagement {
 		return "AttManagement [attCode=" + attCode + ", attDate=" + attDate + ", mrId=" + mrId + ", mrName=" + mrName
 				+ ", attStTime=" + attStTime + ", attEndTime=" + attEndTime + ", attTime=" + attTime + ", attNote="
 				+ attNote + ", goingOut=" + goingOut + ", goingOutStTime=" + goingOutStTime + ", goingOutEndTime="
-				+ goingOutEndTime + ", levelName=" + levelName + ", confirm=" + confirm + "]";
+				+ goingOutEndTime + ", levelName=" + levelName + ", confirm=" + confirm + ", mealTime=" + mealTime
+				+ "]";
 	}
 	
 	
 	
 	
-
 	
 	
 	
