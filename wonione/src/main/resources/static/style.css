@@ -4756,12 +4756,13 @@ div#sparklinehome canvas {
 }
 /* inputboxCss  */
 .inputbox{
-	width:250px;
+	width:100%;
+	overflow: visible;
 }
 #consultingData{
 	overflow-x:hidden;
 	overflow-y:auto; 
-	width:1300px; 
-	height:100px;
+	width: 100%; 
+	height: 100px;
 	resize: none;
 }
