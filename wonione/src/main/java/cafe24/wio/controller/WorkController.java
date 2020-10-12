@@ -36,7 +36,18 @@ public class WorkController {
 
 		return "redirect:/attManage";
 	}
+	
+	@GetMapping("/manageConfirm")
+	public String manageConfirm(AttManagement attManagement, @RequestParam(value = "attCode", required = false) String attCode) {
 
+		apprRequestService.manageConfirm(attCode);
+		
+		
+		return "redirect:/attManage";
+	}
+	
+	
+	
 	@PostMapping("/workTimeModify")
 	public String workTimeModify(AttTimeManage attTimeManage,
 			@RequestParam(value = "mrId", required = false) String mrId,
@@ -140,9 +151,11 @@ public class WorkController {
 
 		List<Member> workerList = apprRequestService.getWorkerList();
 		model.addAttribute("workerList", workerList);
-		List<AttManagement> allAttendanceList = apprRequestService.allAttendanceList();
+		List<AttManagement> noConfirmList = apprRequestService.noConfirmList();
+		model.addAttribute("noConfirmList", noConfirmList);
 		
-		model.addAttribute("allAttendanceList", allAttendanceList);
+		List<AttManagement> confirmList = apprRequestService.confirmList();
+		model.addAttribute("confirmList", confirmList);
 		return "workmanagment/attManage";
 	}
 	

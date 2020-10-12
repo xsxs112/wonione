@@ -24,112 +24,121 @@
 
 	<script type="text/javascript">
 		$(function() {
-	
-			
+
 			// 직원 상세보기 값 가져오기
-	 		$('.detail').click(function(){
-	 			var mrId = $(this).attr('data-mCode');
+			$('.detail').click(function() {
+				var mrId = $(this).attr('data-mCode');
 				var request = $.ajax({
-					  url: "/workerListDetail",
-					  method: "GET",
-					  data: { mrId : mrId },
-					  dataType: "json"
-					});
-					request.done(function(data) {
-						$('#mrName').val(data.mrName);
-						$('#mrId').val(data.mrId);
-						$('#levelName').val(data.levelName);
-						$('#workStTime').val(data.workStTime);
-						$('#workEndTime').val(data.workEndTime);
-						$('#mStTime').val(data.mStTime);
-						$('#mEndTime').val(data.mEndTime);
-						$('#workTime').val(data.workTime);
-					});
-					request.fail(function( jqXHR, textStatus ) {
-						alert( "Request failed: " + textStatus );
-					});	
-	 		});	
-			
-			
-			
-			
-	 		$('#modifyBtn').click(function(){
-	 			var mrId = $('#mrId').val();
-	 			var workStTime = $('#workStTime').val();
-	 			var workEndTime = $('#workEndTime').val();
-				if(mrId == null || mrId == "" || mrId == 'undefined'){
-					alert("직원을 선택해주세요");
-					return;
-				}
-				if(workStTime == null || workStTime == '' || workStTime == 'undefined'){
- 					alert("출근시간을 입력해주세요");
- 					return;
- 				}
- 				
- 				if(workEndTime == null || workEndTime == '' || workEndTime == 'undefined'){
- 					alert("퇴근시간을 입력해주세요");
- 					return;
- 					
- 				}else{
-		 			var request = $.ajax({
-						  url: "/checkWorkTimeList",
-						  method: "GET",
-						  data: { mrId : mrId },
-						  dataType: "text"
-						});
-						request.done(function(data) {
-							
-							if(data==0){
-								alert('저장되었습니다');
-								$('form').attr("action",'/workTimeStorage');
-								$('form').submit();
-							}else{
-								alert('수정되었습니다');
-								$('form').attr("action",'/workTimeModify');
-								$('form').submit();
-							}
-						});
-						request.fail(function( jqXHR, textStatus ) {
-							alert( "Request failed: " + textStatus );
-						});	
- 					
- 					
- 				}
-	 			
-	
-	 			
-	 		})
-	 		
-	 		$('#deleteBtn').click(function(){
-	 			var mrId = $('#mrId').val();
-				if(mrId == null || mrId == "" || mrId == 'undefined'){
-					alert("직원을 선택해주세요");
-					return;
-				}
-	 			
-	 			var request = $.ajax({
-					  url: "/checkWorkTimeList",
-					  method: "GET",
-					  data: { mrId : mrId },
-					  dataType: "text"
-					});
-					request.done(function(data) {
-						
-						if(data==1){
-							alert('삭제되었습니다.');
-							$('form').attr("action",'/workTimeDelete');
-							$('form').submit();
-						}else{
+					url : "/workerListDetail",
+					method : "GET",
+					data : {
+						mrId : mrId
+					},
+					dataType : "json"
+				});
+				request.done(function(data) {
+					$('#mrName').val(data.mrName);
+					$('#mrId').val(data.mrId);
+					$('#levelName').val(data.levelName);
+					$('#workStTime').val(data.workStTime);
+					$('#workEndTime').val(data.workEndTime);
+					$('#mStTime').val(data.mStTime);
+					$('#mEndTime').val(data.mEndTime);
+					$('#workTime').val(data.workTime);
+				});
+				request.fail(function(jqXHR, textStatus) {
+					alert("Request failed: " + textStatus);
+				});
+			});
+
+			$('#modifyBtn').click(
+					function() {
+						var mrId = $('#mrId').val();
+						var workStTime = $('#workStTime').val();
+						var workEndTime = $('#workEndTime').val();
+						if (mrId == null || mrId == "" || mrId == 'undefined') {
+							alert("직원을 선택해주세요");
 							return;
 						}
-					});
-					request.fail(function( jqXHR, textStatus ) {
-						alert( "Request failed: " + textStatus );
-					});	
-	 			
-	 		})
-			
-					
+						if (workStTime == null || workStTime == ''
+								|| workStTime == 'undefined') {
+							alert("출근시간을 입력해주세요");
+							return;
+						}
+
+						if (workEndTime == null || workEndTime == ''
+								|| workEndTime == 'undefined') {
+							alert("퇴근시간을 입력해주세요");
+							return;
+
+						} else {
+							var request = $.ajax({
+								url : "/checkWorkTimeList",
+								method : "GET",
+								data : {
+									mrId : mrId
+								},
+								dataType : "text"
+							});
+							request
+									.done(function(data) {
+
+										if (data == 0) {
+											alert('저장되었습니다');
+											$('form').attr("action",
+													'/workTimeStorage');
+											$('form').submit();
+										} else {
+											alert('수정되었습니다');
+											$('form').attr("action",
+													'/workTimeModify');
+											$('form').submit();
+										}
+									});
+							request.fail(function(jqXHR, textStatus) {
+								alert("Request failed: " + textStatus);
+							});
+
+						}
+
+					})
+
+			$('#deleteBtn').click(function() {
+				var mrId = $('#mrId').val();
+				if (mrId == null || mrId == "" || mrId == 'undefined') {
+					alert("직원을 선택해주세요");
+					return;
+				}
+
+				var request = $.ajax({
+					url : "/checkWorkTimeList",
+					method : "GET",
+					data : {
+						mrId : mrId
+					},
+					dataType : "text"
+				});
+				request.done(function(data) {
+
+					if (data == 1) {
+						alert('삭제되었습니다.');
+						$('form').attr("action", '/workTimeDelete');
+						$('form').submit();
+					} else {
+						return;
+					}
+				});
+				request.fail(function(jqXHR, textStatus) {
+					alert("Request failed: " + textStatus);
+				});
+
+			})
+
+			$('.confirm').click(function() {
+				var attCode = $(this).attr('data-mCode');
+				window.location.href = '/manageConfirm?attCode=' + attCode;
+			})
+
 		})
 	</script>
 
@@ -157,12 +166,13 @@
 								<tr th:each="l: ${workerList}">
 									<td th:text="${l.mrName}"></td>
 									<td th:text="${l.levelName}"></td>
-									<td><a th:data-mCode="${l.mrId}" class ="detail">상세보기</a></td>
+									<td><a th:data-mCode="${l.mrId}" class="detail">상세보기</a></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
+
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 					<div
 						class="product-payment-inner-st res-mg-t-30 analysis-progrebar-ctn">
@@ -175,50 +185,56 @@
 								id="description">
 								<div class="row">
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-									<form id ="signupForm" action="/addMember" method="post">
-									<input type = "hidden" name = "mrId" id = "mrId" >
-									
-										<table class="table">
-											<tbody>
-												<tr>
-													<td>이름</td>
-													<td><input type = "text" id = "mrName" readonly="readonly"></td>
-												</tr>
-												<tr>
-													<td>직급</td>
-													<td><input type = "text" id = "levelName" readonly="readonly"></td>
-												</tr>
-												<tr>
-													<td>출근시간</td>
-													<td><input type = "time" name = "workStTime" id = "workStTime"></td>
-												</tr>
-												<tr>
-													<td>퇴근시간</td>
-													<td><input type = "time" name = "workEndTime" id = "workEndTime"></td>
-												</tr>
-												<tr>
-													<td>식사시간</td>
-													<td><input type = "time" name = "mStTime" id = "mStTime">
-														~
-														<input type = "time" name = "mEndTime" id = "mEndTime"><button type = "button" >추가</button></td>
-												</tr>
-												<tr>
-													<td>근무시간</td>
-													<td><input type = "text" readonly="readonly" id = "workTime"></td>
-												</tr>
-												<tr>
-													<td>비고</td>
-													<td><input type = "text" name = "note" id = "note"></td>
-												</tr>
-												<tr>
-													<td colspan="2" >
-													<button type="button" id="modifyBtn" name = "modifyBtn"
-													class="btn btn-primary waves-effect waves-light">저장</button>
-													<button type="button" id="deleteBtn" name = "deleteBtn"
-													class="btn btn-primary waves-effect waves-light">삭제</button></td>
-												</tr>
-											</tbody>
-										</table>
+										<form id="signupForm" action="/addMember" method="post">
+											<input type="hidden" name="mrId" id="mrId">
+
+											<table class="table">
+												<tbody>
+													<tr>
+														<td>이름</td>
+														<td><input type="text" id="mrName"
+															readonly="readonly"></td>
+													</tr>
+													<tr>
+														<td>직급</td>
+														<td><input type="text" id="levelName"
+															readonly="readonly"></td>
+													</tr>
+													<tr>
+														<td>출근시간</td>
+														<td><input type="time" name="workStTime"
+															id="workStTime"></td>
+													</tr>
+													<tr>
+														<td>퇴근시간</td>
+														<td><input type="time" name="workEndTime"
+															id="workEndTime"></td>
+													</tr>
+													<tr>
+														<td>식사시간</td>
+														<td><input type="time" name="mStTime" id="mStTime">
+															~ <input type="time" name="mEndTime" id="mEndTime">
+															<button type="button">추가</button></td>
+													</tr>
+													<tr>
+														<td>근무시간</td>
+														<td><input type="text" readonly="readonly"
+															id="workTime"></td>
+													</tr>
+													<tr>
+														<td>비고</td>
+														<td><input type="text" name="note" id="note"></td>
+													</tr>
+													<tr>
+														<td colspan="2">
+															<button type="button" id="modifyBtn" name="modifyBtn"
+																class="btn btn-primary waves-effect waves-light">저장</button>
+															<button type="button" id="deleteBtn" name="deleteBtn"
+																class="btn btn-primary waves-effect waves-light">삭제</button>
+														</td>
+													</tr>
+												</tbody>
+											</table>
 										</form>
 									</div>
 								</div>
@@ -226,51 +242,115 @@
 						</div>
 					</div>
 				</div>
-				
-				
-			
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<br>
 				<br>
-					<div class="profile-info-inner">
-						<h4>직원 출퇴근 리스트</h4>
-						<table class="table">
-							<thead>
-								<tr>
-									<th>날짜</th>
-									<th>이름</th>
-									<th>직급</th>
-									<th>출근 시간</th>
-									<th>퇴근시간</th>
-									<th>외출시간</th>
-									<th>복귀시간</th>
-									<th>점심시간</th>
-									<th>근무시간</th>
-									<th>비고</th>
-									<th>관리자확인</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="l: ${allAttendanceList}">
-									<td th:text="${l.attDate}"></td>
-									<td th:text="${l.mrName}"></td>
-									<td th:text="${l.levelName}"></td>
-									<td th:text="${l.attStTime}"></td>
-									<td th:text="${l.attEndTime}"></td>
-									<td th:text="${l.goingOutStTime}"></td>
-									<td th:text="${l.goingOutEndTime}"></td>
-									<td>점심시간</td>
-									<td th:text="${l.attTime}"></td>
-									<td th:text="${l.attNote}"></td>
-									<td>관리자 확인</td>
-								</tr>					
-							</tbody>
-						</table>
 
+
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<br> <br>
+					<div class="product-payment-inner-st">
+						<ul id="myTabedu1" class="tab-review-design">
+							<li class="active"><a href="#reviews"> 출퇴근 리스트 미확인</a></li>
+							<li><a href="#INFORMATION">출퇴근 리스트 확인</a></li>
+
+						</ul>
+						<div id="myTabContent" class="tab-content custom-product-edit">
+							<div class="product-tab-list tab-pane fade active in" id="reviews">
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<div class="review-content-section">
+											<div class="row">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div class="devit-card-custom">
+														<table class="table">
+															<thead>
+																<tr>
+																	<th>날짜</th>
+																	<th>이름</th>
+																	<th>직급</th>
+																	<th>출근 시간</th>
+																	<th>퇴근시간</th>
+																	<th>외출시간</th>
+																	<th>복귀시간</th>
+																	<th>점심시간</th>
+																	<th>근무시간</th>
+																	<th>비고</th>
+																	<th>관리자확인</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr th:each="l: ${noConfirmList}">
+																	<td th:text="${l.attDate}"></td>
+																	<td th:text="${l.mrName}"></td>
+																	<td th:text="${l.levelName}"></td>
+																	<td th:text="${l.attStTime}"></td>
+																	<td th:text="${l.attEndTime}"></td>
+																	<td th:text="${l.goingOutStTime}"></td>
+																	<td th:text="${l.goingOutEndTime}"></td>
+																	<td>점심시간</td>
+																	<td th:text="${l.attTime}"></td>
+																	<td th:text="${l.attNote}"></td>
+																	<td><a th:data-mCode="${l.attCode}"
+																		class="confirm">확인</a></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="product-tab-list tab-pane fade" id="INFORMATION">
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<div class="review-content-section">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="devit-card-custom">
+														<table class="table">
+															<thead>
+																<tr>
+																	<th>날짜</th>
+																	<th>이름</th>
+																	<th>직급</th>
+																	<th>출근 시간</th>
+																	<th>퇴근시간</th>
+																	<th>외출시간</th>
+																	<th>복귀시간</th>
+																	<th>점심시간</th>
+																	<th>근무시간</th>
+																	<th>비고</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr th:each="l: ${confirmList}">
+																	<td th:text="${l.attDate}"></td>
+																	<td th:text="${l.mrName}"></td>
+																	<td th:text="${l.levelName}"></td>
+																	<td th:text="${l.attStTime}"></td>
+																	<td th:text="${l.attEndTime}"></td>
+																	<td th:text="${l.goingOutStTime}"></td>
+																	<td th:text="${l.goingOutEndTime}"></td>
+																	<td>점심시간</td>
+																	<td th:text="${l.attTime}"></td>
+																	<td th:text="${l.attNote}"></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
 					</div>
 				</div>
-				
-				
+
+
 			</div>
 		</div>
 	</div>

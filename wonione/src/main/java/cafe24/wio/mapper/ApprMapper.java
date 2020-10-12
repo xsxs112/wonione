@@ -14,9 +14,12 @@ import cafe24.wio.bean.Member;
 public interface ApprMapper {
 	
 	
+	public int manageConfirm(String attCode);
 	
 	
-	public List<AttManagement> allAttendanceList();
+	public List<AttManagement> confirmList();
+	
+	public List<AttManagement> noConfirmList();
 	
 	
 	public int workTimeDelete(String mrId);
