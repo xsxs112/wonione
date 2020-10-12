@@ -91,8 +91,7 @@ public class OfficersPayService {
 	public int addOfficersPay(OfficersPay officersPay) {
 		int result = officersPayMapper.addOfficersPay(officersPay);
 		
-		return 	result;
-		
+		return 	result;		
 	}
 
 
@@ -101,6 +100,28 @@ public class OfficersPayService {
 		OfficersPay modiOfficersPay = officersPayMapper.getMrByOId(opCode);
 		
 		return modiOfficersPay;
+	}
+	
+	//직원 급여계 수정하기
+	public int modifyOffiCal(OfficersPay officersPay) {
+		int result = officersPayMapper.modifyOffiCal(officersPay);	
+		
+		return 	result;		
+	}
+
+	//직원 공제계 수정하기
+	public int modifyOffiDedu(OfficersPay officersPay) {
+		int result = officersPayMapper.modifyOffiDedu(officersPay);
+		
+		return 	result;
+	}
+
+	//직원 급여 수정
+	public int modiOffiPay(OfficersPay officersPay) {
+		int result = officersPayMapper.modiOffiPay(officersPay);
+		
+		return 	result;
+		
 	}
 
 
