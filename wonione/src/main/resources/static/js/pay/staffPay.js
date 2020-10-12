@@ -4,6 +4,121 @@
  */
   
  	$(function(){
+ 		//강사 급여 수정
+		$('#modiStaffPayBtn').click(function(){
+			
+			var foinForm = $('#modiStaffDeduFoinForm');
+			var spCode = $('#spCode').val();
+			var mrId = $('#dMrId').val();			
+			var pRTitle = $('#dpRTitle').val();
+			var spdCode = $('#spdCode').val();
+			var spDate = $('#spDate').val();
+			var spPay = $('#spPay').val();
+			if(spPay == null || spPay == undefined || spPay == ''){
+				alert('실지급액을 계산해주세요.');
+				return;
+			}	
+
+			foinForm.attr('action', '/modiStaffPay');
+			foinForm.submit();			
+		}); 	 		
+ 	
+  		//강사 공제계 수정
+ 		$('#modiStaffDeduBtn').click(function(){
+ 			var foinForm = $('#modiStaffDeduFoinForm');
+			var spdCode = $('#spdCode').val();
+			var spcCode = $('#spcCode').val();
+			var mrId = $('#dMrId').val();
+			var pRTitle = $('#dpRTitle').val();
+			var iyCode = $('#iyCode').val();
+			var spdTheBusinessTax = $('#spdTheBusinessTax').val();
+			var spdTotal = $('#spdTotal').val();
+			
+			var request = $.ajax({
+				  url: "/modiStaffDedu",
+				  method: "POST",
+				  data: { spdCode : spdCode
+						, spcCode : spcCode
+					  	, mrId : mrId
+					  	, pRTitle : pRTitle
+					  	, iyCode : iyCode
+					  	, spdTheBusinessTax : spdTheBusinessTax
+					  	, spdTotal : spdTotal },
+				  dataType: "json"
+				});
+				request.done(function(data) {
+					//console.log(JSON.stringify(data));
+					
+					$('#spdCode').val(data.spdCode);
+					$('#dMrId').val(data.mrId);
+					$('#dpRTitle').val(data.pRTitle);
+					$('#iyCode').val(data.iyCode);
+					$('#spdTheBusinessTax').val(data.spdTheBusinessTax);
+					$('#spdTotal').val(data.spdTotal);
+						
+					alert( "입력이 완료되었습니다.");				
+				});
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});	
+				
+		});		
+			
+ 	
+ 		//강사 급여계 수정
+		$('#modiStaffCalBtn').click(function(){
+			var foinForm = $('#modiStaffCalFoinForm');
+			var spcCode = $('#spcCode').val();
+			var mrId = $('#cMrId').val();
+			var pRTitle = $('#cpRTitle').val();
+			var spcHourlyWage = $('#spcHourlyWage').val();
+			var spcTotalHour = $('#spcTotalHour').val();
+			var spcBasePay = $('#spcBasePay').val();
+			var spcIncentivePer = $('#spcIncentivePer').val();
+			var spcIncentive = $('#spcIncentive').val();
+			var spcTotal = $('#spcTotal').val();	
+				
+			if($('#spcTotal').val() == null || $('#spcTotal').val() == undefined || $('#spcTotal').val() == '' || $('#spcTotal').val() == 0){
+			alert('총액을 다시 입력해주세요.');
+			return;
+			}
+			var request = $.ajax({
+				  url: "/modiStaffCal",
+				  method: "POST",
+				  data: { spcCode : spcCode
+					  	, mrId : mrId
+					  	, pRTitle : pRTitle
+					  	, spcHourlyWage : spcHourlyWage
+					  	, spcTotalHour : spcTotalHour
+					  	, spcBasePay : spcBasePay
+					  	, spcIncentivePer : spcIncentivePer
+					  	, spcIncentive : spcIncentive
+					  	, spcTotal : spcTotal 
+					  	},
+				  dataType: "json"
+				});
+				request.done(function(data) {
+					$('#spcCode').val(data.spcCode);
+					$('#cMrId').val(data.mrId);
+					$('#cpRTitle').val(data.pRTitle);
+					$('#spcHourlyWage').val(data.spcHourlyWage);
+					$('#spcTotalHour').val(data.spcTotalHour);
+					$('#spcBasePay').val(data.spcBasePay);
+					$('#spcIncentivePer').val(data.spcIncentivePer);
+					$('#spcIncentive').val(data.spcIncentive);
+					$('#spcTotal').val(data.spcTotal);
+					$('#spdCode').val(data.spcCode);
+					$('#dpRTitle').val(data.pRTitle);
+					$('#dMrId').val(data.mrId);
+		
+						alert( "입력이 완료되었습니다.");				
+				});
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+				});	
+				
+		});	
+			
 		//강사 급여 입력
 		$('#staffPayInsertBtn').click(function(){
 			

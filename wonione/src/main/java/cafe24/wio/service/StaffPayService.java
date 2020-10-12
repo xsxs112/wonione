@@ -101,4 +101,25 @@ public class StaffPayService {
 		return modiStaffPay;
 	}
 
+	//강사 급여계 수정하기
+	public int modiStaffCal(StaffPay staffpay) {
+		int result = staffPayMapper.modiStaffCal(staffpay);
+		
+		return result;		
+	}
+
+	//강사 공제계 수정하기
+	public int modiStaffDedu(StaffPay staffPay) {
+		int result = staffPayMapper.modiStaffDedu(staffPay);
+		
+		return result;	
+	}
+
+	//강사 급여 수정
+	public int modiStaffPay(StaffPay staffPay) {
+		int result = staffPayMapper.modiStaffPay(staffPay);
+		
+		return result;
+	}
+
 }

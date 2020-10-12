@@ -9,6 +9,7 @@
 		<script type="text/javascript">
 	 	
 	$(function(){	
+		
 		  	  
 	});
 		</script>	
@@ -17,7 +18,7 @@
 	<th:block layout:fragment="customContent" >	
 	<!--===================강사목록불러오기시작===================-->
 	<!-- 급여계 수정폼 -->
-	<form action="/modiStaffCalpay" id="modiStaffCalFoinForm" method="post">
+	<form action="/modiStaffCal" id="modiStaffCalFoinForm" method="post">
 	<div style="width:30%; float:left" class="container-fluid">
 		<table id="tb2" class ="table table-striped" th:each="m : ${modiStaffPay}">
 			<tr>
@@ -190,7 +191,7 @@
 					<td></td>
 					<td></td>
 					<td colspan="2" >
-					<button type="button" id="modiStaffCalInsertBtn" class="btn btn-primary btn-sm btn-block">
+					<button type="button" id="modiStaffCalBtn" class="btn btn-primary btn-sm btn-block">
 					급여계수정
 					</button>
 					</td>	
@@ -200,7 +201,7 @@
 	</form>
 	<!--===================지급계산끝===================-->	
 	<!-- 공제계 수정폼 -->
-	<form action="/modiStaffDedupay" id="modiStaffDeduFoinForm" method="post"> 
+	<form action="/modiStaffDedu" id="modiStaffDeduFoinForm" method="post"> 
 	<!--===================공제계산시작===================-->	
 	
 		<div class="container-fluid">
@@ -250,7 +251,7 @@
 					<td></td>
 					<td></td>
 					<td colspan="2" >
-					<button type="button" id="modiStaffDeduInsertBtn" class="btn btn-primary btn-sm btn-block">
+					<button type="button" id="modiStaffDeduBtn" class="btn btn-primary btn-sm btn-block">
 					공제계수정
 					</button>
 					<td colspan="2" >
@@ -269,7 +270,7 @@
 				</tr>					
 			</table>			
 			<p>
-				<button type="button" id="modiStaffPayInsertBtn" class="btn btn-success btn-lg">
+				<button type="button" id="modiStaffPayBtn" class="btn btn-success btn-lg">
 				강사급여수정
 				</button>					
 			</p>

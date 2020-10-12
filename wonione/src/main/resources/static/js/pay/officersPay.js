@@ -6,6 +6,184 @@
  */
  
 	$(function(){
+				
+		//직원 급여 수정
+		$('#modiOffiPayBtn').click(function(){
+			
+			var foinForm = $('#modiOffiDeduFoinForm');
+			var opCode = $('#opCode').val();
+			var mrId = $('#dMrId').val();			
+			var pRTitle = $('#dpRTitle').val();
+			var opdCode = $('#opdCode').val();
+			var opDate = $('#opDate').val();
+			var opPay = $('#opPay').val();
+		
+			if(opPay == null || opPay == undefined || opPay == ''){
+				alert('실지급액을 계산해주세요.');
+				return;
+			}	
+
+			foinForm.attr('action', '/modiOffiPay');
+			foinForm.submit();			
+		}); 		
+		
+		//직원 공제계 수정
+		$('#modiOffiDeduBtn').click(function(){
+			var foinForm = $('#modiOffiDeduFoinForm');
+			var opdCode = $('#opdCode').val();
+			var opcCode = $('#opcCode').val();
+			var mrId = $('#dMrId').val();
+			var pRTitle = $('#dpRTitle').val();
+			var iyCode = $('#iyCode').val();
+			var opdIncomeTax = $('#opdIncomeTax').val();
+			var opdResidentIncomTax = $('#opdResidentIncomTax').val();
+			var opdEmploymentInsurance = $('#opdEmploymentInsurance').val();
+			var opdNationalPension = $('#opdNationalPension').val();
+			var opdHealthInsurance = $('#opdHealthInsurance').val();
+			var opdLongtermNursingInsurance = $('#opdLongtermNursingInsurance').val();
+			var opdTotal = $('#opdTotal').val();
+			
+			var request = $.ajax({
+				  url: "/modifyOffiDedu",
+				  method: "POST",
+				  data: { opdCode : opdCode
+						, opcCode : opcCode
+					  	, mrId : mrId
+					  	, pRTitle : pRTitle
+					  	, iyCode : iyCode
+					  	, opdIncomeTax : opdIncomeTax
+					  	, opdResidentIncomTax : opdResidentIncomTax
+					  	, opdEmploymentInsurance : opdEmploymentInsurance
+					  	, opdNationalPension : opdNationalPension
+					  	, opdHealthInsurance : opdHealthInsurance
+					  	, opdLongtermNursingInsurance : opdLongtermNursingInsurance
+					  	, opdTotal : opdTotal },
+				  dataType: "json"
+				});
+					request.done(function(data) {
+					$('#opdCode').val(data.opdCode);
+					$('#dMrId').val(data.mrId);
+					$('#dpRTitle').val(data.pRTitle);
+					$('#iyCode').val(data.iyCode);
+					$('#opdIncomeTax').val(data.opdIncomeTax);
+					$('#opdResidentIncomTax').val(data.opdResidentIncomTax);
+					$('#opdEmploymentInsurance').val(data.opdEmploymentInsurance);
+					$('#opdNationalPension').val(data.opdNationalPension);
+					$('#opdHealthInsurance').val(data.opdHealthInsurance);
+					$('#opdLongtermNursingInsurance').val(data.opdLongtermNursingInsurance);
+					$('#opdTotal').val(data.opdTotal);
+						
+						alert( "입력이 완료되었습니다.");				
+				});
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+				});	
+				
+		});			
+		
+		//직원 급여계 수정
+		$('#modiOffiCalBtn').click(function(){
+			var foinForm = $('#modiOffiCalFoinForm');
+			var opcCode = $('#opcCode').val();
+			var mrId = $('#cMrId').val();
+			var pRTitle = $('#cpRTitle').val();
+			var opcHourlyWage = $('#opcHourlyWage').val();
+			var opcTotalHour = $('#opcTotalHour').val();
+			var opcBasePay = $('#opcBasePay').val();
+			var opcFoodExpenses = $('#opcFoodExpenses').val();
+			var opcTransportation = $('#opcTransportation').val();
+			var opcWelfare = $('#opcWelfare').val();
+			var opcBonus = $('#opcBonus').val();
+			var opcEct = $('#opcEct').val();
+			var opcTotal = $('#opcTotal').val();	
+				
+			if($('#opcTotal').val() == null || $('#opcTotal').val() == undefined || $('#opcTotal').val() == '' || $('#opcTotal').val() == 0){
+			alert('총액을 다시 입력해주세요.');
+			return;
+			}
+			var request = $.ajax({
+				  url: "/modifyOffiCal",
+				  method: "POST",
+				  data: { opcCode : opcCode
+					  	, mrId : mrId
+					  	, pRTitle : pRTitle
+					  	, opcHourlyWage : opcHourlyWage
+					  	, opcTotalHour : opcTotalHour
+					  	, opcBasePay : opcBasePay
+					  	, opcFoodExpenses : opcFoodExpenses
+					  	, opcTransportation : opcTransportation
+					  	, opcWelfare : opcWelfare
+					  	, opcBonus : opcBonus
+					  	, opcEct : opcEct
+					  	, opcTotal : opcTotal },
+				  dataType: "json"
+				});
+					request.done(function(data) {
+					$('#opcCode').val(data.opcCode);
+					$('#mrId').val(data.mrId);
+					$('#pRTitle').val(data.pRTitle);
+					$('#opcHourlyWage').val(data.opcHourlyWage);
+					$('#opcTotalHour').val(data.opcTotalHour);
+					$('#opcBasePay').val(data.opcBasePay);
+					$('#opcFoodExpenses').val(data.opcFoodExpenses);
+					$('#opcTransportation').val(data.opcTransportation);
+					$('#opcWelfare').val(data.opcWelfare);
+					$('#opcBonus').val(data.opcBonus);
+					$('#opcEct').val(data.opcEct);
+					$('#opcTotal').val(data.opcTotal);	
+					$('#opdCode').val(data.opcCode);
+					$('#dpRTitle').val(data.pRTitle);
+					$('#dMrId').val(data.mrId);	
+								
+						alert( "입력이 완료되었습니다.");				
+				});
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+				});	
+				
+		});	
+		
+ 		//직원정보와 시급, 지급월 수정
+ 		$('#modiOffiCalformBtn').click(function(){
+			
+			var mrId = $('input[name=mrId]').val();
+			var mrName = $('input[name=mrName]').val();
+			var pRTitle = $('select[name=pRTitle] option:selected').val();
+			var opcHourlyWage = $('select[name=HourlyWage] option:selected').val();
+				if(mrId == null || mrId == undefined || mrId == ''){
+					alert('직원정보 선택해주세요.');
+					return;
+				}
+				if(pRTitle == '::지급월::'){
+					alert('지급월을 선택해주세요.');
+					return;
+				}
+				if(opcHourlyWage == '::시급::'){
+					alert('시급을 선택해주세요.');
+					return;
+				}
+			var request = $.ajax({
+				  url: "/callOfficersInfo",
+				  method: "POST",
+				  data: { mrId : mrId
+					  , mrName : mrName
+					  , pRTitle : pRTitle
+					  , opcHourlyWage : opcHourlyWage
+					  },
+				  dataType: "json"
+				});
+				request.done(function(data) {
+					
+					$('#cMrId').val(data.mrId);
+					$('#cMrName').val(data.mrName);
+					$('#cpRTitle').val(data.pRTitle);
+					$('#opcHourlyWage').val(data.opcHourlyWage);
+					
+				});
+				request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});	
+			});  	
 	
 		//직원 급여 입력
 		$('#offiPayInsertBtn').click(function(){

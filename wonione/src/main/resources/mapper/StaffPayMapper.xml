@@ -32,6 +32,55 @@
 		<result column="p_r_ect"						property="pREct"/>	
 		
 	</resultMap>
+	<!-- 강사 급여 수정 -->
+	<update id="modiStaffPay">
+		UPDATE 
+			wt_staff_pay
+		SET
+			sp_code = #{spdCode}
+			,mr_id = #{mrId}
+			,p_r_title = #{pRTitle}
+			,spd_code = #{spdCode}
+			,sp_pay = #{spPay}
+			,sp_reg_date = NOW()
+			,sp_writer = #{writer}
+		WHERE 
+			sp_code = #{spdCode}
+	</update>
+	<!-- 강사 공제계 수정 -->
+	<update id="modiStaffDedu">
+		UPDATE 
+			wt_staff_pay_deduction
+		SET
+			spd_code = #{spdCode}
+			,mr_id = #{mrId} 
+			,p_r_title = #{pRTitle}
+			,iy_code = #{iyCode}
+			,spc_code = #{spcCode}
+			,spd_the_business_tax = #{spdTheBusinessTax}
+			,spd_total = #{spdTotal}
+			,spd_reg_date = NOW()
+			,spd_writer = #{writer}
+		WHERE 
+			spd_code = #{spdCode}
+	</update>
+	<!-- 강사 급여계 수정 -->
+	<update id="modiStaffCal">
+		UPDATE 
+			wt_staff_pay_calculate
+		SET
+			spc_code = #{spcCode}
+			,mr_id = #{mrId}
+			,p_r_title = #{pRTitle}
+			,spc_hourly_wage = #{spcHourlyWage}
+			,spc_total_hour = #{spcTotalHour}
+			,spc_base_pay = #{spcBasePay}
+			,spc_incentive = #{spcIncentive}
+			,spc_total = #{spcTotal}
+			,spc_reg_date = NOW()
+			,spc_writer = #{writer}
+		WHERE spc_code = #{spcCode}
+	</update>
 	<!-- 수정할 강사 급여정보 불러오기 -->
 	<select id = "getMrBySId" parameterType="String" resultType="StaffPay">
 		SELECT
@@ -126,7 +175,12 @@
 	<select id="StaffPayDedu" resultType="StaffPay" parameterType="String">
 		SELECT 
 			iy.iy_the_business
-				* (SELECT pc.spc_total AS spcTotal FROM wt_staff_pay_calculate AS pc WHERE pc.spc_code = #{spdCode})
+				* (	SELECT 
+						pc.spc_total AS spcTotal 
+					FROM 
+						wt_staff_pay_calculate AS pc 
+					WHERE 
+						pc.spc_code = #{spdCode})
 				AS spdTheBusinessTax
 		FROM 
 			wt_insurance_year AS iy
