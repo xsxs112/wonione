@@ -6,8 +6,8 @@
     
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
-	
-	<select id = "allAttendanceList" parameterType="string" resultType="AttManagement">
+	<!-- 출근 확인 리스트 -->
+	<select id = "confirmList" parameterType="string" resultType="AttManagement">
 	
 		SELECT attendance_code as attCode
 				, m.mr_id as mrId 
@@ -26,21 +26,55 @@
 				ON a.mr_id = m.mr_id
 				LEFT JOIN wt_level AS l
 				on m.level_num = l.level_num
+		WHERE confirm = '확인'
+	
+	</select>
+	
+	<!-- 출근 확인 업데이트 -->
+	<update id = "manageConfirm" parameterType="String">
+		UPDATE wt_attendance_management
+	SET
+		confirm='확인'
+	WHERE 
+		attendance_code = #{attCode};
+	</update>
+	
+	
+	<!-- 출근 확인 전 리스트 -->
+	<select id = "noConfirmList" parameterType="string" resultType="AttManagement">
+	
+		SELECT attendance_code as attCode
+				, m.mr_id as mrId 
+				, m.mr_name AS mrName
+				, l.level_name AS levelName
+				, attendance_date as attDate
+				, attendance_start_time as attStTime
+				, attendance_end_time as attEndTime
+				, attendance_time as attTime
+				, attendance_note as attNote
+				, going_out_time as goingOut
+				, going_out_stTime as goingOutStTime
+				, going_out_endTime as goingOutEndTime
+		FROM wt_attendance_management AS a
+				LEFT JOIN wt_member_registration AS m
+				ON a.mr_id = m.mr_id
+				LEFT JOIN wt_level AS l
+				on m.level_num = l.level_num
+		WHERE ISNULL(confirm)
 
 	
 	</select>
 	
 	
 	
-	
+	<!-- 출퇴근 시간관리 삭제 -->
 	<delete id="workTimeDelete" parameterType="string">
 	
 		DELETE FROM wt_attendance_time_manage WHERE mr_id=#{mrId}
 	
-	
-	
 	</delete>
 	
+	<!-- 출퇴근시간관리 상세보기 -->
 	<update id = "workTimeModify" parameterType="AttManagement">
 		UPDATE wt_attendance_time_manage
 		SET
@@ -53,22 +87,21 @@
 	</update>
 	
 	
-	
+	<!-- 출퇴근 시간관리 저장 -->
 	<insert id="addWorkTime" parameterType="AttManagement">
-	
 		INSERT INTO wt_attendance_time_manage
 			(att_time_code, mr_id, att_start_time, att_end_time, meal_start_time, meal_end_time, work_time)
 			VALUES (#{attTimeCode}, #{mrId}, #{workStTime}, #{workEndTime}, #{mStTime}, #{mEndTime}, #{workTime})
-		
 	</insert>
 	
-	
+	<!-- 출퇴근 시간 관리 리스트 코드 증가 검색 -->
 	<select id="getTimeCode" resultType="hashMap">
 	
 		SELECT IFNULL((SELECT max(CAST(SUBSTRING(att_time_code,10) AS DECIMAL))+1 FROM wt_attendance_time_manage),1) AS max;	
 	
 	</select>
 
+	
 	<select id="checkWorkTimeList" resultType="int">
 		
 		SELECT  COUNT(a.mr_id)
@@ -240,6 +273,7 @@
 				, going_out_time as goingOut
 				, going_out_stTime as goingOutStTime
 				, going_out_endTime as goingOutEndTime
+				, confirm as confirm
 		FROM wt_attendance_management AS a
 		WHERE a.mr_id = #{SID};
 	

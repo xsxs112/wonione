@@ -20,12 +20,34 @@ public class ApprRequestService {
 	private ApprMapper apprMapper;
 	
 	
-	public List<AttManagement> allAttendanceList() {
+	
+	public int manageConfirm(String attCode) {
 		
-		List<AttManagement> allAttendanceList = apprMapper.allAttendanceList();
 		
 		
-		return allAttendanceList;
+		
+		return apprMapper.manageConfirm(attCode);
+	}
+	
+	
+	
+	
+	public List<AttManagement> confirmList() {
+		
+		List<AttManagement> confirmList = apprMapper.confirmList();
+		
+		
+		return confirmList;
+	}
+	
+	
+	
+	public List<AttManagement> noConfirmList() {
+		
+		List<AttManagement> noConfirmList = apprMapper.noConfirmList();
+		
+		
+		return noConfirmList;
 	}
 	
 	
