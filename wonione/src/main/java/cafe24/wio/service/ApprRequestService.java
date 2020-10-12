@@ -21,6 +21,46 @@ public class ApprRequestService {
 	
 	
 	
+	public float getWorkTime(AttTimeManage attTimeManage) {
+		
+		
+		
+		return apprMapper.getWorkTime(attTimeManage);
+	}
+	
+	public float getMealTime(AttTimeManage attTimeManage) {
+		
+		
+		
+		return apprMapper.getMealTime(attTimeManage);
+	}
+	
+	public int setWorkTime(AttManagement attManagement) {
+		
+		
+		
+		return apprMapper.setWorkTime(attManagement);
+	}
+	
+	
+	public float getAttEndTime(String attCode) {
+		
+		
+		
+		return apprMapper.getAttEndTime(attCode);
+	}
+	
+	
+	public int setGoingOut(AttManagement attManagement) {
+		
+		
+		
+		
+		return apprMapper.setGoingOut(attManagement);
+	}
+	
+	
+	
 	public int manageConfirm(String attCode) {
 		
 		

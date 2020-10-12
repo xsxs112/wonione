@@ -6,6 +6,51 @@
     
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
+	
+	<select id = "getWorkTime" parameterType="string" resultType="float">
+	
+		SELECT (TIMESTAMPDIFF(minute, att_start_time, att_end_time)/60) AS work_time
+		FROM wt_attendance_time_manage
+		WHERE mr_id= #{mrId};
+	
+	</select>
+	
+	
+	<select id = "getMealTime" parameterType="string" resultType="float">
+	
+		SELECT (TIMESTAMPDIFF(minute, meal_start_time, meal_end_time)/60) AS mealTime
+		FROM wt_attendance_time_manage
+		WHERE mr_id= #{mrId};
+	
+	</select>
+	
+	
+	<update id = "setWorkTime" parameterType="AttManagement">
+		UPDATE wt_attendance_management
+		SET
+			attendance_time=#{attTime}
+		WHERE	
+			attendance_code = #{attCode};
+	</update>
+	
+	<!-- 퇴근시간 - 출근시간 구하기 -->
+	<select id = "getAttEndTime" parameterType="string" resultType="float">
+	
+		SELECT (TIMESTAMPDIFF(minute, attendance_start_time, attendance_end_time)/60) AS attendance_time
+		FROM wt_attendance_management
+		WHERE attendance_code= #{attCode}
+	
+	</select>
+	
+	
+	<update id = "setGoingOut" parameterType="AttManagement">
+		UPDATE wt_attendance_management
+		SET		going_out_time=#{goingOut}
+		WHERE	attendance_code = #{attCode};
+	</update>
+	
+	
+	
 	<!-- 출근 확인 리스트 -->
 	<select id = "confirmList" parameterType="string" resultType="AttManagement">
 	
@@ -155,7 +200,8 @@
 		FROM wt_member_registration AS m
 			LEFT JOIN wt_level AS l
 			ON m.level_num = l.level_num 
-		WHERE m.level_num <![CDATA[ < ]]> 4;
+		WHERE m.level_num <![CDATA[ < ]]> 4
+		ORDER BY l.level_num ASC;
 
 	</select>
 	
@@ -251,8 +297,8 @@
 	</select>	
 	
 	
-	
-	<select id = "getGoingOutTime" parameterType="string" resultType="int">
+	<!-- 시간과 시간 사이 구하기 -->
+	<select id = "getGoingOutTime" parameterType="string" resultType="float">
 	
 		SELECT (TIMESTAMPDIFF(minute, going_out_stTime, going_out_endTime)/60) AS goingOutTime
 		FROM wt_attendance_management
