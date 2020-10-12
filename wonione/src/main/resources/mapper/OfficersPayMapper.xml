@@ -41,6 +41,65 @@
 		<result column="mr_account_num"					property="mrAccountNum"/>	
 		<result column="writer"							property="writer"/>	
 	</resultMap>
+	<!-- 직원급여 수정 -->
+	<update id="modiOffiPay">
+		UPDATE 
+			wt_officers_pay
+		SET
+			op_code = #{opdCode}
+			,mr_id = #{mrId}
+			,p_r_title = #{pRTitle}
+			,opd_code = #{opdCode}
+			,op_pay = #{opPay}
+			,op_reg_date = NOW()
+			,op_writer = #{writer}
+		WHERE 
+			op_code = #{opdCode}
+	</update>
+	<!-- 직원 공제계 수정 -->
+	<update id="modifyOffiDedu">
+		UPDATE 
+			wt_officers_pay_deduction
+		SET
+			opd_code = #{opdCode}
+			,mr_id = #{mrId}
+			,iy_code = #{iyCode}
+			,p_r_title = #{pRTitle}
+			,opd_income_tax = #{opdIncomeTax}
+			,opd_resident_income_tax = #{opdResidentIncomTax}
+			,opc_code = #{opcCode}
+			,opd_employment_insurance = #{opdEmploymentInsurance}
+			,opd_national_pension = #{opdNationalPension}
+			,opd_health_insurance = #{opdHealthInsurance}
+			,opd_longterm_nursing_insurance = #{opdLongtermNursingInsurance}
+			,opd_total = #{opdTotal}
+			,opd_reg_date = NOW()
+			,opd_writer = #{writer}
+		WHERE 
+			opd_code = #{opdCode}
+	</update>
+	<!-- 직원 급여계 수정 -->
+	<update id="modifyOffiCal">
+		UPDATE 
+			wt_officers_pay_calculate
+		SET
+			 opc_code = #{opcCode}
+			,mr_id = #{mrId}
+			,p_r_title = #{pRTitle}
+			,opc_hourly_wage = #{opcHourlyWage}
+			,opc_total_hour = #{opcTotalHour}
+			,opc_base_pay = #{opcBasePay}
+			,opc_food_expenses = #{opcFoodExpenses}
+			,opc_transportation = #{opcTransportation}
+			,opc_welfare = #{opcWelfare}
+			,opc_bonus = #{opcBonus}
+			,opc_ect = #{opcEct}
+			,opc_total = #{opcTotal}
+			,opc_reg_date = NOW()
+			,opc_writer = #{writer}
+		WHERE 
+			opc_code = #{opcCode}
+	</update>
 		
 	<!-- 수정할 직원 급여정보 불러오기 -->
 	<select id = "getMrByOId" parameterType="String" resultType="OfficersPay">

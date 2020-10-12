@@ -39,6 +39,15 @@ public interface OfficersPayMapper {
 	//수정할 직원정보 불러오기
 	public OfficersPay getMrByOId(String opCode);
 
+	//직원 급여계 수정하기
+	public int modifyOffiCal(OfficersPay officersPay);
+
+	//직원 공제계 수정하기
+	public int modifyOffiDedu(OfficersPay officersPay);
+
+	//직원 급여 수정
+	public int modiOffiPay(OfficersPay officersPay);
+
 
 
 }

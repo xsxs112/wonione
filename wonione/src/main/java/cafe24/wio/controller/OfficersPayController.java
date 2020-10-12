@@ -29,6 +29,43 @@ public class OfficersPayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(OfficersPayController.class);
 	
+	//직원 급여 수정
+	@PostMapping("/modiOffiPay")
+	public String modiOffiPay(OfficersPay officersPay, HttpSession session) {
+		
+		String writer = (String) session.getAttribute("SID");
+		officersPay.setWriter(writer);
+		officersPayService.modiOffiPay(officersPay);
+		String oid = officersPay.getMrId();
+		return "redirect:/getIdPayList?mrId="+oid;
+	}	
+	
+	//직원 공제계 수정하기
+	@PostMapping(value = "/modifyOffiDedu",produces = "application/json")
+	@ResponseBody
+	public OfficersPay modifyOffiDedu(OfficersPay officersPay, HttpSession session) { 
+		
+		String writer = (String) session.getAttribute("SID");
+		officersPay.setWriter(writer);
+		
+		officersPayService.modifyOffiDedu(officersPay);	
+		
+		return officersPay;		
+	}
+	
+	//직원 급여계 수정하기
+	@PostMapping(value = "/modifyOffiCal",produces = "application/json")
+	@ResponseBody
+	public OfficersPay modifyOffiCal(OfficersPay officersPay, HttpSession session) { 
+		
+		String writer = (String) session.getAttribute("SID");
+		officersPay.setWriter(writer);
+		
+		officersPayService.modifyOffiCal(officersPay);	
+		
+		return officersPay;		
+	}	
+	
 	// 직원급여수정화면 불러오기
 	@GetMapping("/modiFyOfficersPay")
 	public String modiFyOfficersPay(@RequestParam(value = "opCode", required = false) String opCode
