@@ -25,7 +25,7 @@ public class BoardController {
 
 	private static final Logger logger = LoggerFactory.getLogger(WorkReportController.class);
 	
-	//공지사항 조회
+	//공지사항 리스트 조회
 	@RequestMapping(value = "/getNotice", method = RequestMethod.GET)
 	public String getNotice(Model model, Board board) {
 
@@ -96,7 +96,7 @@ public class BoardController {
 	}
 	//공지사항 수정 @Get
 	@GetMapping("/modifyNotice")
-	public String modifyBoard(@RequestParam(value="boardNum", required = false) String boardNum
+	public String modifyNotice(@RequestParam(value="boardNum", required = false) String boardNum
 							,Model model) {
 		Board board = boardService.readNotice(boardNum);
 		System.out.println(board+"<--board");
@@ -124,7 +124,7 @@ public class BoardController {
 		return "board/notice";
 	}
 	
-	//자료게시판 조회
+	//자료게시판 리스트 조회
 	@RequestMapping(value = "/getDataLibrary", method = RequestMethod.GET)
 	public String getDataLibrary(Model model, Board board) {
 		
@@ -148,5 +148,68 @@ public class BoardController {
 		
 		return "board/dataLibraryRead";
 	}
+	
+	//자료게시판 작성 @Post
+	@PostMapping("/addDataLibrary")
+	public String insertDataLibrary(Board board
+			  					,Model model
+			  					,@RequestParam(value="boardNum", required = false) String boardNum
+			  					,@RequestParam(value="boardMenu", required = false) String boardMenu
+			  					,@RequestParam(value="boardTitle", required = false) String boardTitle
+			  					,@RequestParam(value="boardWriterId", required = false) String boardWriterId
+			  					,@RequestParam(value="boardRegDate", required = false) String boardRegDate
+			  					,@RequestParam(value="boardContents", required = false) String boardContents
+			  					,@RequestParam(value="boardPicture", required = false) String boardPicture
+			  					,@RequestParam(value="boardFile", required = false) String boardFile	  					
+			  					) {
+		  System.out.println("boardNum -> " + boardNum);
+		  System.out.println("boardMenu -> " + boardMenu);
+		  System.out.println("boardTitle -> " + boardTitle);
+		  System.out.println("boardWriterId -> " + boardWriterId);
+		  System.out.println("boardRegDate -> " + boardRegDate);
+		  System.out.println("boardContents -> " + boardContents);
+		  System.out.println("boardPicture -> " + boardPicture);
+		  System.out.println("boardFile -> " + boardFile);
+		  boardService.addDataLibrary(board);
+		  model.addAttribute("Board", board);
+		  model.addAttribute("BoardUpload", "/dataLibrary");
+		  return "redirect:/getDataLibrary";
+	}	  
+	//자료게시판 작성 @Get
+	@GetMapping("/addDataLibrary")
+	public String insertDataLibrary(Model model, HttpSession session) {
+		
+		   session.getAttribute("SID");	//세션 아이디 받기
+		   String boardNum = boardService.getBoardNum();
+		   System.out.println(boardNum + " <-- boardNum");
+		   model.addAttribute("boardNum", boardNum);
+	      return "board/dataLibraryAdd";
+	   }
+	
+	//자료게시판 수정 @Post
+	@PostMapping("/modifyDataLibrary")
+	public String modifyDataLibrary(Board board,Model model) {
+		boardService.modifyDataLibrary(board);
+		model.addAttribute("Board", board);
+		return "redirect:/getDataLibrary";
+	}
+	//자료게시판 수정 @Get
+	@GetMapping("/modifyDataLibrary")
+	public String modifyDataLibrary(@RequestParam(value="boardNum", required = false) String boardNum
+			,Model model) {
+		Board board = boardService.readDataLibrary(boardNum);
+		System.out.println(board+"<--board");
+		model.addAttribute("Board", board);
+		return "board/dataLibraryModify";
+	}
+	
+	//공지사항 삭제
+		@GetMapping("/removeDataLibrary")
+		public String removeDataLibrary(Model model
+									,@RequestParam(value="boardNum", required = false) String boardNum) {
+			boardService.removeDataLibrary(boardNum);		
+			System.out.println(boardNum + "boardNum");
+			return "redirect:/getDataLibrary";
+		}
 	
 }
