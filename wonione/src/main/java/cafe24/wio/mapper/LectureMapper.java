@@ -5,12 +5,23 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import cafe24.wio.bean.LectureOpen;
 import cafe24.wio.bean.LectureOpenSchedule;
 
 
 @Mapper
 public interface LectureMapper {
 
+	
+	//강의코드 자동증가
+	public String getLecOpenCode();
+	
+	//강의리스트에 등록하기
+	public int addLectureOpen(LectureOpen lectureOpen);
+	
+	//강의예정코드로 중복개설되었는지 확인
+	public List<LectureOpen> checkLecOpen (String lecOsCode);
+	
 	//개설된 강의 상태변경
 	public int changeLecStatus(String changeLecStatus
 								, String lecOpCode);

@@ -16,6 +16,8 @@
                             <div class="add-product">
                                 <a href="/applyLectureOpen">강의개설신청하기</a>
                             </div>
+                            <input id="sessionId" type="hidden" name="sessionId" th:value="${sessionId}">
+                            <input id="lecOpCode" type="hidden" name="lecOpCode" th:value="${lecOpCode}">
                             <th:block th:each="losl : ${lectureOsList}">
                             <input type="hidden" id="lecOsCode" th:value="${losl.lecOsCode}">
                             </th:block>
@@ -38,10 +40,11 @@
                                         <th>등록일자</th>
                                         <th style="text-align: center;">비고사항</th>
                                         <th>수정 / 삭제</th>
+                                        <th>개강</th>
                                     </tr>
                                     <th:block th:each="losl : ${lectureOsList}">
 	                                    <tr>
-											  <td id="lecOsCode" th:text="${losl.lecOsCode}" style="text-align: center;"></td>
+											  <td th:text="${losl.lecOsCode}" style="text-align: center;"></td>
 											  <td th:text="${losl.lecName}"></td>
 											  <td th:text="${losl.mrTeacherId}"></td>
 											  <td th:text="${losl.mrTeacherName}"></td>
@@ -67,10 +70,12 @@
 						                        </div>											  	
 											  </td>
 	                                        <td>
-	                                            <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-	                                            <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+	                                            <button data-toggle="tooltip" title="수정" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+	                                            <button data-toggle="tooltip" title="삭제" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 	                                        </td>
-	                                        <td><button type="button">개강</button></td>
+	                                        <td>
+	                                       		<button type="button" class="btn btn-dafault openLectureBtn" th:value="${losl.lecOsCode}">개강</button>
+	                                       	</td>
 	                                    </tr>
 	                                    <div class="login-form-area edu-pd mg-b-15">
 						                        <div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
@@ -118,11 +123,40 @@
                     $('#check').append(html);
 				}
 			});
-			 
 			request.fail(function( jqXHR, textStatus ) {
 			  alert( "Request failed: " + textStatus );
 			});
+	});
+	
+	$('.openLectureBtn').click(function(){
+		var lecOsCode = $(this).parents().children('.openLectureBtn').val();
+		var sessionId = $('#sessionId').val();
+		var lecOpCode = $('#lecOpCode').val();
+		console.log(lecOsCode + ' < -- lecOsCode');
+		console.log(sessionId + ' < -- sessionId');
+		console.log(lecOpCode + ' < -- lecOpCode');
+		console.log('개강버튼클릭');
+		var request = $.ajax({
+			  url: "/checkLecOpen",
+			  method: "POST",
+			  data: { lecOsCode : lecOsCode },
+			  dataType: "json"
+			});
+			 
+			request.done(function(data) {
+					if(data == 1){
+						alert('이미 개설되었거나 종료된 강의입니다.');
+					}else if(data == 0){
+						if(confirm('개강하시겠습니까?')){
+							
+						}
+					}
+			});
 			
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+		
 	});
 	</script>
 	</th:block>
