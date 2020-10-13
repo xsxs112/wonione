@@ -73,6 +73,7 @@ public class WorkController {
 			mStTime = "0000-01-01 " + mStTime;
 			mEndTime = "0000-01-01 " + mEndTime;
 			mealTime = apprRequestService.getMealTime(mStTime,mEndTime);
+			attTimeManage.setMealTime(mealTime);
 			numWorkTime = numWorkTime-mealTime;
 		}
 
@@ -121,6 +122,7 @@ public class WorkController {
 			mEndTime = "0000-01-01 " + mEndTime;
 			
 			mealTime = apprRequestService.getMealTime(mStTime,mEndTime);
+			attTimeManage.setMealTime(mealTime);
 			
 			numWorkTime = numWorkTime-mealTime;
 		}
@@ -194,16 +196,38 @@ public class WorkController {
 	public String workAttendanceEnd(AttManagement attManagement, HttpSession session) {
 		String SID = (String) session.getAttribute("SID");
 		String attCode = apprRequestService.getAttCode(SID);
-		apprRequestService.workAttendanceEnd(attCode);
+
 		
-		
+		/* 지각,조퇴,외출 여부 구하고 비고란에 업데이트 */
+		int late = apprRequestService.late(attCode);
+		int earlyLeave = apprRequestService.earlyLeave(attCode);
 		float outTime = apprRequestService.GoingOutTime(attCode);
 		
-		System.out.println(outTime + "------------->외출 시간");
+		String note = "";
+		if(late == 1) {
+			note += "지각 ";
+		}
+		if(earlyLeave == 1) {
+			note += "조퇴 ";
+		}
+		if(outTime >0) {
+			note += "외출 ";
+		}
+		//------------------------------------------------------
+		
 		
 		
 		/* 근무시간 구하기 */
 		float realWorkTime = apprRequestService.getAttEndTime(attCode);
+		float getMealTime = apprRequestService.MealTime(SID);
+		
+		int notMealTime = apprRequestService.notMealTime(attCode);
+		
+		/* 만약 점심시간보다 늦게 출근 한 경우(리턴값 1) 일때 점심시간은 0 */
+		if(notMealTime == 1) {
+			getMealTime = 0;
+		}
+		//---------------------------------------------------
 		
 		int workTimeHH = (int) realWorkTime;
 		
@@ -221,8 +245,8 @@ public class WorkController {
 		String ListWorkTime = apprRequestService.ListWorkTime(SID);
 		float overWorkTime;
 		float fListWorkTime = Float.parseFloat(ListWorkTime.substring(0, 3));
-		realWorkTime = realWorkTime-outTime;
-		System.out.println(realWorkTime + "------------->외출 뺀 실제 근무 시간");
+		realWorkTime = realWorkTime-outTime-getMealTime;
+		System.out.println(realWorkTime + "------------->외출,점심 뺀 실제 근무 시간");
 		
 		if(realWorkTime > fListWorkTime) {
 			overWorkTime = realWorkTime-fListWorkTime;
@@ -231,8 +255,12 @@ public class WorkController {
 		}
 		attManagement.setAttCode(attCode);
 		attManagement.setAttTime(realWorkTime);
+		attManagement.setRealMealTime(getMealTime);
+		attManagement.setAttNote(note);
 		apprRequestService.setWorkTime(attManagement);
 		//-------------------------------------------------
+		
+		
 		
 		
 		return "redirect:/workAttendanceList";

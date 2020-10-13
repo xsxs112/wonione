@@ -6,6 +6,53 @@
     
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
+	
+	
+	
+	<!-- 점심시간보다 늦게  출근 한 경우 1을 리턴 -->
+	<select id = "notMealTime" parameterType="string" resultType="int">
+
+		SELECT (m.attendance_start_time<![CDATA[ > ]]> t.meal_start_time)
+		FROM wt_attendance_management AS m
+				LEFT JOIN wt_attendance_time_manage AS t
+				ON m.mr_id = t.mr_id
+		WHERE m.attendance_code = #{attCode};
+	
+	</select>
+	
+	
+	<!-- 조퇴했을 때 1 리턴 -->
+	<select id = "earlyLeave" parameterType="string" resultType="int">
+
+		SELECT (m.attendance_end_time <![CDATA[ < ]]> t.att_end_time)
+		FROM wt_attendance_management AS m 
+				left join wt_attendance_time_manage AS t
+				ON m.mr_id = t.mr_id
+		WHERE m.attendance_code = #{attCode};
+	
+	</select>
+	
+	<!-- 지각했을 때 1 리턴 -->
+	<select id = "late" parameterType="string" resultType="int">
+
+		SELECT (m.attendance_start_time <![CDATA[ > ]]> t.att_start_time)
+		FROM wt_attendance_management AS m 
+			left join wt_attendance_time_manage AS t
+			ON m.mr_id = t.mr_id
+		WHERE m.attendance_code = #{attCode};
+	
+	</select>
+	
+	
+	<select id = "MealTime" parameterType="string" resultType="float">
+
+		SELECT meal_time
+		FROM wt_attendance_time_manage
+		WHERE mr_id = #{SID};
+	
+	</select>
+	
+	
 	<select id = "GoingOutTime" parameterType="string" resultType="float">
 
 		SELECT going_out_time
@@ -46,10 +93,15 @@
 	<update id = "setWorkTime" parameterType="AttManagement">
 		UPDATE wt_attendance_management
 		SET
+			attendance_end_time=NOW(),
 			attendance_time=#{attTime},
-			work_overtime=#{workOvertime}
+			work_overtime=#{workOvertime},
+			real_meal_time = #{realMealTime},
+			attendance_note=#{attNote}
+			
 		WHERE	
 			attendance_code = #{attCode};
+
 
 
 	</update>
@@ -148,7 +200,8 @@
 			att_end_time = #{workEndTime},
 			meal_start_time = #{mStTime},
 			meal_end_time = #{mEndTime},
-			work_time = #{workTime}
+			work_time = #{workTime},
+			meal_time = ${mealTime}
 		WHERE mr_id = #{mrId}
 	</update>
 	
@@ -156,8 +209,8 @@
 	<!-- 출퇴근 시간관리 저장 -->
 	<insert id="addWorkTime" parameterType="AttManagement">
 		INSERT INTO wt_attendance_time_manage
-			(att_time_code, mr_id, att_start_time, att_end_time, meal_start_time, meal_end_time, work_time)
-			VALUES (#{attTimeCode}, #{mrId}, #{workStTime}, #{workEndTime}, #{mStTime}, #{mEndTime}, #{workTime})
+			(att_time_code, mr_id, att_start_time, att_end_time, meal_start_time, meal_end_time, work_time ,meal_time)
+			VALUES (#{attTimeCode}, #{mrId}, #{workStTime}, #{workEndTime}, #{mStTime}, #{mEndTime}, #{workTime} ,#{mealTime})
 	</insert>
 	
 	<!-- 출퇴근 시간 관리 리스트 코드 증가 검색 -->
@@ -284,7 +337,6 @@
 		UPDATE wt_attendance_management
 		SET
 			going_out_stTime=NOW(),
-			attendance_note='외출'
 		WHERE 
 			attendance_code = #{attCode};
 	</update>
@@ -342,6 +394,9 @@
 				, going_out_endTime as goingOutEndTime
 				, confirm as confirm
 				, work_overtime AS workOvertime
+				, real_meal_time AS realMealTime
+				
+				
 		FROM wt_attendance_management AS a
 		WHERE a.mr_id = #{SID};
 	

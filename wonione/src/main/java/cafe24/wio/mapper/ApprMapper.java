@@ -15,6 +15,16 @@ public interface ApprMapper {
 	
 	
 	
+	
+	public int notMealTime(String attCode);
+	
+	public int earlyLeave(String attCode);
+	
+	public int late(String attCode);
+	
+	
+	public float MealTime(String SID);
+	
 	public float GoingOutTime(String attCode);
 	
 	
