@@ -58,7 +58,10 @@ public class WorkController {
 		attTimeManage.setWorkStTime(workStTime);
 		attTimeManage.setWorkEndTime(workEndTime);
 		
-		float numWorkTime = apprRequestService.getWorkTime(attTimeManage);
+		workStTime = "0000-01-01 " + workStTime;
+		workEndTime = "0000-01-01 " + workEndTime;
+		
+		float numWorkTime = apprRequestService.getWorkTime(workStTime,workEndTime);
 		float mealTime = 0;
 
 		if (mStTime == "" || mStTime == null || mEndTime == "" || mEndTime == null) {
@@ -67,10 +70,9 @@ public class WorkController {
 		} else {
 			attTimeManage.setmStTime(mStTime);
 			attTimeManage.setmEndTime(mEndTime);
-			
-			mealTime = apprRequestService.getMealTime(attTimeManage);
-			
-		
+			mStTime = "0000-01-01 " + mStTime;
+			mEndTime = "0000-01-01 " + mEndTime;
+			mealTime = apprRequestService.getMealTime(mStTime,mEndTime);
 			numWorkTime = numWorkTime-mealTime;
 		}
 
@@ -95,6 +97,19 @@ public class WorkController {
 			@RequestParam(value = "note", required = false) String note) {
 
 		String getTimeCode = apprRequestService.getTimeCode();
+		
+		attTimeManage.setAttTimeCode(getTimeCode);
+		attTimeManage.setMrId(mrId);
+		attTimeManage.setWorkStTime(workStTime);
+		attTimeManage.setWorkEndTime(workEndTime);
+		
+		workStTime = "0000-01-01 " + workStTime;
+		workEndTime = "0000-01-01 " + workEndTime;
+		
+		
+		float numWorkTime = apprRequestService.getWorkTime(workStTime,workEndTime);
+		
+		float mealTime = 0;
 
 		if (mStTime == "" || mStTime == null || mEndTime == "" || mEndTime == null) {
 			attTimeManage.setmStTime(null);
@@ -102,16 +117,20 @@ public class WorkController {
 		} else {
 			attTimeManage.setmStTime(mStTime);
 			attTimeManage.setmEndTime(mEndTime);
+			mStTime = "0000-01-01 " + mStTime;
+			mEndTime = "0000-01-01 " + mEndTime;
+			
+			mealTime = apprRequestService.getMealTime(mStTime,mEndTime);
+			
+			numWorkTime = numWorkTime-mealTime;
 		}
-
-		attTimeManage.setAttTimeCode(getTimeCode);
-		attTimeManage.setMrId(mrId);
-		attTimeManage.setWorkStTime(workStTime);
-		attTimeManage.setWorkEndTime(workEndTime);
+		
+		String workTime = Float.toString(numWorkTime) + "시간";
+		attTimeManage.setWorkTime(workTime);
+		
 
 		apprRequestService.addWorkTime(attTimeManage);
 
-		// "redirect:/holidayApproval"
 		return "redirect:/attManage";
 	}
 
@@ -154,6 +173,7 @@ public class WorkController {
 		String SID = (String) session.getAttribute("SID");
 		String attCode = apprRequestService.getAttCode(SID);
 		apprRequestService.goingOutEnd(attCode);
+		
 		float goingOut = apprRequestService.getGoingOutTime(attCode);
 		
 		int goingOutHH = (int) goingOut;
@@ -177,22 +197,42 @@ public class WorkController {
 		apprRequestService.workAttendanceEnd(attCode);
 		
 		
-		float workTime = apprRequestService.getAttEndTime(attCode);
+		float outTime = apprRequestService.GoingOutTime(attCode);
 		
-		int workTimeHH = (int) workTime;
-
-		if (workTime % 1 < 0.5) {
-			workTime = (float) (workTimeHH + 0.5);
+		System.out.println(outTime + "------------->외출 시간");
+		
+		
+		/* 근무시간 구하기 */
+		float realWorkTime = apprRequestService.getAttEndTime(attCode);
+		
+		int workTimeHH = (int) realWorkTime;
+		
+		if (realWorkTime % 1 < 0.5) {
+			realWorkTime = workTimeHH;
+			
 		} else {
-			workTime = workTimeHH + 1;
+			realWorkTime = (float) (workTimeHH + 0.5);
 		}
 		
+		System.out.println(realWorkTime + "------------->실제 근무 시간");
+		//-------------------------------------------------------
 		
+		/* 초과 근무시간 구하기 */
+		String ListWorkTime = apprRequestService.ListWorkTime(SID);
+		float overWorkTime;
+		float fListWorkTime = Float.parseFloat(ListWorkTime.substring(0, 3));
+		realWorkTime = realWorkTime-outTime;
+		System.out.println(realWorkTime + "------------->외출 뺀 실제 근무 시간");
 		
+		if(realWorkTime > fListWorkTime) {
+			overWorkTime = realWorkTime-fListWorkTime;
+			attManagement.setWorkOvertime(overWorkTime);
+			System.out.println(overWorkTime + "------------->초과 근무 시간");
+		}
 		attManagement.setAttCode(attCode);
-		attManagement.setAttTime(workTime);
+		attManagement.setAttTime(realWorkTime);
 		apprRequestService.setWorkTime(attManagement);
-
+		//-------------------------------------------------
 		
 		
 		return "redirect:/workAttendanceList";

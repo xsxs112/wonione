@@ -21,18 +21,33 @@ public class ApprRequestService {
 	
 	
 	
-	public float getWorkTime(AttTimeManage attTimeManage) {
+	public float GoingOutTime(String attCode) {
 		
 		
 		
-		return apprMapper.getWorkTime(attTimeManage);
+		return apprMapper.GoingOutTime(attCode);
 	}
 	
-	public float getMealTime(AttTimeManage attTimeManage) {
+	
+	public String ListWorkTime(String SID) {
 		
 		
 		
-		return apprMapper.getMealTime(attTimeManage);
+		return apprMapper.ListWorkTime(SID);
+	}
+	
+	public float getWorkTime(String workStTime, String workEndTime) {
+		
+		
+		
+		return apprMapper.getWorkTime(workStTime,workEndTime);
+	}
+	
+	public float getMealTime(String mStTime,String mEndTime) {
+		
+		
+		
+		return apprMapper.getMealTime(mStTime,mEndTime);
 	}
 	
 	public int setWorkTime(AttManagement attManagement) {

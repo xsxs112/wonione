@@ -17,15 +17,10 @@ public class AttManagement {
 	String levelName;
 	String confirm;
 	float mealTime;
+	float workOvertime;
 	
 	
 	
-	public float getMealTime() {
-		return mealTime;
-	}
-	public void setMealTime(float mealTime) {
-		this.mealTime = mealTime;
-	}
 	public String getAttCode() {
 		return attCode;
 	}
@@ -104,14 +99,29 @@ public class AttManagement {
 	public void setConfirm(String confirm) {
 		this.confirm = confirm;
 	}
+	public float getMealTime() {
+		return mealTime;
+	}
+	public void setMealTime(float mealTime) {
+		this.mealTime = mealTime;
+	}
+	public float getWorkOvertime() {
+		return workOvertime;
+	}
+	public void setWorkOvertime(float workOvertime) {
+		this.workOvertime = workOvertime;
+	}
 	@Override
 	public String toString() {
 		return "AttManagement [attCode=" + attCode + ", attDate=" + attDate + ", mrId=" + mrId + ", mrName=" + mrName
 				+ ", attStTime=" + attStTime + ", attEndTime=" + attEndTime + ", attTime=" + attTime + ", attNote="
 				+ attNote + ", goingOut=" + goingOut + ", goingOutStTime=" + goingOutStTime + ", goingOutEndTime="
 				+ goingOutEndTime + ", levelName=" + levelName + ", confirm=" + confirm + ", mealTime=" + mealTime
-				+ "]";
+				+ ", workOvertime=" + workOvertime + "]";
 	}
+	
+	
+	
 	
 	
 	

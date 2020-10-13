@@ -6,31 +6,52 @@
     
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
+	<select id = "GoingOutTime" parameterType="string" resultType="float">
+
+		SELECT going_out_time
+		FROM wt_attendance_management
+		WHERE attendance_code = #{attCode};
 	
+	</select>
+	
+	
+	
+	
+	<!-- 출퇴근 관리 리스트에서 근무시간 가져오기 -->
+	<select id = "ListWorkTime" parameterType="string" resultType="string">
+
+		SELECT work_time
+		FROM wt_attendance_time_manage AS m
+		WHERE m.mr_id = #{SID};
+	
+	</select>
+	
+	
+	<!-- 출퇴근 관리 리스트에서 근무시간 가져오기 -->
 	<select id = "getWorkTime" parameterType="string" resultType="float">
-	
-		SELECT (TIMESTAMPDIFF(minute, att_start_time, att_end_time)/60) AS work_time
-		FROM wt_attendance_time_manage
-		WHERE mr_id= #{mrId};
+
+		SELECT (TIMESTAMPDIFF(minute, #{workStTime}, #{workEndTime})/60) AS work_time
 	
 	</select>
 	
-	
+	<!-- 식사시간 가져오기 -->
 	<select id = "getMealTime" parameterType="string" resultType="float">
-	
-		SELECT (TIMESTAMPDIFF(minute, meal_start_time, meal_end_time)/60) AS mealTime
-		FROM wt_attendance_time_manage
-		WHERE mr_id= #{mrId};
+
+		SELECT (TIMESTAMPDIFF(minute, #{mStTime}, #{mEndTime})/60) AS mealTime
+
 	
 	</select>
 	
-	
+	<!-- 출근 리스트에서 일한시간 업데이트 -->
 	<update id = "setWorkTime" parameterType="AttManagement">
 		UPDATE wt_attendance_management
 		SET
-			attendance_time=#{attTime}
+			attendance_time=#{attTime},
+			work_overtime=#{workOvertime}
 		WHERE	
 			attendance_code = #{attCode};
+
+
 	</update>
 	
 	<!-- 퇴근시간 - 출근시간 구하기 -->
@@ -42,7 +63,7 @@
 	
 	</select>
 	
-	
+	<!-- 외출시간 업데이트 -->
 	<update id = "setGoingOut" parameterType="AttManagement">
 		UPDATE wt_attendance_management
 		SET		going_out_time=#{goingOut}
@@ -71,7 +92,7 @@
 				ON a.mr_id = m.mr_id
 				LEFT JOIN wt_level AS l
 				on m.level_num = l.level_num
-		WHERE confirm = '확인'
+		WHERE confirm = '확인' AND l.level_num<![CDATA[ < ]]>4
 	
 	</select>
 	
@@ -105,7 +126,7 @@
 				ON a.mr_id = m.mr_id
 				LEFT JOIN wt_level AS l
 				on m.level_num = l.level_num
-		WHERE ISNULL(confirm)
+		WHERE ISNULL(confirm) AND l.level_num<![CDATA[ < ]]>4
 
 	
 	</select>
@@ -297,7 +318,7 @@
 	</select>	
 	
 	
-	<!-- 시간과 시간 사이 구하기 -->
+	<!-- 외출 시간 구하기 -->
 	<select id = "getGoingOutTime" parameterType="string" resultType="float">
 	
 		SELECT (TIMESTAMPDIFF(minute, going_out_stTime, going_out_endTime)/60) AS goingOutTime
@@ -309,7 +330,7 @@
 	
 	<select id = "getAttendanceList" parameterType="string" resultType="AttManagement">
 	
-		SELECT attendance_code as attCode
+	SELECT attendance_code as attCode
 				, mr_id as mrId 
 				, attendance_date as attDate
 				, attendance_start_time as attStTime
@@ -320,6 +341,7 @@
 				, going_out_stTime as goingOutStTime
 				, going_out_endTime as goingOutEndTime
 				, confirm as confirm
+				, work_overtime AS workOvertime
 		FROM wt_attendance_management AS a
 		WHERE a.mr_id = #{SID};
 	
