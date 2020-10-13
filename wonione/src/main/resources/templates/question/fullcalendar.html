@@ -42,13 +42,15 @@
                      		  	   }else{
 			                           var a = moment(data[i].lec_st_date+' '+data[i].lec_starttime,'YYYY-MM-DD HH:mm:ss'); 
 			                           var b = moment(data[i].lec_fin_date+' '+data[i].lec_endtime,'YYYY-MM-DD HH:mm:ss'); 
+			                           var c = moment(data[i].lec_st_date+' '+data[i].lec_endtime,'YYYY-MM-DD HH:mm:ss'); 
 			                           var days = b.diff(a, 'days');
 			                           for(var j = 0; j<days; j++){
-			                             var repeatDays = moment(a, 'YYYY-MM-DD HH:mm:ss').add(j, 'days').format('YYYY-MM-DD HH:mm:ss');
+			                             var repeatStartTimeDays = moment(a, 'YYYY-MM-DD HH:mm:ss').add(j, 'days').format('YYYY-MM-DD HH:mm:ss');
+			                             var repeatEndTimeDays = moment(c, 'YYYY-MM-DD HH:mm:ss').add(j, 'days').format('YYYY-MM-DD HH:mm:ss');
 			                             events.push({
 			                               title:data[i].lec_name,
-			                               start:moment(repeatDays).format('YYYY-MM-DD HH:mm:ss'),
-			                               end:moment(repeatDays).format('YYYY-MM-DD HH:mm:ss')
+			                               start:moment(repeatStartTimeDays).format('YYYY-MM-DD HH:mm:ss'),
+			                               end:moment(repeatEndTimeDays).format('YYYY-MM-DD HH:mm:ss')
 			                             });
 			                           }
 		                         	}
