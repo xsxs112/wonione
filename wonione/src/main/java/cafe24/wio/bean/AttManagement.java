@@ -16,7 +16,7 @@ public class AttManagement {
 	String goingOutEndTime;
 	String levelName;
 	String confirm;
-	float mealTime;
+	float realMealTime;
 	float workOvertime;
 	
 	
@@ -99,11 +99,11 @@ public class AttManagement {
 	public void setConfirm(String confirm) {
 		this.confirm = confirm;
 	}
-	public float getMealTime() {
-		return mealTime;
+	public float getRealMealTime() {
+		return realMealTime;
 	}
-	public void setMealTime(float mealTime) {
-		this.mealTime = mealTime;
+	public void setRealMealTime(float realMealTime) {
+		this.realMealTime = realMealTime;
 	}
 	public float getWorkOvertime() {
 		return workOvertime;
@@ -116,11 +116,13 @@ public class AttManagement {
 		return "AttManagement [attCode=" + attCode + ", attDate=" + attDate + ", mrId=" + mrId + ", mrName=" + mrName
 				+ ", attStTime=" + attStTime + ", attEndTime=" + attEndTime + ", attTime=" + attTime + ", attNote="
 				+ attNote + ", goingOut=" + goingOut + ", goingOutStTime=" + goingOutStTime + ", goingOutEndTime="
-				+ goingOutEndTime + ", levelName=" + levelName + ", confirm=" + confirm + ", mealTime=" + mealTime
-				+ ", workOvertime=" + workOvertime + "]";
+				+ goingOutEndTime + ", levelName=" + levelName + ", confirm=" + confirm + ", realMealTime="
+				+ realMealTime + ", workOvertime=" + workOvertime + "]";
 	}
 	
 	
+	
+
 	
 	
 	

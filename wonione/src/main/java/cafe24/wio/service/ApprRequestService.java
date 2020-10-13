@@ -20,6 +20,35 @@ public class ApprRequestService {
 	private ApprMapper apprMapper;
 	
 	
+	public int notMealTime(String attCode) {
+		
+		
+		
+		return apprMapper.notMealTime(attCode);
+	}
+	
+	public int earlyLeave(String attCode) {
+		
+		
+		
+		return apprMapper.earlyLeave(attCode);
+	}
+	
+	public int late(String attCode) {
+		
+		
+		
+		return apprMapper.late(attCode);
+	}
+	
+	
+	public float MealTime(String SID) {
+		
+		
+		
+		return apprMapper.MealTime(SID);
+	}
+	
 	
 	public float GoingOutTime(String attCode) {
 		

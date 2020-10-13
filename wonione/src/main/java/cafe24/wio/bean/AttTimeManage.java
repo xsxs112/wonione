@@ -11,9 +11,16 @@ public class AttTimeManage {
 	String mEndTime;
 	String workTime;
 	String mrName;
+	float mealTime;
 	
 	
 	
+	public float getMealTime() {
+		return mealTime;
+	}
+	public void setMealTime(float mealTime) {
+		this.mealTime = mealTime;
+	}
 	public String getLevelName() {
 		return levelName;
 	}
@@ -72,9 +79,9 @@ public class AttTimeManage {
 	public String toString() {
 		return "AttTimeManage [attTimeCode=" + attTimeCode + ", levelName=" + levelName + ", mrId=" + mrId
 				+ ", workStTime=" + workStTime + ", workEndTime=" + workEndTime + ", mStTime=" + mStTime + ", mEndTime="
-				+ mEndTime + ", workTime=" + workTime + ", mrName=" + mrName + "]";
+				+ mEndTime + ", workTime=" + workTime + ", mrName=" + mrName + ", mealTime=" + mealTime + "]";
 	}
-
+	
 	
 	
 	
