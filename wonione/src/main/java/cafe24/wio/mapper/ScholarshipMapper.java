@@ -41,6 +41,9 @@ public interface ScholarshipMapper {
 	//페이징을 위한 카운팅
 	public int countScholarShip();
 	
+	//학생이름별 과목가져오기
+	public List<Map<String, Object>> sNameClass(String mrId);
+	
 	//보고서 리스트 페이징
 	public List<Report> countScholarShipList(Map<String,Object> scholarMap);
 }

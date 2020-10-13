@@ -36,15 +36,15 @@
 		, fin_lec_reg_date
 	FROM 
 		wt_report_lecture
-		inner join
+	inner join
 		wt_grade_num
-		on
+	on
 		wt_report_lecture.grade_test_num = wt_grade_num.grade_test_num
-		LEFT join
+	LEFT join
 		wt_member_registration
-		on
+	on
 		wt_member_registration.mr_id = wt_report_lecture.mr_id
-		ORDER by
+	ORDER by
 		wt_report_lecture.report_lec_code DESC;	
 </select>
 

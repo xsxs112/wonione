@@ -37,7 +37,7 @@
 		ON.
 		wt_grade_num.grade_test_num = wt_grade_management.test_round
 	ORDER by
-		wt_grade_management.grade_man_code DESC;	
+		wt_grade_management.grade_man_code desc;	
 	
 </select>
 

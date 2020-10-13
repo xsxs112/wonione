@@ -34,6 +34,7 @@
 								<tr>
 									<th>장학코드</th>
 									<th>학생이름</th>
+									<th>수강과목</th>
 									<th>지급액</th>
 									<th>지급자</th>
 									<th>저장</th>
@@ -49,6 +50,11 @@
 											<th:block th:each="s : ${sName}">
 												`<option th:value="${s.mr_id}">[[${s.mr_name}]]</option>
 											</th:block>
+										</select>
+									</td>
+									<td>
+										<select name ="lecName" class="form-control" id="className">
+											<option value="null">::수강과목::</option>
 										</select>
 									</td>
 									<td>
@@ -181,7 +187,39 @@
 				}
 				scholarSubmitForm.submit();
 			}); 
-		});
+		}); 
+	 
+	 $('#mrName').change(function(){
+		 var html = '';
+		 var mrName = $(this).val();
+		 console.log(mrName, "<-선택한학생이름");
+		 var request = $.ajax({
+	          url: "/sNameClass",
+	          method: "POST",
+	          data: { mrName : mrName },
+	          dataType: "json"
+	        });
+		 request.done(function( data ) {
+			 $('#className').empty();
+	         $('#className').children("option").remove();
+	         $('#className').append("<option selected='selected' disabled='disabled'>::수강과목::</option>");
+	 			console.log(data.length);
+	 			
+	 			for(var i=0; i<data.length; i++){
+	 				console.log(data[i]);
+	 				if(data[i].mrId == null){
+	 					html = '';
+	 					html += '<option value= "'+ data[i].lec_os_code +'" name="lec_os_code" >' +data[i].lec_name+ '</option>'
+	 					$('#className').append(html);
+	 				}else{
+		                  $('#className').append("<option value='내용이 없습니다.'>" + "</option>");
+		               }  
+	 		    };   
+	        });
+	        request.fail(function( jqXHR, textStatus ) {
+	          alert( "Request failed: " + textStatus );
+	        }); 
+	 });  
 	 
 		</script>
 		

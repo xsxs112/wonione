@@ -68,6 +68,12 @@ public class ScholarshipService {
 			return mapList;
 		  }
 		
+	//학생이름별 과목 가져오기
+		public  List<Map<String,Object>> sNameClass(String mrId){
+			List<Map<String,Object>> sNameClass = scholarshipMapper.sNameClass(mrId);
+			return sNameClass;
+		}
+		
 	//장학금액 가져오기
 		public List<Map<String,Object>> sMoney(){
 			List<Map<String,Object>> moneyList = scholarshipMapper.sMoney();
