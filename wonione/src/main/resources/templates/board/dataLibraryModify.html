@@ -14,8 +14,8 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 	<!-- 썸머노트 스크립트 end -->
 	
-		<h2>공지사항 수정</h2>
-	<form action="/modifyNotice" class="container-fluid" method="post" id="noticeForm">
+		<h2>자료게시판 수정</h2>
+	<form action="/modifyDataLibrary" class="container-fluid" method="post" id="noticeForm">
 	<!-- 글번호 자동생성, 세션 아이디 받기 히든타입
 	<input type="hidden" th:value="${boardNum}" name="boardNum">
 	<input type="hidden" class="form-control" name="boardWriterId" th:value="${sessionId}">
@@ -62,7 +62,7 @@
 		</table>
 		<div style="margin-bottom:10px">
 			<button type="button" class="btn btn-default btn-success" id="btnSubmit">수정</button>
-			<a th:href="@{/readNotice(boardNum=${Board.boardNum})}" class="btn btn-default btn-info">취소</a>
+			<a th:href="@{/readDataLibrary(boardNum=${Board.boardNum})}" class="btn btn-default btn-info">취소</a>
 		</div>
 	</form>
 	
@@ -82,7 +82,7 @@
 				boardTitle.focus();
 				return;
 			}else if(boardContents.val() == ''){
-				alert('공지할 내용을 입력해주세요.');
+				alert('내용을 입력해주세요.');
 				boardContents.focus();
 				return;
 			}

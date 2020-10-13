@@ -14,25 +14,6 @@ public class BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
-	//공지사항 조회
-	public List<Board> getNotice(Board board){
-		System.out.println(board + " <-- board");
-		List<Board> noticeList = boardMapper.getNotice(board);
-		return noticeList;
-	}
-	
-	//공지사항 읽기
-	public Board readNotice(String boardNum) {
-		Board board = boardMapper.readBoard(boardNum);
-		return board;
-	}
-	
-	//공지사항 작성
-	public int addNotice(Board board) {
-		int write = boardMapper.addNotice(board);
-		return write;		
-	}
-	
 	//글번호 자동증가
 	public String getBoardNum() {
 		
@@ -54,6 +35,25 @@ public class BoardService {
 		String boardNum = tempCode + String.valueOf(boardNumMax.get("max"));
 		
 		return boardNum;
+	}
+	
+	//공지사항 조회
+	public List<Board> getNotice(Board board){
+		System.out.println(board + " <-- board");
+		List<Board> noticeList = boardMapper.getNotice(board);
+		return noticeList;
+	}
+	
+	//공지사항 읽기
+	public Board readNotice(String boardNum) {
+		Board board = boardMapper.readBoard(boardNum);
+		return board;
+	}
+	
+	//공지사항 작성
+	public int addNotice(Board board) {
+		int write = boardMapper.addNotice(board);
+		return write;		
 	}
 	
 	//공지사항 수정
@@ -85,6 +85,24 @@ public class BoardService {
 	public Board readDataLibrary(String boardNum) {
 		Board board = boardMapper.readBoard(boardNum);
 		return board;
+	}
+	
+	//자료게시판 작성
+	public int addDataLibrary(Board board) {
+		int write = boardMapper.addDataLibrary(board);
+		return write;		
+	}
+	
+	//자료게시판 수정
+	public int modifyDataLibrary(Board board) {
+		int modify = boardMapper.modifyBoard(board);
+		return modify;
+	}
+	
+	//자료게시판 삭제
+	public int removeDataLibrary(String boardNum) {
+		int remove = boardMapper.removeBoard(boardNum);
+		return remove;
 	}
 	
 }

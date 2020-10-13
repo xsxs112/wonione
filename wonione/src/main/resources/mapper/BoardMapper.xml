@@ -151,7 +151,6 @@
 		board_num = #{boardNum};
 	</delete>
 
-
 	<!-- 검색  -->
 	<select id="getSearch" resultType="Board" resultMap="boardResultMap">
 	SELECT 
