@@ -20,6 +20,22 @@
 		<result column="qe_D" 				property="qeD"/>
 		<result column="qe_problem_solving" property="qeProblemSolving"/>
 	</resultMap>
+	<select id="lecTimetablefullCalendar" resultType="hashMap" parameterType="map">
+		SELECT 
+			lo.lec_name AS lec_name
+			,lo.lec_st_date AS lec_st_date
+			,lo.lec_fin_date AS lec_fin_date
+			,lr.lec_designation AS lec_designation
+			,lr.lec_starttime AS lec_starttime
+			,lr.lec_endtime AS lec_endtime
+		FROM 
+			wt_lecture_open_schedule AS lo
+			INNER JOIN 
+			wt_lec_resource AS lr
+			ON
+			lo.lec_time_code = lr.lec_number
+			ORDER BY lo.lec_name;
+	</select>
 	<delete id="deleteCandidateQuestion">
 		DELETE 
 			c

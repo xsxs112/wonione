@@ -241,4 +241,16 @@ public class QuestionController {
 		int deleteCandidateQuestionResult = questionService.deleteCandidateQuestion(candidateQuestionId,candidateQuestionCodeName);
 		return deleteCandidateQuestionResult;
 	}
+	//풀캘린더 연습
+	@GetMapping("/lecTimetablefullCalendar")
+	public String fullCalendar(Model model) {
+		return "question/fullcalendar";
+	}
+	
+	@PostMapping(value="/fullCalendar",produces = "application/json")
+	@ResponseBody
+	public List<Map<String, Object>> lecTimetablefullCalendar(){
+		List<Map<String, Object>> javaMap1 = questionService.lecTimetablefullCalendar();
+		return javaMap1;
+	}
 }

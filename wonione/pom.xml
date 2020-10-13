@@ -77,6 +77,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars/fullcalendar -->
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>fullcalendar</artifactId>
+		    <version>5.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
