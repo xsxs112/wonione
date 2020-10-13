@@ -49,8 +49,6 @@ private MemberMapper memberMapper;
 			
 			String WIOIdcheck = memberMapper.WIOMemberIdCheck(mrId, mrPw);
 			
-			System.out.println(WIOIdcheck + "<-- WIOIdcheck memberService");
-			
 			if(WIOIdcheck != null && !"".equals(WIOIdcheck)) {
 				
 			}
@@ -65,7 +63,6 @@ private MemberMapper memberMapper;
 		 */
 		public Member getMemberInfo(String mrId) {
 		Member member = memberMapper.getMemberInfo(mrId);
-		System.out.println(member + "<-- member 정보 조회 / memberService");
 		
 		if(member != null) {
 			int levelNum = 0;
@@ -98,7 +95,6 @@ private MemberMapper memberMapper;
 		
 		// 회원 정보가 담긴 WIOMemberList 객체 생성
 		List<Member> WIOMemberList = memberMapper.getWIOMemberList();
-		System.out.println(WIOMemberList + "<--MemberList MemberService");
 		
 		//회원 정보가 null 이 아닐 경우 조회
 		if(WIOMemberList != null) {
