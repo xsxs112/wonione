@@ -253,6 +253,11 @@ public class QuestionService {
 		int deleteCandidateQuestionResult = questionMapper.deleteCandidateQuestion(candidateQuestionId , candidateQuestionCodeName);
 		return deleteCandidateQuestionResult;
 	}
+	//시간표
+	public List<Map<String, Object>> lecTimetablefullCalendar() {
+		List<Map<String, Object>> fullCalendarResult = questionMapper.lecTimetablefullCalendar();
+		return fullCalendarResult;
+	}
 
 	
 }

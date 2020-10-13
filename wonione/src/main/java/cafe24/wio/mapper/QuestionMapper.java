@@ -54,6 +54,8 @@ public interface QuestionMapper {
 	public List<Map<String, Object>> selectcandidateQuestionId(String selectcandidateQuestionId, String candidateQuestionCodeName);
 	//인원삭제
 	public int deleteCandidateQuestion(String candidateQuestionId, String candidateQuestionCodeName);
+	//시간표
+	public List<Map<String, Object>> lecTimetablefullCalendar();
 	
 
 

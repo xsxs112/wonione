@@ -77,6 +77,14 @@
 				</div>
 				</fieldset>
 			</form>
+			<div style="text-align: center;">
+             <span th:if="${session.SID ne null}" style="margin-right: 20px;">
+                <a href="/logout"><button type="button" class="btn btn-default">Log Out</button></a>
+               </span>
+             <span th:if="${session.SID ne null}">
+                <a href="/index"><button type="button" class="btn btn-default">HOME</button></a>
+               </span>
+            </div>
 		</div>
 		</div>
 		</div>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	  
+  	<th:block layout:fragment="customTitle">
+		<title>풀캘린더</title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+	<link rel="stylesheet" href="css/calendar.css">
+		<div id="calendar"></div>
+		<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() {
+			  var calendarEl = document.getElementById('calendar');
+
+			  var calendar = new FullCalendar.Calendar(calendarEl, {
+			    timeZone: 'UTC',
+			    initialView: 'timeGridWeek',
+			    headerToolbar: {
+			      left: 'prev,next today',
+			      center: 'title',
+			      right: 'timeGridWeek,timeGridDay'
+			    },
+			      navLinks: true, 
+			      editable: true,
+			      events: function(fetchInfo, successCallback, failureCallback ){
+			    	  /* 예전버전: function( startMoment, endMoment, timeZoneStr, callback )
+						  지금버전: function( fetchInfo, successCallback, failureCallback )*/
+		        	   $.ajax({
+		                   type: "POST",
+		                   url: "/fullCalendar",
+		                   dataType: 'json',
+		                   success: function(data){
+		                       var events = [];
+		                       for(var i=0; i<data.length; i++){
+		                    	   if(data[i].repeat == "N"){
+		                    		   events.push({
+			                    		   title: data[i].lec_name,
+			                    		   start: data[i].lec_st_date+'T'+data[i].lec_starttime,
+			                    		   end: data[i].lec_fin_date+'T'+data[i].lec_endtime
+			                    	   });
+                     		  	   }else{
+			                           var a = moment(data[i].lec_st_date+' '+data[i].lec_starttime,'YYYY-MM-DD HH:mm:ss'); 
+			                           var b = moment(data[i].lec_fin_date+' '+data[i].lec_endtime,'YYYY-MM-DD HH:mm:ss'); 
+			                           var days = b.diff(a, 'days');
+			                           for(var j = 0; j<days; j++){
+			                             var repeatDays = moment(a, 'YYYY-MM-DD HH:mm:ss').add(j, 'days').format('YYYY-MM-DD HH:mm:ss');
+			                             events.push({
+			                               title:data[i].lec_name,
+			                               start:moment(repeatDays).format('YYYY-MM-DD HH:mm:ss'),
+			                               end:moment(repeatDays).format('YYYY-MM-DD HH:mm:ss')
+			                             });
+			                           }
+		                         	}
+		                       }
+		                       console.log(events);
+		                       successCallback(events);
+		                       
+		                     },
+		                   error: function (xhr, err) {
+		                       alert("ERROR! - readyState: " + xhr.readyState + "<br/>status: " + xhr.status + "<br/>responseText: " + xhr.responseText);
+		                   }
+		               });
+			 		 }
+		  		});
+			  calendar.render();
+			});
+			  
+		</script>
+	<script src="js/calendar.js"></script>
+	<script src="js/moment.js"></script>
+	<script src="js/moment-with-locales.js"></script>
+	<script src="js/locales-all.js"></script>
+	</th:block>
+</html>
