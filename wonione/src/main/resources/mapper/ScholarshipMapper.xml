@@ -39,8 +39,9 @@
 	LEFT JOIN 
 		wt_member_registration AS r2
 	ON 
-		wt_payments_information.pm_info_Payer = r2.mr_id;		
-		
+		wt_payments_information.pm_info_Payer = r2.mr_id		
+	order by
+		wt_payments_information.pm_info_code desc;	
 </select>
 
 <!--장학금상세보기  -->
@@ -101,17 +102,38 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 		 mr_id
 		,mr_name
 		,level_num
-		,mr_phone
-		,mr_addr
 		,mr_target_score
 		,pm_r_code
-		,mr_account_num
-		,mr_reg_date
 	FROM 
 		wt_member_registration
 	WHERE
 		level_num = 4;	
 		
+</select>
+
+<!-- 학생이름 별 과목가져오기 -->
+
+<select id="sNameClass" resultType="hashMap" >
+				
+	SELECT 
+		os.lec_name,
+		wc.lec_os_code
+	FROM 
+		wt_lecture_open_schedule  as os
+	inner join
+		wt_lecture_open as lo
+	on
+		os.lec_os_code = lo.lec_os_code 
+	inner join
+		wt_course as wc
+	on 
+		lo.lec_os_code = wc.lec_os_code 
+	inner join
+		wt_member_registration as mr
+	on 
+		mr.mr_id = wc.app_sid 
+	WHERE 
+		mr.mr_id = #{mrId};
 </select>
 
 <!-- 지급자가져오기  -->

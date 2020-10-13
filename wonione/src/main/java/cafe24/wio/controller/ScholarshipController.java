@@ -33,16 +33,15 @@ public class ScholarshipController {
 	//장학금지급내역 리스트
 	@RequestMapping(value="/getScholarList", method= RequestMethod.GET)
 	public String getScholarList(Model model, ScholarShip  scholarship ,HttpSession session
+								,@RequestParam(value = "mrName", required = false) String mrId
 								,@RequestParam( value="currentPage", required = false, defaultValue = "1") int currentPage) {
-		logger.info("===============================");
-		logger.info("@RequestMapping getScholarList");
-		logger.info("===============================");
 		
 		Map<String,Object> countScholarShipList =scholarshipService.countScholarShipList(currentPage);
 		
 		String scholarCode = scholarshipService.ScholarReCode();
 		String sessionName= session.getAttribute("SNAME").toString();
 		String sessionId = session.getAttribute("SID").toString();
+		
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("scholarCode", scholarCode);
@@ -59,15 +58,22 @@ public class ScholarshipController {
 		
 	}
 	
+	//ajax호출
+	@PostMapping(value="/sNameClass", produces = "application/json")
+	@ResponseBody
+	public List<Map<String, Object>> sNameClass(Model model
+										,@RequestParam(value = "mrName", required = false) String mrId){
+		List<Map<String, Object>> sNameClass = scholarshipService.sNameClass(mrId);
+		
+		return sNameClass;
+		
+	}
+	
 	//장학금 지급 상세리스트
 	@GetMapping("/ScholarDetailList")
 	public String getScholarList(Model model,
 									@RequestParam(value="pmInfoCode" ,required = false) String pmInfoCode) {
-		logger.info("===============================");
-		logger.info("@GetMapping ScholarDetailList");
-		logger.info("===============================");
 		ScholarShip scholarshipDetail = scholarshipService.ScholarDetailList(pmInfoCode);
-		logger.info("scholarshipDetail-->"+ scholarshipDetail);
 		model.addAttribute("scholarshipDetail", scholarshipDetail);
 		return "grade/scholarshipPage";
 	}
@@ -79,14 +85,10 @@ public class ScholarshipController {
 									,@RequestParam(value="awardBmPrice", required=false) String awardBmPrice
 									,@RequestParam(value="mrName", required=false) String mrName
 									,@RequestParam(value="pmInfoPayer", required=false) String pmInfoPayer){
-		logger.info("===============================");
-		logger.info("@PostMapping getScholarList");
-		logger.info("===============================");
 		
 		int result = scholarshipService.giveScholarShip(scholarship);
 		String scholarCode = scholarshipService.ScholarReCode();
 		model.addAttribute("ScholarShip", scholarship);
-		logger.info("scholarCode-->"+ scholarCode);
 		model.addAttribute("scholarCode", scholarCode);
 		model.addAttribute("result", result);
 		return "redirect:/getScholarList";

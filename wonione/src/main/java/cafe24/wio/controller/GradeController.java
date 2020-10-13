@@ -33,14 +33,10 @@ public class GradeController {
 		List<Map<String, Object>> sName = gradeService.sName();
 		List<Map<String, Object>> testNum = gradeService.testNum();
 		List<Map<String, Object>> className = gradeService.gradeClassId();
-		List<Map<String, Object>> idName = gradeService.idName(lecOsCode);
 		List<Map<String, Object>> gradeClassId = gradeService.gradeClassId();
 		String gradeCode = gradeService.gradeCode();
-		logger.info("className>>>>>>>>>>>>>>>{}", className);
 		Map<String,Object> countGradeList = gradeService.countGradeList(currentPage);
-
 		model.addAttribute("title", "성적리스트조회");
-		model.addAttribute("idName", idName);
 		model.addAttribute("gradeClassId", gradeClassId);
 		model.addAttribute("className", className);
 		model.addAttribute("sName", sName);
