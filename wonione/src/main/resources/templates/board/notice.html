@@ -54,19 +54,24 @@
 				</tbody>			
 			</table>
 		</form>
-		
+
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
+		  	<li class="page-item">
+				<a class="page-link" th:href="@{/getNotice}">First</a>
+			</li>
 		    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
 		    <li class="page-item"><a class="page-link" href="/getNotice">1</a></li>
 		    <li class="page-item"><a class="page-link" href="#">2</a></li>
 		    <li class="page-item"><a class="page-link" href="#">3</a></li>
-		    <li class="page-item"><a class="page-link" href="#">4</a></li>
-		    <li class="page-item"><a class="page-link" href="#">5</a></li>
 		    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+		    <li class="page-item">
+		    	<a th:href="@{/getNotice(currentPage=${lastPage})}" id="lastPageBtn" role="button">Last</a>
+		    </li>
 		  </ul>
 		</nav>
-
+		
+		<!-- 검색 script -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
 		<script type="text/javascript"> 
 		 

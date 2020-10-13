@@ -12,7 +12,7 @@ public interface BoardMapper {
 	
 	//공지사항 목록 조회
 	public List<Board> getNotice(Board board);
-		
+	
 	//공지사항 등록
 	public int addNotice(Board board);
 
@@ -21,6 +21,9 @@ public interface BoardMapper {
 	
 	//자료게시판 목록 조회
 	public List<Board> getDataLibrary(Board board);
+	
+	//자료게시판 등록
+	public int addDataLibrary(Board board);
 
 	//게시물 읽기
 	public Board readBoard(String boardNum);
