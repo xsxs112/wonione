@@ -18,6 +18,8 @@
 		<result column="test_number" 			property="testNumber"/>	
 		<result column="mr_name" 				property="mrName"/>
 		<result column="lec_target" 			property="lecTarget"/>
+		<result column="cla_people" 			property="claPeople"/>
+		
 		
 </resultMap>
 
@@ -41,7 +43,9 @@
 		LEFT join
 		wt_member_registration
 		on
-		wt_member_registration.mr_id = wt_report_lecture.mr_id;
+		wt_member_registration.mr_id = wt_report_lecture.mr_id
+		ORDER by
+		wt_report_lecture.report_lec_code DESC;	
 </select>
 
 <!-- 성적업무보고서 상세조회 -->
@@ -221,6 +225,20 @@
 
 </select>
 
+<select id="openLecture" resultType="GradeReport"  resultMap="gradeReportResultMap">
+
+	SELECT 
+		 wt_lecture_open.lec_op_code
+		,wt_lecture_open.cla_people
+		,wt_lecture_open_schedule.lec_name
+	FROM 
+		wt_lecture_open
+	inner join
+		wt_lecture_open_schedule
+	on
+		wt_lecture_open.lec_os_code = wt_lecture_open_schedule.lec_os_code; 
+
+</select>
 
 
 

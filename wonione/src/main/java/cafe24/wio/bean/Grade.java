@@ -10,6 +10,7 @@ public class Grade {
 	private String mrName;
 	private String testNumber;
 	private String lecName;
+	private String lecOsCode;
 	
 	
 	@Override
@@ -31,9 +32,12 @@ public class Grade {
 		builder.append(testNumber);
 		builder.append(", lecName=");
 		builder.append(lecName);
+		builder.append(", lecOsCode=");
+		builder.append(lecOsCode);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	public String getGradeManCode() {
 		return gradeManCode;
 	}
@@ -81,6 +85,12 @@ public class Grade {
 	}
 	public void setLecName(String lecName) {
 		this.lecName = lecName;
+	}
+	public String getLecOsCode() {
+		return lecOsCode;
+	}
+	public void setLecOsCode(String lecOsCode) {
+		this.lecOsCode = lecOsCode;
 	}
 
 }

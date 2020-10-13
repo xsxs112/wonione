@@ -40,4 +40,11 @@ public interface GradeMapper {
 	//보고서 리스트 페이징
 	public List<Grade> countGradeList(Map<String,Object> gradeMap);
 	
+	//과목 불러오기
+	public List<Map<String, Object>> gradeClassId();
+	
+	//과목에따른 수강학생이름 불러오기
+	public List<Map<String, Object>> idName(String lecOsCode);
+	
+	
 }

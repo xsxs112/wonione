@@ -28,14 +28,21 @@ public class GradeController {
 	// 성적리스트조회
 	@RequestMapping(value = "/getGradeList", method = RequestMethod.GET)
 	public String getGradeList(Grade grade, Model model
-								,@RequestParam( value="currentPage", required = false, defaultValue = "1") int currentPage) {
+								,@RequestParam( value="currentPage", required = false, defaultValue = "1") int currentPage
+								,@RequestParam(value = "lecName", required = false) String lecOsCode) {
 		List<Map<String, Object>> sName = gradeService.sName();
 		List<Map<String, Object>> testNum = gradeService.testNum();
+		List<Map<String, Object>> className = gradeService.gradeClassId();
+		List<Map<String, Object>> idName = gradeService.idName(lecOsCode);
+		List<Map<String, Object>> gradeClassId = gradeService.gradeClassId();
 		String gradeCode = gradeService.gradeCode();
-
+		logger.info("className>>>>>>>>>>>>>>>{}", className);
 		Map<String,Object> countGradeList = gradeService.countGradeList(currentPage);
 
 		model.addAttribute("title", "성적리스트조회");
+		model.addAttribute("idName", idName);
+		model.addAttribute("gradeClassId", gradeClassId);
+		model.addAttribute("className", className);
 		model.addAttribute("sName", sName);
 		model.addAttribute("testNum", testNum);
 		model.addAttribute("gradeCode", gradeCode);
@@ -45,11 +52,22 @@ public class GradeController {
 		model.addAttribute("lastPageNum", countGradeList.get("lastPageNum"));
 		model.addAttribute("startPageNum", countGradeList.get("startPageNum"));
 		
-		
 		return "grade/gradeList";
 
 	}
+	
+	//ajax호출
+	@PostMapping(value="/gradeClassId", produces = "application/json")
+	@ResponseBody
+	public List<Map<String, Object>> idName(Model model
+										,@RequestParam(value = "lecName", required = false) String lecOsCode){
+		List<Map<String, Object>> idName = gradeService.idName(lecOsCode);
+		
+		return idName;
+		
+	}
 
+	
 	// 성적상세보기리스트
 	@GetMapping("/gradePage")
 	public String getGradeDetailList(Model model,

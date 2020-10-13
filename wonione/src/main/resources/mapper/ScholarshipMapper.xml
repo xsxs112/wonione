@@ -78,6 +78,7 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 
 <!--장학금 지급 내역 작성하기  -->
 <insert id="giveScholarShip" parameterType="Scholarship">
+	
 	INSERT INTO
 	 	wt_payments_information
 			( pm_info_code
