@@ -13,7 +13,8 @@
 		<result column="grade_man_reg_date" 	property="gradeManRegDate"/>
 		<result column="mr_name" 				property="mrName"/>
 		<result column="test_number" 			property="testNumber"/>	
-		<result column="lec_name" 			    property="lecName"/>	
+		<result column="lec_name" 			    property="lecName"/>
+		<result column="lec_os_code" 			property="lecOsCode"/>
 		
 </resultMap>
 
@@ -36,7 +37,7 @@
 		ON.
 		wt_grade_num.grade_test_num = wt_grade_management.test_round
 	ORDER by
-		wt_grade_management.grade_man_code ASC;	
+		wt_grade_management.grade_man_code DESC;	
 	
 </select>
 
@@ -62,6 +63,45 @@
 	where
 		grade_man_code = #{gradeManCode};
 	
+</select>
+
+<!-- 개설된 강의 가져오기 -->
+<select id="gradeClassId" resultType="hashMap" >
+		
+	SELECT
+		lo.lec_os_code
+		,ls.lec_name 
+	FROM
+		wt_lecture_open AS lo
+	INNER JOIN 
+		wt_lecture_open_schedule AS ls
+	ON
+		lo.lec_os_code = ls.lec_os_code;
+</select>
+
+<!-- 과목별 학생이름 가져오기 -->
+<select id="idName" resultType="hashMap">
+
+		SELECT
+			 m.mr_name 
+			,m.mr_id
+		FROM
+			wt_lecture_open AS lo
+		INNER JOIN
+			wt_lecture_open_schedule ls
+		ON
+			lo.lec_os_code = ls.lec_os_code
+		INNER JOIN 
+			wt_course AS c
+		ON
+			ls.lec_os_code = c.lec_os_code
+		INNER JOIN
+			wt_member_registration AS m
+		ON
+			c.app_sid = m.mr_id
+		WHERE
+			ls.lec_os_code = #{lecOsCode};
+
 </select>
 
 <!-- 조건검색  -->
@@ -91,24 +131,24 @@
 <!-- 성적입력  -->
 <insert id="insertGrade"  parameterType="Grade">
 
-INSERT INTO 
-	wt_grade_management(
-			grade_man_code
-			, mr_id
-			, test_round
-			, grade_man_score
-			, grade_man_reg_date)
+	INSERT INTO 
+		wt_grade_management(
+				grade_man_code
+				, mr_id
+				, test_round
+				, grade_man_score
+				, grade_man_reg_date)
 	VALUES (
-			  #{gradeManCode}
-			, #{mrName}
-			, #{testNumber}
-			, #{gradeManScore}
-			, NOW());
+				  #{gradeManCode}
+				, #{mrName}
+				, #{testNumber}
+				, #{gradeManScore}
+				, NOW());
 
 </insert>
 
 <!-- 학생이름가져오기  -->
-<select id="sName" resultType="hashMap" >
+<select id="sName" resultType="hashMap">
 
 	SELECT 
 		 mr_id

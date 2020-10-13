@@ -33,6 +33,7 @@
 							<thead>
 								<tr>
 									<th>성적코드</th>
+									<th>과목명</th>
 									<th>학생명</th>
 									<th>회차</th>
 									<th>점수</th>
@@ -44,11 +45,16 @@
 								<td>
 								<input class="form-control" th:value="${gradeCode}" name="gradeManCode" readonly="readonly">
 									<td>
-										<select name ="mrName" class="form-control" id="mrName">
-											<option value="">::학생이름::</option>
-											<th:block th:each="g : ${sName}">
-												`<option th:value="${g.mr_id}">[[${g.mr_name}]]</option>
-											</th:block>
+										<select name ="lecName" class="form-control" id="lecName">
+											<option value="">::과목명::</option>
+										<th:block th:each="c : ${gradeClassId}">
+											<option th:value="${c.lec_os_code}" id="nameId">[[${c.lec_name}]]</option>
+										</th:block>
+										</select>
+									</td>
+									<td>
+										<select name ="mrName" class="form-control" id="sName">
+											<option  value="null" >::학생이름::</option>
 										</select>
 									</td>
 									<td>
@@ -170,10 +176,10 @@
 			  console.log('클릭 이벤트');
 			  var gradeInsertForm = $('#gradeInsertForm');
 			  var gradeManCode = $('#gradeManCode').val();
-				var mrName = $('#mrName').val();
+			  var mrName = $('select[name=mrName] option:selected').index();
 				var testNumber = $('#testNumber').val();
 				var gradeManScore = $('#gradeManScore').val();
-				console.log("mrName-->"+mrName);
+				console.log("mrName-->"+ mrName);
 				console.log("testNumber-->"+testNumber);
 				console.log("gradeManScore-->"+gradeManScore);
 				
@@ -192,11 +198,44 @@
 				}
 				gradeInsertForm.submit();
 			}); 
-		});
-	 
-	 
-	 
+		}); 
 	
+	 $('#lecName').change(function(){
+	        var html = '';
+	        var lecName = $(this).val();
+	        console.log(lecName, "<-선택한과목명");
+	          var request = $.ajax({
+	          url: "/gradeClassId",
+	          method: "POST",
+	          data: { lecName : lecName },
+	          dataType: "json"
+	        });
+	           
+	        request.done(function( data ) {
+	           $('#sName').empty();
+	           $('#sName').children("option").remove();
+	           $('#sName').append("<option selected='selected' disabled='disabled'>::학생이름::</option>");
+	     	   	 console.log(data.length);
+	           for(var i=0; i<data.length; i++){
+	        	   console.log(data[i]);
+	               if(data[i].lecOsCode == null){
+	            	  html ='';
+	            	  html += '<option value= "'+ data[i].mr_id +'" name="mr_id" >' +data[i].mr_name+ '</option>'; 
+	            	  
+	                  $('#sName').append(html);
+	               } else{
+	                  $('#sName').append("<option value='내용이 없습니다.'>" + "</option>");
+	               }  
+         };   
+        });
+        request.fail(function( jqXHR, textStatus ) {
+          alert( "Request failed: " + textStatus );
+        });
+
+        
+     });  
+	 
+	 
 	</script>  
 	</th:block>
 </html>

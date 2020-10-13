@@ -51,6 +51,17 @@ public class GradeService {
 		return inputGrade;
 	}
 
+	//과목이름가져오기
+	public List<Map<String, Object>> gradeClassId(){
+		List<Map<String, Object>> lecName = gradeMapper.gradeClassId();
+		return lecName;
+	}
+	
+	//과목별학생이름가져오기
+	public List<Map<String, Object>> idName(String lecOsCode){
+		List<Map<String, Object>> idName = gradeMapper.idName(lecOsCode);
+		return idName;
+	}
 	
 	 //학생이름가져오기
 	public List<Map<String,Object>> sName(){
