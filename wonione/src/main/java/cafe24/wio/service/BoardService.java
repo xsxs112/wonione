@@ -70,9 +70,9 @@ public class BoardService {
 
 	//공지사항 검색
 	public List<Board> getNoticeSearch(String bdSk, String bdSv){
-		List<Board> noticeList = boardMapper.getSearch(bdSk, bdSv);
+		List<Board> noticeList = boardMapper.getSearchNotice(bdSk, bdSv);
 		return noticeList;
-	}	
+	}
 
 	//자료게시판 조회
 	public List<Board> getDataLibrary(Board board){
@@ -105,4 +105,10 @@ public class BoardService {
 		return remove;
 	}
 	
+	//자료게시판 검색
+	public List<Board> getDataLibrarySearch(String bdSk, String bdSv){
+		List<Board> dataList = boardMapper.getSearchDataLibrary(bdSk, bdSv);
+		return dataList;
+	}
+
 }

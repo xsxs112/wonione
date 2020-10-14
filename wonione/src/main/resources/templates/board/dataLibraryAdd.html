@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 	<!-- 썸머노트 스크립트 end -->
 	
-		<h2>자료게시판 작성</h2>
+		<h2>자료게시판 게시물 작성</h2>
 	<form action="/addDataLibrary" class="container-fluid" method="post" id="noticeForm">
 	<!-- 글번호 자동생성, 세션 아이디 받기 히든타입
 	<input type="hidden" th:value="${boardNum}" name="boardNum">
@@ -62,7 +62,7 @@
 		</table>
 		<div style="margin-bottom:10px">
 			<button type="button" class="btn btn-default btn-success" id="btnSubmit">등록</button>
-			<a href="/getNotice" class="btn btn-default btn-info">취소</a>
+			<a href="/getDataLibrary" class="btn btn-default btn-info">취소</a>
 		</div>
 	</form>
 	
