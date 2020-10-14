@@ -203,13 +203,24 @@ public class BoardController {
 		return "board/dataLibraryModify";
 	}
 	
-	//공지사항 삭제
-		@GetMapping("/removeDataLibrary")
-		public String removeDataLibrary(Model model
-									,@RequestParam(value="boardNum", required = false) String boardNum) {
-			boardService.removeDataLibrary(boardNum);		
-			System.out.println(boardNum + "boardNum");
-			return "redirect:/getDataLibrary";
-		}
+	//자료게시판 삭제
+	@GetMapping("/removeDataLibrary")
+	public String removeDataLibrary(Model model
+								,@RequestParam(value="boardNum", required = false) String boardNum) {
+		boardService.removeDataLibrary(boardNum);
+		System.out.println(boardNum + "boardNum");
+		return "redirect:/getDataLibrary";
+	}
 	
+	//자료게시판 조건 검색
+	@GetMapping("/getSearchDataLibrary")
+	public String getSearchDataLibrary(Model model
+			,@RequestParam(value="bdSk", required=false) String bdSk
+			,@RequestParam(value="bdSv", required=false) String bdSv) {
+		List<Board> dataList = boardService.getDataLibrarySearch(bdSk, bdSv);
+		logger.info(dataList.toString());
+		model.addAttribute("dataList", dataList);
+		return "board/dataLibrary";
+	}
+
 }

@@ -38,6 +38,26 @@
 			board_reg_date DESC;
 	</select>
 	
+	<!-- 공지사항 검색  -->
+	<select id="getSearchNotice" resultType="Board" resultMap="boardResultMap">
+	SELECT 
+		board_num,
+		board_title,
+		board_writer_id,
+		mr_name,
+		board_reg_date
+	FROM
+		wt_board
+	INNER JOIN
+		wt_member_registration 
+	ON
+		wt_member_registration.mr_id = wt_board.board_writer_id
+	WHERE
+		${bdSk} LIKE (CONCAT('%',#{bdSv},'%'))
+	AND
+		board_menu = '공지사항';	
+	</select>
+	
 	<!-- 공지사항 등록  -->
 	<insert id="addNotice" parameterType="Board">
 		INSERT INTO wt_board(
@@ -75,7 +95,9 @@
 		ON
 			m.mr_id = b.board_writer_id
 		WHERE
-			board_menu = '자료게시판';
+			board_menu = '자료게시판'
+		ORDER BY 
+			board_reg_date DESC;
 	</select>
 
 	<!-- 자료게시판 등록  -->
@@ -100,6 +122,26 @@
 			, #{boardFile});
 	</insert>
 
+	<!-- 자료게시판 검색  -->
+	<select id="getSearchDataLibrary" resultType="Board" resultMap="boardResultMap">
+	SELECT 
+		board_num,
+		board_title,
+		board_writer_id,
+		mr_name,
+		board_reg_date
+	FROM
+		wt_board
+	INNER JOIN
+		wt_member_registration 
+	ON
+		wt_member_registration.mr_id = wt_board.board_writer_id
+	WHERE
+		${bdSk} LIKE (CONCAT('%',#{bdSv},'%'))
+	AND
+		board_menu = '자료게시판';	
+	</select>
+	
 	<!-- 게시물 읽기 -->
 	<select id="readBoard" resultType="Board" parameterType="String" resultMap="boardResultMap">
 		SELECT
@@ -151,23 +193,4 @@
 		board_num = #{boardNum};
 	</delete>
 
-	<!-- 검색  -->
-	<select id="getSearch" resultType="Board" resultMap="boardResultMap">
-	SELECT 
-		board_num,
-		board_title,
-		board_writer_id,
-		mr_name,
-		board_reg_date
-	FROM
-		wt_board
-	INNER JOIN
-		wt_member_registration 
-	ON
-		wt_member_registration.mr_id = wt_board.board_writer_id
-	WHERE
-		${bdSk} LIKE (CONCAT('%',#{bdSv},'%'))
-	</select>
-
 </mapper>
-    
