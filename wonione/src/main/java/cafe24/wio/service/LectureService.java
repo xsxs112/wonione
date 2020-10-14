@@ -1,6 +1,5 @@
 package cafe24.wio.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import cafe24.wio.bean.LectureOpen;
 import cafe24.wio.bean.LectureOpenSchedule;
-import cafe24.wio.bean.Member;
 import cafe24.wio.mapper.LectureMapper;
 
 @Service
@@ -42,10 +40,15 @@ public class LectureService {
 		return lecOpCode;
 	}
 	
-	//강의리스트에 등록하기
+	/**
+	 * 강의리스트에 등록하기
+	 * @param lectureOpen
+	 * @return
+	 */
 	public int addLectureOpen(LectureOpen lectureOpen) {
 		
-		return 0;
+		int addResult = lectureMapper.addLectureOpen(lectureOpen);
+		return addResult;
 	}
 	
 	/**

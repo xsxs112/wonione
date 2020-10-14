@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cafe24.wio.bean.LectureOpen;
 import cafe24.wio.bean.LectureOpenSchedule;
 import cafe24.wio.service.LectureService;
 
@@ -22,6 +23,17 @@ public class LectureController {
 	@Autowired
 	private LectureService lectureService;
 
+	//강의예정코드를 사용해 강의리스트에 등록하기
+	@PostMapping(value="/addLectureOpen", produces = "application/json")
+	@ResponseBody
+	public int addLectureOpen(LectureOpen lectureOpen
+							,@RequestParam(value="lecOsCode" ,required = false)String lecOsCode
+							,@RequestParam(value="lecOpWriter" ,required = false)String lecOpWriter
+							,@RequestParam(value="lecOpCode" ,required = false)String lecOpCode) {
+		int addResult = lectureService.addLectureOpen(lectureOpen);
+		
+		return addResult;
+	}
 	
 	//강의예정코드로 중복개설되었는지 확인
 	@PostMapping(value="/checkLecOpen",produces = "application/json")

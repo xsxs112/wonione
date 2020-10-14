@@ -21,7 +21,7 @@
                                 <table class="table border-table">
                                     <tr>
                                         <th>강의개설코드</th>
-                                        <th>강의예정코드</th>
+                                        <th>강의상세보기</th>
                                         <th>강의상태구분</th>
                                         <th colspan="3">수강인원</th>
                                         <th>미달인원</th>
@@ -35,7 +35,7 @@
 											  <td>
 						                        <div class="modal-bootstrap shadow-inner responsive-mg-b-0">
 						                            <div class="modal-area-button">
-						                                <a class="lecOsCodeBtn" href="#" th:value="${lec.lecOsCode}" data-toggle="modal" data-target="#PrimaryModalalert" role="button">[[${lec.lecOsCode}]]</a>
+						                                <a class="lecOsCodeBtn" href="#" th:value="${lec.lecOsCode}" data-toggle="modal" data-target="#PrimaryModalalert" role="button">상세보기</a>
 						                                <input class="lecOsCode" type="hidden" th:value="${lec.lecOsCode}">
 						                            </div>
 						                        </div>												  
@@ -69,7 +69,7 @@
 							                                    <div class="modal-body" id="check">
 																</div>
 						                                    <div class="modal-footer">
-						                                        <a data-dismiss="modal" id="modalConfirmBtn" class="btn btn-default" href="#" role="button">확인</a>
+						                                        <button data-dismiss="modal" id="modalConfirmBtn" th:value="${lec.lecOpCode}"  class="btn btn-default lecOpCode">확인</button>
 						                                        <a data-dismiss="modal" class="btn btn-default" href="#" role="button">닫기</a>
 						                                    </div>
 					                                   	 </div>
@@ -107,6 +107,10 @@
 					html += data[i].lecOsCode;
 					html +=' 강의예정상세보기</h3>';
 					html +='<table class="table">';
+					html +='<tr><td>강의예정코드</td>';
+					html +='<td>';
+					html += data[i].lecOsCode;
+					html += '</td></tr>';
 					html +='<tr><td>과정명</td>';
 					html +='<td>';
 					html +=data[i].lecName;
@@ -171,11 +175,12 @@
 	
 	<!------------------------- Start------------------------------>
 	<!---------------------- 강의상태변경하기 Modal -------------------->
-	<!-------------------------- End------------------------------->
 	<script type="text/javascript" th:inline="javascript">
 	<!---------------------- 강의상태변경하기 아이콘클릭 -------------------->
 		/*<![CDATA[*/
 			$('.changeStatusBtn').click(function(){
+				var lecOpCode = $('.lecOpCode').parents().children('.lecOpCode').val();
+				console.log(lecOpCode + ' < -- lecOpCode ');
 				var lectureStatus = /*[[${lectureStatus}]]*/;
 					html = '';
 				/* alert(JSON.stringify(lectureStatus));  */
@@ -196,7 +201,7 @@
 						html += '>';
 						html += lectureStatus.lecStatusName;
 						html += '</option>';	
-					}
+					}	
 					console.log(lectureStatus.lecStatus + ' < -- lectureStatus.lecStatus');
 					console.log(lectureStatus.lecStatusName + ' < --lectureStatus.lecStatusName');
 				});
@@ -206,9 +211,10 @@
 						
 					$('#modalConfirmBtn').click(function(){
 						console.log('Modal확인버튼클릭');
-						var lecOpCode = $('#lecOpCode').val();
 						var selectLecStatusVal = $('#selectLecStatus option:selected').val();
+						console.log('************************');
 						console.log(selectLecStatusVal + ' < --#selectLecStatus option:selected');
+						console.log('************************');
 						console.log(lecOpCode + ' < -- lecOpCode');
 						var request = $.ajax({
 							 url: "/changeLecStatus",
@@ -219,7 +225,7 @@
 							 
 							request.done(function( data ) {
 								if(data == 1){
-									location.href="/lecList";
+									/* location.href="/lecList"; */
 								}else if(data == 0){
 									alert('수정에 실패하였습니다');
 								}
@@ -233,6 +239,7 @@
 						
 			});
 		/*]]>*/
+		<!-------------------------- End------------------------------->
 	</script>
 	</th:block>
 	<th:block layout:fragment="customJsScript">

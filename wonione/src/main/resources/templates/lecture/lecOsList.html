@@ -40,7 +40,7 @@
                                         <th>등록일자</th>
                                         <th style="text-align: center;">비고사항</th>
                                         <th>수정 / 삭제</th>
-                                        <th>개강</th>
+                                        <th>등록</th>
                                     </tr>
                                     <th:block th:each="losl : ${lectureOsList}">
 	                                    <tr>
@@ -74,7 +74,7 @@
 	                                            <button data-toggle="tooltip" title="삭제" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 	                                        </td>
 	                                        <td>
-	                                       		<button type="button" class="btn btn-dafault openLectureBtn" th:value="${losl.lecOsCode}">개강</button>
+	                                       		<button type="button" class="btn btn-dafault openLectureBtn" th:value="${losl.lecOsCode}">등록</button>
 	                                       	</td>
 	                                    </tr>
 	                                    <div class="login-form-area edu-pd mg-b-15">
@@ -130,10 +130,10 @@
 	
 	$('.openLectureBtn').click(function(){
 		var lecOsCode = $(this).parents().children('.openLectureBtn').val();
-		var sessionId = $('#sessionId').val();
+		var lecOpWriter = $('#sessionId').val();
 		var lecOpCode = $('#lecOpCode').val();
 		console.log(lecOsCode + ' < -- lecOsCode');
-		console.log(sessionId + ' < -- sessionId');
+		console.log(lecOpWriter + ' < -- lecOpWriter');
 		console.log(lecOpCode + ' < -- lecOpCode');
 		console.log('개강버튼클릭');
 		var request = $.ajax({
@@ -148,7 +148,22 @@
 						alert('이미 개설되었거나 종료된 강의입니다.');
 					}else if(data == 0){
 						if(confirm('개강하시겠습니까?')){
-							
+							var openLecture = $.ajax({
+								  url: "/addLectureOpen",
+								  method: "POST",
+								  data: { lecOsCode : lecOsCode 
+									  	, lecOpWriter : lecOpWriter 
+									  	, lecOpCode : lecOpCode},
+								  dataType: "json"
+								});
+							openLecture.done(function(openData) {
+								alert('개강이 완료되었습니다.');
+								location.href='/lecList';
+						});
+						
+						request.fail(function( jqXHR, textStatus ) {
+						  alert( "Request failed: " + textStatus );
+						});
 						}
 					}
 			});
