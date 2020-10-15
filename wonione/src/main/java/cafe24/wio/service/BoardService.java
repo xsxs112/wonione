@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cafe24.wio.bean.Board;
+import cafe24.wio.bean.Review;
 import cafe24.wio.mapper.BoardMapper;
 
 @Service
@@ -111,4 +112,12 @@ public class BoardService {
 		return dataList;
 	}
 
+	
+	//공지사항 조회
+		public List<Review> getReview(Review review){
+			System.out.println(review + " <-- review");
+			List<Review> reviewList = boardMapper.getReview(review);
+			return reviewList;
+		}
+	
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import cafe24.wio.bean.Board;
+import cafe24.wio.bean.Review;
 import cafe24.wio.service.BoardService;
 
 @Controller
@@ -223,4 +224,17 @@ public class BoardController {
 		return "board/dataLibrary";
 	}
 
+	//수강후기 리스트 조회
+	@RequestMapping(value = "/getReview", method = RequestMethod.GET)
+	public String getReview(Model model, Review review) {
+
+		List<Review> reviewList = boardService.getReview(review);
+		System.out.println(reviewList + "reviewList");
+
+		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("title", "수강후기");
+
+		return "board/review";
+	}
+	
 }

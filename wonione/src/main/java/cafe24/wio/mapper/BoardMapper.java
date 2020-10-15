@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import cafe24.wio.bean.Board;
+import cafe24.wio.bean.Review;
 
 @Mapper
 public interface BoardMapper {
@@ -40,4 +41,8 @@ public interface BoardMapper {
 	//게시물 삭제
 	public int removeBoard(String boardNum);
 	
+	
+	//수강후기 목록 조회
+	public List<Review> getReview(Review review);
+
 }
