@@ -105,9 +105,10 @@ public class PayController {
 		return "pay/payList";
 	}
 	
-	// 직원 급여 검색
-	@PostMapping("/getSearchOPL")
-	public String getSearchOPL(	Model model
+	// 직원 급여 검색	
+	@PostMapping(value = "/getSearchOPL",produces = "application/json")
+	@ResponseBody
+	public List<OfficersPay> getSearchOPL(	Model model
 								,@RequestParam(value = "sk", required = false) String sk
 								,@RequestParam(value = "sv", required = false) String sv) {
 		
@@ -116,7 +117,7 @@ public class PayController {
 		
 		model.addAttribute("officersSPayList", officersSPayList);
 		
-		return "pay/payList";
+		return officersSPayList;
 	}
 	
 	//강사 급여 검색

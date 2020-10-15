@@ -95,9 +95,9 @@
 			,sp.sp_reg_date					AS spRegDate
 			,sp.sp_writer	  				AS spWriter	
 		FROM
-			wt_staff_pay 	AS sp
+			wt_staff_pay 					AS sp
 			LEFT JOIN 
-			wt_member_registration AS mr
+			wt_member_registration 			AS mr
 			on
 			sp.mr_id = mr.mr_id	 
 		WHERE 
@@ -114,9 +114,9 @@
 			,op.op_reg_date					AS opRegDate
 			,op.op_writer	  				AS opWriter	
 		FROM
-			wt_officers_pay 	AS op
+			wt_officers_pay 				AS op
 			LEFT JOIN 
-			wt_member_registration AS mr
+			wt_member_registration			AS mr
 			on
 			op.mr_id = mr.mr_id	
 		WHERE	 
@@ -135,9 +135,9 @@
 			,sp.sp_writer	  				AS spWriter	
 			,mr.level_num 			 
 		FROM
-			wt_staff_pay 	AS sp
+			wt_staff_pay 					AS sp
 			LEFT JOIN 
-			wt_member_registration AS mr
+			wt_member_registration 			AS mr
 			on
 			sp.mr_id = mr.mr_id	 
 		WHERE	

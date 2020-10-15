@@ -4,14 +4,22 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
-		<title th:text="${title}">급여목록</title> 
+		<title th:text="${title}">급여목록</title>
+	<script src="js/pay/payList.js"></script> 
+	<script type="text/javascript">	
+	
+	$(function(){		
+
+	});	
+			
+	</script>		
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<div>	
 		<div class="container-fluid">
 		  	<table class ="table table-striped">
 		  		<thead>
-		  			<tr class="info">
+		  			<tr class="info" >
 		  				<th style="text-align: center;">직원급여지급코드</th>
 		  				<th style="text-align: center;">아이디</th>
 		  				<th style="text-align: center;">이름</th>
@@ -78,7 +86,7 @@
 				<input type="text" name="sv" class="form-control">
 			</label>
 			<label>
-				<button type="submit" class="form-control">검색</button>
+				<button type="button" class="form-control searchbtn" id="offiSearchBtn">검색</button>
 			</label>
 		</form>	
 	</div>		
@@ -97,7 +105,7 @@
 				<input type="text" name="sv" class="form-control">
 			</label>
 			<label>
-				<button type="submit" class="form-control">검색</button>
+				<button type="button" class="form-control searchbtn">검색</button>
 			</label>
 		</form>	
 	</div>			
@@ -132,18 +140,18 @@
 	  				<th style="text-align: center;">작성자</th>
 	  			</tr>
 	  		</thead>	  	
-	  		<tbody>
-	  			<tr th:each="l : ${officersSPayList}">
-	  				<!-- get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음) -->	  				
+	  		<tbody id="searchPayList">
+<!-- 	  		<tr th:each="l : ${officersSPayList}">
+	  				get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음)	  				
 	  				<td style="text-align: center;" th:text="${l.opCode}"></td>
 	  				<td style="text-align: center;" th:text="${l.mrId}"></td>
 	  				<td style="text-align: center;" th:text="${l.mrName}"></td>
-	  				<td style="text-align: center;" th:text="${l.opDate}" th:if="${l.opDate}"></td>
-	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(l.opPay, 0, 'COMMA')}+'원'" ></td>
+	  				<td style="text-align: center;" th:text="${l.opDate}"></td>
+	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(l.opPay, 0, 'COMMA')}+'원'"></td>
 	  				<td style="text-align: center;" th:text="${l.opRegDate}"></td>
 	  				<td style="text-align: center;" th:text="${l.opWriter}"></td>
 	  			</tr>
-  				<tr th:each="s : ${staffPaySList}">
+  				<tr th:each="s : ${staffSPayList}">
 	  				<td style="text-align: center;" th:text="${s.spCode}"></td>
 	  				<td style="text-align: center;" th:text="${s.mrId}"></td>
 	  				<td style="text-align: center;" th:text="${s.mrName}"></td>
@@ -151,7 +159,7 @@
 	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(s.spPay, 0, 'COMMA')}+'원'" ></td>
 	  				<td style="text-align: center;" th:text="${s.spRegDate}"></td>
 	  				<td style="text-align: center;" th:text="${s.spWriter}"></td>
-	  			</tr>
+	  			</tr> -->
 	  		</tbody>	
 	  	</table>
 	</div>
