@@ -36,7 +36,7 @@ FROM
 </select>
 
 <!-- 강의리스트에 등록하기 -->
-<insert id="addLectureOpen">
+<insert id="addLectureOpen" parameterType="LectureOpen">
 
 INSERT INTO wt_lecture_open
 	(lec_op_code
@@ -52,7 +52,7 @@ INSERT INTO wt_lecture_open
 	, 'lec_rs_status01'
 	, 20
 	, 0
-	, #{sessionId}
+	, #{lecOpWriter}
 	, CURRENT_DATE());
 
 
