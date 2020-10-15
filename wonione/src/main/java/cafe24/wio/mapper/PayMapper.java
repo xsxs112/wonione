@@ -48,4 +48,10 @@ public interface PayMapper {
 	
 	//강사급여목록조건검색
 	public List<StaffPay> getSearchSPL(String sk, String sv);
+	
+	//자원테이블 호출
+	public List<OfficersPay> standardSheet();
+	
+	//보험요율표 불러오기
+	public List<OfficersPay> insuranceYear();
 }

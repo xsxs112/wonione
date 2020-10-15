@@ -68,33 +68,59 @@
 		<result column="mr_account_num"					property="mrAccountNum"/>	
 		<result column="p_r_ect"						property="pREct"/>			
 	</resultMap>	
+	
+	<!-- 지급월기준표 -->
+	<select id="standardSheet" resultType="OfficersPay">
+		SELECT
+			SUBSTRING_INDEX(pr.p_r_ect,'or',-1) AS pREct
+			,pr.p_r_title AS pRTitle
+		FROM 
+			wt_pay_resource AS pr;
+	</select>
+	<!-- 보험요율표 -->
+	<select id="insuranceYear" resultType="OfficersPay">
+		SELECT
+			iy.iy_code AS iyCode
+		FROM 
+			wt_insurance_year AS iy;
+	</select>
 	<!-- 강사급여검색 -->
-	<select id="getSearchSPL" parameterType="String" resultMap="StaffPayResultMap">
+	<select id="getSearchSPL" parameterType="String" resultType="StaffPay">
 		SELECT 
-			 sp_code 					
-			,mr_id 						
-			,IFNULL(sp_date, '미지급')		
-			,sp_pay						
-			,sp_reg_date					
-			,sp_writer			 
+			 sp.sp_code 					AS spCode
+			,sp.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,IFNULL(sp.sp_date, '미지급')		AS spDate
+			,sp.sp_pay						AS spPay
+			,sp.sp_reg_date					AS spRegDate
+			,sp.sp_writer	  				AS spWriter	
 		FROM
-			wt_staff_pay 
+			wt_staff_pay 	AS sp
+			LEFT JOIN 
+			wt_member_registration AS mr
+			on
+			sp.mr_id = mr.mr_id	 
 		WHERE 
-			${sk} Like CONCAT('%',#{sv},'%')
+			${sk} Like CONCAT('%',#{sv},'%');
 	</select>	
 	<!-- 직원급여검색 -->
-	<select id="getSearchOPL" parameterType="String" resultMap="officersPayResultMap">
+	<select id="getSearchOPL" parameterType="String" resultType="OfficersPay">
 		SELECT 
-			 op_code 					
-			,mr_id 				
-			,IFNULL(op_date, '미지급')		
-			,op_pay						
-			,op_reg_date					
-			,op_writer	
+			 op.op_code 					AS opCode
+			,op.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,IFNULL(op.op_date, '미지급')		AS opDate
+			,op.op_pay						AS opPay
+			,op.op_reg_date					AS opRegDate
+			,op.op_writer	  				AS opWriter	
 		FROM
-			wt_officers_pay 
-		WHERE 
-			${sk} Like CONCAT('%',#{sv},'%')
+			wt_officers_pay 	AS op
+			LEFT JOIN 
+			wt_member_registration AS mr
+			on
+			op.mr_id = mr.mr_id	
+		WHERE	 
+			${sk} Like CONCAT('%',#{sv},'%');
 	</select>	
 
 	<!-- 선택한 강사 급여목록 불러오기 -->
@@ -145,7 +171,7 @@
 		FROM 
 			wt_staff_pay 
 		WHERE  
-			sp_code = #{spCode}
+			sp_code = #{spCode};
 	</delete>
 	<!-- 강사공제계 급여정보 삭제 -->
 	<delete id="removeSPD" parameterType="String"> 
@@ -153,7 +179,7 @@
 		FROM 
 			wt_staff_pay_deduction 
 		WHERE  
-			spd_code = #{spCode}
+			spd_code = #{spCode};
 	</delete>
 	<!-- 강사급여계 급여정보 삭제 -->
 	<delete id="removeSPC" parameterType="String"> 
@@ -161,7 +187,7 @@
 		FROM 
 			wt_staff_pay_calculate 
 		WHERE  
-			spc_code = #{spCode}
+			spc_code = #{spCode};
 	</delete>
 	
 	<!-- 직원급여정보 삭제 -->
@@ -170,7 +196,7 @@
 		FROM 
 			wt_officers_pay 
 		WHERE  
-			op_code = #{opCode}
+			op_code = #{opCode};
 	</delete>
 	<!-- 직원공제계 급여정보 삭제 -->
 	<delete id="removeOPD" parameterType="String"> 
@@ -178,7 +204,7 @@
 		FROM 
 			wt_officers_pay_deduction 
 		WHERE  
-			opd_code = #{opCode}
+			opd_code = #{opCode};
 	</delete>
 	<!-- 직원급여계 급여정보 삭제 -->
 	<delete id="removeOPC" parameterType="String"> 
@@ -186,7 +212,7 @@
 		FROM 
 			wt_officers_pay_calculate 
 		WHERE  
-			opc_code = #{opCode}
+			opc_code = #{opCode};
 	</delete>
 		
 	<!-- 강사급여목록조회  [최근것만 받아오게 쿼리문 수정완] -->
