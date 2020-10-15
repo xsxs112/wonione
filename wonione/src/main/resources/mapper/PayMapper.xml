@@ -66,13 +66,36 @@
 		<result column="op_writer"						property="opWriter"/>
 		<result column="mr_join_date"					property="mrJoinDate"/>
 		<result column="mr_account_num"					property="mrAccountNum"/>	
-		<result column="p_r_ect"						property="pREct"/>	
-		
+		<result column="p_r_ect"						property="pREct"/>			
 	</resultMap>	
-	<!-- 수정할 강사급여정보 가져오기 -->
-	<select id="getMrBySId" parameterType="String" resultType="StaffPay">
-
-	</select>
+	<!-- 강사급여검색 -->
+	<select id="getSearchSPL" parameterType="String" resultMap="StaffPayResultMap">
+		SELECT 
+			 sp_code 					
+			,mr_id 						
+			,IFNULL(sp_date, '미지급')		
+			,sp_pay						
+			,sp_reg_date					
+			,sp_writer			 
+		FROM
+			wt_staff_pay 
+		WHERE 
+			${sk} Like CONCAT('%',#{sv},'%')
+	</select>	
+	<!-- 직원급여검색 -->
+	<select id="getSearchOPL" parameterType="String" resultMap="officersPayResultMap">
+		SELECT 
+			 op_code 					
+			,mr_id 				
+			,IFNULL(op_date, '미지급')		
+			,op_pay						
+			,op_reg_date					
+			,op_writer	
+		FROM
+			wt_officers_pay 
+		WHERE 
+			${sk} Like CONCAT('%',#{sv},'%')
+	</select>	
 
 	<!-- 선택한 강사 급여목록 불러오기 -->
 	<select id = "getStaIdPayList" resultType="StaffPay">
@@ -165,22 +188,6 @@
 		WHERE  
 			opc_code = #{opCode}
 	</delete>
-	<!-- 수정할 직원급여정보 가져오기 -->
-	<select id="getOPCode" parameterType="String" resultType="OfficersPay">
-		SELECT
-			  op_code		AS opCode
-			, mr_id			AS mrId
-			, p_r_title		AS pRTitle
-			, op_date		AS opDate
-			, opd_code		AS opdCode
-			, op_pay		AS opPay
-			, op_reg_date	AS opRegDate
-			, op_writer		AS opWriter
-		FROM
-			wt_officers_pay
-		WHERE
-			op_code = #{opCode}
-	</select>
 		
 	<!-- 강사급여목록조회  [최근것만 받아오게 쿼리문 수정완] -->
 	<select id = "getStaffPayList" resultType="StaffPay" >

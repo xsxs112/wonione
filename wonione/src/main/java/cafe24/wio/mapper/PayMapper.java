@@ -42,6 +42,10 @@ public interface PayMapper {
 	
 	// 선택한 강사 급여정보 조회
 	public List<StaffPay> getStaIdPayList(String mrId);
-
-
+	
+	//직원급여목록조건검색
+	public List<OfficersPay> getSearchOPL(String sk, String sv);
+	
+	//강사급여목록조건검색
+	public List<StaffPay> getSearchSPL(String sk, String sv);
 }

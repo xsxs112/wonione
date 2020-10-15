@@ -7,50 +7,103 @@
 		<title th:text="${title}">급여목록</title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-	<div class="container-fluid">
-	  	<table class ="table table-striped">
+	<div>	
+		<div class="container-fluid">
+		  	<table class ="table table-striped">
+		  		<thead>
+		  			<tr class="info">
+		  				<th style="text-align: center;">직원급여지급코드</th>
+		  				<th style="text-align: center;">아이디</th>
+		  				<th style="text-align: center;">이름</th>
+		  				<th style="text-align: center;">직원급여지급일자</th>
+		  				<th style="text-align: center;">직원급여실지급액</th>
+		  				<th style="text-align: center;">작성일자</th>
+		  				<th style="text-align: center;">작성자</th>
+		  			</tr>
+		  		</thead>	  	
+		  		<tbody>
+		  			<tr th:each="l : ${officersPayList}">
+		  				<!-- get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음) -->	  				
+		  				<td style="text-align: center;"><a th:href="@{/getOfficersPay(mrId=${l.mrId}, opCode=${l.opCode})}" th:text="${l.opCode}"></a></td>
+		  				<td style="text-align: center;"><a th:href="@{/getIdPayList(mrId=${l.mrId})}" th:text="${l.mrId}"></a></td>
+		  				<td style="text-align: center;" th:text="${l.mrName}"></td>
+		  				<td style="text-align: center;" th:text="${l.opDate}"></td>
+		  				<td style="text-align: center;" th:text="${#numbers.formatInteger(l.opPay, 0, 'COMMA')}+'원'" ></td>
+		  				<td style="text-align: center;" th:text="${l.opRegDate}"></td>
+		  				<td style="text-align: center;" th:text="${l.opWriter}"></td>
+		  			</tr>
+		  		</tbody>	
+		  	</table>
+		</div>
+		<div class="container-fluid">
+		  	<table class ="table table-striped"> 
+		  		<thead>
+		  			<tr class="info">
+		  				<th style="text-align: center;">강사급여지급코드</th>
+		  				<th style="text-align: center;">아이디</th>
+		  				<th style="text-align: center;">이름</th>
+		  				<th style="text-align: center;">강사급여지급일자</th>
+		  				<th style="text-align: center;">강사급여실지급액</th>
+		  				<th style="text-align: center;">작성일자</th>
+		  				<th style="text-align: center;">작성자</th>
+		  			</tr>
+		  		</thead>	  	
+		  		<tbody>
+		  			<tr th:each="s : ${staffPayList}">
+		  				<td style="text-align: center;"><a th:href="@{/getStaffPay(mrId=${s.mrId}, spCode=${s.spCode})}" th:text="${s.spCode}"></a></td>
+		  				<td style="text-align: center;"><a th:href="@{/getIdPayList(mrId=${s.mrId})}" th:text="${s.mrId}"></a></td>
+		  				<td style="text-align: center;" th:text="${s.mrName}"></td>
+		  				<td style="text-align: center;" th:text="${s.spDate}"></td>
+		  				<td style="text-align: center;" th:text="${#numbers.formatInteger(s.spPay, 0, 'COMMA')}+'원'" ></td>
+		  				<td style="text-align: center;" th:text="${s.spRegDate}"></td>
+		  				<td style="text-align: center;" th:text="${s.spWriter}"></td>
+		  			</tr>
+		  		</tbody>	
+		  	</table>
+		</div>
+	</div>
+	<div>
+		<form action="/getSearchList" method="post">
+			<label>
+				<select name="sk"> 
+<!-- 				<option value="op_code">직원급여코드</option>
+					<option value="sp_code">강사급여코드</option> -->
+					<option value="p_r_title">지급월</option>
+					<option value="mr_name">이름</option>
+					<option value="op_writer">작성자</option>
+				</select>
+			</label>
+			<label>
+				<input type="text" name="sv">
+			</label>
+			<label>
+				<button type="submit">검색</button>
+			</label>
+		</form>	
+		<table class ="table table-striped">
 	  		<thead>
 	  			<tr class="info">
-	  				<th style="text-align: center;">직원급여지급코드</th>
+	  				<th style="text-align: center;">지급코드</th>
 	  				<th style="text-align: center;">아이디</th>
-	  				<th style="text-align: center;">이름</th>
-	  				<th style="text-align: center;">직원급여지급일자</th>
-	  				<th style="text-align: center;">직원급여여실지급액</th>
+	  				<th style="text-align: center;">급여지급일자</th>
+	  				<th style="text-align: center;">급여실지급액</th>
 	  				<th style="text-align: center;">작성일자</th>
 	  				<th style="text-align: center;">작성자</th>
 	  			</tr>
 	  		</thead>	  	
 	  		<tbody>
-	  			<tr th:each="l : ${officersPayList}">
+	  			<tr th:each="l : ${officersSPayList}">
 	  				<!-- get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음) -->	  				
-	  				<td style="text-align: center;"><a th:href="@{/getOfficersPay(mrId=${l.mrId}, opCode=${l.opCode})}" th:text="${l.opCode}"></a></td>
-	  				<td style="text-align: center;"><a th:href="@{/getIdPayList(mrId=${l.mrId})}" th:text="${l.mrId}"></a></td>
-	  				<td style="text-align: center;" th:text="${l.mrName}"></td>
-	  				<td style="text-align: center;" th:text="${l.opDate}"></td>
+	  				<td style="text-align: center;" th:text="${l.opCode}"></td>
+	  				<td style="text-align: center;" th:text="${l.mrId}"></td>
+	  				<td style="text-align: center;" th:text="${l.opDate}" th:if="${l.opDate}"></td>
 	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(l.opPay, 0, 'COMMA')}+'원'" ></td>
 	  				<td style="text-align: center;" th:text="${l.opRegDate}"></td>
 	  				<td style="text-align: center;" th:text="${l.opWriter}"></td>
 	  			</tr>
-	  		</tbody>	
-	  	</table>
-	</div>
-	<div class="container-fluid">
-	  	<table class ="table table-striped"> 
-	  		<thead>
-	  			<tr class="info">
-	  				<th style="text-align: center;">강사급여지급코드</th>
-	  				<th style="text-align: center;">아이디</th>
-	  				<th style="text-align: center;">이름</th>
-	  				<th style="text-align: center;">강사급여지급일자</th>
-	  				<th style="text-align: center;">강사급여여실지급액</th>
-	  				<th style="text-align: center;">작성일자</th>
-	  				<th style="text-align: center;">작성자</th>
-	  			</tr>
-	  		</thead>	  	
-	  		<tbody>
-	  			<tr th:each="s : ${staffPayList}">
-	  				<td style="text-align: center;"><a th:href="@{/getStaffPay(mrId=${s.mrId}, spCode=${s.spCode})}" th:text="${s.spCode}"></a></td>
-	  				<td style="text-align: center;"><a th:href="@{/getIdPayList(mrId=${s.mrId})}" th:text="${s.mrId}"></a></td>
+  				<tr th:each="s : ${staffPaySList}">
+	  				<td style="text-align: center;" th:text="${s.spCode}"></td>
+	  				<td style="text-align: center;" th:text="${s.mrId}"></td>
 	  				<td style="text-align: center;" th:text="${s.mrName}"></td>
 	  				<td style="text-align: center;" th:text="${s.spDate}"></td>
 	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(s.spPay, 0, 'COMMA')}+'원'" ></td>
