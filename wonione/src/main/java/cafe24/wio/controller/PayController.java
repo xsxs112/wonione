@@ -28,6 +28,21 @@ public class PayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(PayController.class);
 
+	@PostMapping("/getSearchList")
+	public String getSearchList(Model model
+								,@RequestParam(value = "sk", required = false) String sk
+								,@RequestParam(value = "sv", required = false) String sv) {
+		
+		List<OfficersPay> officersSPayList = payService.getSearchOPL(sk, sv);
+		List<StaffPay> staffSPayList = payService.getSearchSPL(sk, sv);
+		System.out.println(" officersSPayList ->> "+officersSPayList);
+		System.out.println(" staffSPayList ->> "+staffSPayList);
+		
+		model.addAttribute("officersSPayList", officersSPayList);
+		model.addAttribute("staffSPayList", staffSPayList);
+		
+		return "pay/payList";
+	}
 
 	// 강사급여 삭제하기
 	@PostMapping(value = "/removeStaffPayDocu", produces = "application/json")
