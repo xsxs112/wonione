@@ -70,94 +70,78 @@
 		  	</table>
 		</div>
 	</div>
-	<div>
-	<div style="width:30%; float:left">		
-		직원
-		<label>
-			<select name="offisk" class="form-control"> 
- 				<option value="op.op_code">직원급여코드</option>
-				<option value="op.p_r_title">지급월</option>
-				<option value="mr.mr_name">이름</option>
-				<option value="op.op_writer">작성자</option>
-			</select>
-		</label>
-		<label>
-			<input type="text" name="offisv" class="form-control">
-		</label>
-		<label>
-			<button type="button" class="form-control searchbtn" id="offiSearchBtn">검색</button>
-		</label>		
-	</div>		
-	<div style="width:30%; float:left">
-		강사
-		<label>
-			<select name="staffsk" class="form-control">
-				<option value="sp.sp_code">강사급여코드</option>
-				<option value="sp.p_r_title">지급월</option>
-				<option value="mr.mr_name">이름</option>
-				<option value="sp.sp_writer">작성자</option>
-			</select>
-		</label>
-		<label>
-			<input type="text" name="staffsv" class="form-control">
-		</label>
-		<label>
-			<button type="button" class="form-control searchbtn" id="staffSearchBtn">검색</button>
-		</label>
-	</div>			
-	<div style="width:13%; float:left">		
-		<select name ="pRTitle" class="form-control">
-  			<option>::지급월::</option>
-  			<th:block th:if="${s.pRTitle} >=1 and ${s.pRTitle} <=12" th:each="s : ${standardSheetHour}">
-	  			<option id ="pRTitle" th:value="${s.pRTitle}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
-  			</th:block>
-  		</select>
-	</div>	
-	<div style="width:13%; float:left" >
-		<select name ="iyCode" class="form-control">
-  			<option>::시행년도::</option>
-  			<th:block th:each="i : ${insuranceYear}">
-	  			<option id ="iyCode" th:value="${i.iyCode}" >[[${i.iyCode+'년'}]]</option>
-  			</th:block>
-  		</select>
-	</div>	
-	<div style="width:13%; float:left">
-		<button type="button" class="form-control">미지급분</button>		
-	</div>
-		<table class ="table table-striped">
-	  		<thead>
-	  			<tr class="info">
-	  				<th style="text-align: center;">지급코드</th>
-	  				<th style="text-align: center;">아이디</th>
-	  				<th style="text-align: center;">이름</th>
-	  				<th style="text-align: center;">급여지급일자</th>
-	  				<th style="text-align: center;">급여실지급액</th>
-	  				<th style="text-align: center;">작성일자</th>
-	  				<th style="text-align: center;">작성자</th>
-	  			</tr>
-	  		</thead>	  	
-	  		<tbody id="searchPayList">
-<!-- 	  		<tr th:each="l : ${officersSPayList}">
-	  				get방식으로 입력받기(localhost/modifyMember?memberId=id001&memeberPw=pw001 ... 과 같음)	  				
-	  				<td style="text-align: center;" th:text="${l.opCode}"></td>
-	  				<td style="text-align: center;" th:text="${l.mrId}"></td>
-	  				<td style="text-align: center;" th:text="${l.mrName}"></td>
-	  				<td style="text-align: center;" th:text="${l.opDate}"></td>
-	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(l.opPay, 0, 'COMMA')}+'원'"></td>
-	  				<td style="text-align: center;" th:text="${l.opRegDate}"></td>
-	  				<td style="text-align: center;" th:text="${l.opWriter}"></td>
-	  			</tr>
-  				<tr th:each="s : ${staffSPayList}">
-	  				<td style="text-align: center;" th:text="${s.spCode}"></td>
-	  				<td style="text-align: center;" th:text="${s.mrId}"></td>
-	  				<td style="text-align: center;" th:text="${s.mrName}"></td>
-	  				<td style="text-align: center;" th:text="${s.spDate}"></td>
-	  				<td style="text-align: center;" th:text="${#numbers.formatInteger(s.spPay, 0, 'COMMA')}+'원'" ></td>
-	  				<td style="text-align: center;" th:text="${s.spRegDate}"></td>
-	  				<td style="text-align: center;" th:text="${s.spWriter}"></td>
-	  			</tr> -->
-	  		</tbody>	
-	  	</table>
+	
+	<div id="wrapper_tb_tab_4" style="border: 3px solid rgb(205, 205, 205); padding-top: 10px; padding-bottom: 10px; margin: 10px; overflow:scroll; height:400px;">
+		<div class="fht-table-wrapper fht-default outbox_tb_h" style="width: 95%; height: 400px;">
+			<div style="width:65%; float:left; padding-left:5px; ">		
+				<label style="margin:5px;">직원</label>
+				<label>
+					<select name="offisk" class="form-control"> 
+		 				<option value="op.op_code">직원급여코드</option>
+						<option value="op.p_r_title">지급월</option>
+						<option value="mr.mr_name">이름</option>
+						<option value="op.op_writer">작성자</option>
+					</select>
+				</label>
+				<label>
+					<input type="text" name="offisv" class="form-control">
+				</label>
+				<label>
+					<button type="button" class="form-control searchbtn" id="offiSearchBtn">검색</button>
+				</label>				
+				<label style="margin:5px;">강사</label>
+				<label>
+					<select name="staffsk" class="form-control">
+						<option value="sp.sp_code">강사급여코드</option>
+						<option value="sp.p_r_title">지급월</option>
+						<option value="mr.mr_name">이름</option>
+						<option value="sp.sp_writer">작성자</option>
+					</select>
+				</label>
+				<label>
+					<input type="text" name="staffsv" class="form-control">
+				</label>
+				<label>
+					<button type="button" class="form-control searchbtn" id="staffSearchBtn">검색</button>
+				</label>
+			</div>			
+			<div style="width:10%; float:left">		
+				<select name ="pRTitle" class="form-control">
+		  			<option>::지급월::</option>
+		  			<th:block th:if="${s.pRTitle} >=1 and ${s.pRTitle} <=12" th:each="s : ${standardSheetHour}">
+			  			<option id ="pRTitle" th:value="${s.pRTitle}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
+		  			</th:block>
+		  		</select>
+			</div>	
+			<div style="width:10%; float:left" >
+				<select name ="iyCode" class="form-control">
+		  			<option>::시행년도::</option>
+		  			<th:block th:each="i : ${insuranceYear}">
+			  			<option id ="iyCode" th:value="${i.iyCode}" >[[${i.iyCode+'년'}]]</option>
+		  			</th:block>
+		  		</select>
+			</div>	
+			<div style="width:10%; float:left">
+				<button type="button" class="form-control">미지급분</button>		
+			</div>
+			<div class="container-fluid">
+		  		<table class ="table table-striped">
+		  			<thead>
+		  			<tr class="info">
+		  				<th style="text-align: center;">지급코드</th>
+		  				<th style="text-align: center;">아이디</th>
+		  				<th style="text-align: center;">이름</th>
+		  				<th style="text-align: center;">급여지급일자</th>
+		  				<th style="text-align: center;">급여실지급액</th>
+		  				<th style="text-align: center;">작성일자</th>
+		  				<th style="text-align: center;">작성자</th>
+		  			</tr>
+		  			</thead>	  	
+		  			<tbody id="searchPayList">
+		  			</tbody>	
+				</table>
+			</div>
+		</div>
 	</div>
 		
 	</th:block>
