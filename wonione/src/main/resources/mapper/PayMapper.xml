@@ -101,7 +101,7 @@
 			on
 			sp.mr_id = mr.mr_id	 
 		WHERE 
-			${sk} Like CONCAT('%',#{sv},'%');
+			${staffsk} Like CONCAT('%',#{staffsv},'%');
 	</select>	
 	<!-- 직원급여검색 -->
 	<select id="getSearchOPL" parameterType="String" resultType="OfficersPay">
@@ -120,7 +120,7 @@
 			on
 			op.mr_id = mr.mr_id	
 		WHERE	 
-			${sk} Like CONCAT('%',#{sv},'%');
+			${offisk} Like CONCAT('%',#{offisv},'%');
 	</select>	
 
 	<!-- 선택한 강사 급여목록 불러오기 -->

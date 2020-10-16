@@ -71,43 +71,39 @@
 		</div>
 	</div>
 	<div>
-	<div style="width:30%; float:left">
-		<form action="/getSearchOPL" method="post">
-			직원
-			<label>
-				<select name="sk" class="form-control"> 
-	 				<option value="op.op_code">직원급여코드</option>
-					<option value="op.p_r_title">지급월</option>
-					<option value="mr.mr_name">이름</option>
-					<option value="op.op_writer">작성자</option>
-				</select>
-			</label>
-			<label>
-				<input type="text" name="sv" class="form-control">
-			</label>
-			<label>
-				<button type="button" class="form-control searchbtn" id="offiSearchBtn">검색</button>
-			</label>
-		</form>	
+	<div style="width:30%; float:left">		
+		직원
+		<label>
+			<select name="offisk" class="form-control"> 
+ 				<option value="op.op_code">직원급여코드</option>
+				<option value="op.p_r_title">지급월</option>
+				<option value="mr.mr_name">이름</option>
+				<option value="op.op_writer">작성자</option>
+			</select>
+		</label>
+		<label>
+			<input type="text" name="offisv" class="form-control">
+		</label>
+		<label>
+			<button type="button" class="form-control searchbtn" id="offiSearchBtn">검색</button>
+		</label>		
 	</div>		
 	<div style="width:30%; float:left">
-		<form action="/getSearchSPL" method="post">
-			강사
-			<label>
-				<select name="sk" class="form-control">
-					<option value="sp.sp_code">강사급여코드</option>
-					<option value="sp.p_r_title">지급월</option>
-					<option value="mr.mr_name">이름</option>
-					<option value="sp.sp_writer">작성자</option>
-				</select>
-			</label>
-			<label>
-				<input type="text" name="sv" class="form-control">
-			</label>
-			<label>
-				<button type="button" class="form-control searchbtn">검색</button>
-			</label>
-		</form>	
+		강사
+		<label>
+			<select name="staffsk" class="form-control">
+				<option value="sp.sp_code">강사급여코드</option>
+				<option value="sp.p_r_title">지급월</option>
+				<option value="mr.mr_name">이름</option>
+				<option value="sp.sp_writer">작성자</option>
+			</select>
+		</label>
+		<label>
+			<input type="text" name="staffsv" class="form-control">
+		</label>
+		<label>
+			<button type="button" class="form-control searchbtn" id="staffSearchBtn">검색</button>
+		</label>
 	</div>			
 	<div style="width:13%; float:left">		
 		<select name ="pRTitle" class="form-control">
@@ -126,7 +122,7 @@
   		</select>
 	</div>	
 	<div style="width:13%; float:left">
-		<button type="submit" class="form-control">미지급분</button>		
+		<button type="button" class="form-control">미지급분</button>		
 	</div>
 		<table class ="table table-striped">
 	  		<thead>
