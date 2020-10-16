@@ -21,7 +21,7 @@
                                 <table class="table border-table">
                                     <tr>
                                         <th>강의개설코드</th>
-                                        <th>강의예정코드</th>
+                                        <th>강의상세보기</th>
                                         <th>강의상태구분</th>
                                         <th colspan="3">수강인원</th>
                                         <th>미달인원</th>
@@ -35,12 +35,12 @@
 											  <td>
 						                        <div class="modal-bootstrap shadow-inner responsive-mg-b-0">
 						                            <div class="modal-area-button">
-						                                <a class="lecOsCodeBtn" href="#" th:value="${lec.lecOsCode}" data-toggle="modal" data-target="#PrimaryModalalert" role="button">[[${lec.lecOsCode}]]</a>
+						                                <a class="lecOsCodeBtn" href="#" th:value="${lec.lecOsCode}" data-toggle="modal" data-target="#PrimaryModalalert" role="button">상세보기</a>
 						                                <input class="lecOsCode" type="hidden" th:value="${lec.lecOsCode}">
 						                            </div>
 						                        </div>												  
 											  </td>
-											  <td th:text="${lec.lecStatusName}" ></td>
+											  <td th:text="${lec.lecStatusName}" id="lecStatusName" ></td>
 											  <td th:text="${lec.claPeople}" ></td>
 											  <td> / </td>
 											  <td th:text="${lec.claCapacity}" ></td>
@@ -66,25 +66,16 @@
 						                        <div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
 						                            <div class="modal-dialog">
 						                                <div class="modal-content">
-						                                    <div class="modal-body" id="check">
-								                           	   	<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-								                             	   		<div class="form-select-list">
-																			<select class="form-control custom-select-value" id="selectLecStatus" name ="changeLecStatus">
-																				<option disabled="disabled" selected="selected">::강의구분을 선택하세요::</option>
-																				<th:block th:each="ls : ${lectureStatus}">';
-																				<option value="${ls.lecStatus}">[[${ls.lecStatusName}]]</option>
-																				</th:block>
-																			</select>
-																		</div>
-																	</div>						                                    
-						                                    </div>
+							                                    <div class="modal-body" id="check">
+																</div>
 						                                    <div class="modal-footer">
-						                                        <a data-dismiss="modal" href="#">닫기</a>
+						                                        <button data-dismiss="modal" id="modalConfirmBtn" th:value="${lec.lecOpCode}"  class="btn btn-default lecOpCode">확인</button>
+						                                        <a data-dismiss="modal" class="btn btn-default" href="#" role="button">닫기</a>
 						                                    </div>
+					                                   	 </div>
 						                                </div>
 						                            </div>
 						                        </div>
-						                    </div>	                                    
 										</th:block>
                              	   </table>
 	                                </div>
@@ -99,7 +90,7 @@
 	$('.lecOsCodeBtn').click(function(){
 		console.log('check');
 		var lecOsCode = $(this).parents().children('.lecOsCode').val();
-		console.log(lecOsCode);
+		console.log(lecOsCode + ' < -- lecOsCode');
 		 var request = $.ajax({
 			  url: "/getLecOsListOnly",
 			  method: "POST",
@@ -116,6 +107,10 @@
 					html += data[i].lecOsCode;
 					html +=' 강의예정상세보기</h3>';
 					html +='<table class="table">';
+					html +='<tr><td>강의예정코드</td>';
+					html +='<td>';
+					html += data[i].lecOsCode;
+					html += '</td></tr>';
 					html +='<tr><td>과정명</td>';
 					html +='<td>';
 					html +=data[i].lecName;
@@ -176,29 +171,75 @@
 			
 	});
 	
-	$('.changeStatusBtn').click(function(){
-		console.log('강의상태변경 클릭이벤트');
-		var lecOpCode = $(this).parents().children('.changeStatusBtn').val();
-		console.log(lecOpCode);
-		$('#selectLecStatus').change(function(){
-			var selectLecStatus = $('#selectLecStatus option:selected').val();
-			console.log(selectLecStatus);
-		});
-		console.log(selectLecStatus);
-		/* var request = $.ajax({
-			  url: "/changeLecStatus",
-			  method: "POST",
-			  data: { lecOpCode : lecOpCode, changeLecStatus : changeLecStatus },
-			  dataType: "json"
+	</script>
+	
+	<!------------------------- Start------------------------------>
+	<!---------------------- 강의상태변경하기 Modal -------------------->
+	<script type="text/javascript" th:inline="javascript">
+	<!---------------------- 강의상태변경하기 아이콘클릭 -------------------->
+		/*<![CDATA[*/
+			$('.changeStatusBtn').click(function(){
+				var lecOpCode = $('.lecOpCode').parents().children('.lecOpCode').val();
+				console.log(lecOpCode + ' < -- lecOpCode ');
+				var lectureStatus = /*[[${lectureStatus}]]*/;
+					html = '';
+				/* alert(JSON.stringify(lectureStatus));  */
+					html +='<h3> 강의상태변경</h3>';
+					html +='<table class="table">';
+					html +='<div class="row">';
+					html +='<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">';
+					html +='<tr><td>';
+					html +='<div class="form-select-list">';
+					html +='<select class="form-control custom-select-value" id="selectLecStatus" name ="changeLecStatus">';
+					html +='<option disabled="disabled" selected="selected" value="">::강의구분을 선택하세요::</option>';
+				$.each(lectureStatus, function(index,lectureStatus){
+					console.log(lectureStatus); 
+					if(lectureStatus != null && lectureStatus != undefined){
+						console.log(lectureStatus.lecStatus + ' < -- lectureStatus.lecStatus');
+						html +='<option value=';
+						html +=lectureStatus.lecStatus;
+						html += '>';
+						html += lectureStatus.lecStatusName;
+						html += '</option>';	
+					}	
+					console.log(lectureStatus.lecStatus + ' < -- lectureStatus.lecStatus');
+					console.log(lectureStatus.lecStatusName + ' < --lectureStatus.lecStatusName');
+				});
+					html +='</select></div></div></div></td></tr></table>';
+				$('#check').empty();
+				$('#check').append(html);
+						
+					$('#modalConfirmBtn').click(function(){
+						console.log('Modal확인버튼클릭');
+						var selectLecStatusVal = $('#selectLecStatus option:selected').val();
+						console.log('************************');
+						console.log(selectLecStatusVal + ' < --#selectLecStatus option:selected');
+						console.log('************************');
+						console.log(lecOpCode + ' < -- lecOpCode');
+						var request = $.ajax({
+							 url: "/changeLecStatus",
+							 method: "POST",
+							 data: { lecOpCode : lecOpCode , selectLecStatusVal : selectLecStatusVal},
+							 dataType: "json"
+							});
+							 
+							request.done(function( data ) {
+								if(data == 1){
+									/* location.href="/lecList"; */
+								}else if(data == 0){
+									alert('수정에 실패하였습니다');
+								}
+							});
+							 
+							request.fail(function( jqXHR, textStatus ) {
+							  alert( "Request failed: " + textStatus );
+							});
+					});
+					
+						
 			});
-			 
-			request.done(function(data) {
-			});
-			 
-			request.fail(function( jqXHR, textStatus ) {
-			  alert( "Request failed: " + textStatus );
-			});  */
-	});
+		/*]]>*/
+		<!-------------------------- End------------------------------->
 	</script>
 	</th:block>
 	<th:block layout:fragment="customJsScript">

@@ -29,7 +29,7 @@ public class StaffPayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(StaffPayController.class);
 	
-	//강사급여 입력하기
+	//강사급여 수정하기
 	@PostMapping("/modiStaffPay")
 	public String modiStaffPay(StaffPay staffPay, HttpSession session) {
 		
@@ -41,7 +41,7 @@ public class StaffPayController {
 		return "redirect:/getPayList?mrId="+sid;
 	}
 	
-	//강사 공제계 입력하기
+	//강사 공제계 수정하기
 	@PostMapping(value = "/modiStaffDedu",produces = "application/json")
 	@ResponseBody
 	public StaffPay modiStaffDedu(StaffPay staffPay, HttpSession session) {
@@ -71,8 +71,7 @@ public class StaffPayController {
 	@GetMapping("/modiFyStaffPay")
 	public String modiFyStaffPay(@RequestParam(value = "spCode", required = false) String spCode
 								,Model model) {
-		StaffPay modiStaffPay = staffPayService.getMrBySId(spCode)
-				;
+		StaffPay modiStaffPay = staffPayService.getMrBySId(spCode);
 		model.addAttribute("modiStaffPay", modiStaffPay);
 		model.addAttribute("title", "강사급여수정");
 		

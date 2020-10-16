@@ -28,7 +28,6 @@ public class PayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(PayController.class);
 
-
 	// 강사급여 삭제하기
 	@PostMapping(value = "/removeStaffPayDocu", produces = "application/json")
 	@ResponseBody
@@ -92,7 +91,46 @@ public class PayController {
 
 		model.addAttribute("staffPayList", staffPayList);
 		model.addAttribute("title", "급여목록조회");
+		
+		//자원관리 테이블 통해 기준표 출력
+		List<OfficersPay> standardSheetHour = payService.standardSheet();		
+		model.addAttribute("standardSheetHour",standardSheetHour);
+		model.addAttribute("title", "시급기준표");
+		
+		//자원관리 테이블 통해 요율표 가져오기
+		List<OfficersPay> insuranceYear = payService.insuranceYear();		
+		model.addAttribute("insuranceYear",insuranceYear);
+		model.addAttribute("title", "보험요율표");
 
+		return "pay/payList";
+	}
+	
+	// 직원 급여 검색	
+	@PostMapping(value = "/getSearchOPL",produces = "application/json")
+	@ResponseBody
+	public List<OfficersPay> getSearchOPL(	Model model
+								,@RequestParam(value = "sk", required = false) String sk
+								,@RequestParam(value = "sv", required = false) String sv) {
+		
+		List<OfficersPay> officersSPayList = payService.getSearchOPL(sk, sv);
+		System.out.println(" officersSPayList ->> "+officersSPayList);
+		
+		model.addAttribute("officersSPayList", officersSPayList);
+		
+		return officersSPayList;
+	}
+	
+	//강사 급여 검색
+	@PostMapping("/getSearchSPL")
+	public String getSearchSPL(	Model model
+								,@RequestParam(value = "sk", required = false) String sk
+								,@RequestParam(value = "sv", required = false) String sv) {
+						
+		List<StaffPay> staffSPayList = payService.getSearchSPL(sk, sv);
+		System.out.println(" staffSPayList ->> "+staffSPayList);
+		
+		model.addAttribute("staffSPayList", staffSPayList);
+		
 		return "pay/payList";
 	}
 

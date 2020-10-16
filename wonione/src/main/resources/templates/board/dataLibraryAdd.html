@@ -4,18 +4,18 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
-		<title th:each="b : ${Board}" th:text=${b.boardTitle}></title>
+		<title>자료게시판 작성</title> 
 	</th:block>
 	
 	<th:block layout:fragment="customContent">
-	
+
 	<!-- 썸머노트 스크립트&link start -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 	<!-- 썸머노트 스크립트 end -->
 	
-		<h2>공지사항 게시물 수정</h2>
-	<form action="/modifyNotice" class="container-fluid" method="post" id="noticeForm">
+		<h2>자료게시판 게시물 작성</h2>
+	<form action="/addDataLibrary" class="container-fluid" method="post" id="noticeForm">
 	<!-- 글번호 자동생성, 세션 아이디 받기 히든타입
 	<input type="hidden" th:value="${boardNum}" name="boardNum">
 	<input type="hidden" class="form-control" name="boardWriterId" th:value="${sessionId}">
@@ -24,19 +24,19 @@
 			<tr class="info">
 				<th colspan="3">글 번호</th>
 				<td colspan="3">
-					<input type="text" class="form-control"  name="boardNum" th:value="${Board.boardNum}" readonly="readonly">
+					<input type="text" class="form-control" th:value="${boardNum}"  name="boardNum" readonly="readonly">
 				</td>
 			</tr>
 			<tr class="info">
 				<th colspan="3">작성자 ID</th>
 				<td colspan="3">
-					<input type="text" class="form-control" name="boardWriterId" th:value="${Board.boardWriterId}" readonly="readonly">
+					<input type="text" class="form-control" th:value="${session.SID}" name="boardWriterId" readonly="readonly">
 				</td>
 			</tr>
 			<tr class="info">
 				 <th colspan="3">제목</th>
 				<td colspan="3">
-					<input type="text" class="form-control" name="boardTitle" th:value="${Board.boardTitle}" placeholder="제목을 입력해주세요." id="boardTitle">
+					<input type="text" class="form-control" name="boardTitle" placeholder="제목을 입력해주세요." id="boardTitle">
 				</td>
 			</tr>
 			<tr class="info">	
@@ -44,25 +44,25 @@
 			</tr>
 			<tr class="info">
 				<td colspan="6">
-					<textarea class="form-control" rows="10" name="boardContents" th:text="${Board.boardContents}" id="boardContents"></textarea>
+					<textarea class="form-control" rows="5" name="boardContents" id="boardContents"></textarea>
 				</td>
 			</tr>
 			<tr class="info">
-				<th colspan="3">사진(미구현 : 사용금지)</th>
+				<th colspan="3">사진(미구현 : 사용금지)</th>	
 				<td colspan="3">
-					<input type="image" class="form-control" name="boardPicture" th:value="${Board.boardPicture}">
+					<input type="image" class="form-control" name="boardPicture" id="boardPicture">
 				</td>
 			</tr>
 			<tr class="info">
 				<th colspan="3">첨부파일(미구현)</th>
 				<td colspan="3">
-					<input type="file" class="form-control" name="boardFile" th:value="${Board.boardFile}">
+					<input type="file" class="form-control" name="boardFile" id="boardFile">
 				</td>
 			</tr>
 		</table>
 		<div style="margin-bottom:10px">
-			<button type="button" class="btn btn-default btn-success" id="btnSubmit">수정</button>
-			<a th:href="@{/readNotice(boardNum=${Board.boardNum})}" class="btn btn-default btn-info">취소</a>
+			<button type="button" class="btn btn-default btn-success" id="btnSubmit">등록</button>
+			<a href="/getDataLibrary" class="btn btn-default btn-info">취소</a>
 		</div>
 	</form>
 	
@@ -82,7 +82,7 @@
 				boardTitle.focus();
 				return;
 			}else if(boardContents.val() == ''){
-				alert('공지할 내용을 입력해주세요.');
+				alert('내용을 입력해주세요.');
 				boardContents.focus();
 				return;
 			}
@@ -99,10 +99,10 @@
         $('#boardContents').summernote();
     });
     </script>
-	<!-- 썸머노트 end -->
+    <!-- 썸머노트 end -->
 	</th:block>
-	
-	<th:block layout:fragment="customJsScript">
+		
+	<th:block layout:fragment="customJsScript">    
 	</th:block>
 	
 </html>

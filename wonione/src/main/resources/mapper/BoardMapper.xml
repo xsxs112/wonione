@@ -6,6 +6,7 @@
     
 <mapper namespace="cafe24.wio.mapper.BoardMapper">
 
+	<!-- 공지사항, 자료게시판  resultMap -->
 	<resultMap type="Board" id="boardResultMap">
 		<result column="board_num"          property="boardNum"/>
       	<result column="board_menu"         property="boardMenu"/>
@@ -16,6 +17,16 @@
       	<result column="board_contents"     property="boardContents"/>
      	<result column="board_picture"      property="boardPicture"/>
       	<result column="board_file"   		property="boardFile"/>
+	</resultMap>
+	
+	<!-- 수강후기  resultMap -->
+	<resultMap type="Review" id="reviewResultMap">
+		<result column="review_num"          property="reviewNum"/>
+      	<result column="review_writer_id"         property="reviewWriterId"/>
+      	<result column="mr_name"			property="reviewWriterName"/>
+      	<result column="review_grade"       	property="reviewGrade"/>
+     	<result column="review_comment"    property="reviewComment"/>
+     	<result column="review_reg_date"		property="reviewRegDate"/>
 	</resultMap>
 	
 	<!-- 공지사항 리스트 조회  -->
@@ -36,6 +47,26 @@
 			board_menu = '공지사항'
 		ORDER BY 
 			board_reg_date DESC;
+	</select>
+	
+	<!-- 공지사항 검색  -->
+	<select id="getSearchNotice" resultType="Board" resultMap="boardResultMap">
+	SELECT 
+		board_num,
+		board_title,
+		board_writer_id,
+		mr_name,
+		board_reg_date
+	FROM
+		wt_board
+	INNER JOIN
+		wt_member_registration 
+	ON
+		wt_member_registration.mr_id = wt_board.board_writer_id
+	WHERE
+		${bdSk} LIKE (CONCAT('%',#{bdSv},'%'))
+	AND
+		board_menu = '공지사항';	
 	</select>
 	
 	<!-- 공지사항 등록  -->
@@ -75,7 +106,9 @@
 		ON
 			m.mr_id = b.board_writer_id
 		WHERE
-			board_menu = '자료게시판';
+			board_menu = '자료게시판'
+		ORDER BY 
+			board_reg_date DESC;
 	</select>
 
 	<!-- 자료게시판 등록  -->
@@ -100,6 +133,26 @@
 			, #{boardFile});
 	</insert>
 
+	<!-- 자료게시판 검색  -->
+	<select id="getSearchDataLibrary" resultType="Board" resultMap="boardResultMap">
+	SELECT 
+		board_num,
+		board_title,
+		board_writer_id,
+		mr_name,
+		board_reg_date
+	FROM
+		wt_board
+	INNER JOIN
+		wt_member_registration 
+	ON
+		wt_member_registration.mr_id = wt_board.board_writer_id
+	WHERE
+		${bdSk} LIKE (CONCAT('%',#{bdSv},'%'))
+	AND
+		board_menu = '자료게시판';	
+	</select>
+	
 	<!-- 게시물 읽기 -->
 	<select id="readBoard" resultType="Board" parameterType="String" resultMap="boardResultMap">
 		SELECT
@@ -151,24 +204,23 @@
 		board_num = #{boardNum};
 	</delete>
 
-
-	<!-- 검색  -->
-	<select id="getSearch" resultType="Board" resultMap="boardResultMap">
-	SELECT 
-		board_num,
-		board_title,
-		board_writer_id,
-		mr_name,
-		board_reg_date
-	FROM
-		wt_board
-	INNER JOIN
-		wt_member_registration 
-	ON
-		wt_member_registration.mr_id = wt_board.board_writer_id
-	WHERE
-		${bdSk} LIKE (CONCAT('%',#{bdSv},'%'))
+	<!-- 수강후기 리스트 조회  -->
+	<select id="getReview" resultType="Review" parameterType="Review" resultMap="reviewResultMap">
+		SELECT
+			r.review_num,
+			r.review_writer_id,
+			m.mr_name,
+			r.review_grade,
+			r.review_comment,
+			r.review_reg_date
+		FROM
+			wt_review AS r
+		INNER JOIN
+			wt_member_registration AS m
+		ON
+			m.mr_id = r.review_writer_id
+		ORDER BY 
+			review_reg_date DESC;
 	</select>
 
 </mapper>
-    

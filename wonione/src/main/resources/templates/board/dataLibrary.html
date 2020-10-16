@@ -8,66 +8,91 @@
 	</th:block>
 	
 	<th:block layout:fragment="customContent">	
-	<form action="#" class="container-fluid">
+	
 		<h2>자료게시판 목록</h2>
-		<table class ="table table-striped">
-			<thead>
-				<tr class="info">
-					<th>글번호</th>
-					<th>제목</th>
-					<th>작성자 ID</th>
-					<th>작성자</th>
-					<th>작성일자</th>					
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="d : ${dataList}">
-					<td th:text=${d.boardNum}></td>
-					<td><a th:text=${d.boardTitle} th:href="@{/readDataLibrary(boardNum=${d.boardNum})}"></a></td>
-					<td th:text=${d.boardWriterId}></td>
-					<td th:text=${d.boardWriterName}></td>
-					<td th:text=${d.boardRegDate}></td>										
-				</tr>
-			</tbody>			
-		</table>
-	</form>
+		
+		<!-- 검색창 start -->
+		<form id="searchForm" class="form-inline" action="/getSearchDataLibrary" method="GET">
+			<select class="form-control" name="bdSk" id="bdSk">
+				<option value="board_title">제목</option>
+				<option value="board_contents">내용</option>
+				<option value="board_writer_id">작성자 아이디</option>
+				<option value="mr_name">작성자 이름</option>
+			</select>
+								
+			<div class="form-group">
+				<input type="text" class="form-control" name="bdSv" id="bdSv" placeholder="검색 키워드"/>
+				<div class="input-group-btn pull-right">
+					<button class="btn btn-default form-group btn-info" type="button" id="searchBtn">검색</button>
+				</div>
+			</div>
+		</form>
+		<!-- 검색창 end -->
+		
+		<form action="addDataLibrary" class="container-fluid">
+		
+			<button type="submit" class="btn btn-default btn-success pull-right" style="margin-bottom:10px">게시물 등록</button>
+		
+			<table class ="table table-striped">
+				<thead>
+					<tr class="info">
+						<th>글번호</th>
+						<th>제목</th>
+						<th>작성자 ID</th>
+						<th>작성자</th>
+						<th>작성일자</th>					
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="d : ${dataList}">
+						<td th:text=${d.boardNum}></td>
+						<td><a th:text=${d.boardTitle} th:href="@{/readDataLibrary(boardNum=${d.boardNum})}"></a></td>
+						<td th:text=${d.boardWriterId}></td>
+						<td th:text=${d.boardWriterName}></td>
+						<td th:text=${d.boardRegDate}></td>										
+					</tr>
+				</tbody>			
+			</table>
+		</form>
+	
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination">
+		  	<li class="page-item">
+				<a class="page-link" th:href="@{/getDataLibrary}">First</a>
+			</li>
+		    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+		    <li class="page-item"><a class="page-link" href="/getDataLibrary">1</a></li>
+		    <li class="page-item"><a class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+		    <li class="page-item">
+		    	<a th:href="@{/getDataLibrary(currentPage=${lastPage})}" id="lastPageBtn" role="button">Last</a>
+		    </li>
+		  </ul>
+		</nav>
+		
+		<!-- 검색 script -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>	
+		<script type="text/javascript">
+		 
+		 $('#searchBtn').click(function(){
+			var searchForm = $('#searchForm');
+			var bdSk = $('#bdSk').val();
+			var bdSv = $('#bdSv').val();
+			console.log(bdSk + ' < -- bdSk');
+			console.log(bdSv + ' < -- bdSv');
+			if(bdSv == null || bdSv == ''){
+				alert('검색어를 입력해주세요');
+				$('#bdSv').focus();
+				return;
+			}
+			searchForm.submit();
+		});
+	 
+		</script>
+		
 	</th:block>
 	
 	<th:block layout:fragment="customJsScript">
-	    <!-- jquery
-		============================================ -->
-	    <script src="js/vendor/jquery-1.12.4.min.js"></script>
-	    <!-- bootstrap JS
-			============================================ -->
-	    <script src="js/bootstrap.min.js"></script>
-	    <!-- wow JS
-			============================================ -->
-	    <script src="js/wow.min.js"></script>
-	    <!-- price-slider JS
-			============================================ -->
-	    <script src="js/jquery-price-slider.js"></script>
-	    <!-- meanmenu JS
-			============================================ -->
-	    <script src="js/jquery.meanmenu.js"></script>
-	    <!-- owl.carousel JS
-		============================================ -->
-    	<script src="js/owl.carousel.min.js"></script>
-	     <!-- sticky JS
-		============================================ -->
-    	<script src="js/jquery.sticky.js"></script>
-	    <!-- scrollUp JS
-			============================================ -->
-	    <script src="js/jquery.scrollUp.min.js"></script>
-	    <!-- mCustomScrollbar JS
-			============================================ -->
-	    <script src="js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-	    <script src="js/scrollbar/mCustomScrollbar-active.js"></script>
-	    <!-- metisMenu JS
-			============================================ -->
-	    <script src="js/metisMenu/metisMenu.min.js"></script>
-	    <script src="js/metisMenu/metisMenu-active.js"></script>
-	    <!-- main JS
-			============================================ -->
-	    <script src="js/main.js"></script>
 	</th:block>
 </html>

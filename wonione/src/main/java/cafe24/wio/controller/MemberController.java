@@ -116,17 +116,17 @@ public class MemberController {
 	
 	@PostMapping("/addWIOMember")
 	public String addWIOMember(Member member
-								,@RequestParam(value = "mrId",required = false) 			String mrId
-								,@RequestParam(value = "mrPw",required = false) 			String mrPw
-								,@RequestParam(value = "mrName",required = false) 			String mrName
-								,@RequestParam(value = "levelNum",required = false) 		int	   levelNum
-								,@RequestParam(value = "mrPhone",required = false) 			String mrPhone
-								,@RequestParam(value = "mrAddr",required = false) 			String mrAddr
-								,@RequestParam(value = "mrTargetScore",required = false) 	int    mrTargetScore
-								,@RequestParam(value = "pmRCode",required = false) 			String pmRCode
-								,@RequestParam(value = "mrAccountNum",required = false) 	String mrAccountNum
-								,@RequestParam(value = "shuttleNum",required = false) 		String shuttleNum
-								,@RequestParam(value = "mrJoinDate",required = false) 		String mrJoinDate) {
+								,@RequestParam(value = "mrId"  			,required = false) String mrId
+								,@RequestParam(value = "mrPw"  			,required = false) String mrPw
+								,@RequestParam(value = "mrName"			,required = false) String mrName
+								,@RequestParam(value = "levelNum"		,required = false) int	   levelNum
+								,@RequestParam(value = "mrPhone"		,required = false) String mrPhone
+								,@RequestParam(value = "mrAddr"			,required = false) String mrAddr
+								,@RequestParam(value = "mrTargetScore"	,required = false) int    mrTargetScore
+								,@RequestParam(value = "pmRCode"		,required = false) String pmRCode
+								,@RequestParam(value = "mrAccountNum"	,required = false) String mrAccountNum
+								,@RequestParam(value = "shuttleNum"		,required = false) String shuttleNum
+								,@RequestParam(value = "mrJoinDate"		,required = false) String mrJoinDate) {
 		
 		
 		member.setMrId(mrId);
@@ -150,6 +150,10 @@ public class MemberController {
 		
 		memberService.addWIOMember(member);
 		
+		// 권한이 학생일 경우 과정 선택 화면으로 이동
+		if(levelNum == 4) {
+			return "redirect:/getCourseSelection";
+		}
 		
 		return "redirect:/getWIOMemberList";
 	}

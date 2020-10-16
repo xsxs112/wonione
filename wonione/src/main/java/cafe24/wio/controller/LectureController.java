@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cafe24.wio.bean.LectureOpen;
 import cafe24.wio.bean.LectureOpenSchedule;
 import cafe24.wio.service.LectureService;
 
@@ -22,6 +23,39 @@ public class LectureController {
 	@Autowired
 	private LectureService lectureService;
 
+	//강의예정코드를 사용해 강의리스트에 등록하기
+	@PostMapping(value="/addLectureOpen", produces = "application/json")
+	@ResponseBody
+	public int addLectureOpen(LectureOpen lectureOpen
+							,@RequestParam(value="lecOsCode" ,required = false)String lecOsCode
+							,@RequestParam(value="lecOpWriter" ,required = false)String lecOpWriter
+							,@RequestParam(value="lecOpCode" ,required = false)String lecOpCode) {
+		int addResult = lectureService.addLectureOpen(lectureOpen);
+		
+		return addResult;
+	}
+	
+	//강의예정코드로 중복개설되었는지 확인
+	@PostMapping(value="/checkLecOpen",produces = "application/json")
+	@ResponseBody
+	public int checkLecOpen(@RequestParam(value="lecOsCode",required = false)String lecOsCode) {
+			int checkResult = lectureService.checkLecOpen(lecOsCode);
+		return checkResult;
+	}
+	
+	
+	//개설된 강의상태 변경하기 ajax
+	@PostMapping(value="/changeLecStatus", produces = "application/json")
+	@ResponseBody
+	public int changeLecStatus(  @RequestParam(value="lecOpCode", required = false)String lecOpCode
+								,@RequestParam(value="selectLecStatusVal", required = false)String changeLecStatus) {
+								
+		int changeResult = lectureService.changeLecStatus(changeLecStatus, lecOpCode);
+		
+		return changeResult;
+	}
+	
+	
 	//강의예정리스트 1개만 조회 ajax
 	@PostMapping(value="/getLecOsListOnly",produces = "application/json")
 	@ResponseBody
@@ -109,10 +143,11 @@ public class LectureController {
 	
 	//강의예정리스트 조회
 	@GetMapping("/lecOsList")
-	public String lecOsList(Model model) {
+	public String lecOsList(Model model
+							,HttpSession session) {
 		
 		/* List<Object> lecApplyCount = lectureService.getApplyCount(); */
-		
+		String lecOpCode = lectureService.getLecOpenCode();
 		List<Map<String,Object>> lectureOsList
 						= lectureService.getLectureOsList();
 		
@@ -120,6 +155,8 @@ public class LectureController {
 		model.addAttribute("mainTitle", "강의 예정 리스트");
 		/* model.addAttribute("lecApplyCount", lecApplyCount); */
 		model.addAttribute("lectureOsList", lectureOsList);
+		model.addAttribute("lecOpCode", lecOpCode);
+		model.addAttribute("sessionId", session.getAttribute("SID").toString());
 		
 		return "lecture/lecOsList";
 	}

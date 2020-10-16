@@ -66,13 +66,62 @@
 		<result column="op_writer"						property="opWriter"/>
 		<result column="mr_join_date"					property="mrJoinDate"/>
 		<result column="mr_account_num"					property="mrAccountNum"/>	
-		<result column="p_r_ect"						property="pREct"/>	
-		
+		<result column="p_r_ect"						property="pREct"/>			
 	</resultMap>	
-	<!-- 수정할 강사급여정보 가져오기 -->
-	<select id="getMrBySId" parameterType="String" resultType="StaffPay">
-
+	
+	<!-- 지급월기준표 -->
+	<select id="standardSheet" resultType="OfficersPay">
+		SELECT
+			SUBSTRING_INDEX(pr.p_r_ect,'or',-1) AS pREct
+			,pr.p_r_title AS pRTitle
+		FROM 
+			wt_pay_resource AS pr;
 	</select>
+	<!-- 보험요율표 -->
+	<select id="insuranceYear" resultType="OfficersPay">
+		SELECT
+			iy.iy_code AS iyCode
+		FROM 
+			wt_insurance_year AS iy;
+	</select>
+	<!-- 강사급여검색 -->
+	<select id="getSearchSPL" parameterType="String" resultType="StaffPay">
+		SELECT 
+			 sp.sp_code 					AS spCode
+			,sp.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,IFNULL(sp.sp_date, '미지급')		AS spDate
+			,sp.sp_pay						AS spPay
+			,sp.sp_reg_date					AS spRegDate
+			,sp.sp_writer	  				AS spWriter	
+		FROM
+			wt_staff_pay 					AS sp
+			LEFT JOIN 
+			wt_member_registration 			AS mr
+			on
+			sp.mr_id = mr.mr_id	 
+		WHERE 
+			${sk} Like CONCAT('%',#{sv},'%');
+	</select>	
+	<!-- 직원급여검색 -->
+	<select id="getSearchOPL" parameterType="String" resultType="OfficersPay">
+		SELECT 
+			 op.op_code 					AS opCode
+			,op.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,IFNULL(op.op_date, '미지급')		AS opDate
+			,op.op_pay						AS opPay
+			,op.op_reg_date					AS opRegDate
+			,op.op_writer	  				AS opWriter	
+		FROM
+			wt_officers_pay 				AS op
+			LEFT JOIN 
+			wt_member_registration			AS mr
+			on
+			op.mr_id = mr.mr_id	
+		WHERE	 
+			${sk} Like CONCAT('%',#{sv},'%');
+	</select>	
 
 	<!-- 선택한 강사 급여목록 불러오기 -->
 	<select id = "getStaIdPayList" resultType="StaffPay">
@@ -86,9 +135,9 @@
 			,sp.sp_writer	  				AS spWriter	
 			,mr.level_num 			 
 		FROM
-			wt_staff_pay 	AS sp
+			wt_staff_pay 					AS sp
 			LEFT JOIN 
-			wt_member_registration AS mr
+			wt_member_registration 			AS mr
 			on
 			sp.mr_id = mr.mr_id	 
 		WHERE	
@@ -122,7 +171,7 @@
 		FROM 
 			wt_staff_pay 
 		WHERE  
-			sp_code = #{spCode}
+			sp_code = #{spCode};
 	</delete>
 	<!-- 강사공제계 급여정보 삭제 -->
 	<delete id="removeSPD" parameterType="String"> 
@@ -130,7 +179,7 @@
 		FROM 
 			wt_staff_pay_deduction 
 		WHERE  
-			spd_code = #{spCode}
+			spd_code = #{spCode};
 	</delete>
 	<!-- 강사급여계 급여정보 삭제 -->
 	<delete id="removeSPC" parameterType="String"> 
@@ -138,7 +187,7 @@
 		FROM 
 			wt_staff_pay_calculate 
 		WHERE  
-			spc_code = #{spCode}
+			spc_code = #{spCode};
 	</delete>
 	
 	<!-- 직원급여정보 삭제 -->
@@ -147,7 +196,7 @@
 		FROM 
 			wt_officers_pay 
 		WHERE  
-			op_code = #{opCode}
+			op_code = #{opCode};
 	</delete>
 	<!-- 직원공제계 급여정보 삭제 -->
 	<delete id="removeOPD" parameterType="String"> 
@@ -155,7 +204,7 @@
 		FROM 
 			wt_officers_pay_deduction 
 		WHERE  
-			opd_code = #{opCode}
+			opd_code = #{opCode};
 	</delete>
 	<!-- 직원급여계 급여정보 삭제 -->
 	<delete id="removeOPC" parameterType="String"> 
@@ -163,24 +212,8 @@
 		FROM 
 			wt_officers_pay_calculate 
 		WHERE  
-			opc_code = #{opCode}
+			opc_code = #{opCode};
 	</delete>
-	<!-- 수정할 직원급여정보 가져오기 -->
-	<select id="getOPCode" parameterType="String" resultType="OfficersPay">
-		SELECT
-			  op_code		AS opCode
-			, mr_id			AS mrId
-			, p_r_title		AS pRTitle
-			, op_date		AS opDate
-			, opd_code		AS opdCode
-			, op_pay		AS opPay
-			, op_reg_date	AS opRegDate
-			, op_writer		AS opWriter
-		FROM
-			wt_officers_pay
-		WHERE
-			op_code = #{opCode}
-	</select>
 		
 	<!-- 강사급여목록조회  [최근것만 받아오게 쿼리문 수정완] -->
 	<select id = "getStaffPayList" resultType="StaffPay" >

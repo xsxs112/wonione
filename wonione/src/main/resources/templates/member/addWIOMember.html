@@ -8,17 +8,115 @@
 	</th:block>
 	
 	<th:block layout:fragment="customContent">
+	
+	<!-- 아이디 중복 검사, 구성원 등록 유효성 검사 		미완성. 수정해야함. 목표 점수 이후로 조건 처리 다시 하기. 1013_17:20-->
+	<script>
+		$(document).ready(function(){
+			
+			var idDuplCheckResult = 0;
+			$('#idDuplCheck').click(function(){
+				idDuplCheckResult = 1;
+				var mrId = $('input[name=mrId]').val();
+				
+				if(mrId == '' || mrId == undefined){
+					alert('아이디를 입력해 주세요.');
+				}else{
+					var request = $.ajax({
+						  url: "/WIOMemberIdCheck",
+						  method:"GET",
+						  data: { mrId : mrId },
+						  dataType: "text"
+					});
+					request.done(function(data){
+						console.log(data);
+						if(data != undefined && data != ''){
+							alert("존재하는 아이디입니다.");
+						}else{
+							alert("가입 가능한 아이디입니다.");
+						}
+					});
+					request.fail(function(jqXHR, textStatus){
+						alert("Request failed: " + textStatus);
+					});
+				}
+			});
+			
+			$('#submitBtn').click(function(){
+				var mrPw 			= $('input[name=mrPw]').val();
+				var mrName 			= $('input[name=mrName]').val();
+				var levelNum 		= $('input[name=levelNum]').val();
+				var mrPhone 		= $('input[name=mrPhone]').val();
+				var mrAddr 			= $('input[name=mrAddr]').val();
+				var mrTargetScore	= $('input[name=mrTargetScore]').val();
+				var pmRCode 		= $('input[name=pmRCode]').val();
+				var mrAccountNum 	= $('input[name=mrAccountNum]').val();
+				var mrJoinDate 		= $('input[name=mrJoinDate]').val();
+				
+				if(mrPw == '' || mrPw == undefined){
+					alert('비밀번호를 입력해주세요.');
+					mrPw.focus();
+					return;
+				}else if(mrName == '' || mrName == undefined){
+					alert('이름을 입력해주세요.');
+					mrName.focus();
+					return;
+				}else if(levelNum == '' || levelNum == undefined){
+					alert('권한을 설정해주세요.');
+					levelNum.focus();
+					return;
+				}else if(mrPhone == '' || mrPhone == undefined){
+					alert('연락처를 입력해주세요.');
+					mrPhone.focus();
+					return;
+				}else if(mrAddr == '' || mrAddr == undefined){
+					alert('주소를 입력해주세요.');
+					mrAddr.focus();
+					return;
+				}else if(levelNum == 4){
+					alert('목표 점수를 입력해주세요.');
+					mrTargetScore.focus();
+					return;
+				}else if(pmRCode == '' || pmRCode == undefined){
+					alert('결제 수단을 선택하세요.');
+					pmRCode.focus();
+					return;
+				}else if(mrAccountNum == '' || mrAccountNum == undefined){
+					alert('계좌 번호를 입력해주세요.');
+					mrAccountNum.focus();
+					return;
+				}else if(levelNum == 2 || levelNum == 3){
+					alert('입사일을 선택해주세요.');
+					mrJoinDate.focus();
+					return;
+				}if(idDuplCheckResult != 1){
+					alert('아이디 중복 체크를 해주세요.');
+				}else{
+					alert('등록에 성공하였습니다.');
+					$('form').submit();
+				}
+			});
+		});
+	
+	</script>
+	
 		
 		<h2>기본 정보 입력</h2>
 			<form class="form-horizontal" style="margin: 10px;" action="/addWIOMember" method="post">
 				<table border="1" class="table table-condensed table-bordered">
-				
+					
+					<div class="form-group">
+					
 					<tr>
 						<td>아이디</td>
 						<td>
 							<input type="text" name="mrId" class="form-control">
+							<button type="button" id="idDuplCheck" class="btn btn-default btn-sm">
+								중복 확인
+							</button>
 						</td>
 					</tr>
+					</div>
+					
 					<tr>
 						<td>비밀번호</td>
 						<td>
@@ -62,7 +160,7 @@
 					</tr>
 					
 					<tr>
-						<td>은행 코드</td>
+						<td>결제 수단</td>
 						<td>
 							<select name="pmRCode">
 								<option>::결제 수단 선택::</option>
@@ -95,8 +193,9 @@
 					</tr>
 					
 				</table>
-				<button type="submit" class="btn btn-default">등록</button>	
+				<button type="button" id="submitBtn" class="btn btn-default">등록</button>	
 			</form>
 	</th:block>
 	
 	
+</html>

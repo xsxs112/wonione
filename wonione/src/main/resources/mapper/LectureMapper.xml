@@ -26,7 +26,37 @@
 <!-- *************************강의 리스트**************************** -->
 <!-- ************************* START *************************** -->
 
+<!-- 강의코드 자동증가 -->
+<select id="getLecOpenCode" resultType="String">
+SELECT IFNULL(
+	(SELECT 
+		MAX(CAST(substring(lec_op_code,10) AS DECIMAL))+1 
+FROM 
+	wt_lecture_open),1) AS MAX;
+</select>
 
+<!-- 강의리스트에 등록하기 -->
+<insert id="addLectureOpen" parameterType="LectureOpen">
+
+INSERT INTO wt_lecture_open
+	(lec_op_code
+	, lec_os_code
+	, lec_status
+	, cla_people
+	, cla_lack
+	, lec_op_writer
+	, lec_op_reg_date
+	)VALUES(
+	#{lecOpCode}
+	, #{lecOsCode}
+	, 'lec_rs_status01'
+	, 20
+	, 0
+	, #{lecOpWriter}
+	, CURRENT_DATE());
+
+
+</insert>
 
 <!-- 강의예정리스트 상세보기 -->
 <select id="getLecOsListOnly" resultType="hashMap">
@@ -117,6 +147,16 @@ FROM
 	lo.lec_status = lr.lec_number;
 </select>
 
+<!-- 강의예정코드로 중복개설되었는지 확인 -->
+<select id="checkLecOpen" resultType="LectureOpen">
+SELECT
+	lo.lec_op_code	AS lecOpCode
+FROM
+	wt_lecture_open AS lo
+WHERE
+	lo.lec_os_code = #{lecOsCode};
+
+</select>
 
 
 <!-- ************************ END ****************************** -->

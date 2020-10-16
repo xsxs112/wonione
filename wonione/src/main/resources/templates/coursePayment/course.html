@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	  
+	<th:block layout:fragment="customTitle">
+		<title th:text="title"></title>
+	</th:block>	  
+	
+	<th:block layout:fragment="customContent">
+	
+	<!-- addMember 에서 입력한 값을 넘겨 받고 싶다. 10.13.15:50 -->
+	
+	<h2>과정 선택</h2>
+	<from>
+		<table class="table table-condensed table-bordered">
+			<thead>
+				<tr>
+					<th>아이디</th>
+					<th>이름</th>
+					<th>과정명</th>
+					<th>단가</th>
+					<th>진행 요일</th>
+					<th>시작 시간</th>
+					<th>종료 시간</th>
+					<th>정원</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="c : ${courseSelection}">
+					<td th:text="${c.appSid}"></td>
+					<td></td>
+					
+					
+			   <!-- 
+			   		<td th:text="${c.lecName}"></td>	
+			   		
+			   		<td>
+			   			<label name="lecName">
+			   				<th:block th:each="l : ${getOpenLecList}">
+				   				<input type="checkbox" th:value="${l.lecOsCode}" th:text="${l.lecName}">
+			   				</th:block>
+			   			</label>
+			   		</td>
+			   		
+			   		<td>
+			   			<label>
+				   			<input type="checkbox" name="getOpenLecList" th:checked="${getOpenLecList}">
+			   			</label>
+			   		</td> 
+			   		
+			   		  -->
+			   		  
+			   		  
+					<td th:text="${c.lecTuition}"></td>
+					<td th:text="${c.lecDay}"></td>
+					<td th:text="${c.lecStartTime}"></td>
+					<td th:text="${c.lecEndTime}"></td>
+					<td th:text="${c.claCapacity}"></td>
+				</tr>
+			</tbody>		
+		</table>
+	</from>
+	
+	</th:block>
+	
+	<th:block layout:fragment="customJsScript">
+			 
+	</th:block> 
+	
+</html>

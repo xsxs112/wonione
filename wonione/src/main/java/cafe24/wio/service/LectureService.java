@@ -1,14 +1,13 @@
 package cafe24.wio.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cafe24.wio.bean.LectureOpen;
 import cafe24.wio.bean.LectureOpenSchedule;
-import cafe24.wio.bean.Member;
 import cafe24.wio.mapper.LectureMapper;
 
 @Service
@@ -16,6 +15,61 @@ public class LectureService {
 
 	@Autowired
 	private LectureMapper lectureMapper;
+	
+	/**
+	 * 강의코드 자동증가
+	 * @return String lecOpCode
+	 */
+	public String getLecOpenCode() {
+		String lecOpMaxCode = lectureMapper.getLecOpenCode();
+		String tempCode = null;
+		String lecOpCode = null;
+		int maxCode = 0;
+		if(lecOpMaxCode != null && !"".equals(lecOpMaxCode)) {
+			maxCode = Integer.parseInt(lecOpMaxCode);
+			if(maxCode <10) {
+				tempCode = "lec_open_00";
+			}else if(10<=maxCode && maxCode <100) {
+				tempCode = "lec_open_0";
+			}else if(100<=maxCode && maxCode <1000) {
+				tempCode = "lec_open_";
+			}
+		}
+		lecOpCode = tempCode + maxCode;
+		
+		return lecOpCode;
+	}
+	
+	/**
+	 * 강의리스트에 등록하기
+	 * @param lectureOpen
+	 * @return
+	 */
+	public int addLectureOpen(LectureOpen lectureOpen) {
+		
+		int addResult = lectureMapper.addLectureOpen(lectureOpen);
+		return addResult;
+	}
+	
+	/**
+	 * 강의예정코드로 중복개설되었는지 확인
+	 * @param lecOsCode
+	 * @return int
+	 */
+	public int checkLecOpen (String lecOsCode){
+		int checkResult = 0;
+		List<LectureOpen> checkLecOpen = lectureMapper.checkLecOpen(lecOsCode);
+		System.out.println(checkLecOpen.size() + " < -- checkLecOpen.size()");
+		if(checkLecOpen !=null) {
+			if(checkLecOpen.size() > 0) {
+				checkResult = 1;
+			}else {
+				checkResult =0;
+			}
+		}
+		
+		return checkResult;
+	}
 	
 	/**
 	 * 개설된 강의 상태변경

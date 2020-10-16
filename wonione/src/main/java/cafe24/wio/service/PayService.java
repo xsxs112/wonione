@@ -72,4 +72,28 @@ public class PayService {
 		return staffPayList;
 	}
 
+	//직원급여목록조건검색
+	public List<OfficersPay> getSearchOPL(String sk, String sv) {
+		List<OfficersPay> officersSPayList = payMapper.getSearchOPL(sk, sv);
+		return officersSPayList;
+	}
+
+	//강사급여목록조건검색
+	public List<StaffPay> getSearchSPL(String sk, String sv) {
+		List<StaffPay> staffSPayList = payMapper.getSearchSPL(sk, sv);
+		return staffSPayList;
+	}
+
+	//자원테이블 가져오기
+	public List<OfficersPay> standardSheet() {
+		List<OfficersPay> standardSheetHour = payMapper.standardSheet();		
+		return standardSheetHour;
+	}
+
+	//보험요율표가져오기
+	public List<OfficersPay> insuranceYear() {
+		List<OfficersPay> insuranceYear = payMapper.insuranceYear();
+		return insuranceYear;
+	}
+	
 }

@@ -65,7 +65,7 @@
 	</script>			
 	</th:block>
 	<th:block layout:fragment="customContent">
-	<div class="container-fluid"  >
+	<div class="container-fluid" th:unless="${#lists.isEmpty(officersPayList)}">
 	<form action="/modiFyOfficersPay" id="opfoinForm" method="get">
 	  	<table class ="table table-striped"> 
 	  		<thead>
@@ -102,7 +102,7 @@
 	  	</table>
 	</form>
 	</div>	
-	<div class="container-fluid">
+	<div class="container-fluid" th:unless="${#lists.isEmpty(staffPayList)}">
 	<form action="/" id="spfoinForm" method="post">
 	  	<table class ="table table-striped"> 
 	  		<thead>

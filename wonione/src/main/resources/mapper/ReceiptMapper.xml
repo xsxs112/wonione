@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="cafe24.wio.mapper.ReceiptMapper">
+
+	<!-- 수납 쿼리(수정중) -->
+		
+	<select id="">
+		SELECT
+				lec_os_code								AS lecOsCode
+			, 	lec_name								AS lecName
+			,	(SELECT
+					lr.lec_starttime
+				FROM
+					wt_lecture_open_schedule AS los1
+				INNER JOIN
+					wt_lec_resource AS lr
+				ON
+					los1.lec_time_code = lr.lec_number
+				WHERE								
+					los1.lec_os_code = 'lec_os_001') 	AS lecStartTime
+			,	(SELECT
+					lr.lec_endtime
+				FROM
+					wt_lecture_open_schedule AS los2
+				INNER JOIN
+					wt_lec_resource AS lr
+				ON
+				los2.lec_time_code = lr.lec_number
+				WHERE
+					los2.lec_os_code = 'lec_os_001')	AS lecEndTime
+			,	lec_day									AS lecDay
+			, 	lec_tuition								AS lecTuition
+			, 	cla_capacity							AS claCapacity
+		FROM
+			wt_lecture_open_schedule AS los3
+		WHERE
+			los3.lec_os_code = #{lecOsCode};
+	</select>
+	
+
+	<!-- 1-2. 과정 리스트 뽑기. 셀렉트 박스에 사용 -->
+	<select id="getOpenLecList" resultType="hashMap">
+		SELECT
+			los.lec_os_code				AS lecOsCode
+		,	los.lec_name				AS lecName
+		FROM
+			wt_lecture_open_schedule 	AS los
+	</select>
+
+	<!-- 1. 과정 선택 -->
+	<insert id="getCourseSelection" parameterType="Course">
+		INSERT INTO wt_course
+		(
+			  course_num
+			, lec_os_code
+			, app_sid
+			, app_group_sid
+		)VALUES (
+			  	CONCAT('cn',
+		      (SELECT LPAD(COUNT(*)+1,5,'0')
+		    	FROM
+		    		wt_course AS c))
+			, #{lecOsCode}
+			, #{appSid}
+			, CONCAT('ag_',app_sid) <!-- app_sid ->#{appSid} 변경? -->
+		);
+	</insert>
+
+</mapper>
