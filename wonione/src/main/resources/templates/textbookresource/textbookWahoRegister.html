@@ -149,6 +149,8 @@
 			if(data != undefined){
 				if(data == 0){
 					alert('해당교재의 입고내역이 존재하지 않습니다.');
+					whTxbCheck='check';
+					console.log(whTxbCheck + ' < -- ajax check');
 					 if(confirm('최초입고등록을 하시겠습니까?')){
 						 location.href = '/textbookFirstWahoRegister?txbCode='+txbCode;
 					}
