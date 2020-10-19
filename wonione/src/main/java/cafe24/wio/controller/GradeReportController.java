@@ -92,7 +92,7 @@ private GradeReportService gradeReportService;
 	      String codeResult =  gradeReportService.gradeCode();
 	      List<Map<String, Object>> testNum =  gradeReportService.testNum();
 	      List<Map<String, Object>> clCode = gradeReportService.classCode();
-	      List< Map<String, Object> > targetScore = gradeReportService.targetScore();
+	      List<Map<String, Object>> targetScore = gradeReportService.targetScore();
 	      model.addAttribute("sessionName", sessionName);
 		  model.addAttribute("sessionId", sessionId);
 	      model.addAttribute("codeResult", codeResult);
@@ -103,7 +103,18 @@ private GradeReportService gradeReportService;
 	      return "humanresource/gradereportwrite";
 	   }
 	
-	
+	//평균점수 구하기
+	   @PostMapping("/gradeAvg")
+	   @ResponseBody
+	   public Map<String, Object> gradeAvg(Model model
+						    	,@RequestParam(value = "lecCode", required = false) String lecCode,
+						    	@RequestParam(value = "testRou", required = false) String testNum ) {
+		 Map<String, Object> gradeAvg = gradeReportService.gradeAvg(lecCode, testNum);
+		 return gradeAvg; 
+	   }
+	   
+	   
+	   
 	//조건검색
 	@GetMapping(value = "/gradereport", produces = "application/json")
 	@ResponseBody

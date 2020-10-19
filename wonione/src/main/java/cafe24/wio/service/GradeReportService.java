@@ -93,6 +93,13 @@ public class GradeReportService {
 	      
 	      return reCode;
 	   }
+	 
+	//평균점수가져오기
+	public  Map<String, Object> gradeAvg(String lecCode, String testNum) {
+		Map<String, Object> avgGrade = gradeReportMapper.gradeAvg(lecCode, testNum);
+		return avgGrade;
+	}
+	 
 	//업무목표점수가져오기
 	 public  List< Map<String, Object>> targetScore() {
 		 List< Map<String, Object> > targetScore = gradeReportMapper.targetScore();

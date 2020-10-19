@@ -45,4 +45,10 @@ public interface GradeReportMapper {
 	
 	//보고서 리스트 페이징
 	public List<Grade> countGradeReportList(Map<String,Object> gradeMap);
+	
+	//평균구하기
+	public Map<String, Object> gradeAvg(String lecCode, String testNum);
+	
+	
+	
 }

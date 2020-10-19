@@ -19,7 +19,8 @@
 		<result column="mr_name" 				property="mrName"/>
 		<result column="lec_target" 			property="lecTarget"/>
 		<result column="cla_people" 			property="claPeople"/>
-		
+		<result column="lec_os_code" 			property="lecOsCode"/>
+		<result column="test_round" 			property="testRound"/>
 		
 </resultMap>
 
@@ -240,6 +241,20 @@
 
 </select>
 
+<!-- 평균구하기 -->
+<select id="gradeAvg" resultType="hashMap" parameterType="String">
+SELECT 
+   (sum(m.grade_man_score))/COUNT(c.app_sid) AS grade_man_score
+   FROM 
+   wt_course AS c
+   INNER JOIN 
+   wt_grade_management m
+   on
+   c.app_sid = m.mr_id
+   WHERE  
+   c.lec_os_code = #{lecCode} AND m.test_round = #{testNum};
+   
+</select>
 
 
 </mapper>   
