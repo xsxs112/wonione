@@ -44,14 +44,17 @@ public interface PayMapper {
 	public List<StaffPay> getStaIdPayList(String mrId);
 	
 	//직원급여목록조건검색
-	public List<OfficersPay> getSearchOPL(String sk, String sv);
+	public List<OfficersPay> getSearchOPL(String offisk, String offisv);
 	
 	//강사급여목록조건검색
-	public List<StaffPay> getSearchSPL(String sk, String sv);
+	public List<StaffPay> getSearchSPL(String staffsk, String staffsv);
 	
 	//자원테이블 호출
 	public List<OfficersPay> standardSheet();
 	
 	//보험요율표 불러오기
 	public List<OfficersPay> insuranceYear();
+	
+	//직원급여 미지급목록 조회하기
+	public OfficersPay nonOffiPay(String opDate);
 }

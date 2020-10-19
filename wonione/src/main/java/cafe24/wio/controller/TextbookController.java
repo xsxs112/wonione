@@ -113,9 +113,9 @@ public class TextbookController {
 	@ResponseBody 
 	public int wahoTextbookCheck(Model model
 					,@RequestParam(value="txbCode", required = false)String txbCode	) { 
-		Map<String,Object> whTxbCodeCheck = textbookService.wahoTextbookCheck(txbCode); 
+		List<Map<String,Object>> whTxbCodeCheck = textbookService.wahoTextbookCheck(txbCode); 
 		int result = 1;
-		if(whTxbCodeCheck == null) {
+		if(whTxbCodeCheck.size()<1) {
 			result = 0;
 		}else {
 			logger.info(whTxbCodeCheck.toString());

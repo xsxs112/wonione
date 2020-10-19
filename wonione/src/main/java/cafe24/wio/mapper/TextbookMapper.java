@@ -62,7 +62,7 @@ public interface TextbookMapper {
 	public String getTxbWhMaxCode();
 	
 	//교재입고내역 존재유무 체크
-	public Map<String,Object> wahoTextbookCheck(String txbCode);
+	public List<Map<String,Object>> wahoTextbookCheck(String txbCode);
 	
 	//교재입고등록
 	public int addWhTextbook(WhTextbook whTextbook);

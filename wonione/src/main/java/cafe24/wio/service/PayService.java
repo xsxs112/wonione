@@ -73,14 +73,14 @@ public class PayService {
 	}
 
 	//직원급여목록조건검색
-	public List<OfficersPay> getSearchOPL(String sk, String sv) {
-		List<OfficersPay> officersSPayList = payMapper.getSearchOPL(sk, sv);
+	public List<OfficersPay> getSearchOPL(String offisk, String offisv) {
+		List<OfficersPay> officersSPayList = payMapper.getSearchOPL(offisk, offisv);
 		return officersSPayList;
 	}
 
 	//강사급여목록조건검색
-	public List<StaffPay> getSearchSPL(String sk, String sv) {
-		List<StaffPay> staffSPayList = payMapper.getSearchSPL(sk, sv);
+	public List<StaffPay> getSearchSPL(String staffsk, String staffsv) {
+		List<StaffPay> staffSPayList = payMapper.getSearchSPL(staffsk, staffsv);
 		return staffSPayList;
 	}
 
@@ -94,6 +94,12 @@ public class PayService {
 	public List<OfficersPay> insuranceYear() {
 		List<OfficersPay> insuranceYear = payMapper.insuranceYear();
 		return insuranceYear;
+	}
+
+	//직원급여 미지급목록 조회하기
+	public OfficersPay nonOffiPay(String opDate) {
+		OfficersPay nonOffiPayList = payMapper.nonOffiPay(opDate);
+		return nonOffiPayList;
 	}
 	
 }
