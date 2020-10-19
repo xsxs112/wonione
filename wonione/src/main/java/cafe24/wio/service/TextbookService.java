@@ -276,9 +276,9 @@ public class TextbookService {
 	 * @param whTextbook
 	 * @return TextbookBasicInfo wahoTextbookCheck
 	 */
-	public Map<String,Object> wahoTextbookCheck(String txbCode){
+	public List<Map<String,Object>> wahoTextbookCheck(String txbCode){
 		
-		Map<String,Object> wahoTextbookCheck = textbookMapper.wahoTextbookCheck(txbCode);
+		List<Map<String,Object>> wahoTextbookCheck = textbookMapper.wahoTextbookCheck(txbCode);
 		
 		return wahoTextbookCheck;
 	}

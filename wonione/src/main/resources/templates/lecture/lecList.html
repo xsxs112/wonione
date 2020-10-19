@@ -179,7 +179,7 @@
 	<!---------------------- 강의상태변경하기 아이콘클릭 -------------------->
 		/*<![CDATA[*/
 			$('.changeStatusBtn').click(function(){
-				var lecOpCode = $('.lecOpCode').parents().children('.lecOpCode').val();
+				var lecOpCode = $(this).val();
 				console.log(lecOpCode + ' < -- lecOpCode ');
 				var lectureStatus = /*[[${lectureStatus}]]*/;
 					html = '';
@@ -225,7 +225,7 @@
 							 
 							request.done(function( data ) {
 								if(data == 1){
-									/* location.href="/lecList"; */
+									location.href="/lecList"; 
 								}else if(data == 0){
 									alert('수정에 실패하였습니다');
 								}
