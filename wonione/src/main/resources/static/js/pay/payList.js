@@ -7,6 +7,11 @@
  
 	 $(function(){	
 	 
+	 	//미지급목록 조회
+	 	$(#nonPay).click(function(){
+	 		var opDate = 
+	 	});
+	 
 	 	//직원급여검색
 	 	$(document).on('click', '#offiSearchBtn', (function(){
 

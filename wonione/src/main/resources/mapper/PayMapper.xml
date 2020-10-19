@@ -68,6 +68,25 @@
 		<result column="mr_account_num"					property="mrAccountNum"/>	
 		<result column="p_r_ect"						property="pREct"/>			
 	</resultMap>	
+	<!-- 직원급여 미지급목록 조회 -->
+	<select id="nonOffiPay" resultType="OfficersPay">
+		 SELECT 
+			 op.op_code 					AS opCode
+			,op.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,IFNULL(op.op_date, '미지급')		AS opDate
+			,op.op_pay						AS opPay
+			,op.op_reg_date					AS opRegDate
+			,op.op_writer	  				AS opWriter	
+		FROM
+			wt_officers_pay 				AS op
+			LEFT JOIN 
+			wt_member_registration			AS mr
+			on
+			op.mr_id = mr.mr_id	
+		WHERE	 
+			op.op_date is NULL;
+	</select>
 	
 	<!-- 지급월기준표 -->
 	<select id="standardSheet" resultType="OfficersPay">

@@ -16,7 +16,7 @@
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<div>	
-		<div class="container-fluid">
+		<div class="container-fluid" style="overflow-y:scroll; -ms-overflow-stlye:none; height:200px;">
 		  	<table class ="table table-striped">
 		  		<thead>
 		  			<tr class="info" >
@@ -43,7 +43,7 @@
 		  		</tbody>	
 		  	</table>
 		</div>
-		<div class="container-fluid">
+		<div class="container-fluid" style="overflow-y:scroll; height:200px;">
 		  	<table class ="table table-striped"> 
 		  		<thead>
 		  			<tr class="info">
@@ -71,7 +71,7 @@
 		</div>
 	</div>
 	
-	<div id="wrapper_tb_tab_4" style="border: 3px solid rgb(205, 205, 205); padding-top: 10px; padding-bottom: 10px; margin: 10px; overflow:scroll; height:400px;">
+	<div id="wrapper_tb_tab_3" style="border: 3px solid rgb(205, 205, 205); padding-top: 10px; padding-bottom: 10px; margin: 10px; overflow-y:scroll; height:400px;">
 		<div class="fht-table-wrapper fht-default outbox_tb_h" style="width: 95%; height: 400px;">
 			<div style="width:65%; float:left; padding-left:5px; ">		
 				<label style="margin:5px;">직원</label>
@@ -122,7 +122,7 @@
 		  		</select>
 			</div>	
 			<div style="width:10%; float:left">
-				<button type="button" class="form-control">미지급분</button>		
+				<button type="button" class="form-control" id="nonPay">미지급분</button>		
 			</div>
 			<div class="container-fluid">
 		  		<table class ="table table-striped">

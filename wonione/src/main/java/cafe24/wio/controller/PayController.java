@@ -28,6 +28,15 @@ public class PayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(PayController.class);
 
+	//직원급여 미지급목록 조회하기
+	@PostMapping(value = "/nonOffiPay",produces = "application/json")
+	@ResponseBody
+	public OfficersPay nonOffiPay(String opDate) {
+		OfficersPay nonOffiPayList = payService.nonOffiPay(opDate);
+		
+		return nonOffiPayList;
+	}
+	
 	// 강사급여 삭제하기
 	@PostMapping(value = "/removeStaffPayDocu", produces = "application/json")
 	@ResponseBody

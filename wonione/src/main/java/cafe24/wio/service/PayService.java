@@ -95,5 +95,11 @@ public class PayService {
 		List<OfficersPay> insuranceYear = payMapper.insuranceYear();
 		return insuranceYear;
 	}
+
+	//직원급여 미지급목록 조회하기
+	public OfficersPay nonOffiPay(String opDate) {
+		OfficersPay nonOffiPayList = payMapper.nonOffiPay(opDate);
+		return nonOffiPayList;
+	}
 	
 }
