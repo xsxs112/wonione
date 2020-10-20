@@ -27,37 +27,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="c : ${courseSelection}">
-					<td th:text="${c.appSid}"></td>
-					<td></td>
-					
-					
-			   <!-- 
-			   		<td th:text="${c.lecName}"></td>	
-			   		
-			   		<td>
-			   			<label name="lecName">
-			   				<th:block th:each="l : ${getOpenLecList}">
-				   				<input type="checkbox" th:value="${l.lecOsCode}" th:text="${l.lecName}">
-			   				</th:block>
-			   			</label>
-			   		</td>
-			   		
-			   		<td>
-			   			<label>
-				   			<input type="checkbox" name="getOpenLecList" th:checked="${getOpenLecList}">
-			   			</label>
-			   		</td> 
-			   		
-			   		  -->
-			   		  
-			   		  
-					<td th:text="${c.lecTuition}"></td>
-					<td th:text="${c.lecDay}"></td>
-					<td th:text="${c.lecStartTime}"></td>
-					<td th:text="${c.lecEndTime}"></td>
-					<td th:text="${c.claCapacity}"></td>
-				</tr>
+			<tr>
+				<td>
+					<label>
+						<th:block th:each="l:${getOpenLecList}">
+							<input th:text="${l.lecName}" th:value="${l.lecOsCode}" type="checkbox" id="lecOpList" name="lecOpList">
+						</th:block>
+					</label>
+				</td>	
+			</tr>
 			</tbody>		
 		</table>
 	</from>

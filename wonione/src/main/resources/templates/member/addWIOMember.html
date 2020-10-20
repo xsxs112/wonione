@@ -9,99 +9,113 @@
 	
 	<th:block layout:fragment="customContent">
 	
-	<!-- 아이디 중복 검사, 구성원 등록 유효성 검사 		미완성. 수정해야함. 목표 점수 이후로 조건 처리 다시 하기. 1013_17:20-->
+	<!-- click 이벤트 말고 onsubmit 으로 변경해서 진행해보기. 블로그 참고 10.19 -->
 	<script>
-		$(document).ready(function(){
+	
+	$(function(){
+		
+		// 아이디 중복 검사 클릭, 유효성 검사 시작
+		
+		var idCheckResult = 0;
+		
+		$('#idDuplCheck').click(function(){
 			
-			var idDuplCheckResult = 0;
-			$('#idDuplCheck').click(function(){
-				idDuplCheckResult = 1;
-				var mrId = $('input[name=mrId]').val();
-				
-				if(mrId == '' || mrId == undefined){
-					alert('아이디를 입력해 주세요.');
-				}else{
-					var request = $.ajax({
-						  url: "/WIOMemberIdCheck",
-						  method:"GET",
-						  data: { mrId : mrId },
-						  dataType: "text"
-					});
-					request.done(function(data){
-						console.log(data);
-						if(data != undefined && data != ''){
-							alert("존재하는 아이디입니다.");
-						}else{
-							alert("가입 가능한 아이디입니다.");
-						}
-					});
-					request.fail(function(jqXHR, textStatus){
-						alert("Request failed: " + textStatus);
-					});
-				}
-			});
+			idCheckResult = 1;
 			
-			$('#submitBtn').click(function(){
-				var mrPw 			= $('input[name=mrPw]').val();
-				var mrName 			= $('input[name=mrName]').val();
-				var levelNum 		= $('input[name=levelNum]').val();
-				var mrPhone 		= $('input[name=mrPhone]').val();
-				var mrAddr 			= $('input[name=mrAddr]').val();
-				var mrTargetScore	= $('input[name=mrTargetScore]').val();
-				var pmRCode 		= $('input[name=pmRCode]').val();
-				var mrAccountNum 	= $('input[name=mrAccountNum]').val();
-				var mrJoinDate 		= $('input[name=mrJoinDate]').val();
-				
-				if(mrPw == '' || mrPw == undefined){
-					alert('비밀번호를 입력해주세요.');
-					mrPw.focus();
-					return;
-				}else if(mrName == '' || mrName == undefined){
-					alert('이름을 입력해주세요.');
-					mrName.focus();
-					return;
-				}else if(levelNum == '' || levelNum == undefined){
-					alert('권한을 설정해주세요.');
-					levelNum.focus();
-					return;
-				}else if(mrPhone == '' || mrPhone == undefined){
-					alert('연락처를 입력해주세요.');
-					mrPhone.focus();
-					return;
-				}else if(mrAddr == '' || mrAddr == undefined){
-					alert('주소를 입력해주세요.');
-					mrAddr.focus();
-					return;
-				}else if(levelNum == 4){
-					alert('목표 점수를 입력해주세요.');
-					mrTargetScore.focus();
-					return;
-				}else if(pmRCode == '' || pmRCode == undefined){
-					alert('결제 수단을 선택하세요.');
-					pmRCode.focus();
-					return;
-				}else if(mrAccountNum == '' || mrAccountNum == undefined){
-					alert('계좌 번호를 입력해주세요.');
-					mrAccountNum.focus();
-					return;
-				}else if(levelNum == 2 || levelNum == 3){
-					alert('입사일을 선택해주세요.');
-					mrJoinDate.focus();
-					return;
-				}if(idDuplCheckResult != 1){
-					alert('아이디 중복 체크를 해주세요.');
-				}else{
-					alert('등록에 성공하였습니다.');
-					$('form').submit();
-				}
-			});
-		});
+			var mrId = $('input[name=mrId]').val();
+			
+			if(mrId == '' || mrId == undefined){
+				alert('아이디를 입력해주세요.');
+			}else{
+				var request = $.ajax({
+					  url: "/WIOMemberIdCheck",
+					  method:"POST",
+					  data: { mrId : mrId },
+					  dataType: "text"
+				});
+				request.done(function(data){
+					console.log(data);
+					if(data != undefined && data != ''){
+						alert("이미 존재하는 아이디입니다.");
+					}else{
+						alert("가입 가능한 아이디입니다.");
+					}
+				});
+				request.fail(function(jqXHR, textStatus){
+					alert("Request failed: " + textStatus);
+				});
+			}
+		});	// 아이디 중복 검사 완료
+		
+	});
+	
+		
+	// 비밀번호 일치 확인
+	
+	$('.pw').focusout(function(){
+		var mrPw 			= $('input[name=mrPw]').val();
+		var pwCheck 		= $('input[name=pwCheck]').val();
+		
+		if(mrPw != '' && pwCheck == ''){
+			null;
+		}else if(mrPw != '' || pwCheck != ''){
+			if(mrPw == pwCheck){
+				$('#alert-success').css('display', 'inline-block');
+				$('#alert-danger').css('display', 'none');
+			}else{
+				alert('비밀번호가 일치하지 않습니다.');
+				$('#alert-success').css('display', 'none');
+				$('#alert-danger').css('display', 'inline-block');
+			}
+		}
+		
+	});
+	
+	
+	// 유효성 검사
+	
+	var infoSubmit = function(form){
+		
+
+		var mrName 			= $('input[name=mrName]').val();
+		var levelNum 		= $('input[name=levelNum]').val();
+		var mrPhone 		= $('input[name=mrPhone]').val();
+		var mrAddr 			= $('input[name=mrAddr]').val();
+		var mrTargetScore	= $('input[name=mrTargetScore]').val();
+		var pmRCode 		= $('select[name=pmRCode]').val();
+		var mrAccountNum 	= $('input[name=mrAccountNum]').val();
+		var mrJoinDate 		= $('input[name=mrJoinDate]').val();
+		
+	
+		if(mrName == '' || mrName == undefined){
+			alert('이름을 입력해주세요.');
+			mrName.focus();
+			return false;
+		}else if(levelNum == '' || levelNum == undefined){
+			alert('권한을 설정해 주세요.');
+			levelNum.focus();
+			return false;
+		}else if(mrPhone == '' || mrPhone == undefined){
+			alert('연락처를 입력해주세요');
+			mrPhone.focus();
+			return false;
+		}else if(mrAddr == '' || mrAddr == undefined){
+			alert('주소를 입력해주세요');
+			mrAddr.focus();
+			return false;
+		}else if(){
+			
+		}
+		
+		
+	};
+		
 	
 	</script>
 	
 		
 		<h2>기본 정보 입력</h2>
-			<form class="form-horizontal" style="margin: 10px;" action="/addWIOMember" method="post">
+			<form onsubmit="return infoSubmit(this)" class="form-horizontal" style="margin: 10px;" action="/addWIOMember" method="post">
 				<table border="1" class="table table-condensed table-bordered">
 					
 					<div class="form-group">
@@ -120,7 +134,16 @@
 					<tr>
 						<td>비밀번호</td>
 						<td>
-							<input type="password" name="mrPw" class="form-control">
+							<input type="password" name="mrPw" class="form-control pw">
+						</td>
+					</tr>
+					
+					<tr>
+						<td>비밀번호 확인</td>
+						<td>
+							<input type="password" name="pwCheck" class="form-control">
+							    <span id="alert-success" style="display: none;">비밀번호가 일치합니다.</span>
+    							<span id="alert-danger" style="display: none; color: #d92742; font-weight: bold; ">비밀번호가 일치하지 않습니다.</span>
 						</td>
 					</tr>
 					
@@ -134,7 +157,12 @@
 					<tr>
 						<td>권한</td>
 						<td>
-							<input type="text" name="levelNum" class="form-control" value="0">
+							<select name="levelName">
+								<option>::권한 선택::</option>
+								<th:block th:each="n:${memberLevelName}">
+									<option th:value="${n.levelNum}" th:text="${n.levelName}"></option>
+								</th:block>
+							</select>
 						</td>
 					</tr>
 				
