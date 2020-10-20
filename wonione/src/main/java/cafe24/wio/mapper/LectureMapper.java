@@ -12,6 +12,8 @@ import cafe24.wio.bean.LectureOpenSchedule;
 @Mapper
 public interface LectureMapper {
 
+	//강의예정리스트 날짜별조회
+	public List<Map<String,Object>> getLecOsListDate(String lecStDate, String lecFinDate);
 	
 	//강의코드 자동증가
 	public String getLecOpenCode();

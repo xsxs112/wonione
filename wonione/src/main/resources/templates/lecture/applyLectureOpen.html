@@ -148,14 +148,18 @@
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                         <label class="login2 pull-right pull-right-pro">강의기간</label>
                                                     </div>
+                                                    <div class="modal-bootstrap shadow-inner responsive-mg-b-0">
+						                            	<div class="modal-area-button">                                                	
+	                                               			<a data-toggle="modal" data-target="#PrimaryModalalert" role="button" id="checkBtn">날짜중복체크</a>
+	                                               		</div>
+	                                            	</div>
                                                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
                                                         <label class="login2 pull-center pull-center-pro">개강일자</label>
-                                                        <input type="date" class="form-control" name="lecStartDate" 
-                                                        id="lecStartDate"/>
+                                                        <input type="date" class="form-control" name="lecStDate" id="lecStDate"/>
                                                     </div>
                                                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
                                                     	<label class="login2 pull-center pull-center-pro">종강일자</label>
-                                                        <input type="date"class="form-control"  name="lecFinalDate" id="lecFinalDate">
+                                                        <input type="date"class="form-control"  name="lecFinDate" id="lecFinDate">
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,6 +190,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Start Modal Contents Area -->
+                                 <div class="login-form-area edu-pd mg-b-15">
+		                        <div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+		                            <div class="modal-dialog">
+		                                <div class="modal-content">
+			                                    <div class="modal-body" id="modalContent">
+												</div>
+		                                    <div class="modal-footer">
+		                                        <button data-dismiss="modal" id="modalConfirmBtn" class="btn btn-default lecOpCode">확인</button>
+		                                        <a data-dismiss="modal" class="btn btn-default" href="#" role="button">닫기</a>
+		                                    </div>
+	                                   	 </div>
+		                                </div>
+		                            </div>
+		                        </div>  
+		                        <!--End Modal Contents Area -->                              
                         		<div class="container-fluid" style="margin: 10px;">
 									<a href="/lecOsList" class="btn btn-default" role="button">강의관리 메인페이지로</a>
 								</div>        
@@ -196,6 +216,9 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
+	var lecStDate = null;
+	var lecFinDate = null;
+	var html = '';
 	$('#addBtn').click(function(){
 		var addForm = $('#addForm');
 		var lecOsCode = $('#lecOsCode').val();
@@ -208,8 +231,8 @@
 		var lecDay = $('#lecDay').val();
 		var claCapacity = $('#claCapacity').val();
 		var lecTuition = $('#lecTuition').val();
-		var lecStartDate = $('#lecStartDate').val();
-		var lecFinalDate = $('#lecFinalDate').val();
+			lecStDate = $('#lecStDate').val();
+			lecFinDate = $('#lecFinDate').val();
 		var lecOsRemark = $('#lecOsRemark').val();
 		
 		console.log(lecOsCode + ' < -- lecOsCode');
@@ -222,12 +245,55 @@
 		console.log(lecDay + ' < -- lecDay');
 		console.log(claCapacity + ' < -- claCapacity');
 		console.log(lecTuition + ' < -- lecTuition');
-		console.log(lecStartDate + ' < -- lecStartDate');
-		console.log(lecFinalDate + ' < -- lecFinalDate');
+		console.log(lecStDate + ' < -- lecStDate');
+		console.log(lecFinDate + ' < -- lecFinDate');
 		console.log(lecOsRemark + ' < -- lecOsRemark');
-		addForm.submit();
+
+		/* addForm.submit(); */
 	});
-	
+	$('#checkBtn').click(function(){
+		var modalContent = $('#modalContent');
+		console.log('날짜체크');
+		lecStDate = $('#lecStDate').val();
+		lecFinDate = $('#lecFinDate').val();
+		console.log(lecStDate);
+		console.log(lecFinDate);
+		if(lecStDate == ''){
+			alert('시작날짜를 선택해주세요');
+			return;
+		}
+		if(lecFinDate == ''){
+			alert('종료날짜를 선택해주세요');
+			return;
+		}
+		if(lecStDate != '' && lecFinDate != ''){
+			var request = $.ajax({
+				 url: "/lecOsCheckDate",
+				 method: "POST",
+				 data: { lecStDate : lecStDate , lecFinDate : lecFinDate},
+				 dataType: "json"
+			});
+			 
+			request.done(function( data ) {
+				alert(JSON.stringify(data));
+				console.log(data);
+				if(data.length == 0){
+					alert('조회되는 데이터가 없습니다');
+				}
+				for(var i=0; i<data.length; i++){
+					console.log('반복문');
+					html ='';
+					html += data[i].lecOsCode;
+				}
+					modalContent.empty();
+					modalContent.append(html);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+			}
+	})	
 	</script>  		
 	</th:block>
 	<th:block layout:fragment="customJsScript">

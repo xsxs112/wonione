@@ -29,17 +29,18 @@ public class TextbookController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 	
+	
 	//교재 기본 정보 수정하기
 	@PostMapping("/textbookInfoModify")
-	public String txbInfoModify( TextbookBasicInfo textbookBasicInfo
+	public String txbInfoModify( TextbookBasicInfo txbBasicInfo
 								,@RequestParam(value="txbCode",required = false) String txbCode
 								,@RequestParam(value="txbName",required = false) String txbName
 								,@RequestParam(value="txbPublisher",required = false) String txbPublisher
 								,@RequestParam(value="txbAuthor",required = false) String txbAuthor
 								,@RequestParam(value="txbRemark",required = false) String txbRemark
-								,@RequestParam(value="txbModifier",required = false) String txbModifier
-								,@RequestParam(value="txbModDate",required = false) String txbModDate) {
+								,@RequestParam(value="txbModifier",required = false) String txbModifier) {
 		
+		textbookService.txbInfoModify(txbBasicInfo);
 		return "redirect:/textbookInfoList";
 	}
 	
@@ -48,12 +49,15 @@ public class TextbookController {
 	public String textbookInfoModify(Model model
 									,HttpSession session
 									,@RequestParam(value="txbCode", required = false) String txbCode) {
-		TextbookBasicInfo textbookBasicInfo = textbookService.getOnlyTxbInfo(txbCode);
+		TextbookBasicInfo textbookBasicInfo= textbookService.getOnlyTxbInfo(txbCode);
 		String txbModifierId = session.getAttribute("SID").toString();
 		String txbModifierName = session.getAttribute("SNAME").toString();
 		model.addAttribute("title", "교재기본정보 수정페이지");
 		model.addAttribute("mainTitle", "교재기본정보 수정페이지");
-		model.addAttribute("textbookBasicInfo", textbookBasicInfo);
+		model.addAttribute("txbCode", txbCode);
+		model.addAttribute("txbName", textbookBasicInfo.getTxbName());
+		model.addAttribute("txbPublisher", textbookBasicInfo.getTxbPublisher());
+		model.addAttribute("txbAuthor", textbookBasicInfo.getTxbAuthor());
 		model.addAttribute("txbModifierId", txbModifierId);
 		model.addAttribute("txbModifierName", txbModifierName);
 		

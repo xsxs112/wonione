@@ -23,6 +23,18 @@ public class LectureController {
 	@Autowired
 	private LectureService lectureService;
 
+	//강의예정리스트 날짜로 체크 ajax
+	@PostMapping(value="/lecOsCheckDate", produces="application/json")
+	@ResponseBody
+	public List<Map<String,Object>> getLecOsListDate(
+						 @RequestParam(value="lecStDate",required = false)String lecStDate
+						,@RequestParam(value="lecFinDate",required = false)String lecFinDate){
+		
+		List<Map<String,Object>> lecOsListDate = 
+						lectureService.getLecOsListDate(lecStDate, lecFinDate);
+		return lecOsListDate;
+	}
+	
 	//강의예정코드를 사용해 강의리스트에 등록하기
 	@PostMapping(value="/addLectureOpen", produces = "application/json")
 	@ResponseBody

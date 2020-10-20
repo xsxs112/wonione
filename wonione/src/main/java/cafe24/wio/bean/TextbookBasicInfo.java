@@ -10,7 +10,8 @@ public class TextbookBasicInfo {
 	private String txbWriter;		//작성자아이디
 	private String txbRegDate;		//등록일자
 	private String txbRemark;		//비고
-	
+	private String txbModifier;		//수정일자
+	private String txbModDate;		//수정자아이디
 	public String getTxbCode() {
 		return txbCode;
 	}
@@ -53,6 +54,18 @@ public class TextbookBasicInfo {
 	public void setTxbRemark(String txbRemark) {
 		this.txbRemark = txbRemark;
 	}
+	public String getTxbModifier() {
+		return txbModifier;
+	}
+	public void setTxbModifier(String txbModifier) {
+		this.txbModifier = txbModifier;
+	}
+	public String getTxbModDate() {
+		return txbModDate;
+	}
+	public void setTxbModDate(String txbModDate) {
+		this.txbModDate = txbModDate;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -70,11 +83,12 @@ public class TextbookBasicInfo {
 		builder.append(txbRegDate);
 		builder.append(", txbRemark=");
 		builder.append(txbRemark);
+		builder.append(", txbModifier=");
+		builder.append(txbModifier);
+		builder.append(", txbModDate=");
+		builder.append(txbModDate);
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
-	
 	
 }
