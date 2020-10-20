@@ -42,7 +42,6 @@
 									  <th>지급일자</th>
 									  <th>작성자아이디</th>
 									  <th>등록일자</th>
-                                      <th>수정 / 삭제</th>
                                     </tr>
 									<th:block th:each="gts : ${getTextbookSuppList}">
 											<tr>
@@ -53,10 +52,6 @@
 											  <td th:text="${gts.supTxbDate}"></td>
 											  <td th:text="${gts.supTxbWriter}"></td>
 											  <td th:text="${gts.supTxbRegDate}"></td>
-									<td>
-                                       <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                       <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                    </td>									  
 									</tr>
 							</th:block>
                                 </table>

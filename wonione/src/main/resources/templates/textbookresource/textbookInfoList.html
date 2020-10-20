@@ -59,8 +59,8 @@
 											  <td th:text="${til.txbWriter}"></td>
 											  <td th:text="${til.txbRegDate}"></td>
 	                                        <td>
-	                                            <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-	                                            <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+	                                            <button data-toggle="tooltip" title="Edit" th:value="${til.txbCode}" class="pd-setting-ed" id="modifyBtn" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+	                                            <button data-toggle="tooltip" title="Trash" class="pd-setting-ed" id="removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 	                                        </td>
 	                                    </tr>
                                     </th:block>
@@ -123,6 +123,11 @@
 			}
 			searchForm.submit();
 		});
+		
+	$('#modifyBtn').click(function(){
+		console.log('수정버튼클릭');
+		var txbCode = $(this).val();
+	})
 	
 	</script>	
 	</th:block>

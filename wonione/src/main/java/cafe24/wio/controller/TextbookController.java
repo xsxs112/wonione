@@ -29,6 +29,37 @@ public class TextbookController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 	
+	//교재 기본 정보 수정하기
+	@PostMapping("/textbookInfoModify")
+	public String txbInfoModify( TextbookBasicInfo textbookBasicInfo
+								,@RequestParam(value="txbCode",required = false) String txbCode
+								,@RequestParam(value="txbName",required = false) String txbName
+								,@RequestParam(value="txbPublisher",required = false) String txbPublisher
+								,@RequestParam(value="txbAuthor",required = false) String txbAuthor
+								,@RequestParam(value="txbRemark",required = false) String txbRemark
+								,@RequestParam(value="txbModifier",required = false) String txbModifier
+								,@RequestParam(value="txbModDate",required = false) String txbModDate) {
+		
+		return "redirect:/textbookInfoList";
+	}
+	
+	//교재기본정보 수정하기
+	@GetMapping("/textbookInfoModify")
+	public String textbookInfoModify(Model model
+									,HttpSession session
+									,@RequestParam(value="txbCode", required = false) String txbCode) {
+		TextbookBasicInfo textbookBasicInfo = textbookService.getOnlyTxbInfo(txbCode);
+		String txbModifierId = session.getAttribute("SID").toString();
+		String txbModifierName = session.getAttribute("SNAME").toString();
+		model.addAttribute("title", "교재기본정보 수정페이지");
+		model.addAttribute("mainTitle", "교재기본정보 수정페이지");
+		model.addAttribute("textbookBasicInfo", textbookBasicInfo);
+		model.addAttribute("txbModifierId", txbModifierId);
+		model.addAttribute("txbModifierName", txbModifierName);
+		
+		
+		return "textbookresource/textbookInfoModify";
+	}
 	
 	//교재지급등록 시 교재명을 선택하면 현재 재고수량을 조회하는 ajax
 	@GetMapping(value="/getTxbStock", produces="application/json")

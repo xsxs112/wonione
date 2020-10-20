@@ -46,7 +46,6 @@
 									  <th>재고수량</th>
 									  <th>작성자아이디</th>
 									  <th>비고</th>
-                                      <th>수정 / 삭제</th>
                                     </tr>
 							<th:block th:each="gtl : ${getTextbookList}">
 									<tr>
@@ -61,10 +60,6 @@
 									  
 									  <td th:text="${gtl.whTxbWriter}"></td>
 									  <td th:text="${gtl.whTxbRemark}"></td>
- 									<td>
-                                       <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                       <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                    </td>									  
 									</tr>
 							</th:block>
                                 </table>
