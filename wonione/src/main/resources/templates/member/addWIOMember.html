@@ -22,6 +22,7 @@
 			
 			idCheckResult = 1;
 			
+			
 			var mrId = $('input[name=mrId]').val();
 			
 			if(mrId == '' || mrId == undefined){
@@ -45,70 +46,90 @@
 					alert("Request failed: " + textStatus);
 				});
 			}
-		});	// 아이디 중복 검사 완료
+		});	
 		
-	});
-	
+		// 아이디 중복 검사 완료
 		
-	// 비밀번호 일치 확인
-	
-	$('.pw').focusout(function(){
-		var mrPw 			= $('input[name=mrPw]').val();
-		var pwCheck 		= $('input[name=pwCheck]').val();
 		
-		if(mrPw != '' && pwCheck == ''){
-			null;
-		}else if(mrPw != '' || pwCheck != ''){
-			if(mrPw == pwCheck){
-				$('#alert-success').css('display', 'inline-block');
-				$('#alert-danger').css('display', 'none');
-			}else{
-				alert('비밀번호가 일치하지 않습니다.');
-				$('#alert-success').css('display', 'none');
-				$('#alert-danger').css('display', 'inline-block');
-			}
-		}
+		// 비밀번호 일치 확인 - focusout 함수 사용
 		
-	});
-	
-	
-	// 유효성 검사
-	
-	var infoSubmit = function(form){
-		
-
-		var mrName 			= $('input[name=mrName]').val();
-		var levelNum 		= $('input[name=levelNum]').val();
-		var mrPhone 		= $('input[name=mrPhone]').val();
-		var mrAddr 			= $('input[name=mrAddr]').val();
-		var mrTargetScore	= $('input[name=mrTargetScore]').val();
-		var pmRCode 		= $('select[name=pmRCode]').val();
-		var mrAccountNum 	= $('input[name=mrAccountNum]').val();
-		var mrJoinDate 		= $('input[name=mrJoinDate]').val();
-		
-	
-		if(mrName == '' || mrName == undefined){
-			alert('이름을 입력해주세요.');
-			mrName.focus();
-			return false;
-		}else if(levelNum == '' || levelNum == undefined){
-			alert('권한을 설정해 주세요.');
-			levelNum.focus();
-			return false;
-		}else if(mrPhone == '' || mrPhone == undefined){
-			alert('연락처를 입력해주세요');
-			mrPhone.focus();
-			return false;
-		}else if(mrAddr == '' || mrAddr == undefined){
-			alert('주소를 입력해주세요');
-			mrAddr.focus();
-			return false;
-		}else if(){
+		$('.pw').focusout(function(){
 			
-		}
+			var mrPw 			= $('input[name=mrPw]').val();
+			var pwCheck 		= $('input[name=pwCheck]').val();
+			
+			if(mrPw != '' && pwCheck == ''){
+				null;
+			}else if(mrPw != '' && pwCheck != ''){
+				if(mrPw == pwCheck){
+					$('#alert-success').css('display', 'inline-block');
+					$('#alert-danger').css('display', 'none');
+				}else{
+					$('#alert-success').css('display', 'none');
+					$('#alert-danger').css('display', 'inline-block');
+				}
+			}
+		});
+		
+		// 비밀번호 유효성 검사 완료
 		
 		
-	};
+		// 기타 항목 유효성 검사
+		
+		var infoSubmit = function(form){
+			
+			// 비밀번호 변수 재사용		
+			mrPw = '';
+			pwCheck = '';
+			var mrName 			= $('input[name=mrName]').val();
+			var levelNum 		= $('select[name=levelNum]').val();
+			var mrPhone 		= $('input[name=mrPhone]').val();
+			var mrAddr 			= $('input[name=mrAddr]').val();
+			var mrTargetScore	= $('input[name=mrTargetScore]').val();
+			var pmRCode 		= $('select[name=pmRCode]').val();
+			var mrAccountNum 	= $('input[name=mrAccountNum]').val();
+			var mrJoinDate 		= $('input[name=mrJoinDate]').val();
+			
+		
+			if(mrPw == '' || mrPw == undefined){
+				alert('비밀번호를 입력해주세요.');
+				mrPw.focus();
+				return false;
+			}else if(pwCheck == '' || pwCheck == undefined){
+				alert('비밀번호를 다시 입력해주세요.');
+				pwCheck.focus();
+				return false;
+			}else if(mrName == '' || mrName == undefined){
+				alert('이름을 입력해주세요.');
+				mrName.focus();
+				return false;
+			}else if(levelNum == '::권한 선택::' || levelNum == undefined){
+				alert('권한을 선택해 주세요.');
+				levelNum.focus();
+				return false;
+			}else if(mrPhone == '' || mrPhone == undefined){
+				alert('연락처를 입력해주세요');
+				mrPhone.focus();
+				return false;
+			}else if(mrAddr == '' || mrAddr == undefined){
+				alert('주소를 입력해주세요');
+				mrAddr.focus();
+				return false;
+			}else if(mrTargetScore == '0'|| mrTargetScore == undefined){
+				if(levelNum == 4){
+					alert('목표 점수를 입력해주세요.');
+					mrTargetScore.focus();
+					return false;
+				}
+			}else if(pmRCode == '::결제 수단 선택::' || pmRCode == undefined){
+				alert('결제 수단을 선택해주세요.');
+				pmRCode.focus();
+				return false;
+			}
+		};
+	});
+	
+		
 		
 	
 	</script>
@@ -134,16 +155,16 @@
 					<tr>
 						<td>비밀번호</td>
 						<td>
-							<input type="password" name="mrPw" class="form-control pw">
+							<input type="password" name="mrPw" class="form-control">
 						</td>
 					</tr>
 					
 					<tr>
 						<td>비밀번호 확인</td>
 						<td>
-							<input type="password" name="pwCheck" class="form-control">
-							    <span id="alert-success" style="display: none;">비밀번호가 일치합니다.</span>
-    							<span id="alert-danger" style="display: none; color: #d92742; font-weight: bold; ">비밀번호가 일치하지 않습니다.</span>
+							<input type="password" name="pwCheck" class="form-control pw">
+							    <span id="alert-success" style="display: none; color:#40ff00;">비밀번호가 일치합니다.</span>
+    							<span id="alert-danger" style="display: none; color: #d92742;">비밀번호가 일치하지 않습니다.</span>
 						</td>
 					</tr>
 					
@@ -157,11 +178,11 @@
 					<tr>
 						<td>권한</td>
 						<td>
-							<select name="levelName">
+							<select name="levelNameList">
 								<option>::권한 선택::</option>
-								<th:block th:each="n:${memberLevelName}">
-									<option th:value="${n.levelNum}" th:text="${n.levelName}"></option>
-								</th:block>
+									<th:block th:each="n:${memberLevelName}">
+										<option th:value="${n.levelNum}" th:text="${n.levelName}"></option>
+									</th:block>
 							</select>
 						</td>
 					</tr>
@@ -192,9 +213,9 @@
 						<td>
 							<select name="pmRCode">
 								<option>::결제 수단 선택::</option>
-								<th:block th:each="l:${pmResourceList}">
-									<option th:value="${l.pmResourceCode}" th:text="${l.pmResourceTitle}"></option>
-								</th:block>
+									<th:block th:each="l:${pmResourceList}">
+										<option th:value="${l.pmResourceCode}" th:text="${l.pmResourceTitle}"></option>
+									</th:block>
 							</select>
 						</td>
 					</tr>
