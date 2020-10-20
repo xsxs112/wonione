@@ -47,8 +47,8 @@ public class GradeReportService {
 	}
 	
 	//강의예정코드조회	
-	public List<Map<String, Object>> classCode() {
-		List<Map<String, Object>> clCode = gradeReportMapper.classCode();
+	public List<Map<String, Object>> classCode(String sessionId) {
+		List<Map<String, Object>> clCode = gradeReportMapper.classCode(sessionId);
 		System.out.println(clCode);
 		return clCode;
 	}	
@@ -101,8 +101,8 @@ public class GradeReportService {
 	}
 	 
 	//업무목표점수가져오기
-	 public  List< Map<String, Object>> targetScore() {
-		 List< Map<String, Object> > targetScore = gradeReportMapper.targetScore();
+	 public   Map<String, Object> targetScore() {
+		 Map<String, Object> targetScore = gradeReportMapper.targetScore();
 		return targetScore;
 	 }
 		 

@@ -38,7 +38,7 @@
 				$('#gradeSum').focus();
 				return;
 			}else if(lecTarget == undefined || lecTarget ==''){
-				alert('목표점수를 선택해주세요');
+				alert('업무목표점수를 선택해주세요');
 				$('#lecTarget').focus();
 				return;	
 			}else if(achievementRate == ''){
@@ -60,26 +60,51 @@
 		  console.log('lecCode-->' + lecCode);
 		  console.log('testRou-->' + testRou);
 
-			var request = $.ajax({
-			  url: "/gradeAvg",  
-			  method: "POST", 
-			  data: { lecCode : lecCode , testRou :  testRou }, 
-			  dataType: "json"
-			});
-			request.done(function(data) {
-				var num = parseInt(data.grade_man_score);
-				$('#gradeSum').attr('value', num);
-			
-				
-			console.log(data);
-			
-			if(num== undefined || num == '')
-			alert()
-			});
+		  if(lecCode == '' || lecCode == undefined){
+			  alert("과목을 선택해주세요");
+		  } else{
+			  if(testRou == '' || testRou == undefined){
+			 	 alert("시험회차를 선택해주세요");
+			  }else{
+				  
+				  var request = $.ajax({
+					  url: "/gradeAvg",  
+					  method: "POST", 
+					  data: { lecCode : lecCode , testRou :  testRou }, 
+					  dataType: "json"
+					});
+					request.done(function(data) {
+						
+						var num = parseInt(data.grade_man_score);
+						$('#gradeSum').attr('value', num);
+					console.log(data);
+					});
 
-			request.fail(function( jqXHR, textStatus ) {
-			  alert( "오류" + textStatus );
-			});
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "error" + textStatus );
+					});
+			  }
+		  } 
+	  });
+	  
+	  $('#achievementBtn').click(function(){
+		  console.log('달성률구하기');
+		  var lecTarget = $('select[name=lecTarget] option:selected').val();
+		  var gradeSum = $('input[name=gradeAverage]').val();
+		  console.log('lecTarget-->' + lecTarget);
+		  console.log('gradeSum-->' + gradeSum);
+		  
+		  if(lecTarget == '' || lecTarget == undefined){
+			  alert("업무목표점수를 입력해주세요");
+		  }
+		 
+		  if(gradeSum != '' || gradeSum !=  undefined){
+		  	if(lecTarget != '' || lecTarget !=  undefined){
+		  	var sum = (1+((gradeSum - lecTarget)/ (lecTarget)));
+		  		$('#achievementRate').attr('value', sum.toFixed(2));
+		  		console.log("sum-->"+sum);
+		   	}
+		  } 
 		  
 	  });
 	  
@@ -130,7 +155,6 @@
 																<option value="">::강의::</option>
 																<th:block th:each="c : ${classCode}">
 																	<option th:value="${c.lec_os_code}">[[${c.lec_name}]]</option>
-																
 																</th:block>
 															</select>
 	                                                    </div>
@@ -177,8 +201,8 @@
 																	<option th:value="${t.lec_target}" th:name ="lecTarget">[[${t.lec_target}]]</option>
 																</th:block>
 																</select>   
-		                                            <input type="text" class="form-control"  th:name="achievementRate" id="achievementRate" placeholder="달성률">
-		                                           		<button type="button" class="btn btn-default">달성률 계산하기</button>
+		                                            <input type="text" class="form-control"  th:name="achievementRate" id="achievementRate" placeholder="달성률" readonly="readonly">
+		                                           		<button type="button" class="btn btn-default" id="achievementBtn">달성률 계산하기</button>
 		                                            </div>
 		                                        </div>
 		                                    </div>
