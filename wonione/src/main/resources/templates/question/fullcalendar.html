@@ -7,6 +7,11 @@
 		<title>풀캘린더</title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
+	<style type="text/css">
+		#calendar{
+			
+		}
+	</style>
 	<link rel="stylesheet" href="css/calendar.css">
 		<div id="calendar"></div>
 		<script type="text/javascript">
@@ -16,13 +21,19 @@
 			  var calendar = new FullCalendar.Calendar(calendarEl, {
 			    timeZone: 'UTC',
 			    initialView: 'timeGridWeek',
+			    slotDuration: '01:00',
 			    headerToolbar: {
 			      left: 'prev,next today',
 			      center: 'title',
 			      right: 'timeGridWeek,timeGridDay'
 			    },
+			     
+			      height: 'auto',
 			      navLinks: true, 
-			      editable: true,
+			      editable: false,
+			      displayEventTime: false,
+			      slotEventOverlap: false,
+			      allDaySlot: false,
 			      events: function(fetchInfo, successCallback, failureCallback ){
 			    	  /* 예전버전: function( startMoment, endMoment, timeZoneStr, callback )
 						  지금버전: function( fetchInfo, successCallback, failureCallback )*/
@@ -55,13 +66,13 @@
 			                           }
 		                         	}
 		                       }
-		                       console.log(events);
 		                       successCallback(events);
 		                       
 		                     },
 		                   error: function (xhr, err) {
 		                       alert("ERROR! - readyState: " + xhr.readyState + "<br/>status: " + xhr.status + "<br/>responseText: " + xhr.responseText);
 		                   }
+		                   
 		               });
 			 		 }
 		  		});

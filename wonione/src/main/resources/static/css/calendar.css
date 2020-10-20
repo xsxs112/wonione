@@ -969,6 +969,7 @@ A VERTICAL event
     bottom: 0;
     max-height: 100%; /* clip overflow */
     overflow: hidden;
+    font-size: larger;
   }
 
 .fc-v-event:not(.fc-event-start) {
