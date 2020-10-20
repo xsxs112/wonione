@@ -16,7 +16,14 @@ public interface ApprMapper {
 	
 	
 	
+	public AttManagement getAttManagemetDetail(String attCode);
+	
+	
+	
 	public int notMealTime(String attCode);
+	
+	
+	
 	
 	public int earlyLeave(String attCode);
 	
@@ -34,6 +41,8 @@ public interface ApprMapper {
 	
 	public float getMealTime(String mStTime,String mEndTime);
 	
+	
+	public int setWorkEndTime(String attCode);
 	
 	public int setWorkTime(AttManagement attManagement);
 	

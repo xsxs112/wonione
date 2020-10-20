@@ -20,6 +20,13 @@ public class ApprRequestService {
 	private ApprMapper apprMapper;
 	
 	
+	public AttManagement getAttManagemetDetail(String attCode) {
+		
+		
+		
+		return apprMapper.getAttManagemetDetail(attCode);
+	}
+	
 	public int notMealTime(String attCode) {
 		
 		
@@ -79,6 +86,12 @@ public class ApprRequestService {
 		return apprMapper.getMealTime(mStTime,mEndTime);
 	}
 	
+	public int setWorkEndTime(String attCode) {
+		
+		
+		
+		return apprMapper.setWorkEndTime(attCode);
+	}
 	public int setWorkTime(AttManagement attManagement) {
 		
 		
