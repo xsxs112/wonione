@@ -87,6 +87,8 @@ private GradeReportService gradeReportService;
 	      String codeResult =  gradeReportService.gradeCode();
 	      List<Map<String, Object>> testNum =  gradeReportService.testNum();
 	      List<Map<String, Object>> clCode = gradeReportService.classCode(sessionId);
+	      Map<String, Object> targetScore = gradeReportService.targetScore();
+	      model.addAttribute("targetScore", targetScore);
 	      model.addAttribute("sessionName", sessionName);
 		  model.addAttribute("sessionId", sessionId);
 	      model.addAttribute("codeResult", codeResult);
