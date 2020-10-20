@@ -74,6 +74,16 @@ public class TextbookService {
 		List<SupplyTextbook> suppTxbSearchResult = textbookMapper.getSuppTxbSearch(suppTxbSk, suppTxbSv);
 		return suppTxbSearchResult;
 	}
+
+	/**
+	 * 교재 정보 수정
+	 * @param txbBasicInfo
+	 * @return modifyResult
+	 */
+	public int txbInfoModify(TextbookBasicInfo txbBasicInfo) {
+			int modiifyResult = textbookMapper.txbInfoModify(txbBasicInfo);
+		return modiifyResult;
+	}
 	
 	/**
 	 * 교재 정보 검색
