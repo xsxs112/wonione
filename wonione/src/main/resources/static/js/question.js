@@ -6,7 +6,7 @@
 	//인원확인에서 삭제버튼
 	$(document).on('click','.deleteCandidateQuestion',function(){
 		var candidateQuestionId = $(this).parents().children('#candidateQuestionId').text();
-		var candidateQuestionCodeName = $(this).parents().children('#candidateQuestionCodeName').text();
+		var candidateQuestionCodeName = $('.candidateQuestionCodeName').val();
 		if(confirm('삭제 하시겠습니까?')){
 			var request = $.ajax({
 				url: "/deleteCandidateQuestion",
@@ -75,7 +75,7 @@
 	});
 	//응시초기화
 	$('#candidateQuestionInitialization').click(function(){
-		var candidateQuestionCodeName = $('#candidateQuestionCodeName').text();
+		var candidateQuestionCodeName = $('.candidateQuestionCodeName').val();
 		if(candidateQuestionCodeName == ''){
 			alert('응시자가 없습니다.');
 		}else{
@@ -409,21 +409,6 @@
 		
 	});
 	
-	//문제타이틀등록페이지 
-	$('#insertQuestionTitlePage').click(function(){
-		if(questionSid != null && questionSid != undefined && questionSid != ''){
-			if(confirm('등록하시겠습니까?')){
-				window.open('/insertQuestionTitle','문제타이틀등록', 'width=550, height=201 left=600 top=100','status=no');
-			}else{
-				alert('취소하셨습니다.');
-			}
-		}else{
-			alert('로그인을 해주세요.');
-			return false;
-		}
-		
-	});
-	
 	//리스트유효성검사및 페이지이동
 	$(document).on('click','.questionCodeName',function(){
 		var questionSid = $('#questionSid').val();
@@ -449,8 +434,6 @@
 			alert('로그인을 해주세요.');
 			return false;
 		}
-		
-		
 	});
 	
 	
