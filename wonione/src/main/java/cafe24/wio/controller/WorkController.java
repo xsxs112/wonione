@@ -28,6 +28,21 @@ public class WorkController {
 	@Autowired
 	private ApprRequestService apprRequestService;
 
+	
+	@GetMapping("/workAttendanceDetail")
+	public String workAttendanceDetail(Model model, @RequestParam(value = "attCode", required = false) String attCode) {
+		
+		
+		System.out.println(attCode + "attCode!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		
+		
+		AttManagement attManagementDetail = apprRequestService.getAttManagemetDetail(attCode);
+		
+		model.addAttribute("attManagementDetail", attManagementDetail);
+
+		return "workmanagment/workAttendanceDetail";
+	}
+	
 	@PostMapping("/workTimeDelete")
 	public String workTimeDelete(@RequestParam(value = "mrId", required = false) String mrId) {
 
@@ -197,6 +212,8 @@ public class WorkController {
 		String SID = (String) session.getAttribute("SID");
 		String attCode = apprRequestService.getAttCode(SID);
 
+		apprRequestService.setWorkEndTime(attCode);
+		
 		
 		/* 지각,조퇴,외출 여부 구하고 비고란에 업데이트 */
 		int late = apprRequestService.late(attCode);
@@ -257,6 +274,7 @@ public class WorkController {
 		attManagement.setAttTime(realWorkTime);
 		attManagement.setRealMealTime(getMealTime);
 		attManagement.setAttNote(note);
+		
 		apprRequestService.setWorkTime(attManagement);
 		//-------------------------------------------------
 		
