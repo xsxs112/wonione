@@ -158,6 +158,18 @@ public class LectureService {
 	}
 	
 	/**
+	 * 강의예정리스트 날짜별조회
+	 * @param lecStDate
+	 * @param lecFinDate
+	 * @return  List<LectureOpenSchedule> lecOsListDate
+	 */
+	public List<Map<String,Object>> getLecOsListDate(String lecStDate, String lecFinDate){
+		List<Map<String,Object>> lecOsListDate = 
+							lectureMapper.getLecOsListDate(lecStDate, lecFinDate);
+		return lecOsListDate;
+	}
+	
+	/**
 	 * 강의예정 리스트
 	 * @return List Map String,Object lectureOsList
 	 */

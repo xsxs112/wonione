@@ -331,7 +331,7 @@ UPDATE wt_textbook_basic_information
 		txb_publisher= #{txbPublisher},
 		txb_author= #{txbAuthor},
 		txb_remark= #{txbRemark},
-		txb_mod_date=#{txbModDate},
+		txb_mod_date= NOW(),
 		txb_modifier=#{txbModifier}
 	WHERE txb_code= #{txbCode}
 

@@ -315,6 +315,34 @@ WHERE
 
 </select>
 
+<!-- 강의예정리스트 날짜별로 조회 -->
+<select id="getLecOsListDate" resultType="hashMap">
+<![CDATA[
+SELECT
+	  lec_os_code			AS 'lecOsCode'
+	, lec_name				AS 'lecName'
+	, mr_teacher_id			AS 'mrTeacherId'
+	, mr_teacher_id			AS 'mrTeacherName'
+	, lec_time_code			AS 'lecTime'
+	, lec_room_code			AS 'lecRoom'
+	, lec_day				AS 'lecDay'
+	, lec_level_code		AS 'lecLevel'
+	, lec_tuition			AS 'lecTuition'
+	, cla_capacity			AS 'claCapacity'
+	, lec_st_date			AS 'lecStartDate'
+	, lec_fin_date			AS 'lecFinalDate'
+	, lec_os_writer			AS 'lecOsWriter'
+	, lec_os_reg_date		AS 'lecOsRegDate'
+	, lec_os_remark			AS 'lecOsRemark'
+FROM
+	wt_lecture_open_schedule	AS los
+WHERE 
+	#{lecStDate}<=los.lec_st_date AND los.lec_st_date<= #{lecFinDate}
+	OR
+	#{lecStDate}<=los.lec_fin_date AND los.lec_fin_date <= #{lecFinDate};
+]]>
+</select>
+
 <!-- 강의개설 신청하기 -->
 <insert id="applyLectureOpen" parameterType="LectureOpenSchedule">
 INSERT INTO wt_lecture_open_schedule

@@ -104,14 +104,26 @@
 			alert('교재명을 입력해주세요');
 			$('#txbName').focus();
 			return;
+		}else if( txbName.replace(/\s|　/gi, "").length == 0 ){
+			alert('공백이 아닌 값을 입력해주세요');
+			$('#txbName').focus();
+			return false;
 		}else if(txbPublisher == undefined || txbPublisher == ''){
 			alert('출판사를 입력해주세요');
 			$('#txbPublisher').focus();
 			return;
+		}else if( txbPublisher.replace(/\s|　/gi, "").length == 0 ){
+			alert('공백이 아닌 값을 입력해주세요');
+			$('#txbPublisher').focus();
+			return false;
 		}else if(txbAuthor == undefined || txbAuthor == ''){
 			alert('저자를 입력해주세요');
 			$('#txbAuthor').focus();
 			return;
+		}else if( txbAuthor.replace(/\s|　/gi, "").length == 0 ){
+			alert('공백이 아닌 값을 입력해주세요');
+			$('#txbAuthor').focus();
+			return false;
 		}
 		if(confirm('등록하시겠습니까?')){
 			addForm.submit(); 
