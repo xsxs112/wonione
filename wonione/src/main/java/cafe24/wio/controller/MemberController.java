@@ -166,6 +166,8 @@ public class MemberController {
 		// 구성원 등록 시, 결제 코드 입력창에 결제 수단이 보이도록.
 		model.addAttribute("pmResourceList", memberMapper.getPmResourceList());
 		
+		model.addAttribute("memberLevelName", memberMapper.getMemberLevelName());
+		
 		return "member/addWIOMember";
 	}
 	

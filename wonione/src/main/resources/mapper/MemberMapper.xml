@@ -28,6 +28,15 @@
 		WHERE 
 				mr_id= #{mrId}
 	</update>
+	
+	<!-- 3-1. 구성원 등록 화면에서 level_num 입력이 아닌 권한명으로 출력되도록 처리.  -->
+	<select id="getMemberLevelName" resultType="hashMap">
+		SELECT
+				level_num 	AS levelNum
+			,	level_name 	AS levelName
+		FROM
+			wt_level
+	</select>
 
 	<!--  3. 구성원 등록, 수납 처리 전 -->
 	<insert id="addWIOMember" parameterType="Member">
@@ -97,9 +106,13 @@
 		FROM 
 			wt_member_registration AS m
 		WHERE
+		<if test="mrId != null and mrId != ''.toString()">
 			m.mr_id = #{mrId}
+		</if>
+		<if test="mrPw != null and mrPw != ''.toString()">
 		AND
 			m.mr_pw = #{mrPw};
+		</if>
 	</select>
 	
 

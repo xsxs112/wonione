@@ -34,7 +34,6 @@ public class ReceiptController {
 	@GetMapping("/getCourseSelection")
 	public String getCourseSelection(Model model) {
 		
-		//학생 이름 뽑아오기 - HTML에서 처리하려면 Controller 코드 적어줘야할까?(10.13)
 		
 		//과정 뽑아오는 코드 작성해줘야함. 1013
 		model.addAttribute("title", "과정 선택");
