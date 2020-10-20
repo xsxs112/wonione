@@ -50,9 +50,6 @@ private GradeReportService gradeReportService;
 	@GetMapping("/GradeReportDetailList")
 	public String GradeReportDetailList(Model model
 										,@RequestParam(value="reportLecCode",required=false)String reportLecCode) {
-		logger.info("===============================");
-		logger.info("@GetMapping GradeReportDetailList");
-		logger.info("===============================");
 		GradeReport gradeReport = gradeReportService.GradeReportDetailList(reportLecCode);		
 		model.addAttribute("gradeReport", gradeReport);
 		model.addAttribute("title", "성적업무보고서상세");
@@ -64,20 +61,18 @@ private GradeReportService gradeReportService;
 	   public String GradeReportInsert(GradeReport gradeReport
 	                        ,Model model, HttpSession session
 	                        ,@RequestParam(value="reportLecCode", required = false)String reportLecCode
-	                        ,@RequestParam(value="openLecCode", required = false) String openLecCode
-	                        ,@RequestParam(value="testNumber", required = false) String testNumber
 	                        ,@RequestParam(value="mrName", required = false) String mrName
-	                        ,@RequestParam(value="workReport", required = false) String workReport
+	                        ,@RequestParam(value="lecName", required = false) String lecName
+	                        ,@RequestParam(value="testNumber", required = false) String testNumber
 	                        ,@RequestParam(value="gradeAverage", required = false) String gradeAverage
 	                        ,@RequestParam(value="achievementRate",required=false)String achievementRate
-	                        ,@RequestParam(value="finLecRegDate", required = false) String finLecRegDate
-	                        ) {
-		
+	                        ,@RequestParam(value="workReport", required = false) String workReport
+			   ) {
 		  model.addAttribute("title", "성적업무 보고서 작성하기");
-		  String sessionName= session.getAttribute("SNAME").toString();
+		  String sessionName = session.getAttribute("SNAME").toString();
 		  String sessionId = session.getAttribute("SID").toString();
 		  List<Map<String, Object>> testNum =  gradeReportService.testNum();
-		  model.addAttribute("sessionName", sessionName);
+		  model.addAttribute("sessionIdName", sessionName);
 		  model.addAttribute("sessionId", sessionId);
 		  gradeReportService.GradeReportInsert(gradeReport);
 	      model.addAttribute("testNum", testNum);
@@ -91,15 +86,15 @@ private GradeReportService gradeReportService;
 		  String sessionId = session.getAttribute("SID").toString();
 	      String codeResult =  gradeReportService.gradeCode();
 	      List<Map<String, Object>> testNum =  gradeReportService.testNum();
-	      List<Map<String, Object>> clCode = gradeReportService.classCode();
-	      List<Map<String, Object>> targetScore = gradeReportService.targetScore();
+	      List<Map<String, Object>> clCode = gradeReportService.classCode(sessionId);
+	      Map<String, Object> targetScore = gradeReportService.targetScore();
+	      model.addAttribute("targetScore", targetScore);
 	      model.addAttribute("sessionName", sessionName);
 		  model.addAttribute("sessionId", sessionId);
 	      model.addAttribute("codeResult", codeResult);
 	      model.addAttribute("title", "성적업무 보고서 작성하기");
 	      model.addAttribute("testNum", testNum);
 	      model.addAttribute("classCode", clCode);
-	      model.addAttribute("targetScore", targetScore);
 	      return "humanresource/gradereportwrite";
 	   }
 	
@@ -113,8 +108,6 @@ private GradeReportService gradeReportService;
 		 return gradeAvg; 
 	   }
 	   
-	   
-	   
 	//조건검색
 	@GetMapping(value = "/gradereport", produces = "application/json")
 	@ResponseBody
@@ -122,9 +115,6 @@ private GradeReportService gradeReportService;
 									@RequestParam(value = "graRe", required = false) String graRe,
 									@RequestParam(value = "graResult", required = false) String graResult) {
 		List<GradeReport> gradeList = gradeReportService.searchGradeReport(graRe, graResult);
-		logger.info("===============================");
-		logger.info("@GetMapping searchGradeReport");
-		logger.info("===============================");
 		model.addAttribute("gradeList", gradeList);
 		return gradeList;
 	}
@@ -134,9 +124,6 @@ private GradeReportService gradeReportService;
 	public String searchReportGrade(Model model
 									,@RequestParam(value = "graRe", required = false) String graRe
 									,@RequestParam(value = "graResult", required = false) String graResult) {
-		logger.info("===============================");
-		logger.info("@PostMapping searchReportGrade");
-		logger.info("===============================");
 		List<GradeReport> reportGrade = gradeReportService.searchGradeReport(graRe, graResult);
 		model.addAttribute("reportGrade", reportGrade);
 		  return "humanresource/gradereport";

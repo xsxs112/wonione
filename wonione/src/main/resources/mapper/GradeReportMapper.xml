@@ -161,19 +161,19 @@
 
 <select id="classCode" resultType="hashMap"  parameterType="String">
 
-	SELECT
-		   lec_os_code
-		 , lec_name
-		 , mr_teacher_id
-		 , lec_time_code
-		 , lec_room_code
-		 , lec_day
-		 , lec_level_code
-		 , lec_st_date
-		 , lec_fin_date
-		 , lec_os_reg_date
-	FROM 
-		wt_lecture_open_schedule;
+	SELECT 
+		lec_os_code
+		, lec_name
+		, mr_teacher_id
+		,m.mr_name
+   FROM 
+  		 wt_lecture_open_schedule AS lo
+   INNER JOIN 
+   		wt_member_registration AS m
+   on
+  		 lo.mr_teacher_id = m.mr_id
+   where
+  		 m.mr_id = #{sessionId};
 
 </select>
 
@@ -191,6 +191,7 @@
 		, open_lec_reg_date
 	FROM 
 		wt_open_lecture;
+	
 </select>
 
 <!-- 페이징 카운트-->
@@ -248,7 +249,7 @@ SELECT
    FROM 
    wt_course AS c
    INNER JOIN 
-   wt_grade_management m
+   wt_grade_management as m
    on
    c.app_sid = m.mr_id
    WHERE  
