@@ -41,7 +41,8 @@ public interface LectureMapper {
 	public String getLecOsMaxCode();
 	
 	//강의개설 신청하기
-	public int applyLectureOpen(LectureOpenSchedule lectureOs);
+	public int addLectureOpenSchedule(LectureOpenSchedule lectureOs);
+	
 	
 	//강의코드가져오기
 	public List<LectureOpenSchedule> getLecOsCode();

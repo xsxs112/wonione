@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title>
+	</th:block>
+	<th:block layout:fragment="customContent">
+<div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="sparkline12-list">
+                    <div class="sparkline12-hd">
+                        <div class="main-sparkline12-hd">
+                            <h1 th:text="${mainTitle}"></h1>
+                        </div>
+                    </div>
+                    <div class="sparkline12-graph">
+                        <div class="basic-login-form-ad">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="all-form-element-inner">
+                                        <form action="/addEquipment" method="post" id="addForm">
+									<input type="hidden" th:value="${eqCode}" name="eqCode">
+									<input type="hidden" th:value="${sessionId}" name="eqWriter">
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">비품코드</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" disabled class="form-control" th:value="${eqCode}" name="eqCode" th:placeholder="${eqCode}" />
+                                                    </div>
+                                                </div>
+                                            </div>									
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">비품카테고리</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <div class="form-select-list">
+                                                            <select class="form-control custom-select-value" id="selectCategory">
+																<option selected="selected" disabled="disabled">::카테고리를 선택해주세요::</option>
+																<th:block th:each=" ec : ${equipmentCategory} ">
+																	<option>[[${ec.eqCategory}]]</option>
+																</th:block>	
+																<option>기타</option>
+															</select>
+                                                        </div>
+                                                        <input type="hidden" name="eqCategory" id="eqCategory"/>
+                                                    </div>
+                                                    <div class="categoryEtc" hidden="">
+	                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+	                                                        <label class="login2 pull-right pull-right-pro">카테고리명</label>
+	                                                    </div>
+	                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+	                                                        <input type="text" class="form-control" id="inputCateEtc"  placeholder="카테고리를 입력해주세요"/>
+	                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>	
+                                             <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">품명</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" class="form-control" name="eqName" id="eqName"  placeholder="물품명을 입력해주세요"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">모델명</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" class="form-control" name="eqModelName" id="eqModelName" placeholder="모델명을 입력해주세요"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">작성자아이디</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" disabled class="form-control" th:value="${sessionId}" name="eqWriter" th:placeholder="${sessionId}" />
+                                                    </div>
+                                                </div>
+                                            </div>	                                                                                              
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">비고</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <textarea class="form-control" name="eqRemark" placeholder="비고사항을 입력하세요."></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>                                                    
+                        					<a href="/addEquipmentMain" class="btn btn-default" role="button">취소</a>
+                                            <button class="btn btn-primary login-submit-cs" type="button" id="addBtn">등록</button>
+                                        </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        		<div class="container-fluid" style="margin: 10px;">
+									<a href="/equipmentManage" class="btn btn-default" role="button">비품 메인페이지로</a>
+								</div>        
+                            </div>
+                        </div>
+                    </div>
+                </div>		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	var eqCategory = null;
+	$('#addBtn').click(function(){
+		console.log('addBtn');
+		eqCategory = $('#eqCategory').val();
+		var eqName = $('#eqName').val();						//물품명 value값
+		var eqModelName =$('#eqModelName').val();				//모델명 value값
+		var inputCateEtc = $('#inputCateEtc').val();			//기타 선택시 input박스의 value값
+		var selectCategory = $('#selectCategory').val(); 		//셀렉트박스의 value값
+		console.log(eqCategory + ' < -- addBtn eqCategory');
+		console.log(inputCateEtc + ' < -- inputCateEtc');
+		if(eqCategory == null || eqCategory == undefined){
+			alert('카테고리를 선택해주세요');
+			return ;
+		}else if(eqName == null || eqName == undefined || eqName == ''){
+			alert('물품명을 입력해주세요');
+			$('#eqName').focus();
+			return ;
+		}else if(eqModelName == null || eqModelName == undefined || eqModelName == ''){
+			alert('모델명을 입력해주세요');
+			$('#eqModelName').focus();
+			return ;
+		}
+		if(selectCategory == '기타'){
+			$('#eqCategory').val(inputCateEtc);
+		}
+		console.log(eqCategory + " <-- final eqCategory")
+		if(confirm('등록하시겠습니까??')){
+			addForm.submit(); 
+		}
+	});
+	
+	$('#selectCategory').change(function(){
+		var selectCategory = $('#selectCategory').val();
+		var inputCateEtc = $('#inputCateEtc').val();
+		console.log(selectCategory + ' < -- selectCategory change');
+		$('#eqCategory').val(selectCategory);
+		if(selectCategory == '기타'){
+			inputCateEtcRemoveHidden();
+		}else{
+			inputCateEtcAddHidden();
+		}
+	});
+	
+	var inputCateEtcRemoveHidden = function(){
+		$('.categoryEtc').removeAttr('hidden');
+	};
+	
+	var inputCateEtcAddHidden = function(){
+		$('.categoryEtc').attr('hidden','hidden');
+	};
+	</script>                 
+	</th:block>
+	
+	<div class="container-fluid" style="margin: 10px;">
+	</div>	
+	<th:block layout:fragment="customJsScript">
+	 
+	</th:block>
+</html>

@@ -80,8 +80,8 @@ public class TextbookService {
 	 * @param txbBasicInfo
 	 * @return modifyResult
 	 */
-	public int txbInfoModify(TextbookBasicInfo txbBasicInfo) {
-			int modiifyResult = textbookMapper.txbInfoModify(txbBasicInfo);
+	public int modifyTxbInfo(TextbookBasicInfo txbBasicInfo) {
+			int modiifyResult = textbookMapper.modifyTxbInfo(txbBasicInfo);
 		return modiifyResult;
 	}
 	

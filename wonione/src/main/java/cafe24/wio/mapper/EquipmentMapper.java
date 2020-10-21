@@ -15,7 +15,7 @@ public interface EquipmentMapper {
 	public String equipMaxCode();
 	
 	//비품 입고내역 검색
-	public List<WhEquipment> getEquipWhSearchList(String equipWhSk
+	public List<Map<String,Object>> getEquipWhSearchList(String equipWhSk
 												, String equipWhSv);
 	
 	//등록 비품정보 검색
@@ -29,7 +29,7 @@ public interface EquipmentMapper {
 	public int countEquipment();
 	
 	//등록된 비품정보 조회
-	public List<Equipment> getEquipList(Map<String,Object> equipMap);
+	public List<Equipment> getEquipmentList(Map<String,Object> equipMap);
 	
 	//비품카테고리 조회
 	public List<Equipment> getEquipCategory();

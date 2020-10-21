@@ -14,7 +14,7 @@
                         <div class="product-status-wrap">
                             <h4 th:text="${mainTitle}"></h4>
                             <div class="add-product">
-                                <a href="/applyLectureOpen">강의개설신청하기</a>
+                                <a href="/addLectureOpenSchedule">강의개설신청하기</a>
                             </div>
                             <input id="sessionId" type="hidden" name="sessionId" th:value="${sessionId}">
                             <input id="lecOpCode" type="hidden" name="lecOpCode" th:value="${lecOpCode}">
@@ -161,7 +161,7 @@
 								});
 							openLecture.done(function(openData) {
 								alert('개강이 완료되었습니다.');
-								location.href='/lecList';
+								location.href='/lectureList';
 						});
 						
 						request.fail(function( jqXHR, textStatus ) {

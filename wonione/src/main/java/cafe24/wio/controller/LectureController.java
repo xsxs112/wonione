@@ -79,7 +79,7 @@ public class LectureController {
 	}
 	
 	//강의리스트 조회
-	@GetMapping("/lecList")
+	@GetMapping("/lectureList")
 	public String getLectureList(Model model) {
 		
 		List<Map<String, Object>> lectureList = lectureService.getLectureList();
@@ -89,12 +89,12 @@ public class LectureController {
 		model.addAttribute("lectureList", lectureList);
 		model.addAttribute("lectureStatus", lectureStatus);
 		
-		return "lecture/lecList";
+		return "lecture/lectureList";
 	}
 	
 	//강의개설 신청하기
-	@PostMapping("/applyLectureOpen")
-	public String applyLectureOpen(Model model
+	@PostMapping("/addLectureOpenSchedule")
+	public String addLectureOpenSchedule(Model model
 								, LectureOpenSchedule lectureOs
 								,@RequestParam(value="lecOsCode",required = false)String lecOsCode
 								,@RequestParam(value="lecName",required = false)String lecName
@@ -110,14 +110,14 @@ public class LectureController {
 								,@RequestParam(value="lecOsWriter",required = false)String lecOsWriter
 								
 								) {
-		lectureService.applyLectureOpen(lectureOs);
+		lectureService.addLectureOpenSchedule(lectureOs);
 		
-		return "redirect:/lecOsList";
+		return "redirect:/lectureOpenScheduleList";
 	}
 	
 	//강의개설 신청하기
-	@GetMapping("/applyLectureOpen")
-	public String applyLectureOpen(Model model
+	@GetMapping("/addLectureOpenSchedule")
+	public String addLectureOpenSchedule(Model model
 								,  HttpSession session) {
 
 		List<Map<String,Object>> teacherList = lectureService.getTeacherList();
@@ -139,7 +139,7 @@ public class LectureController {
 		model.addAttribute("sessionName", sessionName);
 		
 		
-		return "lecture/applyLectureOpen";
+		return "lecture/addLectureOpenSchedule";
 	}
 	
 	//강의관리메인페이지
@@ -154,8 +154,8 @@ public class LectureController {
 	}
 	
 	//강의예정리스트 조회
-	@GetMapping("/lecOsList")
-	public String lecOsList(Model model
+	@GetMapping("/lectureOpenScheduleList")
+	public String lectureOpenScheduleList(Model model
 							,HttpSession session) {
 		
 		/* List<Object> lecApplyCount = lectureService.getApplyCount(); */
@@ -165,12 +165,11 @@ public class LectureController {
 		
 		model.addAttribute("title", "강의 예정 리스트");
 		model.addAttribute("mainTitle", "강의 예정 리스트");
-		/* model.addAttribute("lecApplyCount", lecApplyCount); */
 		model.addAttribute("lectureOsList", lectureOsList);
 		model.addAttribute("lecOpCode", lecOpCode);
 		model.addAttribute("sessionId", session.getAttribute("SID").toString());
 		
-		return "lecture/lecOsList";
+		return "lecture/lectureOpenScheduleList";
 	}
 	
 	//강의예정리스트 비고사항 가져오기 ajax

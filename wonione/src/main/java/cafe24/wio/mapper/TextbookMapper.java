@@ -75,7 +75,7 @@ public interface TextbookMapper {
 	 * 교재정보
 	 *************************************************/
 	//교재 정보 수정
-	public int txbInfoModify(TextbookBasicInfo txbBasicInfo);
+	public int modifyTxbInfo(TextbookBasicInfo txbBasicInfo);
 	
 	//교재 정보 검색
 	public List<TextbookBasicInfo> getTxbInfoSearch(String infoTxbSk, String infoTxbSv);
