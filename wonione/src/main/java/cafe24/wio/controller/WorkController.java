@@ -33,7 +33,6 @@ public class WorkController {
 	public String workAttendanceDetail(Model model, @RequestParam(value = "attCode", required = false) String attCode) {
 		
 		
-		System.out.println(attCode + "attCode!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		
 		
 		AttManagement attManagementDetail = apprRequestService.getAttManagemetDetail(attCode);
@@ -48,7 +47,7 @@ public class WorkController {
 
 		apprRequestService.workTimeDelete(mrId);
 
-		return "redirect:/attManage";
+		return "redirect:/addAttManage";
 	}
 
 	@GetMapping("/manageConfirm")
@@ -57,7 +56,7 @@ public class WorkController {
 
 		apprRequestService.manageConfirm(attCode);
 
-		return "redirect:/attManage";
+		return "redirect:/addAttManage";
 	}
 
 	@PostMapping("/workTimeModify")
@@ -99,7 +98,7 @@ public class WorkController {
 
 		apprRequestService.workTimeModify(attTimeManage);
 
-		return "redirect:/attManage";
+		return "redirect:/addAttManage";
 	}
 
 	
@@ -148,7 +147,7 @@ public class WorkController {
 
 		apprRequestService.addWorkTime(attTimeManage);
 
-		return "redirect:/attManage";
+		return "redirect:/addAttManage";
 	}
 
 	@GetMapping(value = "/checkWorkTimeList", produces = "application/json")
@@ -172,7 +171,7 @@ public class WorkController {
 		return attTimeManage;
 	}
 
-	@RequestMapping(value = "/attManage", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/addAttManage", method = { RequestMethod.GET, RequestMethod.POST })
 	public String attManage(Model model) {
 
 		List<Member> workerList = apprRequestService.getWorkerList();
@@ -182,7 +181,7 @@ public class WorkController {
 
 		List<AttManagement> confirmList = apprRequestService.confirmList();
 		model.addAttribute("confirmList", confirmList);
-		return "workmanagment/attManage";
+		return "workmanagment/addAttManage";
 	}
 
 	@GetMapping("/goingOutEnd")
