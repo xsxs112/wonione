@@ -134,7 +134,7 @@ public class GradeController {
 		logger.info("===============================");
 		logger.info("성적수정" + grade);
 		model.addAttribute("Grade", grade);
-		return "grade/updateGrade";
+		return "grade/modifyGrade";
 	
 	}
 	

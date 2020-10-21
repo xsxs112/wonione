@@ -142,7 +142,7 @@ public class WorkReportController {
 		  logger.info("@GetMapping updateCode");
 		  logger.info("===============================");
 		   model.addAttribute("Report", report);
-		   return "humanresource/updateworkreport";
+		   return "humanresource/modifyWorkreport";
 	   }
 	   
 	   //조건검색
