@@ -408,6 +408,11 @@
 		localhost.href('/insertQuestion');
 		
 	});
+	//타이틀등록
+	$('#insertQuestionTitlePage').click(function(){
+		window.open('/insertQuestionTitle','타이틀추가', 'width=550, height=285 left=600 top=100');
+		
+	});
 	
 	//리스트유효성검사및 페이지이동
 	$(document).on('click','.questionCodeName',function(){

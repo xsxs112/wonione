@@ -4,7 +4,7 @@
 	  layout:decorate="layout/default">
 	  
   	<th:block layout:fragment="customTitle">
-		<title>풀캘린더</title> 
+		<title>시간표</title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<style type="text/css">
@@ -13,7 +13,9 @@
 		}
 	</style>
 	<link rel="stylesheet" href="css/calendar.css">
+	<div class="container-fluid">
 		<div id="calendar"></div>
+	</div>
 		<script type="text/javascript">
 		document.addEventListener('DOMContentLoaded', function() {
 			  var calendarEl = document.getElementById('calendar');
