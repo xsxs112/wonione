@@ -44,7 +44,7 @@ public class WorkReportController {
 		model.addAttribute("lastPage", countReportList.get("lastPage"));
 		model.addAttribute("startPageNum", countReportList.get("startPageNum"));
 		model.addAttribute("lastPageNum", countReportList.get("lastPageNum"));	
-		return "humanresource/workreport";
+		return "humanresource/workreportList";
 		
 	}
 	
@@ -59,7 +59,7 @@ public class WorkReportController {
 		model.addAttribute("Report", report);
 		model.addAttribute("title", "보고서 상세보기");
 		
-		return "humanresource/workreportpage";
+		return "humanresource/workreportDetail";
 		
 	}
 	
@@ -106,7 +106,7 @@ public class WorkReportController {
 	      model.addAttribute("classCode", clCode);
 	      model.addAttribute("writeName", wName);
 	      model.addAttribute("title", "보고서 작성하기");
-	      return "humanresource/workreportwrite";
+	      return "humanresource/addWorkreport";
 	   }
 	   
 	   //보고서 삭제
@@ -168,7 +168,7 @@ public class WorkReportController {
 			logger.info("===============================");
 			List<Report> reportList = reportService.getSearchList(lecSk, lecSv);
 			model.addAttribute("reportList", reportList);
-			return "humanresource/workreport";
+			return "humanresource/workreportList";
 		}
 		
 	

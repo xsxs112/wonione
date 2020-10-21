@@ -54,7 +54,7 @@ public class ScholarshipController {
 		List<Map<String,Object>> sMoney = scholarshipService.sMoney();
 		model.addAttribute("sName", sName);
 		model.addAttribute("sMoney", sMoney);
-		return "grade/scholarship";
+		return "grade/scholarshipList";
 		
 	}
 	
@@ -75,7 +75,7 @@ public class ScholarshipController {
 									@RequestParam(value="pmInfoCode" ,required = false) String pmInfoCode) {
 		ScholarShip scholarshipDetail = scholarshipService.ScholarDetailList(pmInfoCode);
 		model.addAttribute("scholarshipDetail", scholarshipDetail);
-		return "grade/scholarshipPage";
+		return "grade/scholarshipDetail";
 	}
 	
 	//장학금 지급 작성하기

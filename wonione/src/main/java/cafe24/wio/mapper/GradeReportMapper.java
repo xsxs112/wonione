@@ -38,7 +38,7 @@ public interface GradeReportMapper {
 	public List<Map<String, Object>> classCode(String sessionId);
 	
 	//업무목표점수가져오기
-	public Map<String, Object> targetScore();
+	public Map<String, Object> targetScore(String sessionId, String lecOsCode);
 	
 	//페이징을 위한 카운팅
 	public int countGradeReport();
