@@ -86,17 +86,13 @@
 			  }
 		  } 
 	  });
-	  
+	/*   
 	  $('#achievementBtn').click(function(){
 		  console.log('달성률구하기');
 		  var lecTarget = $('select[name=lecTarget] option:selected').val();
 		  var gradeSum = $('input[name=gradeAverage]').val();
 		  console.log('lecTarget-->' + lecTarget);
 		  console.log('gradeSum-->' + gradeSum);
-		  
-		  if(lecTarget == '' || lecTarget == undefined){
-			  alert("업무목표점수를 입력해주세요");
-		  }
 		 
 		  if(gradeSum != '' || gradeSum !=  undefined){
 		  	if(lecTarget != '' || lecTarget !=  undefined){
@@ -106,7 +102,33 @@
 		   	}
 		  } 
 		  
+	  }); */
+	  
+	  $('#lecName').change(function(){
+		  console.log('change이벤트');
+		  var lecTarget = $('input[name=lecTarget]').val();
+		  var request = $.ajax({
+			  url: "/targetScore",  
+			  method: "POST", 
+			  data: {  lecTarget : lecTarget }, 
+			  dataType: "json"
+			});
+		 
+			request.done(function(data) {
+				$('#lecTarget').attr('value', lecTarget);
+				console.log(lecTarget);
+			});
+
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "error" + textStatus );
+			});
+		  
+		  
 	  });
+	  
+	  
+	  
+	  
 	  
 	 });
 	  
@@ -159,7 +181,18 @@
 															</select>
 	                                                    </div>
 	                                                </div>
-	                                            </div>  
+	                                            </div>
+		                                       <div class="form-group-inner">
+	                                               	<div class="row">
+	                                                  		 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+	                                                       	<label class="login2 pull-right-pro">업무목표점수</label>
+	                                                   	</div>
+	                                                   <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+	                                                       <input type="hidden" th:each="t: ${targetScore}" th:value="${t.lec_target}" th:name ="lecTarget">
+														<input type="text" class="form-control" th:placeholder="${lecTarget}" readonly="readonly">
+	                                                   </div>
+	                                               	</div>
+	                                           	</div>  
 	                                         <div class="form-group-inner">
 	                                                <div class="row">
 	                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -195,12 +228,6 @@
 		                                        </div>
 		                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 		                                            <div class="form-inline">
-		                                             <select name =lecTarget class="form-control custom-select-value" id="lecTarget" >
-																<option value="">::업무목표점수::</option>
-																<th:block th:each="t : ${targetScore}">
-																	<option th:value="${t.lec_target}" th:name ="lecTarget">[[${t.lec_target}]]</option>
-																</th:block>
-																</select>   
 		                                            <input type="text" class="form-control"  th:name="achievementRate" id="achievementRate" placeholder="달성률" readonly="readonly">
 		                                           		<button type="button" class="btn btn-default" id="achievementBtn">달성률 계산하기</button>
 		                                            </div>

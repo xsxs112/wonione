@@ -72,7 +72,7 @@ public class GradeController {
 		logger.info("getGradeDetailList-->" + grade);
 		model.addAttribute("Grade", grade);
 		model.addAttribute("title", "성적상세보기리스트");
-		return "grade/gradePage";
+		return "grade/gradeDetail";
 	}
 
 	// 조건검색
@@ -134,8 +134,8 @@ public class GradeController {
 		logger.info("===============================");
 		logger.info("성적수정" + grade);
 		model.addAttribute("Grade", grade);
-		return "grade/gradeUpdate";
-		
+		return "grade/updateGrade";
+	
 	}
 	
 	//성적수정하기

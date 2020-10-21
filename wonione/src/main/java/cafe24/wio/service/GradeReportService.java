@@ -101,8 +101,8 @@ public class GradeReportService {
 	}
 	 
 	//업무목표점수가져오기
-	 public   Map<String, Object> targetScore() {
-		 Map<String, Object> targetScore = gradeReportMapper.targetScore();
+	 public   Map<String, Object> targetScore(String sessionId, String lecOsCode) {
+		 Map<String, Object> targetScore = gradeReportMapper.targetScore(sessionId, lecOsCode);
 		return targetScore;
 	 }
 		 

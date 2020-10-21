@@ -181,17 +181,22 @@
 <!-- 업무목표점수가져오기  -->
 <select id="targetScore" resultType="hashMap" parameterType="String">
 	
-	SELECT 
+		SELECT 
 		  lec_open_code
 		, lec_open_sche_code
+		, lec_os_code
 		, mr_id
 		, lec_target
-		, lec_plan
-		, lec_etc
-		, open_lec_reg_date
 	FROM 
-		wt_open_lecture;
+		wt_open_lecture as m
+		inner join
+		wt_lecture_open_schedule as los
+		on
+		m.lec_open_sche_code = los.lec_os_code 
+		where
+  		 m.mr_id = #{sessionId} and m.lec_open_sche_code = #{lecOsCode} ;
 	
+  		
 </select>
 
 <!-- 페이징 카운트-->
@@ -244,18 +249,25 @@
 
 <!-- 평균구하기 -->
 <select id="gradeAvg" resultType="hashMap" parameterType="String">
-SELECT 
-   (sum(m.grade_man_score))/COUNT(c.app_sid) AS grade_man_score
-   FROM 
-   wt_course AS c
-   INNER JOIN 
-   wt_grade_management as m
-   on
-   c.app_sid = m.mr_id
-   WHERE  
-   c.lec_os_code = #{lecCode} AND m.test_round = #{testNum};
+	
+	SELECT 
+  		 (sum(m.grade_man_score))/COUNT(c.app_sid) AS grade_man_score
+   	FROM 
+   		 wt_course AS c
+   	INNER JOIN 
+         wt_grade_management as m
+  	 on
+  		 c.app_sid = m.mr_id
+   	WHERE  
+ 		 c.lec_os_code = #{lecCode} AND m.test_round = #{testNum};
    
 </select>
+
+<select id="studentCount" resultType="hashMap" parameterType="String">
+
+</select>
+
+
 
 
 </mapper>   
