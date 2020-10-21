@@ -87,18 +87,12 @@ public class QuestionController {
 		String result = questionService.QuestionSidCheck(questionSid,questionName);
 		return result;
 	}
-	//문제타이틀페이지
-	@GetMapping("/insertQuestionTitle")
-	public String insertQuestionTitle() {
-		
-		return "question/insertQuestionTitle";
-	}
 	//문제등록페이지
 	@GetMapping("/insertQuestion")
 	public String insertQuestion(Model model,
 								@RequestParam(value="qtCodeName" ,required = false) String qtCodeName) {
 		model.addAttribute("qtCodeName",qtCodeName);
-		return "question/insertQuestion";
+		return "question/addQuestion";
 	}
 	
 	//문제타이틀등록

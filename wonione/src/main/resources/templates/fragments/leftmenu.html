@@ -36,6 +36,16 @@
                                 	<li><a href="/consultingList"><span class="mini-sub-pro">상담내역 O</span></a></li>
                             	</ul>
                         	</li>
+                        	<li>
+                         		<a class="has-arrow" href="/" style="border: 2px solid #242939;" >
+								   <span class="mini-click-non">환불관리 !</span>
+								</a>
+                            	<ul class="submenu-angle menu-font" aria-expanded="true">
+                                	<li><a href="/refundApplication"><span class="mini-sub-pro">환불신청 !</span></a></li>
+                                	<li th:if="${session.SLEVEL == 1}"><a href="#"><span class="mini-sub-pro">환불내역 !</span></a></li>
+                                	<li th:if="${session.SLEVEL == 1}"><a href="#"><span class="mini-sub-pro">환불결제 !</span></a></li>
+                            	</ul>
+                        	</li>
                             </ul>
                         </li>
                         <li>
