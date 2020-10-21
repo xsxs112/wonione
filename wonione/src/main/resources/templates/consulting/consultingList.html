@@ -7,10 +7,28 @@
 		<title>상담리스트</title> 
 	</th:block>
 	<th:block layout:fragment="customContent" style="text-align: center;">
-	<div style="border: 1px;" class="container-fluid ">
+	<style type="text/css">
+		.consultingListCss {
+	      border-collapse: collapse;
+	      border-top: 3px solid #168;
+	    }  
+	    .consultingListCss th {
+	      color: #168;
+	      background: #f0f6f9;
+	      text-align: center;
+	    }
+	    .consultingListCss th, .consultingListCss td {
+	      padding: 12px;
+	      border: 1px solid #ddd;
+	    }
+	    .consultingListCss tr td:first-child{
+	      text-align: center;
+	    }
+	    .consultingListCss caption{caption-side: bottom; display: none;}
+	</style>
 	<!-- 상담리스트페이지 -->
 		<h4>상담리스트</h4>
-		<table border="1" class="table">
+		<table border="1" class="consultingListCss">
 	  		<thead>
 	  			<tr>
 	  				<th>순번</th>
@@ -45,14 +63,13 @@
 		    <span th:if="${currentPage != lastPage}"><a th:href="@{/consultingList(currentPage=(${currentPage}+1))}">다음</a></span>
 		    <span th:unless="${currentPage != lastPage}" th:text="다음"></span>
 		    <a th:href="@{/consultingList(currentPage=${lastPage})}">마지막</a>
-  	</div>
   		<!-- ajax를 이용한 상세내용 화면출력  -->
   		<!-- ajax를 사용한 js는 /static/js/main.js -->
-  		<div class="container-fluid">
+  		<div class="container">
 			<form action="/upConsultingList" method="POST" id="consultingForm">
-				<div style="border: 1px; margin: 20px;">
+				<div style="margin-top: 20px;">
 					<h4>상담정보</h4>
-					<table border="1" class="table">
+					<table border="1" class="consultingListCss">
 			  			<tr>
 							<td hidden=""><input type="hidden" id="consultingCode" name="consultingCode"></td>
 			  				<td><label>제목</label></td>

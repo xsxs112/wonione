@@ -361,7 +361,9 @@
 	//문제타이틀추가
 	$('#insertQuestionTitle').click(function(){
 		var qtCodeName = $('input[name=qtCodeName]').val();
+		var qtCodeNameFocus = $('input[name=qtCodeName]');
 		var qtTitle = $('input[name=qtTitle]').val();
+		var qtTitleFocus = $('input[name=qtTitle]');
 		var qtTeacher = $('input[name=qtTeacher]').val();
 		if(confirm('등록하시겠습니까?')){
 		var request = $.ajax({
@@ -372,27 +374,33 @@
 		});
 		request.done(function(data) {
 			if(data == 0){
-				if(qtCodeName != '' && qtTitle != ''){
-					var request = $.ajax({
-						url: "/insertQuestionTitle",
-						method: "POST",
-						data: { qtCodeName : qtCodeName , qtTitle : qtTitle , qtTeacher : qtTeacher },
-						dataType: "json"
-					});
-					request.done(function(data) {
-						alert('등록되었습니다.');
-						opener.parent.location.reload();
-						window.close();
-						
-					});
-					request.fail(function( jqXHR, textStatus ) {
-						alert( "Request failed: " + textStatus );
-					});
+				if(qtCodeName != ''){
+					if(qtTitle != ''){
+						var request = $.ajax({
+							url: "/insertQuestionTitle",
+							method: "POST",
+							data: { qtCodeName : qtCodeName , qtTitle : qtTitle , qtTeacher : qtTeacher },
+							dataType: "json"
+						});
+						request.done(function(data) {
+							alert('등록되었습니다.');
+							window.top.location.reload();
+							
+						});
+						request.fail(function( jqXHR, textStatus ) {
+							alert( "Request failed: " + textStatus );
+						});
+					}else{
+						alert('LIST TITLE를 써주세요.');
+						qtTitleFocus.trigger('focus');
+					}
 				}else{
-					alert('값을 입력해주세요.');
+					alert('문제이름을 써주세요.');
+					qtCodeNameFocus.trigger('focus');
 				}
 			}else{
-				alert('이름이 중복입니다.');
+				alert('문제이름이 중복입니다.');
+				qtCodeNameFocus.trigger('focus');
 			}
 		});
 		request.fail(function( jqXHR, textStatus ) {
@@ -406,11 +414,6 @@
 	
 	$('#enrollmentQuestion').click(function(){
 		localhost.href('/insertQuestion');
-		
-	});
-	//타이틀등록
-	$('#insertQuestionTitlePage').click(function(){
-		window.open('/insertQuestionTitle','타이틀추가', 'width=550, height=285 left=600 top=100');
 		
 	});
 	
@@ -457,9 +460,11 @@
 			return false;
 		}
 	});
+	//점수 확인
 	$('#QuestionbtnCompletion').click(function(){
 		alert('고생하셨습니다.\n점수확인해주세요.');
 		opener.parent.location.reload();
 		window.close();
 	});
+	
 })(jQuery); 

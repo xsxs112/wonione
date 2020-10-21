@@ -32,11 +32,11 @@ public class ConsultingController {
 		List<Map<String, Object>> consultingLecNameMap = consultingService.SelectLecName();
 		model.addAttribute("Teacher",consultingTeacherMap);
 		model.addAttribute("LecName",consultingLecNameMap);
-		return "/consulting/consultingWrite";
+		return "/consulting/addConsulting";
 	}
 	//상담작성페이지
 	//상담후 상담한 내용을 작성하여 database에 올리위한 코드작업
-	@PostMapping("/consultingWrite")
+	@PostMapping("/addConsulting")
 	public String addConsultingWrite(Consulting consulting
 									,@RequestParam(value="consultingTitle", required = false) String consultingTitle
 									,@RequestParam(value="consultingTeacher", required = false) String consultingTeacher
@@ -46,9 +46,9 @@ public class ConsultingController {
 		
 		if(consulting != null) {
 			consultingService.addConsultingWrite(consulting);
-			return "redirect:/consultingList";
+			return "redirect:/addConsulting";
 		}else {
-			return "consulting/consultingWrite";
+			return "consulting/addConsulting";
 		}
 	}
 	//상담내역리스트
