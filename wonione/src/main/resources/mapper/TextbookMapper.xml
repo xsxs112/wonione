@@ -324,7 +324,7 @@ INSERT INTO wt_supply_textbook
 <!-- *********************** START ************************ -->
 
 <!-- 교재정보 수정 -->
-<update id="txbInfoModify">
+<update id="modifyTxbInfo">
 UPDATE wt_textbook_basic_information
 	SET
 		txb_name= #{txbName},

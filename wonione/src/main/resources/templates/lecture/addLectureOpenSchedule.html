@@ -183,7 +183,7 @@
                                                     </div>
                                                 </div>
                                             </div>                                            
-                        					<a href="/lecOsList" class="btn btn-default" role="button">취소</a>
+                        					<a href="/lectureOpenScheduleList" class="btn btn-default" role="button">취소</a>
                                             <button class="btn btn-primary login-submit-cs" type="button" id="addBtn">등록</button>
                                         </form>
                                             </div>
@@ -207,7 +207,7 @@
 		                        </div>  
 		                        <!--End Modal Contents Area -->                              
                         		<div class="container-fluid" style="margin: 10px;">
-									<a href="/lecOsList" class="btn btn-default" role="button">강의관리 메인페이지로</a>
+									<a href="/lectureManage" class="btn btn-default" role="button">강의관리 메인페이지로</a>
 								</div>        
                             </div>
                         </div>
@@ -280,9 +280,9 @@
 				if(data.length == 0){
 					alert('조회되는 데이터가 없습니다');
 				}
+					html ='';
 				for(var i=0; i<data.length; i++){
 					console.log('반복문');
-					html ='';
 					html += data[i].lecOsCode;
 				}
 					modalContent.empty();

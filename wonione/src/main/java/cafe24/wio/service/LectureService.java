@@ -144,9 +144,9 @@ public class LectureService {
 	 * @param lectureOs
 	 * @return
 	 */
-	public int applyLectureOpen(LectureOpenSchedule lectureOs) {
+	public int addLectureOpenSchedule(LectureOpenSchedule lectureOs) {
 			
-		return lectureMapper.applyLectureOpen(lectureOs);
+		return lectureMapper.addLectureOpenSchedule(lectureOs);
 	}
 	/**
 	 * 강의코드만 가져오기

@@ -344,7 +344,7 @@ WHERE
 </select>
 
 <!-- 강의개설 신청하기 -->
-<insert id="applyLectureOpen" parameterType="LectureOpenSchedule">
+<insert id="addLectureOpenSchedule" parameterType="LectureOpenSchedule">
 INSERT INTO wt_lecture_open_schedule
 	(lec_os_code
 	, lec_name

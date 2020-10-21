@@ -72,9 +72,9 @@ public class EquipmentService {
 	 * @param selectEqWhSv
 	 * @return List WhEquipment getEqWhSearchList
 	 */
-	public List<WhEquipment> getEquipWhSearchList(String equipWhSk
+	public List<Map<String,Object>> getEquipWhSearchList(String equipWhSk
 												, String equipWhSv){
-		List<WhEquipment> getEqWhSearchList = 
+		List<Map<String,Object>> getEqWhSearchList = 
 							equipmentMapper.getEquipWhSearchList(equipWhSk, equipWhSv);
 		return getEqWhSearchList;
 	}
@@ -106,7 +106,7 @@ public class EquipmentService {
 	 * 등록된 비품정보 조회
 	 * @return Map String,Object resultMap
 	 */
-	public Map<String,Object> getEquipList(int currentPage){
+	public Map<String,Object> getEquipmentList(int currentPage){
 		final int ROW_PER_PAGE = 7;
 	      
 	      int startRow = 0;
@@ -126,7 +126,7 @@ public class EquipmentService {
 	      equipMap.put("startRow", startRow);
 	      equipMap.put("rowPerPage", ROW_PER_PAGE);
 
-	      List<Equipment> equipList = equipmentMapper.getEquipList(equipMap);
+	      List<Equipment> equipmentList = equipmentMapper.getEquipmentList(equipMap);
 	      
 	      double totalRowCount = equipmentMapper.countEquipment();
 	      
@@ -138,7 +138,7 @@ public class EquipmentService {
 		      }
 	      Map<String,Object> resultMap = new HashMap<String,Object>();
 	      
-	      resultMap.put("equipList", equipList);
+	      resultMap.put("equipmentList", equipmentList);
 	      resultMap.put("lastPage", lastPage);
 	      resultMap.put("startPageNum", startPageNum);
 	      resultMap.put("lastPageNum", lastPageNum);

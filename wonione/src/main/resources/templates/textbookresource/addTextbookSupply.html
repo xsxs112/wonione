@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="all-form-element-inner">
-                                        <form action="/textbookSupplyRegister" method="post" id="addForm">
+                                        <form action="/addTextbookSupply" method="post" id="addForm">
 									<input type="hidden" th:value="${supTxbCode}" name="supTxbCode">
 									<input type="hidden" th:value="${sessionId}" name="supTxbWriter">
                                             <div class="form-group-inner">
@@ -43,7 +43,7 @@
                                                         <div class="form-select-list">
                                                             <select class="form-control custom-select-value" id="txbCode" name ="txbCode">
                                                             <option disabled="disabled" selected="selected">::교재를 선택하세요::</option>
-	                                                            <th:block th:each="til : ${textbookinfolist}">
+	                                                            <th:block th:each="til : ${textbookInfoList}">
 	                                                            	<option th:value="${til.txbCode}">[[${til.txbName}]]</option>                                                       
 	                                                            </th:block>
 															</select>

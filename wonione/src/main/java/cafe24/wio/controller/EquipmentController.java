@@ -30,8 +30,8 @@ public class EquipmentController {
 							,@RequestParam(value="equipWhSv", required = false) String equipWhSv) {
 		model.addAttribute("title", "비품입고내역 검색결과");
 		model.addAttribute("mainTitle", "검색결과는 아래와 같습니다");
-		List<WhEquipment> getEqWhSearchList = equipmentService.getEquipWhSearchList(equipWhSk, equipWhSv);
-		model.addAttribute("equipWhList", getEqWhSearchList);
+		List<Map<String,Object>> getEquipWhSearchList = equipmentService.getEquipWhSearchList(equipWhSk, equipWhSv);
+		model.addAttribute("equipWhList", getEquipWhSearchList);
 		
 		return "equipment/equipWhList";
 	}
@@ -43,11 +43,11 @@ public class EquipmentController {
 							,@RequestParam(value="equipSv", required = false) String equipSv) {
 		model.addAttribute("title", "비품 리스트 검색결과");
 		model.addAttribute("mainTitle", "검색결과는 아래와 같습니다");
-		List<Equipment> getEqSearchResult =
+		List<Equipment> getEquipSearchList =
 							equipmentService.getEquipSearchList(equipSk, equipSv);
-		model.addAttribute("equipList", getEqSearchResult);
+		model.addAttribute("equipmentList", getEquipSearchList);
 		
-		return "equipment/equipList";
+		return "equipment/equipmentList";
 	}
 	
 	//비품 입고내역조회 view로 forward
@@ -63,39 +63,39 @@ public class EquipmentController {
 	}
 	
 	//비품 정보조회 view로 forward
-	@GetMapping("/equipList")
-	public String equipList(Model model
+	@GetMapping("/equipmentList")
+	public String equipmentList(Model model
 						,@RequestParam
 						(	value="currentPage"
 						, 	required = false
 						, 	defaultValue = "1") int currentPage) {
 
-		Map<String,Object> equipList = equipmentService.getEquipList(currentPage);
+		Map<String,Object> equipmentList = equipmentService.getEquipmentList(currentPage);
 
 		model.addAttribute("title", "등록비품 조회");
 		model.addAttribute("mainTitle", "등록비품 조회");
 		model.addAttribute("currentPage",currentPage);
-		model.addAttribute("equipList", equipList.get("equipList"));
-		model.addAttribute("lastPage", equipList.get("lastPage"));
-		model.addAttribute("startPageNum", equipList.get("startPageNum"));
-		model.addAttribute("lastPageNum", equipList.get("lastPageNum"));	
+		model.addAttribute("equipmentList", equipmentList.get("equipmentList"));
+		model.addAttribute("lastPage", equipmentList.get("lastPage"));
+		model.addAttribute("startPageNum", equipmentList.get("startPageNum"));
+		model.addAttribute("lastPageNum", equipmentList.get("lastPageNum"));	
 		
-		return "equipment/equipList";
+		return "equipment/equipmentList";
 	}
 	
 	//비품 리스트 메인페이지 view로 forward
-	@GetMapping("/equipListMain")
-	public String equipListMain(Model model) {
+	@GetMapping("/equipmentListMain")
+	public String equipmentListMain(Model model) {
 
 		model.addAttribute("title", "비품 리스트 메인페이지");
 		model.addAttribute("mainTitle", "비품 리스트 메인페이지");
 		
-		return "equipment/equipListMain";
+		return "equipment/equipmentListMain";
 	}
 	
 	//비품정보등록
-	@PostMapping("/equipRegister")
-	public String equipRegister(Equipment equipment
+	@PostMapping("/addEquipment")
+	public String addEquipment(Equipment equipment
 							,@RequestParam(value="eqCode",required = false)String eqCode) {
 
 		equipmentService.addEquipment(equipment);
@@ -104,8 +104,8 @@ public class EquipmentController {
 	}
 	
 	//비품 정보등록 페이지 view로 forward
-	@GetMapping("/equipRegister")
-	public String equipRegister(Model model
+	@GetMapping("/addEquipment")
+	public String addEquipment(Model model
 							,   HttpSession session) {
 		String sessionId = session.getAttribute("SID").toString();
 		String eqCode = equipmentService.equipMaxCode();
@@ -116,17 +116,17 @@ public class EquipmentController {
 		model.addAttribute("eqCode", eqCode);
 		model.addAttribute("equipmentCategory", equipmentCategory);
 		
-		return "equipment/equipRegister";
+		return "equipment/addEquipment";
 	}
 	
 	//비품등록 메인페이지 view로 forward
-	@GetMapping("/equipRegisterMain")
+	@GetMapping("/addEquipmentMain")
 	public String equipRegMain(Model model) {
 		
 		model.addAttribute("title", "등록 메인페이지");
 		model.addAttribute("mainTitle", "등록 메인페이지");
 		
-		return "equipment/equipRegisterMain";
+		return "equipment/addEquipmentMain";
 	}
 	
 	//비품관리 메인페이지 view로 forward

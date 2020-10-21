@@ -30,7 +30,7 @@
                         <div class="product-status-wrap">
                             <h4 th:text="${mainTitle}"></h4>
                             <div class="add-product">
-                                <a href="/equipRegister">비품정보등록하기</a>
+                                <a href="/addEquipment">비품정보등록하기</a>
                             </div>
                             <div class="asset-inner">
                                 <table>
@@ -44,7 +44,7 @@
 									  <td>비고</td>
                                       <td>수정 / 삭제</td>
                                     </tr>
-							<th:block th:each="eL : ${equipList}">
+							<th:block th:each="eL : ${equipmentList}">
 								<tr>
 								  <td th:text="${eL.eqCode}"></td> 
 								  <td th:text="${eL.eqCategory}"></td> 
@@ -64,37 +64,37 @@
 							<div class="custom-pagination" th:if="${currentPage ne null}">
 								<ul class="pagination">
 									<li class="page-item">
-										<a class="page-link" th:href="@{/equipList}">처음</a>
+										<a class="page-link" th:href="@{/equipmentList}">처음</a>
 									</li>
 									<li class="page-item">
 										<span th:if="${currentPage > 1}">
-											<a class="page-link" th:href="@{/equipList(currentPage=(${currentPage}-1))}">이전</a>
+											<a class="page-link" th:href="@{/equipmentList(currentPage=(${currentPage}-1))}">이전</a>
 										</span>
 									</li>
 								</ul>
 								<ul class="pagination">
 									<li class="page-item">
 									<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
-										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/equipList(currentPage=${num})}"></a>
+										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/equipmentList(currentPage=${num})}"></a>
 									</th:block>
 									</li>
 								</ul>
 								<ul class="pagination">
 									<li class="page-item">
 										<span th:if="${currentPage ne lastPage}">
-											<a th:href="@{/equipList(currentPage=(${currentPage}+1))}">다음</a>
+											<a th:href="@{/equipmentList(currentPage=(${currentPage}+1))}">다음</a>
 										</span>
 		    						</li>
 		    						<li class="page-item">
-		    							<a th:href="@{/equipList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
+		    							<a th:href="@{/equipmentList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
 		    						</li>
 								</ul>
                             </div>
                             <div class="container-fluid" style="margin: 10px;">
-                            	<a th:if="${currentPage eq null}" href="/equipList" class="btn btn-default" role="button">전체리스트보기</a>                            </div>
+                            	<a th:if="${currentPage eq null}" href="/equipmentList" class="btn btn-default" role="button">전체리스트보기</a>                            </div>
                             <div class="container-fluid" style="margin: 10px;">
-								<a href="/equipmentManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
-								<a href="/equipListMain" class="btn btn-default " role="button">리스트메인페이지</a>
+								<a href="/equipmentListMain" class="btn btn-default " role="button">리스트메인페이지</a>
+								<a href="/equipmentManage" class="btn btn-default" role="button">비품관리 메인페이지로</a>
 							</div>
                         </div>
                     </div>

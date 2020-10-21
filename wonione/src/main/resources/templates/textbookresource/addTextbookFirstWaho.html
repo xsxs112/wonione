@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="layout/default">
-	
 	<th:block layout:fragment="customTitle">
-		<title th:text="${title}"></title>
+		<title th:text="${title}"></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
-<div class="row">
+
+	<div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="sparkline12-list">
                     <div class="sparkline12-hd">
@@ -20,63 +20,52 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="all-form-element-inner">
-                                        <form action="/equipRegister" method="post" id="addForm">
-									<input type="hidden" th:value="${eqCode}" name="eqCode">
-									<input type="hidden" th:value="${sessionId}" name="eqWriter">
+                                        <form action="/addTextbookFirstWaho" method="post" id="addForm">
+									<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
+									<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">비품코드</label>
+                                                        <label class="login2 pull-right pull-right-pro">교재입고코드</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" disabled class="form-control" th:value="${eqCode}" name="eqCode" th:placeholder="${eqCode}" />
-                                                    </div>
-                                                </div>
-                                            </div>									
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">비품카테고리</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <div class="form-select-list">
-                                                            <select class="form-control custom-select-value" id="selectCategory">
-																<option selected="selected" disabled="disabled">::카테고리를 선택해주세요::</option>
-																<th:block th:each=" ec : ${equipmentCategory} ">
-																	<option>[[${ec.eqCategory}]]</option>
-																</th:block>	
-																<option>기타</option>
-															</select>
-                                                        </div>
-                                                        <input type="hidden" name="eqCategory" id="eqCategory"/>
-                                                    </div>
-                                                    <div class="categoryEtc" hidden="">
-	                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-	                                                        <label class="login2 pull-right pull-right-pro">카테고리명</label>
-	                                                    </div>
-	                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-	                                                        <input type="text" class="form-control" id="inputCateEtc"  placeholder="카테고리를 입력해주세요"/>
-	                                                    </div>
-                                                    </div>
-                                                </div>
-                                            </div>	
-                                             <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">품명</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" class="form-control" name="eqName" id="eqName"  placeholder="물품명을 입력해주세요"/>
+                                                        <input type="text" disabled class="form-control" th:value="${whTxbCode}" name="whTxbCode" th:placeholder="${whTxbCode}" />
                                                     </div>
                                                 </div>
                                             </div>
-                                             <div class="form-group-inner">
+                                            <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">모델명</label>
+                                                        <label class="login2 pull-right pull-right-pro">교재명</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" class="form-control" name="eqModelName" id="eqModelName" placeholder="모델명을 입력해주세요"/>
+                                                        <div class="form-select-list">
+                                                            <select class="form-control custom-select-value" id="txbCode" name ="txbCode">
+																<th:block>
+																	<option th:value=${textbookBasicInfo.txbCode} selected="selected">[[${textbookBasicInfo.txbName}]]</option>
+																</th:block>																	
+															</select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>	                                                  
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">입고수량</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="number" class="form-control" name="whTxbQuantity" id="whTxbQuantity" onFocus="this.value=0; return true;" placeholder="수량을 입력해주세요"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        <label class="login2 pull-right pull-right-pro">재고수량</label>
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                        <input type="text" class="form-control" onFocus="this.value=0; return true;" placeholder="재고수량이 없습니다." readonly="readonly"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -86,21 +75,21 @@
                                                         <label class="login2 pull-right pull-right-pro">작성자아이디</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" disabled class="form-control" th:value="${sessionId}" name="eqWriter" th:placeholder="${sessionId}" />
+                                                        <input type="text" disabled class="form-control" th:value="${sessionId}" name="whTxbWriter" th:placeholder="${sessionId}"/>
                                                     </div>
                                                 </div>
-                                            </div>	                                                                                              
+                                            </div>
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                         <label class="login2 pull-right pull-right-pro">비고</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <textarea class="form-control" name="eqRemark" placeholder="비고사항을 입력하세요."></textarea>
+                                                        <textarea class="form-control" name="whTxbRemark" placeholder="비고사항을 입력하세요."></textarea>
                                                     </div>
                                                 </div>
                                             </div>                                                    
-                        					<a href="/textbookOwnList" class="btn btn-default" role="button">취소</a>
+                        					<a href="/addTextbookWaho" class="btn btn-default" role="button">취소</a>
                                             <button class="btn btn-primary login-submit-cs" type="button" id="addBtn">등록</button>
                                         </form>
                                             </div>
@@ -108,69 +97,38 @@
                                     </div>
                                 </div>
                         		<div class="container-fluid" style="margin: 10px;">
-									<a href="/equipmentManage" class="btn btn-default" role="button">비품 메인페이지로</a>
+									<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 								</div>        
                             </div>
                         </div>
+                        
                     </div>
-                </div>		
+                </div>	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
-	var eqCategory = null;
 	$('#addBtn').click(function(){
 		console.log('addBtn');
-		eqCategory = $('#eqCategory').val();
-		var eqName = $('#eqName').val();						//물품명 value값
-		var eqModelName =$('#eqModelName').val();				//모델명 value값
-		var inputCateEtc = $('#inputCateEtc').val();			//기타 선택시 input박스의 value값
-		var selectCategory = $('#selectCategory').val(); 		//셀렉트박스의 value값
-		console.log(eqCategory + ' < -- addBtn eqCategory');
-		console.log(inputCateEtc + ' < -- inputCateEtc');
-		if(eqCategory == null || eqCategory == undefined){
-			alert('카테고리를 선택해주세요');
+		var txbCode = $('#txbCode').val();
+		var whTxbQuantity = $('#whTxbQuantity').val();
+		console.log(whTxbQuantity);
+		console.log(txbCode + ' < --txbCode 등록버튼 클릭 시');
+		if(whTxbQuantity == undefined || whTxbQuantity == ''){
+			alert('입고수량을 입력해주세요');
+			$('#whTxbQuantity').focus();
 			return ;
-		}else if(eqName == null || eqName == undefined || eqName == ''){
-			alert('물품명을 입력해주세요');
-			$('#eqName').focus();
-			return ;
-		}else if(eqModelName == null || eqModelName == undefined || eqModelName == ''){
-			alert('모델명을 입력해주세요');
-			$('#eqModelName').focus();
-			return ;
+		}else if(whTxbQuantity<1){
+			alert('0보다 큰 값을 입력해주세요');
+			$('#whTxbQuantity').focus();
+			return ; 
 		}
-		if(selectCategory == '기타'){
-			$('#eqCategory').val(inputCateEtc);
-		}
-		console.log(eqCategory + " <-- final eqCategory")
-		if(confirm('등록하시겠습니까??')){
+		if(confirm('입고수량 ' + whTxbQuantity +'권이 맞습니까? 등록후엔 수정이 불가합니다.')){
 			addForm.submit(); 
 		}
 	});
 	
-	$('#selectCategory').change(function(){
-		var selectCategory = $('#selectCategory').val();
-		var inputCateEtc = $('#inputCateEtc').val();
-		console.log(selectCategory + ' < -- selectCategory change');
-		$('#eqCategory').val(selectCategory);
-		if(selectCategory == '기타'){
-			inputCateEtcRemoveHidden();
-		}else{
-			inputCateEtcAddHidden();
-		}
-	});
-	
-	var inputCateEtcRemoveHidden = function(){
-		$('.categoryEtc').removeAttr('hidden');
-	};
-	
-	var inputCateEtcAddHidden = function(){
-		$('.categoryEtc').attr('hidden','hidden');
-	};
-	</script>                 
+	</script> 
 	</th:block>
 	
-	<div class="container-fluid" style="margin: 10px;">
-	</div>	
 	<th:block layout:fragment="customJsScript">
 	 
 	</th:block>

@@ -19,7 +19,7 @@
 <resultMap type="WhEquipment" id="whEquipmentResult">
 
 <result column="wh_eq_code" 		property="whEqCode"/>
-<result column="eq_code" 		property="eqCode"/>
+<result column="eq_code" 			property="eqCode"/>
 <result column="wh_eq_name" 		property="whEqName"/>
 <result column="wh_eq_unit_price" 		property="whEqUnitPrice"/>
 <result column="wh_eq_quantity" 		property="whEqQuantity"/>
@@ -105,20 +105,20 @@ INSERT INTO wt_warehousing_equipment
 </insert> -->
 
 <!-- 비품 입고내역 검색 -->
-<select id="getEquipWhSearchList" parameterType="String" resultMap="whEquipmentResult">
+<select id="getEquipWhSearchList" parameterType="String" resultType="hashMap">
 SELECT 
-		wh_eq_code
-	, 	eq_code
-	,	wh_eq_name
-	, 	wh_eq_unit_price
-	, 	wh_eq_quantity
-	, 	wh_eq_total
-	, 	wh_eq_date
-	, 	wh_eq_writer
-	,	wh_eq_reg_date
-	, 	wh_eq_remark
+		wh_eq_code			AS	'whEqCode'
+	, 	eq_code				AS	'eqCode'
+	,	wh_eq_name			AS	'whEqName'
+	, 	wh_eq_unit_price	AS	'whEqUnitPrice'
+	, 	wh_eq_quantity		AS	'whEqQuantity'
+	, 	wh_eq_total			AS	'whEqTotal'		
+	, 	wh_eq_date			AS	'whEqDate'
+	, 	wh_eq_writer		AS	'whEqWriter'
+	,	wh_eq_reg_date		AS	'whEqRegDate'
+	, 	wh_eq_remark		AS	'whEqRemark'
 FROM 
-	wt_equipment
+	wt_warehousing_equipment
 WHERE
 	${equipWhSk} LIKE (CONCAT ('%',#{equipWhSv},'%'));
 
@@ -208,7 +208,7 @@ WHERE
 </select>
 
 <!-- 비품정보 보기 -->
- <select id="getEquipList" resultType="Equipment" resultMap="equipmentResult">
+ <select id="getEquipmentList" resultType="Equipment" resultMap="equipmentResult">
 SELECT 
 		eq_code				
 	, 	eq_category			
