@@ -18,9 +18,17 @@ public class AttManagement {
 	String confirm;
 	float realMealTime;
 	float workOvertime;
+	String modifyRequest;
 	
 	
 	
+	
+	public String getModifyRequest() {
+		return modifyRequest;
+	}
+	public void setModifyRequest(String modifyRequest) {
+		this.modifyRequest = modifyRequest;
+	}
 	public String getAttCode() {
 		return attCode;
 	}
@@ -117,12 +125,9 @@ public class AttManagement {
 				+ ", attStTime=" + attStTime + ", attEndTime=" + attEndTime + ", attTime=" + attTime + ", attNote="
 				+ attNote + ", goingOut=" + goingOut + ", goingOutStTime=" + goingOutStTime + ", goingOutEndTime="
 				+ goingOutEndTime + ", levelName=" + levelName + ", confirm=" + confirm + ", realMealTime="
-				+ realMealTime + ", workOvertime=" + workOvertime + "]";
+				+ realMealTime + ", workOvertime=" + workOvertime + ", modifyRequest=" + modifyRequest + "]";
 	}
 	
-	
-	
-
 	
 	
 	

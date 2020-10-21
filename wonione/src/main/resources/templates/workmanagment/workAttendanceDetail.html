@@ -25,26 +25,10 @@
 	<script type="text/javascript">
 		$(function() {
 
-			$('#stTimeBtn').click(function() {
-				var sid = $('#sid').val();
-				var dateCheck = $.ajax({
-					url : "/dateCheck",
-					method : "GET",
-					data : {
-						sid : sid
-					},
-					dataType : "text"
-				})
-
-				dateCheck.done(function(data) {
-					if (data == 0) {
-						window.location.href = '/workAttendance';
-					} else {
-						alert("이미 출근 하셨습니다");
-					}
-				})
+			$('#modifyRequestBtn').click(function() {
+				$('#modifyRequestForm').submit();
 			})
-
+			
 		})
 	</script>
 
@@ -67,11 +51,11 @@
 							<div class="review-content-section">
 								<div id="dropzone1" class="pro-ad">
 									<br>
-									<p style="font-size: 20px;">상세보기,수정 아직 ㄴㄴㄴㄴㄴㄴㄴㄴㄴ</p>
+									<p style="font-size: 20px;">상세보기</p>
 									<br>
-									<form action="/holidayRequest" method="POST" id="requestForm">
+									
 										<input type="hidden" name="mrId" >
-										<div style="width: 60%; float: left" class="container-fluid">
+										<div style="width: 50%; float: left" class="container-fluid">
 											<table id="tb" class="table table-striped">
 												<tr>
 													<td>이름</td>
@@ -99,19 +83,10 @@
 													<td><input type="text" class="form-control" name="mrName" th:value="${attManagementDetail.realMealTime}"
 														readonly="readonly"></td>
 												</tr>
-												<tr>
-													<td>근무시간</td>
-													<td><input type="text" class="form-control" name="mrName" th:value="${attManagementDetail.attTime}"
-														readonly="readonly"></td>
-												</tr>
-												<tr>
-													<td>초과 근무시간</td>
-													<td><input type="text" class="form-control" name="mrName" th:value="${attManagementDetail.workOvertime}"
-														readonly="readonly"></td>
-												</tr>
+												
 											</table>
 										</div>
-										<div style="width: 40%; float: right" class="container-fluid">
+										<div style="width: 50%; float: right" class="container-fluid">
 											<table class="table table-striped">
 												<tr>
 													<td>외출시각</td>
@@ -127,6 +102,15 @@
 													<td>외출시간</td>
 													<td><input type="text" class="form-control" name="mrName" th:value="${attManagementDetail.goingOut}"
 														readonly="readonly"></td>
+												</tr><tr>
+													<td>근무시간</td>
+													<td><input type="text" class="form-control" name="mrName" th:value="${attManagementDetail.attTime}"
+														readonly="readonly"></td>
+												</tr>
+												<tr>
+													<td>초과 근무시간</td>
+													<td><input type="text" class="form-control" name="mrName" th:value="${attManagementDetail.workOvertime}"
+														readonly="readonly"></td>
 												</tr>
 												<tr>
 													<td>비고</td>
@@ -136,23 +120,26 @@
 											</table>
 										</div>
 										<div style="width: 100%; float: right" class="container-fluid">
+										<form action="/modifyRequest" method="POST" id="modifyRequestForm">
+										
 											<table class="table table-striped">
 												<tr>
 													<td style="text-align: center; font-size: 20px; font-weight: 500;">
-														<div class="form-group">사유</div>
+														<div class="form-group">수정요청</div>
 													</td>
 												</tr>
 												<tr>
 													<td>
 														<div class="form-group">
-															<textarea name="reReason" class="form-control"></textarea>
+															<textarea name="reReason" placeholder="사유" class="form-control"></textarea>
 														</div>
 													</td>
 												</tr>
 											</table>
+										</form>
 											<div class="payment-adress">
-												<button type="button" id="requestBtn"
-													class="btn btn-primary waves-effect waves-light">신청</button>
+												<button type="button" id="modifyRequestBtn"
+													class="btn btn-primary waves-effect waves-light">요청</button>
 												<br> <br>
 											</div>
 										</div>
