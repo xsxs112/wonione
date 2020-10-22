@@ -9,7 +9,7 @@
 	
 	<th:block layout:fragment="customContent">
 
-	<!-- 썸머노트 스크립트&link start -->
+	<!-- 썸머노트 링크&스크립트 start -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 	<!-- 썸머노트 스크립트 end -->
@@ -81,11 +81,22 @@
 				alert('제목을 입력해주세요.');
 				boardTitle.focus();
 				return;
-			}else if(boardContents.val() == ''){
-				alert('내용을 입력해주세요.');
+			}
+			if(boardTitle.val().replace(/\s|　/gi, "").length == 0){
+				alert('제목을 공백으로 채울 수 없습니다.');
+				boardTitle.focus();
+				return;
+			}
+			if(boardContents.val() == ''){
+				alert('본문 내용을 입력해주세요.');
 				boardContents.focus();
 				return;
 			}
+			if(boardContents.val().replace(/\s|　/gi, "").length == 0){
+				alert('본문 내용을 공백으로 채울 수 없습니다.');
+				boardContents.focus();
+				return;
+			}// 버그 : 본문 내용은 공백으로 채울 수 있음
 			noticeForm.submit();
 		});
 	});
