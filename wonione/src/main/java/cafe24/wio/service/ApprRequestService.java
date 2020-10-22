@@ -20,6 +20,22 @@ public class ApprRequestService {
 	private ApprMapper apprMapper;
 	
 	
+	
+	
+	public int attendanceModify(AttManagement attManagement) {
+		
+		
+		return apprMapper.attendanceModify(attManagement);
+	}
+	
+	public int attendanceModifyRequest(String attCode,String reReason) {
+		
+		
+		return apprMapper.attendanceModifyRequest(attCode,reReason);
+	}
+	
+	
+	
 	public AttManagement getAttManagemetDetail(String attCode) {
 		
 		

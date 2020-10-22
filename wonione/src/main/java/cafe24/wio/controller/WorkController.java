@@ -29,19 +29,83 @@ public class WorkController {
 	private ApprRequestService apprRequestService;
 
 	
+	
+	
+	@PostMapping("/attendanceModify")
+	public String attendanceModify(AttManagement attManagement ,@RequestParam(value = "attCode", required = false) String attCode
+									,@RequestParam(value = "attStTime", required = false) String attStTime
+									,@RequestParam(value = "attEndTime", required = false) String attEndTime
+									,@RequestParam(value = "realMealTime", required = false) float realMealTime
+									,@RequestParam(value = "goingOutStTime", required = false) String goingOutStTime
+									,@RequestParam(value = "goingOutEndTime", required = false) String goingOutEndTime
+									,@RequestParam(value = "goingOut", required = false) float goingOut
+									,@RequestParam(value = "attTime", required = false) float attTime
+									,@RequestParam(value = "workOvertime", required = false) float workOvertime
+									,@RequestParam(value = "attNote", required = false) String attNote) {
+		
+		
+		attManagement.setAttCode(attCode);
+		attManagement.setAttStTime(attStTime);
+		attManagement.setAttEndTime(attEndTime);
+		attManagement.setRealMealTime(realMealTime);
+		if(goingOutStTime == "") {
+			goingOutStTime = null;
+		}
+		if(goingOutEndTime == "") {
+			goingOutEndTime = null;
+		}
+		
+		attManagement.setGoingOutStTime(goingOutStTime);
+		attManagement.setGoingOutEndTime(goingOutEndTime);
+		attManagement.setGoingOut(goingOut);
+		attManagement.setAttTime(attTime);
+		attManagement.setWorkOvertime(workOvertime);
+		attManagement.setAttNote(attNote);
+		
+		
+		apprRequestService.attendanceModify(attManagement);
+		
+		
+		
+		return "redirect:/addAttManage";
+	}
+	
+	
+	
+	
+	@GetMapping("/modifyAttendance")
+	public String modifyAttendance(Model model, @RequestParam(value = "attCode", required = false) String attCode) {
+
+		AttManagement attManagementDetail = apprRequestService.getAttManagemetDetail(attCode);
+		System.out.println(attManagementDetail.getModifyRequest() + "사유다");
+		model.addAttribute("attManagementDetail", attManagementDetail);
+		
+		
+		return "workmanagment/modifyAttendance";
+	}
+
+	
+	
+	@PostMapping("/attendanceModifyRequest")
+	public String attendanceModifyRequest(@RequestParam(value = "reReason", required = false) String reReason,
+			@RequestParam(value = "attCode", required = false) String attCode) {
+
+		System.out.println(reReason + "<-reReason");
+		apprRequestService.attendanceModifyRequest(attCode, reReason);
+
+		return "redirect:/workAttendanceList";
+	}
+
 	@GetMapping("/workAttendanceDetail")
 	public String workAttendanceDetail(Model model, @RequestParam(value = "attCode", required = false) String attCode) {
-		
-		
-		
-		
+
 		AttManagement attManagementDetail = apprRequestService.getAttManagemetDetail(attCode);
-		
+
 		model.addAttribute("attManagementDetail", attManagementDetail);
 
 		return "workmanagment/workAttendanceDetail";
 	}
-	
+
 	@PostMapping("/workTimeDelete")
 	public String workTimeDelete(@RequestParam(value = "mrId", required = false) String mrId) {
 
@@ -71,11 +135,11 @@ public class WorkController {
 		attTimeManage.setMrId(mrId);
 		attTimeManage.setWorkStTime(workStTime);
 		attTimeManage.setWorkEndTime(workEndTime);
-		
+
 		workStTime = "0000-01-01 " + workStTime;
 		workEndTime = "0000-01-01 " + workEndTime;
-		
-		float numWorkTime = apprRequestService.getWorkTime(workStTime,workEndTime);
+
+		float numWorkTime = apprRequestService.getWorkTime(workStTime, workEndTime);
 		float mealTime = 0;
 
 		if (mStTime == "" || mStTime == null || mEndTime == "" || mEndTime == null) {
@@ -86,14 +150,13 @@ public class WorkController {
 			attTimeManage.setmEndTime(mEndTime);
 			mStTime = "0000-01-01 " + mStTime;
 			mEndTime = "0000-01-01 " + mEndTime;
-			mealTime = apprRequestService.getMealTime(mStTime,mEndTime);
+			mealTime = apprRequestService.getMealTime(mStTime, mEndTime);
 			attTimeManage.setMealTime(mealTime);
-			numWorkTime = numWorkTime-mealTime;
+			numWorkTime = numWorkTime - mealTime;
 		}
 
-
 		String workTime = Float.toString(numWorkTime) + "시간";
-		
+
 		attTimeManage.setWorkTime(workTime);
 
 		apprRequestService.workTimeModify(attTimeManage);
@@ -101,7 +164,6 @@ public class WorkController {
 		return "redirect:/addAttManage";
 	}
 
-	
 	@PostMapping("/workTimeStorage")
 	public String workTimeStorage(AttTimeManage attTimeManage,
 			@RequestParam(value = "mrId", required = false) String mrId,
@@ -112,18 +174,17 @@ public class WorkController {
 			@RequestParam(value = "note", required = false) String note) {
 
 		String getTimeCode = apprRequestService.getTimeCode();
-		
+
 		attTimeManage.setAttTimeCode(getTimeCode);
 		attTimeManage.setMrId(mrId);
 		attTimeManage.setWorkStTime(workStTime);
 		attTimeManage.setWorkEndTime(workEndTime);
-		
+
 		workStTime = "0000-01-01 " + workStTime;
 		workEndTime = "0000-01-01 " + workEndTime;
-		
-		
-		float numWorkTime = apprRequestService.getWorkTime(workStTime,workEndTime);
-		
+
+		float numWorkTime = apprRequestService.getWorkTime(workStTime, workEndTime);
+
 		float mealTime = 0;
 
 		if (mStTime == "" || mStTime == null || mEndTime == "" || mEndTime == null) {
@@ -134,16 +195,15 @@ public class WorkController {
 			attTimeManage.setmEndTime(mEndTime);
 			mStTime = "0000-01-01 " + mStTime;
 			mEndTime = "0000-01-01 " + mEndTime;
-			
-			mealTime = apprRequestService.getMealTime(mStTime,mEndTime);
+
+			mealTime = apprRequestService.getMealTime(mStTime, mEndTime);
 			attTimeManage.setMealTime(mealTime);
-			
-			numWorkTime = numWorkTime-mealTime;
+
+			numWorkTime = numWorkTime - mealTime;
 		}
-		
+
 		String workTime = Float.toString(numWorkTime) + "시간";
 		attTimeManage.setWorkTime(workTime);
-		
 
 		apprRequestService.addWorkTime(attTimeManage);
 
@@ -189,9 +249,9 @@ public class WorkController {
 		String SID = (String) session.getAttribute("SID");
 		String attCode = apprRequestService.getAttCode(SID);
 		apprRequestService.goingOutEnd(attCode);
-		
+
 		float goingOut = apprRequestService.getGoingOutTime(attCode);
-		
+
 		int goingOutHH = (int) goingOut;
 
 		if (goingOut % 1 < 0.5) {
@@ -212,60 +272,57 @@ public class WorkController {
 		String attCode = apprRequestService.getAttCode(SID);
 
 		apprRequestService.setWorkEndTime(attCode);
-		
-		
+
 		/* 지각,조퇴,외출 여부 구하고 비고란에 업데이트 */
 		int late = apprRequestService.late(attCode);
 		int earlyLeave = apprRequestService.earlyLeave(attCode);
 		float outTime = apprRequestService.GoingOutTime(attCode);
-		
+
 		String note = "";
-		if(late == 1) {
+		if (late == 1) {
 			note += "지각 ";
 		}
-		if(earlyLeave == 1) {
+		if (earlyLeave == 1) {
 			note += "조퇴 ";
 		}
-		if(outTime >0) {
+		if (outTime > 0) {
 			note += "외출 ";
 		}
-		//------------------------------------------------------
-		
-		
-		
+		// ------------------------------------------------------
+
 		/* 근무시간 구하기 */
 		float realWorkTime = apprRequestService.getAttEndTime(attCode);
 		float getMealTime = apprRequestService.MealTime(SID);
-		
+
 		int notMealTime = apprRequestService.notMealTime(attCode);
-		
+
 		/* 만약 점심시간보다 늦게 출근 한 경우(리턴값 1) 일때 점심시간은 0 */
-		if(notMealTime == 1) {
+		if (notMealTime == 1) {
 			getMealTime = 0;
 		}
-		//---------------------------------------------------
-		
+		// ---------------------------------------------------
+
 		int workTimeHH = (int) realWorkTime;
-		
+
 		if (realWorkTime % 1 < 0.5) {
 			realWorkTime = workTimeHH;
-			
+
 		} else {
 			realWorkTime = (float) (workTimeHH + 0.5);
 		}
-		
+
 		System.out.println(realWorkTime + "------------->실제 근무 시간");
-		//-------------------------------------------------------
-		
+		// -------------------------------------------------------
+
 		/* 초과 근무시간 구하기 */
 		String ListWorkTime = apprRequestService.ListWorkTime(SID);
 		float overWorkTime;
 		float fListWorkTime = Float.parseFloat(ListWorkTime.substring(0, 3));
-		realWorkTime = realWorkTime-outTime-getMealTime;
+		realWorkTime = realWorkTime - outTime - getMealTime;
 		System.out.println(realWorkTime + "------------->외출,점심 뺀 실제 근무 시간");
-		
-		if(realWorkTime > fListWorkTime) {
-			overWorkTime = realWorkTime-fListWorkTime;
+
+		if (realWorkTime > fListWorkTime) {
+			overWorkTime = realWorkTime - fListWorkTime;
 			attManagement.setWorkOvertime(overWorkTime);
 			System.out.println(overWorkTime + "------------->초과 근무 시간");
 		}
@@ -273,13 +330,10 @@ public class WorkController {
 		attManagement.setAttTime(realWorkTime);
 		attManagement.setRealMealTime(getMealTime);
 		attManagement.setAttNote(note);
-		
+
 		apprRequestService.setWorkTime(attManagement);
-		//-------------------------------------------------
-		
-		
-		
-		
+		// -------------------------------------------------
+
 		return "redirect:/workAttendanceList";
 	}
 
@@ -319,6 +373,9 @@ public class WorkController {
 
 		String sid = (String) session.getAttribute("SID");
 		List<AttManagement> getAttendanceList = apprRequestService.getAttendanceList(sid);
+		
+		//List<AttTimeManage> getAttTimeManage = apprRequestService.getAttTimeManage(sid);
+		
 		System.out.println(getAttendanceList);
 
 		model.addAttribute("getAttendanceList", getAttendanceList);
@@ -423,20 +480,6 @@ public class WorkController {
 		return "redirect:/holidayApproval";
 
 	}
-
-	// 휴가요청 리스트
-	/*
-	 * @GetMapping("/holidayApproval")
-	 * 
-	 * @PostMapping("/holidayApproval")
-	 * 
-	 * public String getHolidayList(Model model) {
-	 * 
-	 * List<ApprovalRequest> holidayList = apprRequestService.getHolidayList();
-	 * model.addAttribute("holidayList", holidayList);
-	 * 
-	 * return "workmanagment/holidayApproval"; }
-	 */
 
 	@GetMapping("/holidayApproval")
 	@PostMapping("/holidayApproval")

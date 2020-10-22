@@ -15,6 +15,12 @@ public interface ApprMapper {
 	
 	
 	
+	public int attendanceModify(AttManagement attManagement);
+	
+	
+	public int attendanceModifyRequest(String attCode, String reReason);
+	
+	
 	
 	public AttManagement getAttManagemetDetail(String attCode);
 	

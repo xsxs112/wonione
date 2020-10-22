@@ -7,6 +7,33 @@
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
 	
+	<update id = "attendanceModify" parameterType="AttManagement">
+		UPDATE wt_attendance_management
+		SET
+			attendance_start_time=#{attStTime},
+			attendance_end_time=#{attEndTime},
+			attendance_time=#{attTime},
+			attendance_note=#{attNote},
+			going_out_time=#{goingOut},
+			going_out_stTime=#{goingOutStTime},
+			going_out_endTime=#{goingOutEndTime},
+			work_overtime=#{workOvertime},
+			real_meal_time=#{realMealTime},
+			confirm = '수정 완료'
+		WHERE 
+			attendance_code = #{attCode};
+	</update>
+	
+	
+	<update id = "attendanceModifyRequest" parameterType="AttManagement">
+		UPDATE wt_attendance_management
+			SET
+				confirm='수정 요청',
+				modify_request=#{reReason}
+			WHERE 
+				attendance_code = #{attCode};
+	</update>
+	
 	
 	
 	<select id = "getAttManagemetDetail" parameterType="string" resultType="AttManagement">
@@ -26,6 +53,7 @@
 				, confirm AS confirm
 				, work_overtime AS workOvertime
 				, real_meal_time AS realMealTime
+				, modify_request AS modifyRequest
 			FROM wt_attendance_management AS a 
 					LEFT JOIN wt_member_registration AS m
 					ON a.mr_id = m.mr_id
@@ -215,12 +243,15 @@
 				, going_out_time as goingOut
 				, going_out_stTime as goingOutStTime
 				, going_out_endTime as goingOutEndTime
+				, confirm AS confirm
+				, real_meal_time AS realMealTime
 		FROM wt_attendance_management AS a
 				LEFT JOIN wt_member_registration AS m
 				ON a.mr_id = m.mr_id
 				LEFT JOIN wt_level AS l
 				on m.level_num = l.level_num
-		WHERE ISNULL(confirm) AND l.level_num<![CDATA[ < ]]>4
+		WHERE  (confirm != '확인' or ISNULL(confirm)) AND l.level_num <![CDATA[ < ]]>4
+		ORDER BY attendance_date DESC;
 
 	
 	</select>
@@ -439,7 +470,8 @@
 				, real_meal_time AS realMealTime
 				
 		FROM wt_attendance_management AS a
-		WHERE a.mr_id = #{SID};
+		WHERE a.mr_id = #{SID}
+		ORDER BY a.attendance_date desc;
 	
 	</select>
 	
@@ -569,8 +601,8 @@
 	<insert id="addholidayApproval" parameterType="ApprovalRequest">
 	
 		INSERT INTO wt_approval_request
-		(request_code, request_sortation, mr_id, request_date, request_start_date, request_end_date, request_outting_time, request_reason, sortation, request_supervisor, request_processing_date, request_state)
-		VALUES (#{reCode},'holiday', #{mrId}, NOW(), #{reStartDate}, #{reEndDate}, null,  #{reReason}, #{sortation},null, null, '신청')
+		(request_code, request_sortation, mr_id, request_date, request_start_date, request_end_date, request_reason, sortation, request_supervisor, request_processing_date, request_state)
+		VALUES (#{reCode},'holiday', #{mrId}, NOW(), #{reStartDate}, #{reEndDate},  #{reReason}, #{sortation},null, null, '신청')
 		
 	</insert>
 	
