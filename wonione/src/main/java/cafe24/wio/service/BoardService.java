@@ -15,7 +15,7 @@ public class BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
-	//글번호 자동증가
+	//게시판 글 번호 자동증가
 	public String getBoardNum() {
 		
 		Map<String, Object> boardNumMax = boardMapper.getBoardNum();
@@ -37,6 +37,8 @@ public class BoardService {
 		
 		return boardNum;
 	}
+	
+	
 	
 	//공지사항 조회
 	public List<Board> getNotice(Board board){
@@ -119,5 +121,10 @@ public class BoardService {
 			List<Review> reviewList = boardMapper.getReview(review);
 			return reviewList;
 		}
-	
+		
+	//수강후기 작성
+	public int addReview(Review review) {
+		int write = boardMapper.addReview(review);
+		return write;		
+	}
 }
