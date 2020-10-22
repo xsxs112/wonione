@@ -14,6 +14,7 @@ public class GradeReport {
 	private String testNumber;
 	private String lecName;
 	private String lecTarget;
+	private int claPeople;
 	
 	
 	@Override
@@ -43,6 +44,8 @@ public class GradeReport {
 		builder.append(lecName);
 		builder.append(", lecTarget=");
 		builder.append(lecTarget);
+		builder.append(", claPeople=");
+		builder.append(claPeople);
 		builder.append("]");
 		return builder.toString();
 	}
@@ -118,6 +121,13 @@ public class GradeReport {
 
 	public void setLecTarget(String lecTarget) {
 		this.lecTarget = lecTarget;
+	}
+
+	public int getClaPeople() {
+		return claPeople;
+	}
+	public void setClaPeople(int claPeople) {
+		this.claPeople = claPeople;
 	}
 	
 

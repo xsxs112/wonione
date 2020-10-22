@@ -82,16 +82,15 @@ private GradeReportService gradeReportService;
 	   //보고서작성
 	   @GetMapping("/GradeReportWrite")
 	   public String GradeReportInsert(Model model ,HttpSession session 
-			   						,@RequestParam(value="lecOsCode", required = false) String lecOsCode) {
+			   						,@RequestParam(value="lecOsCode", required = false) String lecOsCode
+			   						,@RequestParam(value="testRound", required = false) String testRound) {
 		  String sessionName= session.getAttribute("SNAME").toString();
 		  String sessionId = session.getAttribute("SID").toString();
 	      String codeResult =  gradeReportService.gradeCode();
 	     
 	      List<Map<String, Object>> testNum =  gradeReportService.testNum();
 	      List<Map<String, Object>> clCode = gradeReportService.classCode(sessionId);
-	      Map<String, Object> targetScore = gradeReportService.targetScore(sessionId,lecOsCode);
-	      
-	      model.addAttribute("targetScore", targetScore);
+	     
 	      model.addAttribute("sessionName", sessionName);
 		  model.addAttribute("sessionId", sessionId);
 	      model.addAttribute("codeResult", codeResult);
@@ -105,22 +104,31 @@ private GradeReportService gradeReportService;
 	   @PostMapping("/gradeAvg")
 	   @ResponseBody
 	   public Map<String, Object> gradeAvg(
-						    	@RequestParam(value = "lecCode", required = false) String lecCode,
-						    	@RequestParam(value = "testRou", required = false) String testNum ) {
+								    	@RequestParam(value = "lecCode", required = false) String lecCode,
+								    	@RequestParam(value = "testRou", required = false) String testNum ) {
 		 Map<String, Object> gradeAvg = gradeReportService.gradeAvg(lecCode, testNum);
 		 return gradeAvg; 
 	   }
 	 
-	 //과목에 따른 업무계획점수
-	   @PostMapping("/targetScore")
+	 //과목에 따른 학생 수
+	   
+	   @PostMapping("/claPeople")
 	   @ResponseBody
-	   public Map<String, Object> targetScore(HttpSession session ,
-			   									@RequestParam(value = "lecTarget", required = false) String lecOsCode){
-		   String sessionId = session.getAttribute("SID").toString();
-		   Map<String, Object> lecTarget = gradeReportService.targetScore(sessionId, lecOsCode);
-		return lecTarget;
+	   public Map<String, Object> claPeople(
+			   								@RequestParam(value = "lecOsCode", required = false) String lecOsCode){
+		   Map<String, Object> claPeople = gradeReportService.studentCount(lecOsCode);
+		return claPeople;
 	   }
 	   
+	 //과목에 따른 목표점 넘은 학생 수 
+	   @PostMapping("/studentTargetCount")
+	   @ResponseBody
+	   public Map<String, Object> studentTargetCount(
+											   @RequestParam(value = "lecOsCode", required = false) String lecOsCode
+											   ,@RequestParam(value = "testRound", required = false) String testRound){
+		   Map<String, Object> studentTargetCount = gradeReportService.studentTargetCount(lecOsCode, testRound);
+		   return studentTargetCount;
+	   }
 	   
 	//조건검색
 	@GetMapping(value = "/gradereport", produces = "application/json")

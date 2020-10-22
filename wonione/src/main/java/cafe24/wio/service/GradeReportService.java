@@ -105,9 +105,21 @@ public class GradeReportService {
 		 Map<String, Object> targetScore = gradeReportMapper.targetScore(sessionId, lecOsCode);
 		return targetScore;
 	 }
-		 
+	
+	 //반에따른 학생 수 가져오기
+	 public Map<String, Object> studentCount(String lecOsCode){
+		 Map<String, Object> studentCount = gradeReportMapper.studentCount(lecOsCode);
+		return studentCount;
+	 }
 	 
-		//페이징
+	 //반에따른 목표점 넘은 학생 수 가져오기
+	 public Map<String, Object> studentTargetCount(String lecOsCode , String testRound){
+		 Map<String, Object> studentTargetCount = gradeReportMapper.studentTargetCount(lecOsCode, testRound);
+		return studentTargetCount;
+		 
+	 }
+		
+	 //페이징
 		public Map<String,Object> countGradeReportList(int currentPage){
 			
 			final int ROW_PER_PAGE = 5;
