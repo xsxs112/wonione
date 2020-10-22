@@ -4,7 +4,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="cafe24.wio.mapper.GradeReportMapper">
+ <mapper namespace="cafe24.wio.mapper.GradeReportMapper">
 
 <resultMap type="GradeReport" id="gradeReportResultMap">
 		<result column="report_lec_code" 		property="reportLecCode"/>
@@ -21,6 +21,7 @@
 		<result column="cla_people" 			property="claPeople"/>
 		<result column="lec_os_code" 			property="lecOsCode"/>
 		<result column="test_round" 			property="testRound"/>
+		
 		
 </resultMap>
 
@@ -263,12 +264,44 @@
    
 </select>
 
-<select id="studentCount" resultType="hashMap" parameterType="String">
+<!--목표점수 초과한 학생 수  -->
 
+<select id="studentTargetCount" resultType="hashMap" parameterType="String">
+<![CDATA[
+SELECT 
+	   COUNT(c.app_sid) as 'targetCount'
+	FROM 
+	   wt_course AS c
+	INNER JOIN 
+	   wt_lecture_open_schedule AS lo
+	ON
+	   c.lec_os_code = lo.lec_os_code
+	INNER JOIN 
+	   wt_grade_management AS g
+	ON 
+	   c.app_sid =g.mr_id
+	INNER JOIN 
+	   wt_open_lecture AS o
+	ON 
+	   lo.lec_os_code = o.lec_open_sche_code 
+	WHERE
+	   c.lec_os_code = #{lecOsCode} && g.test_round = #{testRound} && (o.lec_target <= g.grade_man_score);
+]]>
 </select>
 
 
+<!-- 반에 따른 학생수 -->
+<select id="studentCount" resultType="hashMap" parameterType="String">
 
+		SELECT 
+			cla_people as 'claPeople'
+			, lec_os_code
+		FROM 
+			wt_lecture_open 
+		where
+			lec_os_code  = #{lecOsCode};
 
-</mapper>   
+</select>
+
+</mapper>
 

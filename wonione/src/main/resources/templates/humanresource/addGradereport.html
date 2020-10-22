@@ -37,10 +37,6 @@
 				alert('평균을 구해주세요');
 				$('#gradeSum').focus();
 				return;
-			}else if(lecTarget == undefined || lecTarget ==''){
-				alert('업무목표점수를 선택해주세요');
-				$('#lecTarget').focus();
-				return;	
 			}else if(achievementRate == ''){
 				alert('달성률을 구해주세요');
 				$('#achievementRate').focus();
@@ -86,51 +82,81 @@
 			  }
 		  } 
 	  });
-	/*   
-	  $('#achievementBtn').click(function(){
-		  console.log('달성률구하기');
-		  var lecTarget = $('select[name=lecTarget] option:selected').val();
-		  var gradeSum = $('input[name=gradeAverage]').val();
-		  console.log('lecTarget-->' + lecTarget);
-		  console.log('gradeSum-->' + gradeSum);
-		 
-		  if(gradeSum != '' || gradeSum !=  undefined){
-		  	if(lecTarget != '' || lecTarget !=  undefined){
-		  	var sum = (1+((gradeSum - lecTarget)/ (lecTarget)));
-		  		$('#achievementRate').attr('value', sum.toFixed(2));
-		  		console.log("sum-->"+sum);
-		   	}
-		  } 
-		  
-	  }); */
+	
 	  
 	  $('#lecName').change(function(){
-		  console.log('change이벤트');
-		  var lecTarget = $('input[name=lecTarget]').val();
+		  console.log('강의명change이벤트');
+		  var lecOsCode = $('select[name=lecName] option:selected').val();
+		  
 		  var request = $.ajax({
-			  url: "/targetScore",  
+			  url: "/claPeople",  
 			  method: "POST", 
-			  data: {  lecTarget : lecTarget }, 
+			  data: {  lecOsCode : lecOsCode }, 
 			  dataType: "json"
 			});
 		 
 			request.done(function(data) {
-				$('#lecTarget').attr('value', lecTarget);
-				console.log(lecTarget);
+				/* alert(JSON.stringify(data)); */
+				$('#claPeople').attr('value', data.claPeople);
+				console.log(data.claPeople);
 			});
 
 			request.fail(function( jqXHR, textStatus ) {
 			  alert( "error" + textStatus );
 			});
 		  
+	  });
+	  
+	  $('#testNumber').change(function(){
+		  console.log('회차 change이벤트');testNumber
+		  var lecOsCode = $('select[name=lecName] option:selected').val();
+		  var testRound = $('select[name=testNumber] option:selected').val();
+		  
+		  var request = $.ajax({
+			  url: "/studentTargetCount",  
+			  method: "POST", 
+			  data: {  lecOsCode : lecOsCode , testRound : testRound}, 
+			  dataType: "json"
+			});
+		 
+			request.done(function(data) {
+				/*  alert(JSON.stringify(data));  */
+				 console.log(data.targetCount);
+				 $('#targetCount').attr('value', data.targetCount);
+			});
+
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "error" + textStatus );
+			});
 		  
 	  });
 	  
 	  
-	  
-	  
-	  
-	 });
+	  $('#achievementBtn').click(function(){
+		  console.log('달성률구하기');
+		  var lecOsCode = $('select[name=lecName] option:selected').val();
+		  var testNumber = $('select[name=testNumber] option:selected').val();
+		  var claPeople = $('#claPeople').val();
+		  var targetCount = $('#targetCount').val();
+		
+		  console.log('lecOsCode-->' + lecOsCode);
+		  console.log('testNumber-->' + testNumber);
+		  console.log('targetCount-->' + targetCount);
+		  console.log('claPeople-->' + claPeople);
+		  
+		  if(lecOsCode == '' || lecOsCode ==  undefined){
+			  alert("강의명을 선택해주세요");
+		  }else if(testNumber == '' || testNumber == undefined){
+		  	  alert("시험회차를 선택해주세요");
+	  	  }else{
+  		 
+				var sum = (((targetCount)/(claPeople))*100);
+		  		$('#achievementRate').attr('value', sum.toFixed(2));
+		  		console.log("sum-->"+sum);
+			
+	  	  }
+	  });
+	});
 	  
 	
 	</script>
@@ -152,7 +178,7 @@
 	                                                        <label class="login2 pull-right-pro">업무보고서 코드</label>
 	                                                    </div>
 	                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-	                                                        <label th:text="${codeResult}" class="form-control"  th:name="reportLecCode" ></label>
+	                                                        <label th:text="${codeResult}" class="form-control"  name="reportLecCode" ></label>
 	                                                    </div>
 	                                                </div>
 	                                            </div>
@@ -185,11 +211,12 @@
 		                                       <div class="form-group-inner">
 	                                               	<div class="row">
 	                                                  		 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-	                                                       	<label class="login2 pull-right-pro">업무목표점수</label>
+	                                                       	<label class="login2 pull-right-pro">반 학생수</label>
 	                                                   	</div>
 	                                                   <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-	                                                       <input type="hidden" th:each="t: ${targetScore}" th:value="${t.lec_target}" th:name ="lecTarget">
-														<input type="text" class="form-control" th:placeholder="${lecTarget}" readonly="readonly">
+	                                                       <input type="hidden" name ="claPeople">
+														<input type="text" class="form-control" id="claPeople" readonly="readonly">
+	                                                   		<input type="hidden" id="targetCount" name="targetCount">
 	                                                   </div>
 	                                               	</div>
 	                                           	</div>  
@@ -215,7 +242,7 @@
 		                                        </div>
 		                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 		                                            <div class="form-inline">
-		                                                <input type="text" class="form-control"  th:name="gradeAverage" id="gradeSum" placeholder="평균" readonly="readonly">
+		                                                <input type="text" class="form-control"  name="gradeAverage" id="gradeSum" placeholder="평균" readonly="readonly">
 		                                           		<button type="button" class="btn btn-default" id="avgBtn">평균계산하기</button>
 		                                            </div>
 		                                        </div>
@@ -228,7 +255,7 @@
 		                                        </div>
 		                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 		                                            <div class="form-inline">
-		                                            <input type="text" class="form-control"  th:name="achievementRate" id="achievementRate" placeholder="달성률" readonly="readonly">
+		                                            <input type="text" class="form-control" name="achievementRate" id="achievementRate" placeholder="달성률" readonly="readonly">
 		                                           		<button type="button" class="btn btn-default" id="achievementBtn">달성률 계산하기</button>
 		                                            </div>
 		                                        </div>

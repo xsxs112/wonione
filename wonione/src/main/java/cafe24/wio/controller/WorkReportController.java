@@ -85,7 +85,6 @@ public class WorkReportController {
 		  model.addAttribute("sessionId", sessionId);
 	      reportService.getReportWrite(report);
 	      model.addAttribute("Report", report);
-	      model.addAttribute("Reportcomplete", "/workreport");
 	      return "redirect:/getReportList";
 	   }
 	   
