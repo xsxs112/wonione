@@ -443,7 +443,7 @@ UPDATE wt_textbook_basic_information
 </insert>
 
 <!-- 보유교재리스트 조회 -->
-<select id="getTextbookOwnList" resultType="hashMap" parameterType="Map">
+<select id="getTextbookWahoList" resultType="hashMap" parameterType="Map">
 	SELECT
 			wt.wh_txb_code			AS	whTxbCode	
 		,	wt.txb_code				AS	txbCode
