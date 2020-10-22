@@ -138,6 +138,16 @@
 				var attCode = $(this).attr('data-mCode');
 				window.location.href = '/manageConfirm?attCode=' + attCode;
 			})
+			
+			$('.modify').click(function() {
+				var attCode = $(this).attr('data-mCode');
+				window.location.href = '/modifyAttendance?attCode=' + attCode;
+			})
+			
+			$('.delete').click(function() {
+				var attCode = $(this).attr('data-mCode');
+				window.location.href = '/deleteAttendance?attCode=' + attCode;
+			})
 
 		})
 	</script>
@@ -214,7 +224,6 @@
 														<td>식사시간</td>
 														<td><input type="time" name="mStTime" id="mStTime">
 															~ <input type="time" name="mEndTime" id="mEndTime">
-															<button type="button">추가</button></td>
 													</tr>
 													<tr>
 														<td>근무시간</td>
@@ -275,6 +284,7 @@
 																	<th>근무시간</th>
 																	<th>비고</th>
 																	<th>관리자확인</th>
+																	<th>수정</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -286,11 +296,13 @@
 																	<td th:text="${l.attEndTime}"></td>
 																	<td th:text="${l.goingOutStTime}"></td>
 																	<td th:text="${l.goingOutEndTime}"></td>
-																	<td>점심시간</td>
+																	<td th:text="${l.realMealTime}"></td>
 																	<td th:text="${l.attTime}"></td>
 																	<td th:text="${l.attNote}"></td>
-																	<td><a th:data-mCode="${l.attCode}"
-																		class="confirm">확인</a></td>
+																	<td><a th:data-mCode="${l.attCode}"class="confirm">확인</a> /
+																	<a th:data-mCode="${l.attCode}"class="modify">수정</a> /
+																	<a th:data-mCode="${l.attCode}"class="delete">삭제</a></td>
+																	<td th:text="${l.confirm}"></td>
 																</tr>
 															</tbody>
 														</table>
