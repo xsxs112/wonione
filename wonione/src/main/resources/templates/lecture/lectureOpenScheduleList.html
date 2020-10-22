@@ -13,8 +13,23 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-status-wrap">
                             <h4 th:text="${mainTitle}"></h4>
+							<form class="form-inline" id="searchForm" action="/lecOsSearch" method="GET" >  
+								<select class="form-control" name="lecOsSk" id="selectlecOsSk">
+									<option disabled="disabled" selected="selected">::검색조건::</option>
+									<option value="lec_os_code">강의예정코드</option>
+									<option value=lec_name>강의명</option>
+									<option value="mr_name">강사이름</option>
+									<option value="lec_os_writer">작성자아이디</option>
+								</select> 
+								<div class="form-group">
+								<input type="text" id="lecOsSv" class="form-control" name="lecOsSv" placeholder="검색어를 입력해주세요"/>
+									<div class="input-group-btn pull-right">
+										<button class="btn btn-default form-group" id="searchLecOsBtn" type="button">검색</button>
+									</div>
+								</div>
+							</form>                            
                             <div class="add-product">
-                                <a href="/addLectureOpenSchedule">강의개설신청하기</a>
+                                <a href="/addLectureOpenSchedule">강의예정등록</a>
                             </div>
                             <input id="sessionId" type="hidden" name="sessionId" th:value="${sessionId}">
                             <input id="lecOpCode" type="hidden" name="lecOpCode" th:value="${lecOpCode}">
@@ -25,16 +40,11 @@
                             <div class="asset-inner">
                                 <table class="table border-table">
                                     <tr>
+                                    	<th>순번</th>
                                         <th>강의개설예정코드</th>
                                         <th>강의명</th>
-                                        <th>강사아이디</th>
+                                        <!-- <th>강사아이디</th> -->
                                         <th>강사명</th>	
-                                        <th colspan="4" style="text-align: center;">강의시간</th>
-                                        <th>강의실</th>
-                                        <th>강의요일</th>
-                                        <th>수업수준</th>
-                                        <th>수업료</th>
-                                        <th colspan="3">수강정원</th>
                                         <th>수업시작일자</th>
                                         <th>수업종료일자</th>
                                         <th>등록일자</th>
@@ -44,21 +54,18 @@
                                     </tr>
                                     <th:block th:each="losl : ${lectureOsList}">
 	                                    <tr>
+	                                    	<td>1</td>
 											  <td th:text="${losl.lecOsCode}" style="text-align: center;"></td>
-											  <td th:text="${losl.lecName}"></td>
-											  <td th:text="${losl.mrTeacherId}"></td>
+											  <td>
+						                        <div class="modal-bootstrap shadow-inner responsive-mg-b-0">
+						                            <div class="modal-area-button">
+						                                <a class="lecOsNameBtn" href="#" th:value="${losl.lecOsCode}" data-toggle="modal" data-target="#PrimaryModalalert" role="button">[[${losl.lecName}]]</a>
+						                                <input class="lecOsCode" type="hidden" th:value="${losl.lecOsCode}">
+						                            </div>
+						                        </div>											  
+											  </td>
+											  <!-- <td th:text="${losl.mrTeacherId}"></td> -->
 											  <td th:text="${losl.mrTeacherName}"></td>
-											  <td th:text="${losl.lecTimeName}"></td>
-											  <td th:text="${losl.lecStartTime}"></td>
-											  <td>~</td>
-											  <td th:text="${losl.lecEndTime}"></td>
-											  <td th:text="${losl.lecRoom}"></td>
-											  <td th:text="${losl.lecDay}"></td>
-											  <td th:text="${losl.lecLevel}"></td>
-											  <td th:text="${losl.lecTuition}"></td>
-											  <td th:text="${losl.lecApplyCount}"></td>
-											  <td>/</td>
-											  <td th:text="${losl.lecClaCapacity}"></td>
 											  <td th:text="${losl.lecStartDate}"></td>
 											  <td th:text="${losl.lecFinalDate}"></td>
 											  <td th:text="${losl.lecOsRegDate}"></td>
@@ -78,18 +85,19 @@
 	                                       	</td>
 	                                    </tr>
 	                                    <div class="login-form-area edu-pd mg-b-15">
-						                        <div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
-						                            <div class="modal-dialog">
-						                                <div class="modal-content">
-						                                    <div class="modal-body" id="check">
-						                                    </div>
-						                                    <div class="modal-footer">
-						                                        <a data-dismiss="modal" href="#">닫기</a>
-						                                    </div>
-						                                </div>
-						                            </div>
-						                        </div>
-						                    </div>
+				                        	<div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+				                            	<div class="modal-dialog">
+					                                <div class="modal-content">
+					                                    <div class="modal-body" id="check">
+														</div>
+					                                    <div class="modal-footer">
+					                                        <button data-dismiss="modal" id="modalConfirmBtn" th:value="${losl.lecOsCode}" class="btn btn-default lecOpCode">확인</button>
+					                                        <a data-dismiss="modal" class="btn btn-default" href="#" role="button">닫기</a>
+														</div>
+													</div>
+												</div>
+				                            </div>
+				                        </div>						                    
 										</th:block>
                              	   </table>
                             	    <div class="container-fluid" style="margin: 10px;">
@@ -103,6 +111,93 @@
 					</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
+	$('#searchLecOsBtn').click(function(){
+		var searchForm = $('#searchForm');
+		var selectlecOsSk = $('#selectlecOsSk').val();
+		var lecOsSv = $('#lecOsSv').val();
+		console.log(selectlecOsSk + ' < -- selectlecOsSk');
+		console.log(lecOsSv + ' < -- lecOsSv');
+		if(selectlecOsSk == null || selectlecOsSk == undefined){
+			alert('검색조건을 선택해주세요');
+			return;
+		}else if(lecOsSv == null || lecOsSv == ''){
+			alert('검색어를 입력해주세요');
+			$('#lecOsSv').focus();
+			return;
+		}
+		searchForm.submit();
+	});	
+	
+	$('.lecOsNameBtn').click(function(){
+		console.log('check');
+		var lecOsCode = $(this).parents().children('.lecOsCode').val();
+		console.log(lecOsCode + ' < -- lecOsCode');
+		 var request = $.ajax({
+			  url: "/getLecOsListOnly",
+			  method: "POST",
+			  data: { lecOsCode : lecOsCode },
+			  dataType: "json"
+			});
+			 
+			request.done(function(data) {
+				for(var i=0; i<data.length; i++){
+					console.log(data[i]);
+					console.log(data.length);
+					html ='';
+					html +='<h3>';
+					html += data[i].lecName;
+					html +=' 강의예정상세보기</h3>';
+					html +='<table class="table">';
+					html +='<tr><td>강의명</td>';
+					html +='<td>';
+					html +=data[i].lecName;
+					html +='</td></tr>';
+					html +='<tr><td>강의시간구분</td>';
+					html +='<td>';
+					html +=data[i].lecTimeName;
+					html +=' ( ';
+					html +=data[i].lecStartTime;
+					html +=' ~ ';
+					html +=data[i].lecEndTime;
+					html +=' ) </td></tr>';
+					html +='<tr><td>강의요일</td>';
+					html +='<td>';
+					html +=data[i].lecDay;
+					html +='</td></tr>';
+					html +='<tr><td>강의수준</td>';
+					html +='<td>';
+					html +=data[i].lecLevel;
+					html +='</td></tr>';
+					html +='<tr><td>강의실</td>';
+					html +='<td>';
+					html +=data[i].lecRoom;
+					html +='</td></tr>';
+					html +='<tr><td>현재 신청인원</td>';
+					html +='<td>';
+					html +=data[i].lecApplyCount;
+					html +=' 명</td></tr>';
+					html +='<tr><td>수강정원</td>';
+					html +='<td>';
+					html +=data[i].lecClaCapacity;
+					html +=' 명</td></tr>';
+					html +='<tr><td>수업료</td>';
+					html +='<td>';
+					html +=data[i].lecTuition;
+					html +=' 원 </td></tr>';
+					html +='</table>';
+					html +='';
+					html +='';
+					$('#check').empty();
+					$('#check').append(html);
+				}
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			}); 
+			
+	});	
+	
 	$('.lecRemarkBtn').click(function(){
 		var lecOsCode = $(this).parents().children('.lecRemarkBtn').val();
 		console.log(lecOsCode);

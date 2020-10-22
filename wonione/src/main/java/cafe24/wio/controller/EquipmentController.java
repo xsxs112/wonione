@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cafe24.wio.bean.Equipment;
 import cafe24.wio.bean.WhEquipment;
@@ -22,6 +23,16 @@ public class EquipmentController {
 	
 	@Autowired
 	private EquipmentService equipmentService;
+	
+	@PostMapping("/getEquipListOnly")
+	@ResponseBody
+	public Map<String,Object> getEquipListOnly(
+						@RequestParam(value="eqCode",required = false)String eqCode){
+		
+		Map<String,Object> eqListOnly = 
+							equipmentService.getEquipListOnly(eqCode);
+		return eqListOnly;
+	}
 	
 	//비품 입고 검색 후 리스트객체를 비품입고내역 리스트로 forward
 	@GetMapping("/equipWhSearch")
