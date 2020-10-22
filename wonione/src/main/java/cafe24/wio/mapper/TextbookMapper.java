@@ -34,7 +34,7 @@ public interface TextbookMapper {
 	public List<SupplyTextbook> getTextbookSupp();
 	
 	//교재 지급내역 페이징
-	public List<SupplyTextbook> getTextbookSuppList(Map<String,Object> txbMap);
+	public List<Map<String,Object>> getTextbookSuppList(Map<String,Object> txbMap);
 	
 	//교재지급코드 maxcount
 	public String getTxbSuppMaxCode();
@@ -49,8 +49,8 @@ public interface TextbookMapper {
 	//가장 마지막에 등록한 입고정보 가져오기
 	public WhTextbook getRecentTxbWhList();
 	
-	//교재보유리스트(입고/재고)
-	public List<Map<String, Object>> getTextbookOwnList(Map<String,Object> txbMap);
+	//교재 입고내역 리스트
+	public List<Map<String, Object>> getTextbookWahoList(Map<String,Object> txbMap);
 	
 	//최초 입고등록
 	public int addFirstWhTextbook(WhTextbook whTextbook);

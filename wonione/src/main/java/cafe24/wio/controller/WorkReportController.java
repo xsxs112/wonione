@@ -38,7 +38,7 @@ public class WorkReportController {
 		logger.info("@GetMapping getReportList");
 		logger.info("===============================");
 		
-		model.addAttribute("title", "보고서리스트");
+		model.addAttribute("title", "업무계획서 리스트");
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("listReport", countReportList.get("listReport"));
 		model.addAttribute("lastPage", countReportList.get("lastPage"));
@@ -57,7 +57,7 @@ public class WorkReportController {
 		logger.info("===============================");
 		Report report = reportService.getReportDetailList(lecOpenCode);
 		model.addAttribute("Report", report);
-		model.addAttribute("title", "보고서 상세보기");
+		model.addAttribute("title", "업무계획서 상세보기");
 		
 		return "humanresource/workreportDetail";
 		
@@ -104,7 +104,7 @@ public class WorkReportController {
 	      model.addAttribute("codeResult", codeResult);
 	      model.addAttribute("classCode", clCode);
 	      model.addAttribute("writeName", wName);
-	      model.addAttribute("title", "보고서 작성하기");
+	      model.addAttribute("title", "업무계획서 작성페이지");
 	      return "humanresource/addWorkreport";
 	   }
 	   
@@ -113,9 +113,6 @@ public class WorkReportController {
 	   public String deleteCode(  
 			   					@RequestParam(value="lecOpenCode", required = false) String lecOpenCode) {
 		  reportService.deleteCode(lecOpenCode);
-		  logger.info("===============================");
-	      logger.info("@GetMapping deleteCode");
-	      logger.info("===============================");
 		   return "redirect:/getReportList";
 	   }
 	   
@@ -123,9 +120,6 @@ public class WorkReportController {
 	   @PostMapping("/updateCode")
 	   public String updateCode(Report report, Model model
 				               ) {
-		  logger.info("===============================");
-		  logger.info("@PostMapping updateCode");
-		  logger.info("===============================");
 		   reportService.updateCode(report);
 		   model.addAttribute("Report", report);
 		   return "redirect:/getReportList";
@@ -137,10 +131,8 @@ public class WorkReportController {
 			   					@RequestParam(value="lecOpenCode", required = false) String lecOpenCode
 			   					,Model model ) {
 		  Report report = reportService.getReportDetailList(lecOpenCode);
-		  logger.info("===============================");
-		  logger.info("@GetMapping updateCode");
-		  logger.info("===============================");
 		   model.addAttribute("Report", report);
+		   model.addAttribute("title", "업무계획서 수정페이지");
 		   return "humanresource/modifyWorkreport";
 	   }
 	   
@@ -150,23 +142,17 @@ public class WorkReportController {
 		public List<Report> memberList(Model model
 								,@RequestParam(value="lecSk", required = false) String lecSk
 								,@RequestParam(value="lecSv", required = false) String lecSv) {
-			List<Report> reportList = reportService.getSearchList(lecSk, lecSv);
-			logger.info("===============================");
-			logger.info("@GetMapping workreport");
-			logger.info("===============================");
-			model.addAttribute("reportList", reportList);
-			return reportList;
+			List<Report> listReport = reportService.getSearchList(lecSk, lecSv);
+			model.addAttribute("listReport", listReport);
+			return listReport;
 }
 		//조건검색
 		@PostMapping("/searchList")
 		public String searchList(Model model
 										,@RequestParam(value="lecSk", required = false) String lecSk
 										,@RequestParam(value="lecSv", required = false) String lecSv) {
-			logger.info("===============================");
-			logger.info("@PostMapping searchList");
-			logger.info("===============================");
-			List<Report> reportList = reportService.getSearchList(lecSk, lecSv);
-			model.addAttribute("reportList", reportList);
+			List<Report> listReport = reportService.getSearchList(lecSk, lecSv);
+			model.addAttribute("listReport", listReport);
 			return "humanresource/workreportList";
 		}
 		

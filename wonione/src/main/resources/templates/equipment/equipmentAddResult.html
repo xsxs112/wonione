@@ -7,18 +7,24 @@
 		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
-	<h2 th:text="${mainTitle}"></h2>
-	<div class="container-fluid" style="margin: 10px;">
-		<div>
-			<a href="#" class="btn btn-default btn-lg" role="button">비품등록</a>
-			<a href="#" class="btn btn-default btn-lg" role="button">비품입고내역</a>
-			<a href="#" class="btn btn-default btn-lg" role="button">비품목록</a>
-		</div>
-	</div>	
+		<h2 th:text="${mainTitle}"></h2>
+	<div>
+		<h2 th:text="${regResult}"></h2>
+	</div>
+		<table class="table table-bordered table-hover table-striped">
+				<thead>
+					<tr>
+					  <th>1</th> 
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+					  <td>1</td>
+					</tr>
+				</tbody>
+			</th:block> 
+		</table>
 	</th:block>
-	
-	<div class="container-fluid" style="margin: 10px;">
-	</div>	
 	<th:block layout:fragment="customJsScript">
 	 
 	</th:block>

@@ -36,23 +36,44 @@
                                 <table>
                                     <tr>
      				  				  <th>교재지급코드</th>
-									  <th>교재코드</th>
+									  <th>교재명</th>
 									  <th>지급수량</th>
 									  <th>지급대상</th>
 									  <th>지급일자</th>
 									  <th>작성자아이디</th>
 									  <th>등록일자</th>
                                     </tr>
-									<th:block th:each="gts : ${getTextbookSuppList}">
-											<tr>
-											  <td th:text="${gts.supTxbCode}"></td>
-											  <td th:text="${gts.txbCode}"></td>
-											  <td th:text="${gts.supTxbQuantity}"></td>
-											  <td th:text="${gts.txbReceiverId}"></td>
-											  <td th:text="${gts.supTxbDate}"></td>
-											  <td th:text="${gts.supTxbWriter}"></td>
-											  <td th:text="${gts.supTxbRegDate}"></td>
+							<th:block th:each="gts : ${getTextbookSuppList}">
+									<tr>
+										<td th:text="${gts.supTxbCode}"></td>
+										<td>
+					                      	<div class="modal-bootstrap shadow-inner responsive-mg-b-0">
+					                          <div class="modal-area-button">
+					                            <a class="txbDeailBtn" href="#" th:value="${gts.txbCode}" data-toggle="modal" data-target="#PrimaryModalalert" role="button">[[${gts.txbName}]]</a>
+					                            <input class="txbCode" type="hidden" th:value="${gts.txbCode}">
+					                          </div>
+					                        </div>												
+										</td>
+										<td th:text="${gts.supTxbQuantity}"></td>
+										<td th:text="${gts.txbReceiverName}"></td>
+										<td th:text="${gts.supTxbDate}"></td>
+										<td th:text="${gts.supTxbWriterName}"></td>
+										<td th:text="${gts.supTxbRegDate}"></td>
 									</tr>
+									<div class="login-form-area edu-pd mg-b-15">
+										<div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-body" id="txbDetail">
+													</div>
+													<div class="modal-footer">
+														<button data-dismiss="modal" id="modalConfirmBtn"  class="btn btn-default">확인</button>
+														<a data-dismiss="modal" class="btn btn-default" href="#" role="button">닫기</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>									
 							</th:block>
                                 </table>
                             </div>
@@ -87,7 +108,7 @@
                             </div>
                             <div class="container-fluid" style="margin: 10px;">
 								<a href="/textbookSupplyList" class="btn btn-default" role="button">전체리스트보기</a>
-								<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
+								<a href="#" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 							</div>
                         </div>
                     </div>
@@ -114,6 +135,51 @@
 			}
 			searchForm.submit();
 		});
+		$('.txbDeailBtn').click(function(){
+			console.log('txbDeailBtn');
+			var txbCode = $(this).parents().children('.txbCode').val();
+			var html = '';
+			console.log(txbCode + ' < -- txbCode');
+			 var request = $.ajax({
+				  url: "/txbDetail",
+				  method: "POST",
+				  data: { txbCode : txbCode },
+				  dataType: "json"
+				});
+				 
+				request.done(function(data) {
+					console.log(data);
+						html ='';
+						html +='<h3>';
+						html += data.txbCode;
+						html +=' 교재정보보기</h3>';
+						html +='<table class="table">';
+						html +='<tr><td>교재코드</td>';
+						html +='<td>';
+						html += data.txbCode;
+						html += '</td></tr>';
+						html +='<tr><td>교재명</td>';
+						html +='<td>';
+						html +=data.txbName;
+						html +='</td></tr>';
+						html +='<tr><td>출판사</td>';
+						html +='<td>';
+						html +=data.txbPublisher;
+						html +='</td></tr>';
+						html +='<tr><td>저자</td>';
+						html +='<td>';
+						html +=data.txbAuthor;
+						html +='</td></tr>';
+						html +='</table>';
+						$('#txbDetail').empty();
+						$('#txbDetail').append(html);
+				});
+				 
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				}); 
+				
+		});			
 	</script>
 	</th:block>
 	

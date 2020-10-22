@@ -139,7 +139,7 @@ public class TextbookController {
 		model.addAttribute("title", "교재입고검색결과 페이지");
 		model.addAttribute("mainTitle", "검색하신내용은 아래와 같습니다.");
 		model.addAttribute("getTextbookList", whTxbSearchResult);
-		return "textbookresource/textbookOwnlist";
+		return "textbookresource/textbookWahoList";
 	}
 	
 	//입고내역유무 체크
@@ -299,34 +299,34 @@ public class TextbookController {
 		return "textbookresource/addTextbookWaho";
 	}
 	
-	//교재보유목록 
-	@GetMapping("/textbookOwnList")
-	public String getTextbookOwnList(Model model
+	//교재 입고내역 
+	@GetMapping("/textbookWahoList")
+	public String getTextbookWahoList(Model model
 									,@RequestParam(
 												  value="currentPage"
 												, required = false
 												, defaultValue = "1") int currentPage) {
 		
-		Map<String, Object> textbookOwnList = textbookService.getTextbookOwnList(currentPage);
-		model.addAttribute("title", "교재보유현황 페이지");
-		model.addAttribute("mainTitle", "교재보유현황 페이지");
-		model.addAttribute("getTextbookList", textbookOwnList.get("textbookOwnList"));
+		Map<String, Object> textbookWahoList = textbookService.getTextbookWahoList(currentPage);
+		model.addAttribute("title", "교재입고내역 페이지");
+		model.addAttribute("mainTitle", "교재입고내역 페이지");
+		model.addAttribute("getTextbookList", textbookWahoList.get("textbookWahoList"));
 		model.addAttribute("currentPage",currentPage);
-		model.addAttribute("lastPage", textbookOwnList.get("lastPage"));
-		model.addAttribute("startPageNum", textbookOwnList.get("startPageNum"));
-		model.addAttribute("lastPageNum", textbookOwnList.get("lastPageNum"));
+		model.addAttribute("lastPage", textbookWahoList.get("lastPage"));
+		model.addAttribute("startPageNum", textbookWahoList.get("startPageNum"));
+		model.addAttribute("lastPageNum", textbookWahoList.get("lastPageNum"));
 		
-		return "textbookresource/textbookOwnList";
+		return "textbookresource/textbookWahoList";
 	}
 	
-	//교재관리메인페이지
-	@GetMapping("/textbookManage")
-	public String textbookManage(Model model) {
-		model.addAttribute("title", "교재관리페이지");
-		model.addAttribute("mainTitle", "교재관리페이지");
-		
-		return "textbookresource/textbookManage";
-		}
+	//교재정보상세보기 ajax
+	@PostMapping(value="/txbDetail", produces = "application/json")
+	@ResponseBody
+	public TextbookBasicInfo txbDetail(@RequestParam(value="txbCode", required = false)String txbCode) {
+		TextbookBasicInfo textbookBasicInfo =
+							textbookService.getOnlyTxbInfo(txbCode);
+		return textbookBasicInfo;
+	}
 	
 	//교재기본정보 리스트
 	@GetMapping("/textbookInfoList")

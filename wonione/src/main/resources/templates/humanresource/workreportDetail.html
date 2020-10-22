@@ -4,7 +4,7 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
-		<title th:text="title"></title>
+		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
 
@@ -23,7 +23,7 @@
 			                                                        <label class="login2 pull-right-pro">강의개설예정코드</label>
 			                                                    </div>
 			                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-			                                                        <label  th:text="${Report.lecOpenCode}" class="form-control"  th:name="lecOpenCode" readonly="readonly" ></label>
+			                                                        <label  th:text="${Report.lecOpenCode}" class="form-control"  name="lecOpenCode" readonly="readonly" ></label>
 			                                                    </div>
 			                                                </div>
 			                                            </div>
@@ -33,7 +33,7 @@
 			                                                        <label class="login2 pull-right-pro">개설예정강의</label>
 			                                                    </div>
 			                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-			                                                        <label class="form-control" th:text="${Report.lecOpenScheCode}" th:name="lecOpenScheCode" readonly="readonly"></label>
+			                                                        <label class="form-control" th:text="${Report.lecName}" name="lecName" readonly="readonly"></label>
 			                                                    </div>
 			                                                </div>
 			                                            </div>
@@ -43,7 +43,7 @@
 			                                                        <label class="login2 pull-right-pro">작성일자</label>
 			                                                    </div>
 			                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-			                                                        <label class="form-control" th:text="${Report.openLecRegDate}" th:name="openLecRegDate" readonly="readonly" ></label>
+			                                                        <label class="form-control" th:text="${Report.openLecRegDate}" name="openLecRegDate" readonly="readonly" ></label>
 			                                                    </div>
 			                                                </div>
 			                                            </div>
@@ -53,7 +53,7 @@
 			                                                        <label class="login2 pull-right-pro">작성자</label>
 			                                                    </div>
 			                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-			                                                        <label class="form-control" th:text="${Report.mrName}" th:name="mrName" readonly="readonly" ></label>
+			                                                        <label class="form-control" th:text="${Report.mrName}" name="mrName" readonly="readonly" ></label>
 			                                                    </div>
 			                                                </div>
 			                                            </div>
@@ -64,7 +64,7 @@
 			                                        </div>
 			                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 			                                            <div class="form-select-list">
-			                                                <label class="form-control" th:text="${Report.lecTarget}" th:name="lecTarget" id="lecTarget" readonly="readonly"></label>
+			                                                <label class="form-control" th:text="${Report.lecTarget}" name="lecTarget" id="lecTarget" readonly="readonly"></label>
 			                                            </div>
 			                                        </div>
 			                                    </div>
@@ -75,7 +75,7 @@
 			                                         <label class="login2 pull-right-pro">업무계획</label>
 			                                     </div>
 			                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-			                                        <textarea class="form-control" rows="10" th:text="${Report.lecPlan}" th:name="lecPlan" id="lecPlan" readonly="readonly"></textarea>
+			                                        <textarea class="form-control" rows="10" th:text="${Report.lecPlan}" name="lecPlan" id="lecPlan" readonly="readonly"></textarea>
 			                                     </div>
 			                                 </div>
 			                             </div>
@@ -85,7 +85,7 @@
 			                                      <label class="login2  pull-right-pro">기타사항</label>
 			                                  </div>
 			                                  <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-			                                      <textarea class="form-control" rows="5" th:text="${Report.lecEtc}" th:name="lecEtc" id="lecEtc" readonly="readonly"></textarea>
+			                                      <textarea class="form-control" rows="5" th:text="${Report.lecEtc}" name="lecEtc" id="lecEtc" readonly="readonly"></textarea>
 			                                  </div>
 			                              </div>
 			                          </div>

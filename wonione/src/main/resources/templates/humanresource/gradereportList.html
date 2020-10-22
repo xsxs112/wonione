@@ -4,7 +4,7 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
-	<title th:text="title"></title> 
+	<title th:text="${title}"></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
 	 <div class="product-status mg-b-15">
@@ -36,7 +36,7 @@
                                 <table>
                                    <tr>
 										<th>업무보고서코드</th>
-										<th>강의명</th>
+										<th>강의계획서코드</th>
 										<th>시험 회차</th>
 										<th>작성자</th>
 										<th>평균점수</th>
