@@ -3,6 +3,7 @@ package cafe24.wio.bean;
 public class GradeReport {
 
 	private String reportLecCode;
+	private String lecOpenCode;
 	private String openLecCode;
 	private String gradeTestNum;
 	private String mrId;
@@ -17,11 +18,14 @@ public class GradeReport {
 	private int claPeople;
 	
 	
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("GradeReport [reportLecCode=");
 		builder.append(reportLecCode);
+		builder.append(", lecOpenCode=");
+		builder.append(lecOpenCode);
 		builder.append(", openLecCode=");
 		builder.append(openLecCode);
 		builder.append(", gradeTestNum=");
@@ -129,7 +133,11 @@ public class GradeReport {
 	public void setClaPeople(int claPeople) {
 		this.claPeople = claPeople;
 	}
-	
-
+	public String getLecOpenCode() {
+		return lecOpenCode;
+	}
+	public void setLecOpenCode(String lecOpenCode) {
+		this.lecOpenCode = lecOpenCode;
+	}
 	
 }

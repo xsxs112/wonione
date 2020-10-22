@@ -21,8 +21,7 @@
 		<result column="cla_people" 			property="claPeople"/>
 		<result column="lec_os_code" 			property="lecOsCode"/>
 		<result column="test_round" 			property="testRound"/>
-		
-		
+		<result column="lec_open_code" 			property="lecOpenCode"/>
 </resultMap>
 
 <!-- 성적업무보고서 조회 -->
@@ -130,8 +129,8 @@
 	SELECT IFNULL((SELECT max(CAST(SUBSTRING(report_lec_code,11) AS DECIMAL))+1 FROM wt_report_lecture),1) AS max;
 </select>
 
-<!--보고서작성쿼리문  -->
-<insert id="GradeReportWrite" parameterType="GradeReport">
+<!--보고서작성 쿼리문  -->
+<insert id="GradeReportWrite"  parameterType="GradeReport" >
    
    INSERT INTO
 		wt_report_lecture
@@ -146,16 +145,32 @@
    VALUES
 		(
 		 #{reportLecCode}
-		, #{lecName}
+		, #{openLecCode}
 		, #{testNumber}
 		, #{mrName}
 		, #{workReport}
-		, #{gradeAverage}
-		, #{achievementRate}
+		, ${gradeAverage}
+		, ${achievementRate}
 		, NOW()
 		);
  
 </insert>
+
+
+<!-- 업무계획서코드 가져오기 -->
+<select id="lecOpenCodeNum" parameterType="String" resultType="int" >
+
+	SELECT
+		lec_open_code
+	FROM
+		wt_open_lecture AS ol
+	INNER JOIN
+		wt_report_lecture AS rl
+	ON
+		ol.mr_id = rl.mr_id
+	WHERE
+		lec_open_sche_code = #{lecOsCode} and ol.mr_id = #{sessionId};
+</select>
 
 
 <!-- 수업명가져오기   -->

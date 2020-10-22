@@ -118,7 +118,14 @@ public class GradeReportService {
 		return studentTargetCount;
 		 
 	 }
-		
+	
+	//업무계획서 코드 조회하기
+		public int lecOpenCodeNum(String sessionId, String lecOsCode) {
+			int lecOpenCodeNum = gradeReportMapper.lecOpenCodeNum(sessionId, lecOsCode);
+			return lecOpenCodeNum;
+	}
+	 
+	 
 	 //페이징
 		public Map<String,Object> countGradeReportList(int currentPage){
 			
