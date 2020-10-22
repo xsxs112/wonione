@@ -28,7 +28,6 @@ public class GradeReportController {
 @Autowired
 private GradeReportService gradeReportService;
 	
-
 	//성적업무보고서 리스트 
 	@RequestMapping(value="/getGradeReportList", method = RequestMethod.GET)
 	public String getGradeReportList(Model model, GradeReport gradeReport
