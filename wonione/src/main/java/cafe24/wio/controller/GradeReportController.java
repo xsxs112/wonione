@@ -28,7 +28,6 @@ public class GradeReportController {
 @Autowired
 private GradeReportService gradeReportService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(GradeReportController.class);
 
 	//성적업무보고서 리스트 
 	@RequestMapping(value="/getGradeReportList", method = RequestMethod.GET)
@@ -52,7 +51,7 @@ private GradeReportService gradeReportService;
 										,@RequestParam(value="reportLecCode",required=false)String reportLecCode) {
 		GradeReport gradeReport = gradeReportService.GradeReportDetailList(reportLecCode);		
 		model.addAttribute("gradeReport", gradeReport);
-		model.addAttribute("title", "성적업무보고서상세");
+		model.addAttribute("title", "성적업무보고서상세보기");
 		return "humanresource/gradereportDetail";
 	}
 	
@@ -68,7 +67,6 @@ private GradeReportService gradeReportService;
 	                        ,@RequestParam(value="achievementRate",required=false)String achievementRate
 	                        ,@RequestParam(value="workReport", required = false) String workReport
 			   ) {
-		  model.addAttribute("title", "성적업무 보고서 작성하기");
 		  String sessionName = session.getAttribute("SNAME").toString();
 		  String sessionId = session.getAttribute("SID").toString();
 		  List<Map<String, Object>> testNum =  gradeReportService.testNum();
@@ -136,9 +134,9 @@ private GradeReportService gradeReportService;
 	public List<GradeReport> searchGradeReport(Model model,
 									@RequestParam(value = "graRe", required = false) String graRe,
 									@RequestParam(value = "graResult", required = false) String graResult) {
-		List<GradeReport> gradeList = gradeReportService.searchGradeReport(graRe, graResult);
-		model.addAttribute("gradeList", gradeList);
-		return gradeList;
+		List<GradeReport> countGradeReportList = gradeReportService.searchGradeReport(graRe, graResult);
+		model.addAttribute("countGradeReportList", countGradeReportList);
+		return countGradeReportList;
 	}
 		
 	//조건검색
@@ -146,8 +144,8 @@ private GradeReportService gradeReportService;
 	public String searchReportGrade(Model model
 									,@RequestParam(value = "graRe", required = false) String graRe
 									,@RequestParam(value = "graResult", required = false) String graResult) {
-		List<GradeReport> reportGrade = gradeReportService.searchGradeReport(graRe, graResult);
-		model.addAttribute("reportGrade", reportGrade);
+		List<GradeReport> countGradeReportList = gradeReportService.searchGradeReport(graRe, graResult);
+		model.addAttribute("countGradeReportList", countGradeReportList);
 		  return "humanresource/gradereportList";
 		
 	}

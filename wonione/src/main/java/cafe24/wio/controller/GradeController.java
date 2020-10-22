@@ -36,7 +36,7 @@ public class GradeController {
 		List<Map<String, Object>> gradeClassId = gradeService.gradeClassId();
 		String gradeCode = gradeService.gradeCode();
 		Map<String,Object> countGradeList = gradeService.countGradeList(currentPage);
-		model.addAttribute("title", "성적리스트조회");
+		model.addAttribute("title", "성적리스트");
 		model.addAttribute("gradeClassId", gradeClassId);
 		model.addAttribute("className", className);
 		model.addAttribute("sName", sName);
@@ -71,7 +71,7 @@ public class GradeController {
 		Grade grade = gradeService.getGradeDetailList(gradeManCode);
 		logger.info("getGradeDetailList-->" + grade);
 		model.addAttribute("Grade", grade);
-		model.addAttribute("title", "성적상세보기리스트");
+		model.addAttribute("title", "성적상세보기");
 		return "grade/gradeDetail";
 	}
 
@@ -80,12 +80,12 @@ public class GradeController {
 	public String serchGrade(Model model,
 							@RequestParam(value = "lecGd", required = false) String lecGd,
 							@RequestParam(value = "lecGds", required = false) String lecGds) {
-		List<Grade> gradeList = gradeService.searchGrade(lecGd, lecGds);
-		logger.info("serchGrade gradeList-->" + gradeList);
+		List<Grade> countGradeList = gradeService.searchGrade(lecGd, lecGds);
+		logger.info("serchGrade gradeList-->" + countGradeList);
 		List<Map<String, Object>> sName = gradeService.sName();
 		List<Map<String, Object>> testNum = gradeService.testNum();
 		String gradeCode = gradeService.gradeCode();
-		model.addAttribute("gradeList", gradeList);
+		model.addAttribute("countGradeList", countGradeList);
 		model.addAttribute("sName", sName);
 		model.addAttribute("testNum", testNum);
 		model.addAttribute("gradeCode", gradeCode);
@@ -99,9 +99,9 @@ public class GradeController {
 	public List<Grade> searchGrade(Model model,
 									@RequestParam(value = "lecGd", required = false) String lecGd,
 									@RequestParam(value = "lecGds", required = false) String lecGds) {
-		List<Grade> gradeList = gradeService.searchGrade(lecGd, lecGds);
-		model.addAttribute("gradeList", gradeList);
-		return gradeList;
+		List<Grade> countGradeList = gradeService.searchGrade(lecGd, lecGds);
+		model.addAttribute("countGradeList", countGradeList);
+		return countGradeList;
 
 	}
 
@@ -119,7 +119,7 @@ public class GradeController {
 		String gradeCode = gradeService.gradeCode();
 		model.addAttribute("gradeCode", gradeCode);
 		model.addAttribute("result", result);
-		model.addAttribute("title", "성적입력하기");
+		model.addAttribute("title", "성적등록페이지");
 		return "redirect:/getGradeList";
 	}
 	
@@ -129,11 +129,8 @@ public class GradeController {
 	public String updateGrade(Model model,
 							@RequestParam(value="gradeManCode", required= false) String gradeManCode) {
 		Grade grade = gradeService.getGradeDetailList(gradeManCode);
-		logger.info("===============================");
-		logger.info("@GetMapping updateGrade");
-		logger.info("===============================");
-		logger.info("성적수정" + grade);
 		model.addAttribute("Grade", grade);
+		model.addAttribute("title", "성적수정페이지");
 		return "grade/modifyGrade";
 	
 	}
@@ -141,10 +138,6 @@ public class GradeController {
 	//성적수정하기
 	@PostMapping("/updateGrade")
 	public String updateGrade(Grade grade) {
-		logger.info("===============================");
-		logger.info("@PostMapping updateGrade");
-		logger.info("===============================");
-		logger.info("성적수정" + grade);
 		gradeService.updateGrade(grade);
 		return "redirect:/getGradeList";
 	}

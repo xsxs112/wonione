@@ -52,6 +52,7 @@ public class ScholarshipController {
 		model.addAttribute("currentPage", currentPage);
 		List<Map<String,Object>> sName = scholarshipService.sName();
 		List<Map<String,Object>> sMoney = scholarshipService.sMoney();
+		model.addAttribute("title", "장학금 지급리스트");
 		model.addAttribute("sName", sName);
 		model.addAttribute("sMoney", sMoney);
 		return "grade/scholarshipList";
@@ -75,6 +76,7 @@ public class ScholarshipController {
 									@RequestParam(value="pmInfoCode" ,required = false) String pmInfoCode) {
 		ScholarShip scholarshipDetail = scholarshipService.ScholarDetailList(pmInfoCode);
 		model.addAttribute("scholarshipDetail", scholarshipDetail);
+		model.addAttribute("title", "장학금 지급상세보기");
 		return "grade/scholarshipDetail";
 	}
 	
@@ -99,15 +101,15 @@ public class ScholarshipController {
 								@RequestParam(value = "awaBp", required = false) String awaBp,
 								@RequestParam(value = "awaBpSc", required = false) String awaBpSc) {
 		if(awaBp.equals("mr_name")) awaBp = "r1." + awaBp;
-		List<ScholarShip> scholarshipList = scholarshipService.serchScholar(awaBp, awaBpSc);
+		List<ScholarShip> countScholarShipList = scholarshipService.serchScholar(awaBp, awaBpSc);
 		List<Map<String,Object>> sName = scholarshipService.sName();
 		List<Map<String,Object>> sMoney = scholarshipService.sMoney();
 		String scholarCode = scholarshipService.ScholarReCode();
 		model.addAttribute("sName", sName);
 		model.addAttribute("sMoney", sMoney);
 		model.addAttribute("scholarCode", scholarCode);
-		model.addAttribute("scholarshipList", scholarshipList);
-		return "grade/scholarship";
+		model.addAttribute("countScholarShipList", countScholarShipList);
+		return "grade/scholarshipList";
 	}
 	
 	//조건검색
@@ -116,9 +118,9 @@ public class ScholarshipController {
 	public List<ScholarShip> serchScholarList(Model model
 											,@RequestParam(value = "awaBp", required = false) String awaBp,
 											 @RequestParam(value = "awaBpSc", required = false) String awaBpSc) {
-		List<ScholarShip>  ScholarShipResult = scholarshipService.serchScholar(awaBp, awaBpSc);
-		model.addAttribute("ScholarShipResult", ScholarShipResult);
-		return ScholarShipResult;
+		List<ScholarShip>  countScholarShipList = scholarshipService.serchScholar(awaBp, awaBpSc);
+		model.addAttribute("countScholarShipList", countScholarShipList);
+		return countScholarShipList;
 	}
 	
 	//삭제처리

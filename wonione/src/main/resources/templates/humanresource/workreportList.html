@@ -4,7 +4,7 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
-		<title th:text="title"></title> 
+		<title th:text="${title}"></title> 
 	</th:block>
 	<th:block layout:fragment="customContent">
 	 <div class="product-status mg-b-15">
@@ -43,7 +43,7 @@
 									</tr>
                                   	<tr th:each="r : ${listReport}">
 										<td th:text=${r.lecOpenCode}></td>
-										<td th:text=${r.lecOpenScheCode}></td>
+										<td th:text=${r.lecName}></td>
 										<td th:text=${r.lecTarget}></td>
 										<td th:text=${r.mrName}></td>
 										<td th:text=${r.openLecRegDate}></td>
