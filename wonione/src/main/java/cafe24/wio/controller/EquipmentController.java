@@ -82,17 +82,7 @@ public class EquipmentController {
 		
 		return "equipment/equipmentList";
 	}
-	
-	//비품 리스트 메인페이지 view로 forward
-	@GetMapping("/equipmentListMain")
-	public String equipmentListMain(Model model) {
 
-		model.addAttribute("title", "비품 리스트 메인페이지");
-		model.addAttribute("mainTitle", "비품 리스트 메인페이지");
-		
-		return "equipment/equipmentListMain";
-	}
-	
 	//비품정보등록
 	@PostMapping("/addEquipment")
 	public String addEquipment(Equipment equipment
@@ -118,23 +108,5 @@ public class EquipmentController {
 		
 		return "equipment/addEquipment";
 	}
-	
-	//비품등록 메인페이지 view로 forward
-	@GetMapping("/addEquipmentMain")
-	public String equipRegMain(Model model) {
-		
-		model.addAttribute("title", "등록 메인페이지");
-		model.addAttribute("mainTitle", "등록 메인페이지");
-		
-		return "equipment/addEquipmentMain";
-	}
-	
-	//비품관리 메인페이지 view로 forward
-	@GetMapping("/equipmentManage")
-	public String equipmentMain(Model model) {
-		
-		model.addAttribute("title", "비품관리 메인페이지");
-		model.addAttribute("mainTitle", "비품관리 메인페이지");
-		return "equipment/equipmentManage";
-	}
+
 }

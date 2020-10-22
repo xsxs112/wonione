@@ -372,11 +372,11 @@ public class TextbookService {
 	}
 	
 	/**
-	 * 보유 교재리스트 조회
-	 * @param whTextbook
+	 * 교재 입고내역 리스트
+	 * @param currentPage
 	 * @return Map<Strin, Object> resultMap
 	 */
-	public Map<String, Object> getTextbookOwnList(int currentPage){
+	public Map<String, Object> getTextbookWahoList(int currentPage){
 		 final int ROW_PER_PAGE = 7;
 	      
 	      int startRow = 0;
@@ -400,7 +400,7 @@ public class TextbookService {
 	      
 	      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
 	      
-	      List<Map<String, Object>> textbookOwnList = textbookMapper.getTextbookOwnList(txbMap);
+	      List<Map<String, Object>> textbookOwnList = textbookMapper.getTextbookWahoList(txbMap);
 	      
 	      if(currentPage >= (lastPage-4)) {
 	         lastPageNum = lastPage;

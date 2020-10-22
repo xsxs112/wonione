@@ -37,7 +37,7 @@
                                 <table>
                                     <tr>
 				      				  <th>교재입고코드</th>
-									  <th>교재코드</th>
+									  <th>교재정보보기</th>
 									  <th>교재명</th>
 									  <th>출판사</th>
 									  <th>저자</th>
@@ -50,7 +50,7 @@
 							<th:block th:each="gtl : ${getTextbookList}">
 									<tr>
 									  <td th:text="${gtl.whTxbCode}"></td>
-									  <td th:text="${gtl.txbCode}"></td>
+									  <td><a th:value="${gtl.txbCode}" role="button">교재정보보기</a></td>
 									  <td th:text="${gtl.txbName}"></td>
 									  <td th:text="${gtl.txbPublisher}"></td>
 									  <td th:text="${gtl.txbAuthor}"></td>
@@ -94,8 +94,8 @@
 								</ul>
                             </div>
                             <div class="container-fluid" style="margin: 10px;">
-								<a th:if="${currentPage eq null}" href="/textbookOwnList" class="btn btn-default" role="button">전체리스트보기</a>
-								<a href="/textbookManage" class="btn btn-default" role="button">교재관리 메인페이지로</a>
+								<a th:if="${currentPage eq null}" href="/textbookWahoList" class="btn btn-default" role="button">전체리스트보기</a>
+								<a href="#" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 							</div>
                         </div>
                     </div>
