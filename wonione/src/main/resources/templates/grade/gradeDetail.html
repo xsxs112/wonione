@@ -4,7 +4,7 @@
 	  layout:decorate="layout/default">
 	
 	<th:block layout:fragment="customTitle">
-		<title th:text="title"></title>
+		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
 	<form action="/getGradeList" class="container-fluid" style="text-align:center">
@@ -47,16 +47,6 @@
 				                                          </div>
 				                                </div>
 				                           </div>
-				                           		 <div class="form-group-inner">
-				                                      <div class="row">
-				                                          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-				                                               <label class="login2 pull-right-pro">수강과목</label>
-				                                          </div>
-				                                          <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-				                                                <label class="form-control" th:text="${g.lecName}" th:name="lecName"></label>
-				                                           </div>
-				                                      </div>
-				                                   </div>
 				                                <div class="form-group-inner">
 				                                      <div class="row">
 				                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -77,42 +67,32 @@
 				                                             </div>
 				                                        </div>
 				                                  </div>
-				                         		 <div class="form-group-inner">
-				                              		<div class="row">
-				                                  		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-				                                     		 <label class="login2  pull-right-pro">과정상태</label>
-				                                 		 </div>
-				                                 		 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-				                                      <label class="form-control"></label>
-				                                  </div>
-				                              </div>
-				                          </div>
-	                                         <div class="form-group-inner">
-	                                             <div class="login-btn-inner">
-	                                                 <div class="row">
-	                                                 	 <div class="col-lg-3"></div>
-	                                                     <div class="col-lg-9">
-	                                                         <div class="login-horizental cancel-wp  form-bc-ele">
-																<div style= "margin-bottom:10px" th:each="g : ${Grade}">
-																<a class="btn btn-default btn-danger" th:href="@{/updateGrade(gradeManCode=${g.gradeManCode})}" role="button">수정하기</a>
-																<button type="submit" class="btn btn-default">리스트로 돌아가기</button>
-																<a class="btn btn-default btn-danger" th:href="@{/deleteCode(gradeManCode=${g.gradeManCode})}" role="button" >삭제하기</a>
-																</div>	
-	                                                      </div>
-	                                                  </div>
-	                                              </div>
-	                                          </div>
-	                                      </div>
-	                                 </div>
-	                             </div>
-	                         </div>
-	                     </div>
-	                 </div>
-	             </div>
+					                          </div>
+		                                         <div class="form-group-inner">
+		                                             <div class="login-btn-inner">
+		                                                 <div class="row">
+		                                                 	 <div class="col-lg-3"></div>
+		                                                     <div class="col-lg-9">
+		                                                         <div class="login-horizental cancel-wp  form-bc-ele">
+																	<div style= "margin-bottom:10px" th:each="g : ${Grade}">
+																	<a class="btn btn-default btn-danger" th:href="@{/updateGrade(gradeManCode=${g.gradeManCode})}" role="button">수정하기</a>
+																	<button type="submit" class="btn btn-default">리스트로 돌아가기</button>
+																	<a class="btn btn-default btn-danger" th:href="@{/deleteCode(gradeManCode=${g.gradeManCode})}" role="button" >삭제하기</a>
+																	</div>	
+		                                                      </div>
+		                                                  </div>
+		                                              </div>
+		                                          </div>
+		                                      </div>
+		                                 </div>
+		                             </div>
+		                         </div>
+		                     </div>
+		                 </div>
+		             </div>
+				</form>	
 			</th:block>
-         </div>
-	</form>	
-	</th:block>
-</html>
+		</th:block>
+	</html>
 
 
