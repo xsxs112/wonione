@@ -143,7 +143,7 @@ public class TextbookService {
 	      txbMap.put("startRow", startRow);
 	      txbMap.put("rowPerPage", ROW_PER_PAGE);
 
-	      List<SupplyTextbook> getTextbookSuppList = textbookMapper.getTextbookSuppList(txbMap);
+	      List<Map<String,Object>> getTextbookSuppList = textbookMapper.getTextbookSuppList(txbMap);
 	      double totalRowCount = textbookMapper.countSuppTxb();
 	      
 	      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
@@ -374,7 +374,7 @@ public class TextbookService {
 	/**
 	 * 교재 입고내역 리스트
 	 * @param currentPage
-	 * @return Map<Strin, Object> resultMap
+	 * @return Map<String, Object> resultMap
 	 */
 	public Map<String, Object> getTextbookWahoList(int currentPage){
 		 final int ROW_PER_PAGE = 7;
@@ -400,14 +400,14 @@ public class TextbookService {
 	      
 	      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
 	      
-	      List<Map<String, Object>> textbookOwnList = textbookMapper.getTextbookWahoList(txbMap);
+	      List<Map<String, Object>> textbookWahoList = textbookMapper.getTextbookWahoList(txbMap);
 	      
 	      if(currentPage >= (lastPage-4)) {
 	         lastPageNum = lastPage;
 	      }
 	      
 	      Map<String,Object> resultMap = new HashMap<String,Object>();
-	      resultMap.put("textbookOwnList", textbookOwnList);
+	      resultMap.put("textbookWahoList", textbookWahoList);
 	      resultMap.put("lastPage", lastPage);
 	      resultMap.put("startPageNum", startPageNum);
 	      resultMap.put("lastPageNum", lastPageNum);

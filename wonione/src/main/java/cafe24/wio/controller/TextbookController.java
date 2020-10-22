@@ -319,6 +319,15 @@ public class TextbookController {
 		return "textbookresource/textbookWahoList";
 	}
 	
+	//교재정보상세보기 ajax
+	@PostMapping(value="/txbDetail", produces = "application/json")
+	@ResponseBody
+	public TextbookBasicInfo txbDetail(@RequestParam(value="txbCode", required = false)String txbCode) {
+		TextbookBasicInfo textbookBasicInfo =
+							textbookService.getOnlyTxbInfo(txbCode);
+		return textbookBasicInfo;
+	}
+	
 	//교재기본정보 리스트
 	@GetMapping("/textbookInfoList")
 	public String getTextbookInfoList(Model model
