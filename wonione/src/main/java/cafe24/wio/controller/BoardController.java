@@ -36,7 +36,7 @@ public class BoardController {
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("title", "공지사항");
 
-		return "board/notice";
+		return "board/noticeList";
 	}
 	
 	//공지사항 읽기
@@ -48,7 +48,7 @@ public class BoardController {
 		  model.addAttribute("Board", board);
 		  model.addAttribute("readNotice", "공지사항 읽기");
 		  
-		  return "board/noticeRead";
+		  return "board/noticeDetail";
 	}
 	
 	//공지사항 작성 @Post
@@ -85,7 +85,7 @@ public class BoardController {
 		   String boardNum = boardService.getBoardNum();
 		   System.out.println(boardNum + " <-- boardNum");
 		   model.addAttribute("boardNum", boardNum);
-	      return "board/noticeAdd";
+	      return "board/addNotice";
 	   }
 	  
 	//공지사항 수정 @Post
@@ -102,7 +102,7 @@ public class BoardController {
 		Board board = boardService.readNotice(boardNum);
 		System.out.println(board+"<--board");
 		model.addAttribute("Board", board);
-		return "board/noticeModify";
+		return "board/modifyNotice";
 	}
 	
 	//공지사항 삭제
@@ -122,7 +122,7 @@ public class BoardController {
 		List<Board> noticeList = boardService.getNoticeSearch(bdSk, bdSv);
 		logger.info(noticeList.toString());
 		model.addAttribute("noticeList", noticeList);
-		return "board/notice";
+		return "board/noticeList";
 	}
 	
 	//자료게시판 리스트 조회
@@ -135,7 +135,7 @@ public class BoardController {
 		model.addAttribute("title", "자료게시판");
 		model.addAttribute("dataList", dataList);
 		
-		return "board/dataLibrary";
+		return "board/dataLibraryList";
 	}
 	
 	//자료게시판 읽기
@@ -147,7 +147,7 @@ public class BoardController {
 		model.addAttribute("Board", board);
 		model.addAttribute("readDataLibrary", "자료게시판 읽기");
 		
-		return "board/dataLibraryRead";
+		return "board/dataLibraryDetail";
 	}
 	
 	//자료게시판 작성 @Post
@@ -184,7 +184,7 @@ public class BoardController {
 		   String boardNum = boardService.getBoardNum();
 		   System.out.println(boardNum + " <-- boardNum");
 		   model.addAttribute("boardNum", boardNum);
-	      return "board/dataLibraryAdd";
+	      return "board/addDataLibrary";
 	   }
 	
 	//자료게시판 수정 @Post
@@ -201,7 +201,7 @@ public class BoardController {
 		Board board = boardService.readDataLibrary(boardNum);
 		System.out.println(board+"<--board");
 		model.addAttribute("Board", board);
-		return "board/dataLibraryModify";
+		return "board/modifyDataLibrary";
 	}
 	
 	//자료게시판 삭제
@@ -221,7 +221,7 @@ public class BoardController {
 		List<Board> dataList = boardService.getDataLibrarySearch(bdSk, bdSv);
 		logger.info(dataList.toString());
 		model.addAttribute("dataList", dataList);
-		return "board/dataLibrary";
+		return "board/dataLibraryList";
 	}
 
 	//수강후기 리스트 조회
@@ -234,7 +234,7 @@ public class BoardController {
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("title", "수강후기");
 
-		return "board/review";
+		return "board/reviewList";
 	}
 	
 }

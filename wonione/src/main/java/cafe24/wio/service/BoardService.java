@@ -113,7 +113,7 @@ public class BoardService {
 	}
 
 	
-	//공지사항 조회
+	//수강후기 조회
 		public List<Review> getReview(Review review){
 			System.out.println(review + " <-- review");
 			List<Review> reviewList = boardMapper.getReview(review);

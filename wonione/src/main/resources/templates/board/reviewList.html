@@ -6,7 +6,13 @@
 	<th:block layout:fragment="customTitle">
 		<title>수강후기</title> 
 	</th:block>
+	
 	<th:block layout:fragment="customContent">
+	
+	<form action="addReview" class="container-fluid">		
+			 
+			<button type="submit" class="btn btn-default btn-success pull-right" style="margin-bottom:10px">수강후기 등록</button>
+			
 		<h1 align="center">수강후기</h1>
 		<table class ="table table-striped">
 			<thead>
@@ -14,7 +20,7 @@
 					<th>작성자 ID</th>
 					<th>작성자</th>
 					<th>평점</th>
-					<th>후기</th>
+					<th>코멘트</th>
 					<th>작성일자</th>
 				</tr>
 			</thead>
@@ -27,7 +33,9 @@
 					<td th:text=${r.reviewRegDate}></td>
 				</tr>
 			</tbody>
-		</table>
+		</table>	
+	</form>
+	
 	</th:block>
 	
 	<th:block layout:fragment="customJsScript">
