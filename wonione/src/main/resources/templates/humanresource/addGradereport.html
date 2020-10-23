@@ -46,7 +46,7 @@
 				$('#workReport').focus();
 				return;	
 			};
-	/* 		gradeReportForm.submit(); */
+			gradeReportForm.submit(); 
 		});
 	  
 	  $('#avgBtn').click(function(){
@@ -107,9 +107,8 @@
 		  
 	  });
 	  
-	  
 	  $('#lecOpenCodeBtn').click(function(){
-		  console.log('lecOpenCode click 이벤트');
+		  console.log('업무계획코드 click 이벤트');
 		  var lecOpenCode = $('select[name=lecName] option:selected').val();
 		  console.log(lecOpenCode + "<--lecOpenCode");
 		  
@@ -121,17 +120,17 @@
 			});
 		 
 			request.done(function(data) {
-				 /* alert(JSON.stringify(data)); */
-				 $('#lecOpenCode').attr('value', data.lecOpenCode);
-				console.log("data.lecOpenCode-->"+data.lecOpenCode);
+				 alert(JSON.stringify(data)); 
+				  $('#lecOpenCode').attr('value', data.lecOpenCode);
+				console.log("data.lecOpenCode-->"+ data.lecOpenCode); 
+				  }
 			});
-
+			
 			request.fail(function( jqXHR, textStatus ) {
 			  alert( "error" + textStatus );
 			});
 		  
 	  });  
-	  
 	  
 	  $('#testNumber').change(function(){
 		  console.log('회차 change이벤트');testNumber

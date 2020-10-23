@@ -60,7 +60,7 @@ private GradeReportService gradeReportService;
 	                        ,Model model, HttpSession session
 	                        ,@RequestParam(value="reportLecCode", required = false)String reportLecCode
 	                        ,@RequestParam(value="mrName", required = false) String mrName
-	                        ,@RequestParam(value="openLecCode", required = false) String openLecCode
+	                        ,@RequestParam(value="lecOpenCode", required = false) String lecOpenCode
 	                        ,@RequestParam(value="testNumber", required = false) String testNumber
 	                        ,@RequestParam(value="gradeAverage", required = false) int gradeAverage
 	                        ,@RequestParam(value="achievementRate",required=false) int achievementRate
@@ -101,7 +101,7 @@ private GradeReportService gradeReportService;
 	//업무계획서코드 가져오기
 	   @PostMapping("/lecOpenCodeNum")
 	   @ResponseBody
-	   public  Map<String, Object> lecOpenCodeNum(HttpSession session, 
+	   public Map<String, Object> lecOpenCodeNum(HttpSession session, 
 			   			@RequestParam(value = "lecOpenCode", required = false) String lecOsCode
 			   			 ) {
 		   String sessionId = session.getAttribute("SID").toString();

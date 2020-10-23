@@ -58,4 +58,7 @@ public interface GradeReportMapper {
 	//업무계획서 코드 조회하기
 	public Map<String, Object> lecOpenCodeNum(String sessionId, String lecOsCode);
 	
+	//선생님아이디이름가져오기
+	public Map<String, Object> teacherId();
+	
 }
