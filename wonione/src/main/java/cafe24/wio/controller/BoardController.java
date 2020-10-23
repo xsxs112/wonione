@@ -243,7 +243,7 @@ public class BoardController {
 			  					,Model model
 			  					,@RequestParam(value="reviewNum", required = false) String reviewNum
 			  					,@RequestParam(value="reviewWriterId", required = false) String reviewWriterId
-			  					,@RequestParam(value="reviewGrade", required = false) int reviewGrade
+			  					,@RequestParam(value="reviewGrade", required = false) double reviewGrade
 			  					,@RequestParam(value="reviewRegDate", required = false) String reviewRegDate
 			  					,@RequestParam(value="reviewComment", required = false) String reviewComment	  					
 			  					) {
