@@ -46,7 +46,7 @@
 				$('#workReport').focus();
 				return;	
 			};
-			gradeReportForm.submit();
+	/* 		gradeReportForm.submit(); */
 		});
 	  
 	  $('#avgBtn').click(function(){
@@ -106,6 +106,32 @@
 			});
 		  
 	  });
+	  
+	  
+	  $('#lecOpenCodeBtn').click(function(){
+		  console.log('lecOpenCode click 이벤트');
+		  var lecOpenCode = $('select[name=lecName] option:selected').val();
+		  console.log(lecOpenCode + "<--lecOpenCode");
+		  
+		  var request = $.ajax({
+			  url: "/lecOpenCodeNum",  
+			  method: "POST", 
+			  data: {  lecOpenCode : lecOpenCode }, 
+			  dataType: "json"
+			});
+		 
+			request.done(function(data) {
+				 /* alert(JSON.stringify(data)); */
+				 $('#lecOpenCode').attr('value', data.lecOpenCode);
+				console.log("data.lecOpenCode-->"+data.lecOpenCode);
+			});
+
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "error" + textStatus );
+			});
+		  
+	  });  
+	  
 	  
 	  $('#testNumber').change(function(){
 		  console.log('회차 change이벤트');testNumber
@@ -210,16 +236,19 @@
 	                                                    </div>
 	                                                </div>
 	                                            </div>
-	                                             <div class="form-group-inner">
-                                               	<div class="row">
-                                                  		 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                       	<label class="login2 pull-right-pro">업무계획서코드</label>
-                                                   	</div>
-                                                   <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-													<input type="text" class="form-control"  readonly="readonly">
-                                                   </div>
-                                               	</div>
-                                           	</div>
+	                                          <div class="form-group-inner">
+		                                   		 <div class="row">
+		                                       		 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+		                                           		 <label class="login2  pull-right-pro">업무계획서코드</label>
+		                                       		 </div>
+		                                        	 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+		                                            	 <div class="form-inline">
+		                                               		 <input type="text" style="text-align:center; width:400px" class="form-control" name="lecOpenCode" id="lecOpenCode" placeholder="업무계획서코드" readonly="readonly">
+		                                           			 <button type="button" class="btn btn-default" id="lecOpenCodeBtn">업무계획서코드</button>
+		                                            	 </div>
+		                                        	 </div>
+		                                    	</div>
+		                                	</div>
 	                                         <div class="form-group-inner">
 	                                                <div class="row">
 	                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -244,7 +273,7 @@
 		                                            <div class="form-inline">
 		                                            <input type="hidden" name ="claPeople" id="claPeople">
 	                                                   		<input type="hidden" id="targetCount" name="targetCount">
-		                                                <input type="text" class="form-control"  name="gradeAverage" id="gradeSum" placeholder="평균" readonly="readonly">
+		                                                <input type="text" style="text-align:center; width:400px" class="form-control"  name="gradeAverage" id="gradeSum" placeholder="평균" readonly="readonly">
 		                                           		<button type="button" class="btn btn-default" id="avgBtn">평균계산하기</button>
 		                                            </div>
 		                                        </div>
@@ -257,7 +286,7 @@
 		                                        </div>
 		                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 		                                            <div class="form-inline">
-		                                            <input type="number" class="form-control" name="achievementRate" id="achievementRate" placeholder="달성률" readonly="readonly">
+		                                            <input type="number" style="text-align:center; width:400px" class="form-control" name="achievementRate" id="achievementRate" placeholder="달성률" readonly="readonly">
 		                                           		<button type="button" class="btn btn-default" id="achievementBtn">달성률 계산하기</button>
 		                                            </div>
 		                                        </div>

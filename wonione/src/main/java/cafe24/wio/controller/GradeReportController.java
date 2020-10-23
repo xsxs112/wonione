@@ -101,11 +101,11 @@ private GradeReportService gradeReportService;
 	//업무계획서코드 가져오기
 	   @PostMapping("/lecOpenCodeNum")
 	   @ResponseBody
-	   public int lecOpenCodeNum(HttpSession session, 
-			   			@RequestParam(value = "lecOsCode", required = false) String lecOsCode
+	   public  Map<String, Object> lecOpenCodeNum(HttpSession session, 
+			   			@RequestParam(value = "lecOpenCode", required = false) String lecOsCode
 			   			 ) {
 		   String sessionId = session.getAttribute("SID").toString();
-		   int lecOpenCodeNum = gradeReportService.lecOpenCodeNum(sessionId,lecOsCode);
+		   Map<String, Object> lecOpenCodeNum = gradeReportService.lecOpenCodeNum(sessionId,lecOsCode);
 		   return lecOpenCodeNum;
 		   
 	   }

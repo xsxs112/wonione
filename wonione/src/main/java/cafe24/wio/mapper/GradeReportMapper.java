@@ -56,6 +56,6 @@ public interface GradeReportMapper {
 	public Map<String, Object> studentTargetCount(String lecOsCode , String testRound);
 	
 	//업무계획서 코드 조회하기
-	public int lecOpenCodeNum(String sessionId, String lecOsCode);
+	public Map<String, Object> lecOpenCodeNum(String sessionId, String lecOsCode);
 	
 }

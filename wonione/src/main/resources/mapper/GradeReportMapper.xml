@@ -158,10 +158,10 @@
 
 
 <!-- 업무계획서코드 가져오기 -->
-<select id="lecOpenCodeNum" parameterType="String" resultType="int" >
+<select id="lecOpenCodeNum" parameterType="String" resultType="hashMap" >
 
 	SELECT
-		lec_open_code
+		ol.lec_open_code
 	FROM
 		wt_open_lecture AS ol
 	INNER JOIN
@@ -169,8 +169,9 @@
 	ON
 		ol.mr_id = rl.mr_id
 	WHERE
-		lec_open_sche_code = #{lecOsCode} and ol.mr_id = #{sessionId};
+		ol.lec_open_sche_code = #{lecOsCode} and ol.mr_id = #{sessionId};
 </select>
+
 
 
 <!-- 수업명가져오기   -->
@@ -304,12 +305,11 @@ SELECT
 ]]>
 </select>
 
-
 <!-- 반에 따른 학생수 -->
 <select id="studentCount" resultType="hashMap" parameterType="String">
 
 		SELECT 
-			cla_people as 'claPeople'
+			  cla_people as 'claPeople'
 			, lec_os_code
 		FROM 
 			wt_lecture_open 

@@ -120,8 +120,8 @@ public class GradeReportService {
 	 }
 	
 	//업무계획서 코드 조회하기
-		public int lecOpenCodeNum(String sessionId, String lecOsCode) {
-			int lecOpenCodeNum = gradeReportMapper.lecOpenCodeNum(sessionId, lecOsCode);
+		public Map<String, Object> lecOpenCodeNum(String sessionId, String lecOsCode) {
+			 Map<String, Object> lecOpenCodeNum = gradeReportMapper.lecOpenCodeNum(sessionId, lecOsCode);
 			return lecOpenCodeNum;
 	}
 	 
