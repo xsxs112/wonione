@@ -101,8 +101,8 @@ public class EquipmentService {
 	 * 비품 입고내역 조회
 	 * @return List WhEquipment equipWhList
 	 */
-	public List<WhEquipment> getEquipWhList(){
-		List<WhEquipment> equipWhList = equipmentMapper.getEquipWhList();
+	public List<Map<String,Object>> getEquipWhList(){
+		List<Map<String,Object>> equipWhList = equipmentMapper.getEquipWhList();
 		return equipWhList;
 	}
 	

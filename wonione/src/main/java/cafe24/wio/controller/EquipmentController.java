@@ -24,6 +24,7 @@ public class EquipmentController {
 	@Autowired
 	private EquipmentService equipmentService;
 	
+	//비품코드로 비품정보 조회 ajax 
 	@PostMapping("/getEquipListOnly")
 	@ResponseBody
 	public Map<String,Object> getEquipListOnly(
@@ -43,6 +44,7 @@ public class EquipmentController {
 		model.addAttribute("mainTitle", "검색결과는 아래와 같습니다");
 		List<Map<String,Object>> getEquipWhSearchList = equipmentService.getEquipWhSearchList(equipWhSk, equipWhSv);
 		model.addAttribute("equipWhList", getEquipWhSearchList);
+		model.addAttribute("href", "/equipWhList");
 		
 		return "equipment/equipWhList";
 	}
@@ -57,6 +59,7 @@ public class EquipmentController {
 		List<Equipment> getEquipSearchList =
 							equipmentService.getEquipSearchList(equipSk, equipSv);
 		model.addAttribute("equipmentList", getEquipSearchList);
+		model.addAttribute("href", "/equipmentList");
 		
 		return "equipment/equipmentList";
 	}
@@ -67,7 +70,7 @@ public class EquipmentController {
 		
 		model.addAttribute("title", "비품입고내역 조회");
 		model.addAttribute("mainTitle", "비품입고내역 조회");
-		List<WhEquipment> equipWhList = equipmentService.getEquipWhList();
+		List<Map<String,Object>> equipWhList = equipmentService.getEquipWhList();
 		model.addAttribute("equipWhList", equipWhList);
 		
 		return "equipment/equipWhList";
@@ -101,7 +104,7 @@ public class EquipmentController {
 
 		equipmentService.addEquipment(equipment);
 		
-		return "redirect:/equipmentManage";
+		return "redirect:/equipmentList";
 	}
 	
 	//비품 정보등록 페이지 view로 forward

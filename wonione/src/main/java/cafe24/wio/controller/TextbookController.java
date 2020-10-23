@@ -116,6 +116,8 @@ public class TextbookController {
 			,@RequestParam(value="suppSk", required=false) String suppTxbSk
 			,@RequestParam(value="suppTxbSv", required=false) String suppTxbSv) {
 		List<SupplyTextbook> suppTxbSearchResult = textbookService.getSuppTxbSearch(suppTxbSk, suppTxbSv);
+		model.addAttribute("title", "교재지급내역 검색");
+		model.addAttribute("mainTitle", "검색하신내용은 아래와 같습니다.");
 		model.addAttribute("getTextbookSuppList", suppTxbSearchResult);
 		return "textbookresource/textbookSupplyList";
 	}
@@ -126,6 +128,8 @@ public class TextbookController {
 			,@RequestParam(value="infoTxbSk", required=false) String infoTxbSk
 			,@RequestParam(value="infoTxbSv", required=false) String infoTxbSv) {
 		List<TextbookBasicInfo> txbInfoSearchResult = textbookService.getTxbInfoSearch(infoTxbSk, infoTxbSv);
+		model.addAttribute("title", "교재정보내역 검색");
+		model.addAttribute("mainTitle", "검색하신내용은 아래와 같습니다.");
 		model.addAttribute("textbookInfoList", txbInfoSearchResult);
 		return "textbookresource/textbookInfoList";
 	}
