@@ -17,11 +17,6 @@ public class GradeReport {
 	private String lecTarget;
 	private int claPeople;
 	
-<<<<<<< HEAD
-=======
-	
-	
->>>>>>> refs/heads/LSY
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
