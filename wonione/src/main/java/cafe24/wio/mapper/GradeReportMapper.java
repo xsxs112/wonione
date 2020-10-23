@@ -49,10 +49,13 @@ public interface GradeReportMapper {
 	//평균구하기
 	public Map<String, Object> gradeAvg(String lecCode, String testNum);
 	
-	//반에따른 학생수
+	//반에 따른 학생수
 	public Map<String, Object> studentCount(String lecOsCode);
 	
 	//반에따른 목표점넘은 학생수
 	public Map<String, Object> studentTargetCount(String lecOsCode , String testRound);
+	
+	//업무계획서 코드 조회하기
+	public Map<String, Object> lecOpenCodeNum(String sessionId, String lecOsCode);
 	
 }

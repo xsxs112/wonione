@@ -142,7 +142,7 @@
 				  #{gradeManCode}
 				, #{mrName}
 				, #{testNumber}
-				, #{gradeManScore}
+				, ${gradeManScore}
 				, NOW());
 
 </insert>
