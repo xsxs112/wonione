@@ -17,6 +17,7 @@ public class GradeReport {
 	private String lecTarget;
 	private int claPeople;
 	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -139,3 +140,4 @@ public class GradeReport {
 	}
 	
 }
+
