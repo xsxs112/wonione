@@ -7,29 +7,29 @@
 		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
-		<form class="form-inline " id="searchForm" action="/getWhTxbSearch" method="GET" >  
-			<select class="form-control" name="whTxbSk" id="selectWtSk">
-				<option disabled="disabled" selected="selected">::검색조건::</option>
-				<option value="wt.wh_txb_code">교재입고코드</option>
-				<option value="tbi.txb_code">교재코드</option>
-				<option value="tbi.txb_name">교재명</option>
-				<option value="tbi.txb_publisher">출판사</option>
-				<option value="tbi.txb_author">저자</option>
-				<option value="tbi.txb_writer">작성자아이디</option>
-			</select> 
-			<div class="form-group">
-			<input type="text" id="whTxbSv" class="form-control" name="whTxbSv" placeholder="검색어를 입력해주세요"/>
-				<div class="input-group-btn pull-right">
-					<button class="btn btn-default" id="searchWhBtn" type="button">검색</button>
-				</div>
-			</div>
-		</form>
 	        <div class="product-status mg-b-15">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-status-wrap">
+                        <div class="product-status-wrap drp-lst">
                             <h4 th:text="${mainTitle}"></h4>
+							<form class="form-inline " id="searchForm" action="/getWhTxbSearch" method="GET" >  
+								<select class="form-control" name="whTxbSk" id="selectWtSk">
+									<option disabled="disabled" selected="selected">::검색조건::</option>
+									<option value="wt.wh_txb_code">교재입고코드</option>
+									<option value="tbi.txb_code">교재코드</option>
+									<option value="tbi.txb_name">교재명</option>
+									<option value="tbi.txb_publisher">출판사</option>
+									<option value="tbi.txb_author">저자</option>
+									<option value="tbi.txb_writer">작성자아이디</option>
+								</select> 
+								<div class="form-group">
+								<input type="text" id="whTxbSv" class="form-control" name="whTxbSv" placeholder="검색어를 입력해주세요"/>
+									<div class="input-group-btn pull-right">
+										<button class="btn btn-default" id="searchWhBtn" type="button">검색</button>
+									</div>
+								</div>
+							</form>                            
                             <div class="add-product">
                                 <a href="/addTextbookWaho">입고내역등록하기</a>
                             </div>

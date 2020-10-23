@@ -23,6 +23,20 @@ public class LectureController {
 	@Autowired
 	private LectureService lectureService;
 
+	@GetMapping("/lecOsSearch")
+	public String getLecOsSearch(Model model
+								,@RequestParam(value="lecOsSk",required = false)String lecOsSk
+								,@RequestParam(value="lecOsSv",required = false)String lecOsSv) {
+		List<Map<String,Object>> lectureOsList = 
+								lectureService.getLecOsSearch(lecOsSk, lecOsSv);
+		
+		model.addAttribute("title", "강의 예정 리스트");
+		model.addAttribute("mainTitle", "강의 예정 리스트");
+		model.addAttribute("lectureOsList", lectureOsList);
+		
+		return "lecture/lectureOpenScheduleList";
+	}
+	
 	//강의예정리스트 날짜로 체크 ajax
 	@PostMapping(value="/lecOsCheckDate", produces="application/json")
 	@ResponseBody

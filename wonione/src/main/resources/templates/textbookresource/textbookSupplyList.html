@@ -7,28 +7,27 @@
 		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
- 	<form class="form-inline" id="searchForm" action="/getSuppTxbSearch" method="GET" style="margin: 10px;">  
-			<select class="form-control" name="suppSk" id="selectStSk">
-				<option disabled="disabled" selected="selected">::검색조건::</option>
-				<option value="sup_txb_code">교재지급코드</option>
-				<option value="txb_code">교재명</option>
-				<option value="txb_receiver_id">지급대상</option>
-				<option value="sup_txb_writer">작성자아이디</option>
-			</select> 
-			<div class="form-group">
-			<input type="text" id="suppTxbSv" class="form-control" name="suppTxbSv" placeholder="검색어를 입력해주세요"/>
-				<div class="input-group-btn pull-right">
-					<button class="btn btn-default form-group" id="searchStBtn" type="button">검색</button>
-				</div>
-			</div>
-		</form>
-	
 	 <div class="product-status mg-b-15">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-status-wrap">
+                        <div class="product-status-wrap drp-lst">
                             <h4 th:text="${mainTitle}"></h4>
+						 	<form class="form-inline" id="searchForm" action="/getSuppTxbSearch" method="GET" style="margin: 10px;">  
+								<select class="form-control" name="suppSk" id="selectStSk">
+									<option disabled="disabled" selected="selected">::검색조건::</option>
+									<option value="sup_txb_code">교재지급코드</option>
+									<option value="txb_code">교재명</option>
+									<option value="txb_receiver_id">지급대상</option>
+									<option value="sup_txb_writer">작성자아이디</option>
+								</select> 
+								<div class="form-group">
+								<input type="text" id="suppTxbSv" class="form-control" name="suppTxbSv" placeholder="검색어를 입력해주세요"/>
+									<div class="input-group-btn pull-right">
+										<button class="btn btn-default form-group" id="searchStBtn" type="button">검색</button>
+									</div>
+								</div>
+							</form>                            
                             <div class="add-product">
                                 <a href="/addTextbookSupply">지급내역등록하기</a>
                             </div>

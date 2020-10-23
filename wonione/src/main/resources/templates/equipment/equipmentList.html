@@ -7,28 +7,28 @@
 		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
-			<form class="form-inline" id="searchForm" action="/equipSearch" method="GET" >  
-			<select class="form-control" name="equipSk" id="selectEqSk">
-				<option disabled="disabled" selected="selected">::검색조건::</option>
-				<option value="eq_code">비품코드</option>
-				<option value="eq_category">물품카테고리</option>
-				<option value="eq_name">품명</option>
-				<option value="eq_model_name">물품모델명</option>
-				<option value="eq_writer">작성자아이디</option>
-			</select> 
-			<div class="form-group">
-			<input type="text" id="equipSv" class="form-control" name="equipSv" placeholder="검색어를 입력해주세요"/>
-				<div class="input-group-btn pull-right">
-					<button class="btn btn-default form-group" id="searchEqBtn" type="button">검색</button>
-				</div>
-			</div>
-		</form>
 	        <div class="product-status mg-b-15">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-status-wrap">
+                        <div class="product-status-wrap drp-lst">
                             <h4 th:text="${mainTitle}"></h4>
+							<form class="form-inline" id="searchForm" action="/equipSearch" method="GET" >  
+								<select class="form-control" name="equipSk" id="selectEqSk">
+									<option disabled="disabled" selected="selected">::검색조건::</option>
+									<option value="eq_code">비품코드</option>
+									<option value="eq_category">물품카테고리</option>
+									<option value="eq_name">품명</option>
+									<option value="eq_model_name">물품모델명</option>
+									<option value="eq_writer">작성자아이디</option>
+								</select> 
+								<div class="form-group">
+								<input type="text" id="equipSv" class="form-control" name="equipSv" placeholder="검색어를 입력해주세요"/>
+									<div class="input-group-btn pull-right">
+										<button class="btn btn-default form-group" id="searchEqBtn" type="button">검색</button>
+									</div>
+								</div>
+							</form>                            
                             <div class="add-product">
                                 <a href="/addEquipment">비품정보등록하기</a>
                             </div>
