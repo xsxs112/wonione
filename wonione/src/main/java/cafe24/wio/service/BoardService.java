@@ -15,6 +15,7 @@ public class BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	//공지 사항, 자료 게시판
 	//게시판 글 번호 자동증가
 	public String getBoardNum() {
 		
@@ -37,8 +38,6 @@ public class BoardService {
 		
 		return boardNum;
 	}
-	
-	
 	
 	//공지사항 조회
 	public List<Board> getNotice(Board board){
@@ -115,16 +114,51 @@ public class BoardService {
 	}
 
 	
-	//수강후기 조회
+	//수강 후기 조회
 		public List<Review> getReview(Review review){
 			System.out.println(review + " <-- review");
 			List<Review> reviewList = boardMapper.getReview(review);
 			return reviewList;
 		}
 		
-	//수강후기 작성
+	//수강 후기 작성
 	public int addReview(Review review) {
 		int write = boardMapper.addReview(review);
 		return write;		
+	}	
+	//수강 후기 글 번호 자동증가
+	public String getReviewNum() {
+		
+		Map<String, Object> reviewNumMax = boardMapper.getReviewNum();
+		
+		String tempCode = "review_000";
+		
+		int getMax = Integer.parseInt(reviewNumMax.get("max").toString());
+		
+		if(getMax<10) {
+			tempCode = "review_0000";
+		}else if(getMax<100) {
+			tempCode = "review_000";
+		}else if(getMax<1000) {
+			tempCode = "review_00";
+		}else if(getMax<10000) {
+			tempCode = "review_0";
+		}
+		String reviewNum = tempCode + String.valueOf(reviewNumMax.get("max"));
+		
+		return reviewNum;
 	}
+		
+	//자료게시판 수정
+	public int modifyReview(Review review) {
+		int modify = boardMapper.modifyReview(review);
+		return modify;
+	}
+	
+	//자료게시판 삭제
+	public int removeReview(String reviewNum) {
+		int remove = boardMapper.removeReview(reviewNum);
+		return remove;
+	}
+	
 }

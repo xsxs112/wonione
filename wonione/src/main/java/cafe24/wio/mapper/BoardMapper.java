@@ -11,6 +11,7 @@ import cafe24.wio.bean.Review;
 @Mapper
 public interface BoardMapper {
 	
+	//공지 사항, 자료 게시판
 	//공지 사항 목록 조회
 	public List<Board> getNotice(Board board);
 	
@@ -42,9 +43,19 @@ public interface BoardMapper {
 	public int removeBoard(String boardNum);
 	
 	
+	//수강후기
 	//수강 후기 목록 조회
 	public List<Review> getReview(Review review);
 
 	//수강 후기 등록
 	public int addReview(Review review);
+	//수강 후기 글 번호(PK) 자동증가
+	public Map<String, Object> getReviewNum();
+
+	//게시물 수정
+	public int modifyReview(Review review);
+	
+	//게시물 삭제
+	public int removeReview(String reviewNum);
+	
 }

@@ -19,7 +19,7 @@
 			<tr class="info">
 				<th colspan="3">후기 번호</th>
 				<td colspan="3">
-					<input type="text" class="form-control" th:value="${reviewNum}"  name="reviewNum">
+					<input type="text" class="form-control" th:value="${reviewNum}" name="reviewNum" readonly="readonly">
 				</td>
 			</tr>
 			<tr class="info">
@@ -32,16 +32,18 @@
 				 <th colspan="3">평점</th>
 				<td colspan="3">
 					0<input type="radio" name="reviewGrade" id="reviewGrade" value="0">
-					0.5<input type="radio" name="reviewGrade" id="reviewGrade" value="0.5">
 					1<input type="radio" name="reviewGrade" id="reviewGrade" value="1">
-					1.5<input type="radio" name="reviewGrade" id="reviewGrade" value="1.5">
 					2<input type="radio" name="reviewGrade" id="reviewGrade" value="2">
-					2.5<input type="radio" name="reviewGrade" id="reviewGrade" value="2.5">
 					3<input type="radio" name="reviewGrade" id="reviewGrade" value="3">
-					3.5<input type="radio" name="reviewGrade" id="reviewGrade" value="3.5">
 					4<input type="radio" name="reviewGrade" id="reviewGrade" value="4">
+					5<input type="radio" name="reviewGrade" id="reviewGrade" value="5">				
+					<!-- 소수는 입력할 수 없는 문제점 미해결
+					0.5<input type="radio" name="reviewGrade" id="reviewGrade" value="0.5">
+					1.5<input type="radio" name="reviewGrade" id="reviewGrade" value="1.5">
+					2.5<input type="radio" name="reviewGrade" id="reviewGrade" value="2.5">
+					3.5<input type="radio" name="reviewGrade" id="reviewGrade" value="3.5">
 					4.5<input type="radio" name="reviewGrade" id="reviewGrade" value="4.5">
-					5<input type="radio" name="reviewGrade" id="reviewGrade" value="5">
+					 -->
 				</td>
 			</tr>
 			<tr class="info">	
@@ -65,14 +67,14 @@
 	$(function(){
 		$('#btnSubmit').click(function(){
 			var reviewForm = $('#reviewForm');
-			var reviewGrade = $('#reviewGrade');
+			var reviewGrade = $('#reviewGrade:checked').length;
 			var reviewComment = $('#reviewComment');
 			console.log(reviewGrade + '<--reviewGrade');
 			console.log(reviewComment + '<--reviewComment');
 			
-			if(reviewGrade.val() == ''){
+			if(reviewGrade == 0){
 				alert('평점을 선택해주세요.');
-				reviewGrade.focus();
+				$('.reviewGrade').eq(0).focus();
 				return;
 			}else if(reviewComment.val() == ''){
 				alert('내용을 입력해주세요.');
