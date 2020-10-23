@@ -15,6 +15,21 @@
 	
 	</select>
 	
+	<select id = "getAttTimeManage" parameterType="string" resultType="AttTimeManage">
+
+		SELECT m.mr_name AS mrName
+			, att_start_time AS workStTime
+			, att_end_time AS workEndTime
+			, meal_start_time AS mStTime
+			, meal_end_time AS mEndTime
+			, work_time AS workTime
+			, meal_time AS mealTime
+		FROM wt_attendance_time_manage AS t
+				LEFT JOIN wt_member_registration AS m
+				ON t.mr_id = m.mr_id
+		WHERE m.mr_id = #{SID};
+		
+	</select>
 	
 	
 	<delete id="deleteAttendance" parameterType="string">
@@ -226,12 +241,13 @@
 				, going_out_time as goingOut
 				, going_out_stTime as goingOutStTime
 				, going_out_endTime as goingOutEndTime
+				, confirm as confirm
 		FROM wt_attendance_management AS a
 				LEFT JOIN wt_member_registration AS m
 				ON a.mr_id = m.mr_id
 				LEFT JOIN wt_level AS l
 				on m.level_num = l.level_num
-		WHERE  (confirm = '확인' OR confirm = '수정 완료' )AND l.level_num<![CDATA[ < ]]>4
+		WHERE confirm LIKE'%확인%' AND l.level_num<![CDATA[ < ]]>4
 	
 	</select>
 	
@@ -239,12 +255,20 @@
 	<update id = "manageConfirm" parameterType="String">
 		UPDATE wt_attendance_management
 	SET
-		confirm='확인'
+		confirm=#{confirm}
 	WHERE 
 		attendance_code = #{attCode};
 	</update>
 	
+	<!-- confirm이 null인지 확인 -->
+	<select id = "countConfirm" parameterType="string" resultType="string">
 	
+		SELECT confirm
+		FROM wt_attendance_management
+		WHERE attendance_code = #{attCode};
+
+	
+	</select>
 	<!-- 출근 확인 전 리스트 -->
 	<select id = "noConfirmList" parameterType="string" resultType="AttManagement">
 	
@@ -267,7 +291,7 @@
 				ON a.mr_id = m.mr_id
 				LEFT JOIN wt_level AS l
 				on m.level_num = l.level_num
-		WHERE  (confirm != '확인'AND confirm != '수정 완료')OR ISNULL(confirm) AND l.level_num <![CDATA[ < ]]>4
+		WHERE  !(confirm LIKE'%확인%')OR ISNULL(confirm)AND l.level_num <![CDATA[ < ]]>4
 		ORDER BY attendance_date DESC;
 
 	
