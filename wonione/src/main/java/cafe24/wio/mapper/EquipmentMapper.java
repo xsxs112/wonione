@@ -26,7 +26,7 @@ public interface EquipmentMapper {
 											, String equipSv);
 
 	//비품 입고내역 조회
-	public List<WhEquipment> getEquipWhList();
+	public List<Map<String,Object>> getEquipWhList();
 
 	//페이징을 위한 비품정보카운팅 
 	public int countEquipment();

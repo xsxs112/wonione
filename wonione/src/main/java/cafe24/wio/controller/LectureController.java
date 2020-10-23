@@ -33,6 +33,7 @@ public class LectureController {
 		model.addAttribute("title", "강의 예정 리스트");
 		model.addAttribute("mainTitle", "강의 예정 리스트");
 		model.addAttribute("lectureOsList", lectureOsList);
+		model.addAttribute("href", "/lectureOpenScheduleList");
 		
 		return "lecture/lectureOpenScheduleList";
 	}

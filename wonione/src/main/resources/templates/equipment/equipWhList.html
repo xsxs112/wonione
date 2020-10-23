@@ -16,10 +16,10 @@
 							<form class="form-inline" id="searchForm" action="/equipWhSearch" method="GET" >  
 								<select class="form-control" name="equipWhSk" id="selectEqWhSk">
 									<option disabled="disabled" selected="selected">::검색조건::</option>
-									<option value="wh_eq_code">비품입고코드</option>
-									<option value="eq_code">비품코드</option>
-									<option value="wh_eq_name">품명</option>
-									<option value="wh_eq_writer">작성자아이디</option>
+									<option value="wq.wh_eq_code">비품입고코드</option>
+									<option value="wq.eq_code">비품코드</option>
+									<option value="wq.wh_eq_name">품명</option>
+									<option value="mr.mr_name">작성자</option>
 								</select> 
 								<div class="form-group">
 								<input type="text" id="equipWhSv" class="form-control" name="equipWhSv" placeholder="검색어를 입력해주세요"/>
@@ -41,7 +41,7 @@
 									  <th>수량</th>
 									  <th>총구매액</th>
 									  <th>입고일자</th>
-									  <th>작성자아이디</th>
+									  <th>작성자</th>
 									  <th>등록일자</th>
 									  <th>비고</th>
 									  <th>수정/삭제</th>
@@ -63,7 +63,7 @@
 									<td th:text="${ewl.whEqQuantity}"></td>
 									<td th:text="${ewl.whEqTotal}"></td>
 									<td th:text="${ewl.whEqDate}"></td>
-									<td th:text="${ewl.whEqWriter}"></td>
+									<td th:text="${ewl.whEqWriterName}"></td>
 									<td th:text="${ewl.whEqRegDate}"></td>
 									<td th:text="${ewl.whEqRemark}"></td>
 									<td>
@@ -98,12 +98,12 @@
 									<li class="page-item"><a class="page-link" href="#">다음</a></li>
 								</ul>
                             </div>
-                        	<div class="container-fluid" style="margin: 10px;">
-								<a href="/equipWhList" class="btn btn-default" role="button">전체리스트보기</a>
-							</div>		
+                         	<th:block th:unless= "${href eq null}">
+	                           <div class="container-fluid" style="margin: 10px;">	
+	                           		<a th:href="${href}" class="btn btn-default" role="button">전체리스트보기</a>
+								</div>
+							</th:block>    	
                             <div class="btn-group" style="margin: 10px;">
-								<a href="/#" class="btn btn-default " role="button">리스트메인페이지</a>
-								<a href="/#" class="btn btn-default " role="button">비품관리 메인페이지</a>
 							</div>
                         </div>
                     </div>

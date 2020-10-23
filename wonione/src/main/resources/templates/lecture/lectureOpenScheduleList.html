@@ -100,9 +100,11 @@
 				                        </div>						                    
 										</th:block>
                              	   </table>
-                            	    <div class="container-fluid" style="margin: 10px;">
-										<a href="#" class="btn btn-default" role="button">메인페이지로</a>
-									</div>
+                             	   <th:block th:unless= "${href eq null}">
+	                            	    <div class="container-fluid" style="margin: 10px;">
+											<a th:href="${href}" class="btn btn-default" role="button">전체리스트보기</a>
+										</div>
+									</th:block>                            	   
 	                             </div>
 								</div>
 							</div>
@@ -259,7 +261,7 @@
 								location.href='/lectureList';
 						});
 						
-						request.fail(function( jqXHR, textStatus ) {
+						openLecture.fail(function( jqXHR, textStatus ) {
 						  alert( "Request failed: " + textStatus );
 						});
 						}
