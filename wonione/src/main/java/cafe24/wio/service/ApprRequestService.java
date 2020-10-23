@@ -22,6 +22,18 @@ public class ApprRequestService {
 	
 	
 	
+	public String getModifyRequest(String attCode) {
+		
+		
+		return apprMapper.getModifyRequest(attCode);
+	}
+	
+	public int deleteAttendance(String attCode) {
+		
+		
+		return apprMapper.deleteAttendance(attCode);
+	}
+	
 	public int attendanceModify(AttManagement attManagement) {
 		
 		

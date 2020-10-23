@@ -31,6 +31,24 @@ public class WorkController {
 	
 	
 	
+	@GetMapping("/getModifyRequest")
+	@ResponseBody
+	public String getModifyRequest(@RequestParam(value = "attCode", required = false) String attCode) {
+		
+		String modifyRequest = apprRequestService.getModifyRequest(attCode);
+		
+		return modifyRequest;
+	}
+	
+	
+	@GetMapping("/deleteAttendance")
+	public String deleteAttendance(@RequestParam(value = "attCode", required = false) String attCode) {
+		apprRequestService.deleteAttendance(attCode);
+		
+		return "redirect:/addAttManage";
+	}
+	
+	
 	@PostMapping("/attendanceModify")
 	public String attendanceModify(AttManagement attManagement ,@RequestParam(value = "attCode", required = false) String attCode
 									,@RequestParam(value = "attStTime", required = false) String attStTime

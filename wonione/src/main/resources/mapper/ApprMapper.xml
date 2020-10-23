@@ -7,6 +7,23 @@
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
 	
+	<select id = "getModifyRequest" parameterType="string" resultType="string">
+
+		SELECT modify_request as modifyRequest
+		FROM wt_attendance_management
+		WHERE attendance_code = #{attCode};
+	
+	</select>
+	
+	
+	
+	<delete id="deleteAttendance" parameterType="string">
+	
+		DELETE FROM wt_attendance_management WHERE attendance_code=#{attCode};
+	
+	</delete>
+	
+	
 	<update id = "attendanceModify" parameterType="AttManagement">
 		UPDATE wt_attendance_management
 		SET
@@ -214,7 +231,7 @@
 				ON a.mr_id = m.mr_id
 				LEFT JOIN wt_level AS l
 				on m.level_num = l.level_num
-		WHERE confirm = '확인' AND l.level_num<![CDATA[ < ]]>4
+		WHERE  (confirm = '확인' OR confirm = '수정 완료' )AND l.level_num<![CDATA[ < ]]>4
 	
 	</select>
 	
@@ -250,7 +267,7 @@
 				ON a.mr_id = m.mr_id
 				LEFT JOIN wt_level AS l
 				on m.level_num = l.level_num
-		WHERE  (confirm != '확인' or ISNULL(confirm)) AND l.level_num <![CDATA[ < ]]>4
+		WHERE  (confirm != '확인'AND confirm != '수정 완료')OR ISNULL(confirm) AND l.level_num <![CDATA[ < ]]>4
 		ORDER BY attendance_date DESC;
 
 	

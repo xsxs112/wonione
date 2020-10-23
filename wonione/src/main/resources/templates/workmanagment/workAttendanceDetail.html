@@ -24,10 +24,34 @@
 
 	<script type="text/javascript">
 		$(function() {
-
+			
+			
+			var attCode = $('#attCode').val();
+			var request = $.ajax({
+				url : "/getModifyRequest",
+				method : "GET",
+				data : {
+					attCode : attCode
+				},
+				dataType : "text"
+			});
+			request.done(function(data) {
+				$('textarea').attr("placeholder",data);
+				
+			});
+			request.fail(function(jqXHR, textStatus) {
+				alert("Request failed: " + textStatus);
+			});
+			
+			
+			
+			
+			
 			$('#modifyRequestBtn').click(function() {
 				$('#modifyRequestForm').submit();
 			})
+			
+			
 			
 		})
 	</script>
@@ -54,8 +78,8 @@
 									<p style="font-size: 20px; font-weight: bold;">상세보기</p>
 									<br>
 									<form action="/attendanceModifyRequest" method="POST" id="modifyRequestForm">
-										<input type="hidden" name="mrId" >
-										<input type="hidden" name="attCode" th:value="${attManagementDetail.attCode}">
+										<input type="hidden" name="mrId" id ="mrId">
+										<input type="hidden" name="attCode" id = "attCode" th:value="${attManagementDetail.attCode}">
 										<div style="width: 50%; float: left" class="container-fluid">
 											<table id="tb" class="table table-striped">
 												<tr>
@@ -136,7 +160,7 @@
 												<tr>
 													<td>
 														<div class="form-group">
-															<textarea name="reReason" th:field="${attManagementDetail.modifyRequest}" class="form-control"></textarea>
+															<textarea name="reReason" placeholder="" class="form-control"></textarea>
 														</div>
 													</td>
 												</tr>
@@ -154,10 +178,18 @@
 					</div>
 				</div>
 			</div>
-			
-			
 		</div>
 	</div>
+	<script type="text/javascript">
+	
+	
+	
+	
+	
+	</script>
+	
+	
+	
 </th:block>
 
 <th:block layout:fragment="customJsScript">
