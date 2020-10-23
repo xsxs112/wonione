@@ -22,6 +22,18 @@ public class ApprRequestService {
 	
 	
 	
+	public String countConfirm(String attCode) {
+		
+		
+		return apprMapper.countConfirm(attCode);
+	}
+	
+	public AttTimeManage getAttTimeManage(String SID) {
+		
+		
+		return apprMapper.getAttTimeManage(SID);
+	}
+	
 	public String getModifyRequest(String attCode) {
 		
 		
@@ -146,12 +158,12 @@ public class ApprRequestService {
 	
 	
 	
-	public int manageConfirm(String attCode) {
+	public int manageConfirm(String attCode, String confirm) {
 		
 		
 		
 		
-		return apprMapper.manageConfirm(attCode);
+		return apprMapper.manageConfirm(attCode, confirm);
 	}
 	
 	

@@ -15,6 +15,10 @@ public interface ApprMapper {
 	
 	
 	
+	public String countConfirm(String attCode);
+
+	public AttTimeManage getAttTimeManage(String SID);
+	
 	public String getModifyRequest(String attCode);
 
 	public int deleteAttendance(String attCode);
@@ -52,7 +56,7 @@ public interface ApprMapper {
 	public int setGoingOut(AttManagement attManagement);
 	
 	
-	public int manageConfirm(String attCode);
+	public int manageConfirm(String attCode, String confirm);
 	
 	
 	public List<AttManagement> confirmList();
