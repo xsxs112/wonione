@@ -12,6 +12,18 @@
   
   
   		<h2>구성원 목록</h2>
+  		
+  		<form action="getWIOMemberList" method="POST">
+  			<select name="sk">
+  				<option selected="selected" disabled="disabled">::검색 조건::</option>
+  				<option value="mr_id">아이디</option>
+  				<option value="mr_name">이름</option>
+  				<option value="level_num">권한</option>
+  			</select>
+  			<input type="text" name="sv">
+  			<button type="submit">검색</button>
+  		</form>
+  		
 	<div class="container-fluid">
 	  	<table class="table table-bordered table-hover" style="margin: 10px">
 	  		<thead>

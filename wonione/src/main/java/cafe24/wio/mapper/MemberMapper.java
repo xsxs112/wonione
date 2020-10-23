@@ -10,8 +10,14 @@ import cafe24.wio.bean.Member;
 @Mapper
 public interface MemberMapper {
 	
+	// 9. 구성원 정보 검색 처리
+	public List<Member> getSearchMember(String sk, String sv);
+	
+	// 8. 구성원 등록 화면 셔틀 리스트 뽑아오기
+	public List<Map<String, Object>> getShuttleList();
+	
 	// 7. 구성원 등록 화면에서 권한 레벨이 아닌 권한명으로 선택하도록 변경
-	public List<Map<String, Object>> getMemberLevelName();
+	public List<Map<String,Object>> getMemberLevelName();
 	
 	// 6. 결제 정보 카테고리 조회
 	public List<Map<String, Object>> getPmResourceList();
