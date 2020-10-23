@@ -224,7 +224,7 @@ public class BoardController {
 		return "board/dataLibraryList";
 	}
 
-	//수강후기 리스트 조회
+	//수강 후기 리스트 조회
 	@RequestMapping(value = "/getReview", method = RequestMethod.GET)
 	public String getReview(Model model, Review review) {
 
@@ -260,11 +260,20 @@ public class BoardController {
 	//수강 후기 작성 @Get
 	@GetMapping("/addReview")
 	public String insertReview(Model model, HttpSession session) {
-		
-		   session.getAttribute("SID");	//세션 아이디 받기
-		   //String reviewNum = boardService.getReviewNum();
-		   //System.out.println(reviewNum + " <-- reviewNum");
-		   //model.addAttribute("reviewNum", reviewNum);
-	      return "board/addReview";
-	   }
+	
+	   session.getAttribute("SID");	//세션 아이디 받기
+	   String reviewNum = boardService.getReviewNum();
+	   System.out.println(reviewNum + " <-- reviewNum");
+	   model.addAttribute("reviewNum", reviewNum);
+      return "board/addReview";
+   }
+	
+	//수강 후기 삭제
+	@GetMapping("/removeReview")
+	public String removeReview(Model model
+			,@RequestParam(value="reviewNum", required = false) String reviewNum) {
+		boardService.removeReview(reviewNum);
+		System.out.println(reviewNum + "reviewNum");
+		return "redirect:/getReview";
+	}
 }
