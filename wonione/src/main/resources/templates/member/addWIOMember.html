@@ -9,14 +9,14 @@
 	
 	<th:block layout:fragment="customContent">
 	
-	<!-- click 이벤트 말고 onsubmit 으로 변경해서 진행해보기. 블로그 참고 10.19 -->
 	<script>
 	
 	$(function(){
 		
 		// 아이디 중복 검사 클릭, 유효성 검사 시작
 		
-		var idCheckResult = 0;
+		var idCheckResult   = 0;
+		var spaceCheck 		= /\s/g;	// 공백 체크용 정규식
 		
 		$('#idDuplCheck').click(function(){
 			
@@ -27,10 +27,12 @@
 			
 			if(mrId == '' || mrId == undefined){
 				alert('아이디를 입력해주세요.');
+			}else if(mrId.match(spaceCheck) || mrId.length <3){
+				alert('공백 또는 두자리 미만의 아이디를 입력하였습니다.');
 			}else{
 				var request = $.ajax({
 					  url: "/WIOMemberIdCheck",
-					  method:"POST",
+					  method:"GET",
 					  data: { mrId : mrId },
 					  dataType: "text"
 				});
@@ -76,14 +78,17 @@
 		
 		// 기타 항목 유효성 검사
 		
-		var infoSubmit = function(form){
-			
-			// 비밀번호 변수 재사용		
-			mrPw = '';
-			pwCheck = '';
+		$('#submitBtn').click(function(){
+				
+			var mrPw 			= $('input[name=mrPw]').val();
+			var pwCheck 		= $('input[name=pwCheck]').val();
 			var mrName 			= $('input[name=mrName]').val();
 			var levelNum 		= $('select[name=levelNum]').val();
 			var mrPhone 		= $('input[name=mrPhone]').val();
+			
+			// 연락처 양식 체크 정규식
+			var regPhone 		= /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+			
 			var mrAddr 			= $('input[name=mrAddr]').val();
 			var mrTargetScore	= $('input[name=mrTargetScore]').val();
 			var pmRCode 		= $('select[name=pmRCode]').val();
@@ -92,44 +97,58 @@
 			
 		
 			if(mrPw == '' || mrPw == undefined){
-				alert('비밀번호를 입력해주세요.');
+				alert('비밀번호를 입력해 주세요.');
 				mrPw.focus();
-				return false;
+				return;
+			}else if(mrPw.match(spaceCheck)){
+				alert('비밀번호에 공백을 입력하셨습니다.');
+				mrPw.focus();
+				return;
 			}else if(pwCheck == '' || pwCheck == undefined){
-				alert('비밀번호를 다시 입력해주세요.');
+				alert('비밀번호를 다시 입력해 주세요.');
 				pwCheck.focus();
-				return false;
-			}else if(mrName == '' || mrName == undefined){
-				alert('이름을 입력해주세요.');
+				return;
+			}else if(mrPw != pwCheck){
+				alert('입력하신 비밀번호를 확인해 주세요');
+				mrPw.focus();
+				return;
+			}
+			else if(mrName == '' || mrName == undefined){
+				alert('이름을 입력해 주세요.');
 				mrName.focus();
-				return false;
+				return;
 			}else if(levelNum == '::권한 선택::' || levelNum == undefined){
 				alert('권한을 선택해 주세요.');
 				levelNum.focus();
-				return false;
+				return;
 			}else if(mrPhone == '' || mrPhone == undefined){
-				alert('연락처를 입력해주세요');
+				alert('연락처를 입력해 주세요');
 				mrPhone.focus();
-				return false;
-			}else if(mrAddr == '' || mrAddr == undefined){
-				alert('주소를 입력해주세요');
-				mrAddr.focus();
-				return false;
-			}else if(mrTargetScore == '0'|| mrTargetScore == undefined){
-				if(levelNum == 4){
-					alert('목표 점수를 입력해주세요.');
-					mrTargetScore.focus();
-					return false;
-				}
-			}else if(pmRCode == '::결제 수단 선택::' || pmRCode == undefined){
-				alert('결제 수단을 선택해주세요.');
-				pmRCode.focus();
-				return false;
+				return;
+			}else if(!regPhone.test(mrPhone)){
+				alert('연락처 양식에 어긋납니다.');
+				mrPhone.focus();
+				return;
 			}
-		};
+			else if(mrAddr == '' || mrAddr == undefined){
+				alert('주소를 입력해 주세요');
+				mrAddr.focus();
+				return;
+			}else if(pmRCode == '::결제 수단 선택::' || pmRCode == undefined){
+				alert('결제 수단을 선택해 주세요.');
+				pmRCode.focus();
+				return;
+			}else if(mrAccountNum == '' || mrAccountNum == undefined){
+				alert('계좌 번호를 입력해 주세요.');
+				mrAccountNum.focus();
+				return;
+			}else if(idCheckResult != 1){
+				alert('중복된 아이디인지 체크해 주세요.');
+				return;
+			}
+			$('form').submit();
+		});
 	});
-	
-		
 		
 	
 	</script>
@@ -137,7 +156,7 @@
 		
 		<h2>기본 정보 입력</h2>
 		<div class="container-fluid">
-			<form onsubmit="return infoSubmit(this)" class="form-horizontal" style="margin: 10px;" action="/addWIOMember" method="post">
+			<form class="form-horizontal" style="margin: 10px;" action="/addWIOMember" method="post">
 				<table border="1" class="table table-condensed table-bordered">
 					
 					<div class="form-group">
@@ -179,8 +198,8 @@
 					<tr>
 						<td>권한</td>
 						<td>
-							<select name="levelNameList">
-								<option>::권한 선택::</option>
+							<select name="levelNum">
+								<option selected="selected" disabled="disabled">::권한 선택::</option>
 									<th:block th:each="n:${memberLevelName}">
 										<option th:value="${n.levelNum}" th:text="${n.levelName}"></option>
 									</th:block>
@@ -213,7 +232,7 @@
 						<td>결제 수단</td>
 						<td>
 							<select name="pmRCode">
-								<option>::결제 수단 선택::</option>
+								<option selected="selected" disabled="disabled">::결제 수단 선택::</option>
 									<th:block th:each="l:${pmResourceList}">
 										<option th:value="${l.pmResourceCode}" th:text="${l.pmResourceTitle}"></option>
 									</th:block>
@@ -231,7 +250,12 @@
 					<tr>
 						<td>셔틀버스 신청</td>
 						<td>
-							<input type="text" name="shuttleNum" class="form-control">
+							<select name="shuttleNum">
+								<option selected="selected" disabled="disabled">::셔틀버스 신청::</option>
+								<th:block th:each="s:${shuttleList}">
+									<option th:value="${s.shuttleName}" th:text="${s.shuttleName}"></option>
+								</th:block>
+							</select>
 						</td>
 					</tr>
 					
