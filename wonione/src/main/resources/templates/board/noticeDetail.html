@@ -56,8 +56,8 @@
 		</table>
 		
 		<div style=	"margin-bottom:10px" th:each="b : ${Board}">
-			<a th:href="@{/modifyNotice(boardNum=${b.boardNum})}" class="btn btn-default btn-warning">수정</a>
-			<a th:href="@{/removeNotice(boardNum=${b.boardNum})}" class="btn btn-default btn-danger">삭제</a>
+			<a th:href="@{/modifyNotice(boardNum=${b.boardNum})}" class="btn btn-default btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>수정</a>
+			<a th:href="@{/removeNotice(boardNum=${b.boardNum})}" class="btn btn-default btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</a>
 		</div>
 		<div style=	"margin-bottom:10px" th:each="b : ${Board}">
 			<a href="/getNotice" class="btn btn-default btn-info">리스트로 돌아가기</a>
