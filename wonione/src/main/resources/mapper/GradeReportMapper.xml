@@ -145,7 +145,7 @@
    VALUES
 		(
 		 #{reportLecCode}
-		, #{openLecCode}
+		, #{lecOpenCode}
 		, #{testNumber}
 		, #{mrName}
 		, #{workReport}
@@ -156,12 +156,25 @@
  
 </insert>
 
+<!-- 강사이름아이디 가져오기-->
+<select id="teacherId" resultType="hashMap" >
+
+	SELECT 
+		mr_id, 
+		mr_name, 
+		level_num
+	FROM 
+		wt_member_registration
+	where 
+	level_num = "2";
+
+</select>
 
 <!-- 업무계획서코드 가져오기 -->
 <select id="lecOpenCodeNum" parameterType="String" resultType="hashMap" >
 
-	SELECT
-		ol.lec_open_code
+	SELECT 
+ 		ol.lec_open_code as 'lecOpenCode'
 	FROM
 		wt_open_lecture AS ol
 	INNER JOIN
@@ -170,6 +183,7 @@
 		ol.mr_id = rl.mr_id
 	WHERE
 		ol.lec_open_sche_code = #{lecOsCode} and ol.mr_id = #{sessionId};
+	
 </select>
 
 
@@ -213,7 +227,6 @@
 		where
   		 m.mr_id = #{sessionId} and m.lec_open_sche_code = #{lecOsCode} ;
 	
-  		
 </select>
 
 <!-- 페이징 카운트-->

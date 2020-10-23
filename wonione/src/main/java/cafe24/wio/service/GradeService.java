@@ -56,6 +56,13 @@ public class GradeService {
 		List<Map<String, Object>> lecName = gradeMapper.gradeClassId();
 		return lecName;
 	}
+	//강의예정코드조회	
+		public List<Map<String, Object>> classCode(String sessionId) {
+		List<Map<String, Object>> clCode = gradeMapper.classCode(sessionId);
+		return clCode;
+		}	
+
+	
 	
 	//과목별학생이름가져오기
 	public List<Map<String, Object>> idName(String lecOsCode){

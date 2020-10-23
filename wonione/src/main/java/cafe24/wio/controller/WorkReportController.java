@@ -34,10 +34,6 @@ public class WorkReportController {
 		
 		Map<String,Object> countReportList =reportService.countReportList(currentPage);
 		
-		logger.info("===============================");
-		logger.info("@GetMapping getReportList");
-		logger.info("===============================");
-		
 		model.addAttribute("title", "업무계획서 리스트");
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("listReport", countReportList.get("listReport"));
@@ -52,13 +48,12 @@ public class WorkReportController {
 	@GetMapping("/workreportpage")
 	public String getReportDetailList(Model model,
 										@RequestParam(value="lecOpenCode", required = false) String lecOpenCode) {
-		logger.info("===============================");
-		logger.info("@GetMapping workreportpage");
-		logger.info("===============================");
 		Report report = reportService.getReportDetailList(lecOpenCode);
+		List<Map<String, Object>> wName = reportService.writeName();
+		
 		model.addAttribute("Report", report);
 		model.addAttribute("title", "업무계획서 상세보기");
-		
+		model.addAttribute("writeName", wName);
 		return "humanresource/workreportDetail";
 		
 	}
@@ -76,9 +71,6 @@ public class WorkReportController {
 	                        ,@RequestParam(value="lecEtc", required = false) String lecEtc
 	                        ,@RequestParam(value="openLecRegDate", required = false) String openLecRegDate
 	                        ) {
-		logger.info("===============================");
-		logger.info("@PostMapping workreportwrite");
-		logger.info("===============================");
 		  String sessionName= session.getAttribute("SNAME").toString();
 		  String sessionId = session.getAttribute("SID").toString();
 		  model.addAttribute("sessionName", sessionName);
@@ -96,9 +88,6 @@ public class WorkReportController {
 		  String sessionName= session.getAttribute("SNAME").toString();
 		  String sessionId = session.getAttribute("SID").toString();
 	      String codeResult =  reportService.getReCode();
-	      logger.info("===============================");
-	      logger.info("@GetMapping workreportwrite");
-	      logger.info("===============================");
 	      model.addAttribute("sessionName", sessionName);
 		  model.addAttribute("sessionId", sessionId);
 	      model.addAttribute("codeResult", codeResult);

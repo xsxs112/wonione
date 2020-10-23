@@ -46,5 +46,7 @@ public interface GradeMapper {
 	//과목에따른 수강학생이름 불러오기
 	public List<Map<String, Object>> idName(String lecOsCode);
 	
+	//강의코드불러오기
+	public List<Map<String, Object>> classCode(String sessionId);
 	
 }

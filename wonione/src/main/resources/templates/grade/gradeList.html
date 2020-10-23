@@ -47,7 +47,7 @@
 									<td>
 										<select name ="lecName" class="form-control" id="lecName">
 											<option value="">::과목명::</option>
-										<th:block th:each="c : ${gradeClassId}">
+										<th:block th:each="c : ${classCode}">
 											<option th:value="${c.lec_os_code}" id="nameId">[[${c.lec_name}]]</option>
 										</th:block>
 										</select>
