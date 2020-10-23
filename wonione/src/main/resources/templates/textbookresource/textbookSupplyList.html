@@ -29,7 +29,7 @@
 									</div>
 								</div>
 							</form>                            
-                            <div class="add-product">
+                            <div class="add-product" th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
                                 <a href="/addTextbookSupply">지급내역등록하기</a>
                             </div>
                             <div class="asset-inner">
@@ -42,6 +42,8 @@
 									  <th>지급일자</th>
 									  <th>작성자아이디</th>
 									  <th>등록일자</th>
+                                      <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
+                                      <th th:if="${SLEVEL eq '1'}">삭제</th>									  
                                     </tr>
 							<th:block th:each="gts : ${getTextbookSuppList}">
 									<tr>
@@ -59,6 +61,12 @@
 										<td th:text="${gts.supTxbDate}"></td>
 										<td th:text="${gts.supTxbWriterName}"></td>
 										<td th:text="${gts.supTxbRegDate}"></td>
+                                        <td th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
+                                            <button data-toggle="tooltip" title="수정" th:value="${gts.txbCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                        </td>
+                                        <td th:if="${SLEVEL eq '1'}">
+                                       		<button data-toggle="tooltip" title="삭제" th:value="${gts.txbCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                        </td>										
 									</tr>
 									<div class="login-form-area edu-pd mg-b-15">
 										<div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">

@@ -23,6 +23,7 @@ public class LectureController {
 	@Autowired
 	private LectureService lectureService;
 
+	//강의예정리스트 검색
 	@GetMapping("/lecOsSearch")
 	public String getLecOsSearch(Model model
 								,@RequestParam(value="lecOsSk",required = false)String lecOsSk
@@ -95,10 +96,12 @@ public class LectureController {
 	
 	//강의리스트 조회
 	@GetMapping("/lectureList")
-	public String getLectureList(Model model) {
-		
+	public String getLectureList(Model model
+								,HttpSession session) {
 		List<Map<String, Object>> lectureList = lectureService.getLectureList();
 		List<Map<String,Object>> lectureStatus = lectureService.getLectureStatus();
+		String sessionLevel = session.getAttribute("SLEVEL").toString();
+		model.addAttribute("SLEVEL", sessionLevel);
 		model.addAttribute("title", "강의 리스트");
 		model.addAttribute("mainTitle", "강의 리스트");
 		model.addAttribute("lectureList", lectureList);
@@ -162,16 +165,17 @@ public class LectureController {
 	public String lectureOpenScheduleList(Model model
 							,HttpSession session) {
 		
-		/* List<Object> lecApplyCount = lectureService.getApplyCount(); */
 		String lecOpCode = lectureService.getLecOpenCode();
 		List<Map<String,Object>> lectureOsList
 						= lectureService.getLectureOsList();
-		
+		String sessionId = session.getAttribute("SID").toString();
+		String sessionLevel = session.getAttribute("SLEVEL").toString();
+		model.addAttribute("SLEVEL", sessionLevel);
 		model.addAttribute("title", "강의 예정 리스트");
 		model.addAttribute("mainTitle", "강의 예정 리스트");
 		model.addAttribute("lectureOsList", lectureOsList);
 		model.addAttribute("lecOpCode", lecOpCode);
-		model.addAttribute("sessionId", session.getAttribute("SID").toString());
+		model.addAttribute("sessionId", sessionId);
 		
 		return "lecture/lectureOpenScheduleList";
 	}

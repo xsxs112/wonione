@@ -28,7 +28,7 @@
 									</div>
 								</div>
 							</form>                            
-                            <div class="add-product">
+                            <div class="add-product" th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
                                 <a href="#">입고내역등록하기</a>
                             </div>
                             <div class="asset-inner">
@@ -44,7 +44,8 @@
 									  <th>작성자</th>
 									  <th>등록일자</th>
 									  <th>비고</th>
-									  <th>수정/삭제</th>
+                                      <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
+                                      <th th:if="${SLEVEL eq '1'}">삭제</th>
 									</tr>
 								</thead>
 							<th:block th:each="ewl : ${equipWhList}">                                   
@@ -66,10 +67,12 @@
 									<td th:text="${ewl.whEqWriterName}"></td>
 									<td th:text="${ewl.whEqRegDate}"></td>
 									<td th:text="${ewl.whEqRemark}"></td>
-									<td>
-                                      <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                      <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                   </td>									  
+	                                <td th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
+	                                    <button data-toggle="tooltip" title="수정" th:value="${ewl.whEqCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+	                                </td>
+	                                <td th:if="${SLEVEL eq '1'}">
+	                                	<button data-toggle="tooltip" title="삭제" th:value="${ewl.whEqCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+	                                </td>										  
 								</tr>
 							</tbody>
                             <div class="login-form-area edu-pd mg-b-15">

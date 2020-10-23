@@ -29,33 +29,36 @@
 									</div>
 								</div>
 							</form><br><br>                             
-                            <div class="add-product">
+                            <div class="add-product" th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
                                 <a href="/addTextbookInfo">신규교재등록하기</a>
                             </div>
                             <div class="asset-inner">
                                 <table>
                                     <tr>
                                         <th>교재코드</th>
-                                        <th>교재이미지</th>
+                                        <!-- <th>교재이미지</th> -->
                                         <th>교재명</th>
                                         <th>출판사</th>
                                         <th>저자</th>
                                         <th>작성자아이디</th>
                                         <th>등록일자</th>
-                                        <th>수정 / 삭제</th>
+                                        <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
+                                        <th th:if="${SLEVEL eq '1'}">삭제</th>
                                     </tr>
                                     <th:block th:each="til : ${textbookInfoList}">
 	                                    <tr>
 											  <td th:text="${til.txbCode}"></td>
-	                                        <td><img src="img/product/book-1.jpg" alt="" /></td>
+	                                        <!-- <td><img src="img/product/book-1.jpg" alt="" /></td> -->
 											  <td th:text="${til.txbName}"></td>
 											  <td th:text="${til.txbPublisher}"></td>
 											  <td th:text="${til.txbAuthor}"></td>
 											  <td th:text="${til.txbWriter}"></td>
 											  <td th:text="${til.txbRegDate}"></td>
-	                                        <td>
+	                                        <td th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
 	                                            <button data-toggle="tooltip" title="수정" th:value="${til.txbCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-	                                            <button data-toggle="tooltip" title="삭제" th:value="${til.txbCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+	                                        </td>
+	                                        <td th:if="${SLEVEL eq '1'}">
+	                                        	<button data-toggle="tooltip" title="삭제" th:value="${til.txbCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 	                                        </td>
 	                                    </tr>
                                     </th:block>

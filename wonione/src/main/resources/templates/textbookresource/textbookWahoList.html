@@ -21,7 +21,8 @@
 									<option value="tbi.txb_name">교재명</option>
 									<option value="tbi.txb_publisher">출판사</option>
 									<option value="tbi.txb_author">저자</option>
-									<option value="tbi.txb_writer">작성자아이디</option>
+									<option value="wt.wh_txb_writer">작성자아이디</option>
+									<option value="mr.mr_name">작성자이름</option>
 								</select> 
 								<div class="form-group">
 								<input type="text" id="whTxbSv" class="form-control" name="whTxbSv" placeholder="검색어를 입력해주세요"/>
@@ -30,7 +31,7 @@
 									</div>
 								</div>
 							</form>                            
-                            <div class="add-product">
+                            <div class="add-product" th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
                                 <a href="/addTextbookWaho">입고내역등록하기</a>
                             </div>
                             <div class="asset-inner">
@@ -43,6 +44,8 @@
 									  <th>재고수량</th>
 									  <th>작성자</th>
 									  <th>비고</th>
+                                      <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
+                                      <th th:if="${SLEVEL eq '1'}">삭제</th>											  
                                     </tr>
 							<th:block th:each="gtl : ${getTextbookList}">
 									<tr>
@@ -61,6 +64,12 @@
 									  
 									  <td th:text="${gtl.whTxbWriterName}"></td>
 									  <td th:text="${gtl.whTxbRemark}"></td>
+                                      <td th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
+                                          <button data-toggle="tooltip" title="수정" th:value="${gtl.txbCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                      </td>
+                                      <td th:if="${SLEVEL eq '1'}">
+                                      	<button data-toggle="tooltip" title="삭제" th:value="${gtl.txbCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                      </td>									  
 									</tr>
 									<div class="login-form-area edu-pd mg-b-15">
 										<div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">

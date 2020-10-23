@@ -52,8 +52,8 @@ public class TextbookController {
 		TextbookBasicInfo textbookBasicInfo= textbookService.getOnlyTxbInfo(txbCode);
 		String txbModifierId = session.getAttribute("SID").toString();
 		String txbModifierName = session.getAttribute("SNAME").toString();
-		model.addAttribute("title", "교재기본정보 수정페이지");
-		model.addAttribute("mainTitle", "교재기본정보 수정페이지");
+		model.addAttribute("title", "교재기본정보 수정");
+		model.addAttribute("mainTitle", "교재기본정보 수정");
 		model.addAttribute("txbCode", txbCode);
 		model.addAttribute("txbName", textbookBasicInfo.getTxbName());
 		model.addAttribute("txbPublisher", textbookBasicInfo.getTxbPublisher());
@@ -98,8 +98,8 @@ public class TextbookController {
 		String supTxbCode = textbookService.getTxbSuppMaxCode();
 		
 		
-		model.addAttribute("title", "교재지급내역 등록페이지");
-		model.addAttribute("mainTitle", "교재지급내역 등록페이지");
+		model.addAttribute("title", "교재지급내역 등록");
+		model.addAttribute("mainTitle", "교재지급내역 등록");
 		model.addAttribute("txbReceiverId", txbReceiverId);
 		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("sessionName", sessionName);
@@ -140,7 +140,7 @@ public class TextbookController {
 							,@RequestParam(value="whTxbSk", required=false) String whTxbSk
 							,@RequestParam(value="whTxbSv", required=false) String whTxbSv) {
 		List<Map<String, Object>> whTxbSearchResult= textbookService.getWhTxbSearch(whTxbSk, whTxbSv);
-		model.addAttribute("title", "교재입고검색결과 페이지");
+		model.addAttribute("title", "교재입고검색결과 ");
 		model.addAttribute("mainTitle", "검색하신내용은 아래와 같습니다.");
 		model.addAttribute("getTextbookList", whTxbSearchResult);
 		return "textbookresource/textbookWahoList";
@@ -171,15 +171,17 @@ public class TextbookController {
 	//교재 지급내역 조회
 	@GetMapping("/textbookSupplyList")
 	public String getTextbookSuppList(Model model
+									,HttpSession session
 									, @RequestParam(
 													  value="currentPage"
 													, required = false
 													, defaultValue = "1") int currentPage) {
 		
 		Map<String,Object> getTextbookSuppList = textbookService.getTextbookSuppList(currentPage);
-		
-		model.addAttribute("title", "교재지급내역 페이지");
-		model.addAttribute("mainTitle", "교재지급내역 페이지");
+		String sessionLevel = session.getAttribute("SLEVEL").toString();
+		model.addAttribute("SLEVEL", sessionLevel);
+		model.addAttribute("title", "교재지급내역 ");
+		model.addAttribute("mainTitle", "교재지급내역 ");
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("getTextbookSuppList", getTextbookSuppList.get("getTextbookSuppList"));
 		model.addAttribute("lastPage", getTextbookSuppList.get("lastPage"));
@@ -199,8 +201,8 @@ public class TextbookController {
 		String txbInfoCode = textbookService.getAddTxbInfoCode();
 		TextbookBasicInfo textbookBasicInfo = textbookService.getOnlyTxbInfo(txbInfoCode);
 		String sessionName = session.getAttribute("SNAME").toString();
-		model.addAttribute("title", "교재등록 완료  페이지");
-		model.addAttribute("mainTitle", "교재등록 완료 페이지");
+		model.addAttribute("title", "교재등록 완료  ");
+		model.addAttribute("mainTitle", "교재등록 완료 ");
 		model.addAttribute("regResult", "다음과 같은 정보로 등록되었습니다");
 		model.addAttribute("txbInfoCode", txbInfoCode);
 		model.addAttribute("textbookBasicInfo", textbookBasicInfo);
@@ -216,8 +218,8 @@ public class TextbookController {
 		String txbCode = textbookService.getTxbInfoMaxCode();
 		String sessionId = session.getAttribute("SID").toString();
 		String sessionName = session.getAttribute("SNAME").toString();
-		model.addAttribute("title", "교재기본정보등록  페이지");
-		model.addAttribute("mainTitle", "교재기본정보등록 페이지");
+		model.addAttribute("title", "교재기본정보등록  ");
+		model.addAttribute("mainTitle", "교재기본정보등록 ");
 		model.addAttribute("txbCode", txbCode);
 		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("sessionName", sessionName);
@@ -234,8 +236,8 @@ public class TextbookController {
 	
 		textbookService.addFirstWhTextbook(whTextbook);
 		WhTextbook txbWhResult = textbookService.getRecentTxbWhList();
-		model.addAttribute("title", "교재등록 완료  페이지");
-		model.addAttribute("mainTitle", "교재등록 완료 페이지");
+		model.addAttribute("title", "교재등록 완료  ");
+		model.addAttribute("mainTitle", "교재등록 완료 ");
 		model.addAttribute("regResult", "다음과 같은 정보로 등록되었습니다");
 		model.addAttribute("txbWhResult", txbWhResult);
 		
@@ -254,8 +256,8 @@ public class TextbookController {
 		//교재입고코드 자동증가
 		String whTxbCode = textbookService.getTxbWhMaxCode();
 		
-		model.addAttribute("title", "교재최초입고등록  페이지");
-		model.addAttribute("mainTitle", "교재최초입고등록 페이지");
+		model.addAttribute("title", "교재최초입고등록  ");
+		model.addAttribute("mainTitle", "교재최초입고등록 ");
 		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("whTxbCode", whTxbCode);
 		model.addAttribute("textbookBasicInfo", textbookBasicInfo);
@@ -273,8 +275,8 @@ public class TextbookController {
 			 					,@RequestParam(value="whTxbRemark", required = false)String whTxbRemark) {
 		textbookService.addWhTextbook(whTextbook);
 		WhTextbook txbWhResult = textbookService.getRecentTxbWhList();
-		model.addAttribute("title", "교재등록 완료  페이지");
-		model.addAttribute("mainTitle", "교재등록 완료 페이지");
+		model.addAttribute("title", "입고등록 완료  ");
+		model.addAttribute("mainTitle", "입고등록 완료 ");
 		model.addAttribute("regResult", "다음과 같은 정보로 등록되었습니다");
 		model.addAttribute("txbWhResult", txbWhResult);
 		
@@ -293,8 +295,8 @@ public class TextbookController {
 		//코드자동증가
 		String whTxbCode = textbookService.getTxbWhMaxCode();
 		
-		model.addAttribute("title", "교재입고등록  페이지");
-		model.addAttribute("mainTitle", "교재입고등록 페이지");
+		model.addAttribute("title", "교재입고등록  ");
+		model.addAttribute("mainTitle", "교재입고등록 ");
 		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("textbookInfoList", textbookinfolist);
 		model.addAttribute("whTextbookList", whTextbookList);
@@ -306,14 +308,17 @@ public class TextbookController {
 	//교재 입고내역 
 	@GetMapping("/textbookWahoList")
 	public String getTextbookWahoList(Model model
+									,HttpSession session
 									,@RequestParam(
 												  value="currentPage"
 												, required = false
 												, defaultValue = "1") int currentPage) {
 		
 		Map<String, Object> textbookWahoList = textbookService.getTextbookWahoList(currentPage);
-		model.addAttribute("title", "교재입고내역 페이지");
-		model.addAttribute("mainTitle", "교재입고내역 페이지");
+		String sessionLevel = session.getAttribute("SLEVEL").toString();
+		model.addAttribute("SLEVEL", sessionLevel);
+		model.addAttribute("title", "교재입고내역 ");
+		model.addAttribute("mainTitle", "교재입고내역 ");
 		model.addAttribute("getTextbookList", textbookWahoList.get("textbookWahoList"));
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("lastPage", textbookWahoList.get("lastPage"));
@@ -335,13 +340,16 @@ public class TextbookController {
 	//교재기본정보 리스트
 	@GetMapping("/textbookInfoList")
 	public String getTextbookInfoList(Model model
+								,HttpSession session
 								,@RequestParam(
 											  value="currentPage"
 											, required = false
 											, defaultValue = "1") int currentPage) {
 			Map<String,Object> textbookinfolist = textbookService.getTextbookInfoList(currentPage);
-			model.addAttribute("title", "교재목록페이지");
-			model.addAttribute("mainTitle", "교재목록페이지");
+			String sessionLevel = session.getAttribute("SLEVEL").toString();
+			model.addAttribute("SLEVEL", sessionLevel);
+			model.addAttribute("title", "교재목록");
+			model.addAttribute("mainTitle", "교재목록");
 			model.addAttribute("currentPage",currentPage);
 			model.addAttribute("textbookInfoList", textbookinfolist.get("textbookinfolist"));
 			model.addAttribute("lastPage", textbookinfolist.get("lastPage"));

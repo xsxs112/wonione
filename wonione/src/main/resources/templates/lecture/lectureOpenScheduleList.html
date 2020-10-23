@@ -28,7 +28,7 @@
 									</div>
 								</div>
 							</form>                            
-                            <div class="add-product">
+                            <div class="add-product" th:if="${SLEVEL eq '1' OR SLEVEL eq '2'}">                            
                                 <a href="/addLectureOpenSchedule">강의예정등록</a>
                             </div>
                             <input id="sessionId" type="hidden" name="sessionId" th:value="${sessionId}">
@@ -49,7 +49,8 @@
                                         <th>수업종료일자</th>
                                         <th>등록일자</th>
                                         <th style="text-align: center;">비고사항</th>
-                                        <th>수정 / 삭제</th>
+	                                    <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
+	                                    <th th:if="${SLEVEL eq '1'}">삭제</th>                                        
                                         <th>등록</th>
                                     </tr>
                                     <th:block th:each="losl : ${lectureOsList}">
@@ -76,11 +77,13 @@
 						                            </div>
 						                        </div>											  	
 											  </td>
-	                                        <td>
-	                                            <button data-toggle="tooltip" title="수정" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-	                                            <button data-toggle="tooltip" title="삭제" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-	                                        </td>
-	                                        <td>
+			                                <td th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
+			                                    <button data-toggle="tooltip" title="수정" th:value="${losl.lecOsCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+			                                </td>
+			                                <td th:if="${SLEVEL eq '1'}">
+			                                	<button data-toggle="tooltip" title="삭제" th:value="${losl.lecOsCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+			                                </td>
+	                                        <td th:if="${SLEVEL eq '1' OR SLEVEL eq '2' OR SLEVEL eq '3'}">
 	                                       		<button type="button" class="btn btn-dafault openLectureBtn" th:value="${losl.lecOsCode}">등록</button>
 	                                       	</td>
 	                                    </tr>

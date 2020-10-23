@@ -235,7 +235,7 @@ INSERT INTO wt_supply_textbook
 </select>
 
 <!-- 교재 입고내역 검색 -->
-<select id="getWhTxbSearch"  resultType="hashMap" parameterType="Map">
+<select id="getWhTxbSearch"  resultType="hashMap" >
 	
 	SELECT
 			wt.wh_txb_code			AS	whTxbCode	
@@ -244,6 +244,7 @@ INSERT INTO wt_supply_textbook
 		,	wt.wh_txb_date			AS	whTxbDate
 		,	wt.stock_txb_quantity	AS	stockTxbQuantity
 		,	wt.wh_txb_writer		AS	whTxbWriter
+		,	mr.mr_name				AS 	whTxbWriterName
 		,	wt.wh_txb_reg_date		AS	whTxbRegDate
 		,	wt.wh_txb_remark		AS	whTxbRemark
 		,	tbi.txb_code			AS	txbCode
@@ -260,9 +261,12 @@ INSERT INTO wt_supply_textbook
 		wt.txb_code
 		=
 		tbi.txb_code
+		INNER JOIN 
+		wt_member_registration	AS mr
+		ON 
+		wt.wh_txb_writer = mr.mr_id
 	WHERE	
-	${whTxbSk} LIKE(CONCAT('%',#{whTxbSv},'%'))
-	ORDER BY wt.wh_txb_code ASC
+	${whTxbSk} LIKE(CONCAT('%',#{whTxbSv},'%'));
 </select>
 
 <!-- 입고내역조회 -->
@@ -354,6 +358,44 @@ INSERT INTO wt_supply_textbook
 			MAX(CAST(SUBSTRING(wh_txb_code,12) AS DECIMAL))+1 
 		FROM 
 			wt_warehousing_textbook),1) AS max;
+</select>
+
+
+<!-- 입고리스트 조회 -->
+<select id="getTextbookWahoList" resultType="hashMap" parameterType="Map">
+	SELECT
+			wt.wh_txb_code			AS	whTxbCode	
+		,	wt.txb_code				AS	txbCode
+		,	wt.wh_txb_quantity		AS	whTxbQuantity
+		,	wt.wh_txb_date			AS	whTxbDate
+		,	wt.stock_txb_quantity	AS	stockTxbQuantity
+		,	wt.wh_txb_writer		AS	whTxbWriter
+		,	mr.mr_name				AS 	whTxbWriterName
+		,	wt.wh_txb_reg_date		AS	whTxbRegDate
+		,	wt.wh_txb_remark		AS	whTxbRemark
+		,	tbi.txb_code			AS	txbCode
+		,	tbi.txb_name			AS	txbName
+		,	tbi.txb_publisher		AS	txbPublisher
+		,	tbi.txb_author			AS	txbAuthor
+		,	tbi.txb_writer			AS	txbWriter
+		,	tbi.txb_reg_date		AS	txbRegDate
+	FROM
+		wt_textbook_basic_information AS tbi
+		RIGHT JOIN
+		wt_warehousing_textbook AS wt
+		on
+		wt.txb_code
+		=
+		tbi.txb_code
+		LEFT join
+		wt_member_registration AS mr
+		ON
+		wt.wh_txb_writer 
+		=
+		mr.mr_id
+	ORDER BY wt.wh_txb_code ASC
+	LIMIT #{startRow},#{rowPerPage};
+
 </select>
 
 
@@ -486,42 +528,6 @@ UPDATE wt_textbook_basic_information
 		,   CURRENT_TIME())
 </insert>
 
-<!-- 보유교재리스트 조회 -->
-<select id="getTextbookWahoList" resultType="hashMap" parameterType="Map">
-	SELECT
-			wt.wh_txb_code			AS	whTxbCode	
-		,	wt.txb_code				AS	txbCode
-		,	wt.wh_txb_quantity		AS	whTxbQuantity
-		,	wt.wh_txb_date			AS	whTxbDate
-		,	wt.stock_txb_quantity	AS	stockTxbQuantity
-		,	wt.wh_txb_writer		AS	whTxbWriter
-		,	mr.mr_name				AS 	whTxbWriterName
-		,	wt.wh_txb_reg_date		AS	whTxbRegDate
-		,	wt.wh_txb_remark		AS	whTxbRemark
-		,	tbi.txb_code			AS	txbCode
-		,	tbi.txb_name			AS	txbName
-		,	tbi.txb_publisher		AS	txbPublisher
-		,	tbi.txb_author			AS	txbAuthor
-		,	tbi.txb_writer			AS	txbWriter
-		,	tbi.txb_reg_date		AS	txbRegDate
-	FROM
-		wt_textbook_basic_information AS tbi
-		RIGHT JOIN
-		wt_warehousing_textbook AS wt
-		on
-		wt.txb_code
-		=
-		tbi.txb_code
-		LEFT join
-		wt_member_registration AS mr
-		ON
-		wt.wh_txb_writer 
-		=
-		mr.mr_id
-	ORDER BY wt.wh_txb_code ASC
-	LIMIT #{startRow},#{rowPerPage};
-
-</select>
 
 
 <!-- *********************** END ************************* -->
