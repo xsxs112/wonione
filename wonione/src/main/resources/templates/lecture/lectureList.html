@@ -27,7 +27,9 @@
                                         <th>미달인원</th>
                                         <th>작성자아이디</th>
                                         <th>등록일자</th>
-                                        <th>강의상태변경</th>
+                                        <th th:if="${SLEVEL eq '1' OR SLEVEL eq '2'}">
+											강의상태변경
+										</th>
                                     </tr>
                                     <th:block th:each="lec : ${lectureList}">
 	                                    <tr>
@@ -47,11 +49,12 @@
 											  <td th:text="${lec.claLack}" style="text-align: center;"></td>
 											  <td th:text="${lec.lecOpWriter}" ></td>
 											  <td th:text="${lec.lecOpRegDate}" ></td>
-	                                        <td>
+	                                        <td th:if="${SLEVEL eq '1' OR SLEVEL eq '2'}">
 	                                            <div class="container-fluid">
 		                                        	<div class="modal-bootstrap shadow-inner responsive-mg-b-0">
 							                            <div class="modal-area-button">
-		                                            		<button data-toggle="modal"
+		                                            		<button  
+		                                            				data-toggle="modal"
 		                                            				data-target="#PrimaryModalalert" 
 		                                            				title="강의상태변경" 
 		                                            				class="pd-setting-ed changeStatusBtn" 

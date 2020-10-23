@@ -66,10 +66,13 @@ public class EquipmentController {
 	
 	//비품 입고내역조회 view로 forward
 	@GetMapping("/equipWhList")
-	public String equipWhList(Model model) {
+	public String equipWhList(Model model
+							, HttpSession session) {
 		
 		model.addAttribute("title", "비품입고내역 조회");
 		model.addAttribute("mainTitle", "비품입고내역 조회");
+		String sessionLevel = session.getAttribute("SLEVEL").toString();
+		model.addAttribute("SLEVEL", sessionLevel);
 		List<Map<String,Object>> equipWhList = equipmentService.getEquipWhList();
 		model.addAttribute("equipWhList", equipWhList);
 		
@@ -79,13 +82,15 @@ public class EquipmentController {
 	//비품 정보조회 view로 forward
 	@GetMapping("/equipmentList")
 	public String equipmentList(Model model
+						,HttpSession session
 						,@RequestParam
 						(	value="currentPage"
 						, 	required = false
 						, 	defaultValue = "1") int currentPage) {
 
 		Map<String,Object> equipmentList = equipmentService.getEquipmentList(currentPage);
-
+		String sessionLevel = session.getAttribute("SLEVEL").toString();
+		model.addAttribute("SLEVEL", sessionLevel);
 		model.addAttribute("title", "등록비품 조회");
 		model.addAttribute("mainTitle", "등록비품 조회");
 		model.addAttribute("currentPage",currentPage);

@@ -29,7 +29,7 @@
 									</div>
 								</div>
 							</form>                            
-                            <div class="add-product">
+                            <div class="add-product" th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
                                 <a href="/addEquipment">비품정보등록하기</a>
                             </div>
                             <div class="asset-inner">
@@ -42,7 +42,8 @@
 									  <td>작성자아이디</td>
 									  <td>등록일자</td>
 									  <td>비고</td>
-                                      <td>수정 / 삭제</td>
+                                      <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
+                                      <th th:if="${SLEVEL eq '1'}">삭제</th>
                                     </tr>
 							<th:block th:each="eL : ${equipmentList}">
 								<tr>
@@ -53,10 +54,12 @@
 								  <td th:text="${eL.eqWriter}"></td> 
 								  <td th:text="${eL.eqReg_date}"></td> 
 								  <td th:text="${eL.eqRemark}"></td> 
-									<td>
-                                      <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                      <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                   </td>									  
+	                              <td th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
+	                                 <button data-toggle="tooltip" title="수정" th:value="${eL.eqCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+	                              </td>
+	                              <td th:if="${SLEVEL eq '1'}">
+	                             	<button data-toggle="tooltip" title="삭제" th:value="${eL.eqCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+	                              </td>									  
 								</tr>
 							</th:block>
                                 </table>
