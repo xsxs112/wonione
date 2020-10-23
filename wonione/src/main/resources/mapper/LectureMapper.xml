@@ -26,6 +26,7 @@
 <!-- *************************강의 리스트**************************** -->
 <!-- ************************* START *************************** -->
 
+
 <!-- 강의코드 자동증가 -->
 <select id="getLecOpenCode" resultType="String">
 SELECT IFNULL(
@@ -119,6 +120,7 @@ UPDATE wt_lecture_open
 SELECT 
 	lo.lec_op_code			AS	'lecOpCode'
 	,lo.lec_os_code			AS	'lecOsCode'
+	,los.lec_name			AS 'lecName'	
 	,lo.lec_status			AS	'lecStatus'
 	,(SELECT 
 		COUNT(c.lec_os_code)
@@ -144,7 +146,11 @@ FROM
 	LEFT JOIN 
 	wt_lec_resource	AS lr
 	ON
-	lo.lec_status = lr.lec_number;
+	lo.lec_status = lr.lec_number
+	INNER JOIN
+	wt_lecture_open_schedule	AS los
+	ON
+	lo.lec_os_code = los.lec_os_code;
 </select>
 
 <!-- 강의예정코드로 중복개설되었는지 확인 -->
@@ -167,6 +173,54 @@ WHERE
 <!-- *********************** START ************************* -->
 <!-- *************************강의예정************************ -->
 <!-- *********************** START ************************* -->
+
+<!-- 강의예정리스트 검색	-->
+<select id="getLecOsSearch" resultType="hashMap">
+SELECT
+	los.lec_os_code				AS	'lecOsCode'
+	,los.lec_name				AS	'lecName'
+	,los.mr_teacher_id			AS	'mrTeacherId'
+	,mr.mr_name					AS	'mrTeacherName'
+	,lrt.lec_starttime			AS	'lecStartTime'
+	,lrt.lec_endtime			AS	'lecEndTime'
+	,lrt.lec_designation		AS 	'lecTimeName'
+	,lrr.lec_designation		AS	'lecRoom'
+	,los.lec_day				AS	'lecDay'
+	,lrl.lec_designation		AS	'lecLevel'
+	,los.lec_tuition			AS	'lecTuition'
+	,
+	(SELECT COUNT(c.lec_os_code)
+		FROM wt_course AS c
+	WHERE los.lec_os_code = c.lec_os_code)
+								AS	'lecApplyCount'
+	,los.cla_capacity			AS	'lecClaCapacity'
+	,los.lec_st_date			AS	'lecStartDate'
+	,los.lec_fin_date			AS	'lecFinalDate'
+	,los.lec_os_writer			AS 	'lecOsWriter'
+	,los.lec_os_reg_date		AS	'lecOsRegDate'
+	,los.lec_os_remark			AS	'lecOsRemark'
+FROM
+	wt_lecture_open_schedule AS los
+	INNER JOIN
+	wt_member_registration AS mr
+	ON
+	los.mr_teacher_id = mr.mr_id
+	LEFT JOIN
+	wt_lec_resource AS lrt
+	ON
+	los.lec_time_code = lrt.lec_number
+	LEFT JOIN
+	wt_lec_resource AS lrr
+	ON
+	los.lec_room_code = lrr.lec_number
+	LEFT join
+	wt_lec_resource AS lrl
+	ON
+	los.lec_level_code = lrl.lec_number
+	WHERE
+	${lecOsSk} LIKE (CONCAT('%',#{lecOsSv},'%'));
+
+</select>
 
 <!-- 강의개설신청시 코드 강의예정 코드 자동증가 -->
 <select id="getLecOsMaxCode" resultType="String">
@@ -242,7 +296,6 @@ FROM
 	wt_lec_resource AS lrl
 	ON
 	los.lec_level_code = lrl.lec_number;
-
 </select>
 
 <!-- 회원중 시간강사만 조회 -->

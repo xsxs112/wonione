@@ -34,7 +34,7 @@ public interface TextbookMapper {
 	public List<SupplyTextbook> getTextbookSupp();
 	
 	//교재 지급내역 페이징
-	public List<SupplyTextbook> getTextbookSuppList(Map<String,Object> txbMap);
+	public List<Map<String,Object>> getTextbookSuppList(Map<String,Object> txbMap);
 	
 	//교재지급코드 maxcount
 	public String getTxbSuppMaxCode();

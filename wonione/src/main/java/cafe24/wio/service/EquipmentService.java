@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cafe24.wio.bean.Equipment;
-import cafe24.wio.bean.SupplyTextbook;
 import cafe24.wio.bean.WhEquipment;
 import cafe24.wio.mapper.EquipmentMapper;
 
@@ -17,7 +16,12 @@ public class EquipmentService {
 
 	@Autowired
 	private EquipmentMapper equipmentMapper;
-	
+	//비품코드로 비품정보 조회
+	public Map<String,Object> getEquipListOnly(String eqCode){
+			Map<String,Object> eqListOnly = 
+								equipmentMapper.getEquipListOnly(eqCode);
+		return eqListOnly;
+	}
 	
 	/**
 	 * 비품카테고리 보기
@@ -97,8 +101,8 @@ public class EquipmentService {
 	 * 비품 입고내역 조회
 	 * @return List WhEquipment equipWhList
 	 */
-	public List<WhEquipment> getEquipWhList(){
-		List<WhEquipment> equipWhList = equipmentMapper.getEquipWhList();
+	public List<Map<String,Object>> getEquipWhList(){
+		List<Map<String,Object>> equipWhList = equipmentMapper.getEquipWhList();
 		return equipWhList;
 	}
 	

@@ -88,16 +88,38 @@ INSERT INTO wt_supply_textbook
 </select>
 
 <!-- 교재 지급내역 검색 -->
-<select id="getSuppTxbSearch" resultMap="resultSupplyTextbook">
-	SELECT 
-			sup_txb_code
-		,   txb_code
-		,   sup_txb_quantity
-		,   txb_receiver_id
-		,   sup_txb_date
-		,   sup_txb_writer
-		,   sup_txb_reg_date
-	FROM wt_supply_textbook
+<select id="getSuppTxbSearch" resultType="hashMap">
+		SELECT 
+			st.sup_txb_code			AS	'supTxbCode'
+		,	st.txb_code				AS	'txbCode'		
+		,	tbi.txb_name			AS	'txbName'
+		,  st.sup_txb_quantity		AS	'supTxbQuantity'
+		,  st.txb_receiver_id		AS	'txbReceiverId'
+		,	mr.mr_name				AS 	'txbReceiverName'	
+		,  st.sup_txb_date			AS	'supTxbDate'
+		,  st.sup_txb_writer		AS	'supTxbWriter'
+		,	mr2.mr_name				AS	'supTxbWriterName'		
+		,  st.sup_txb_reg_date		AS	'supTxbRegDate'
+	FROM 
+		wt_supply_textbook	AS st
+		INNER JOIN
+		wt_textbook_basic_information AS tbi
+		ON
+		st.txb_code	
+		= 
+		tbi.txb_code
+		INNER JOIN
+		wt_member_registration	AS mr
+		ON
+		st.txb_receiver_id 
+		=
+		mr.mr_id
+		LEFT join
+		wt_member_registration	AS mr2
+		ON
+		st.sup_txb_writer
+		=	
+		mr2.mr_id	
 	WHERE
 		${suppTxbSk} LIKE (CONCAT ('%',#{suppTxbSv},'%'));
 </select>
@@ -116,16 +138,38 @@ INSERT INTO wt_supply_textbook
 </select>
 
 <!-- 교재지급내역조회 페이징 -->
-<select id="getTextbookSuppList" resultType="SupplyTextbook"  resultMap="resultSupplyTextbook">
+<select id="getTextbookSuppList" resultType="hashMap" >
 	SELECT 
-			sup_txb_code
-		,  txb_code
-		,  sup_txb_quantity
-		,  txb_receiver_id
-		,  sup_txb_date
-		,  sup_txb_writer
-		,  sup_txb_reg_date
-	FROM wt_supply_textbook
+			st.sup_txb_code			AS	'supTxbCode'
+		,	st.txb_code				AS	'txbCode'		
+		,	tbi.txb_name			AS	'txbName'
+		,  st.sup_txb_quantity		AS	'supTxbQuantity'
+		,  st.txb_receiver_id		AS	'txbReceiverId'
+		,	mr.mr_name				AS 	'txbReceiverName'	
+		,  st.sup_txb_date			AS	'supTxbDate'
+		,  st.sup_txb_writer		AS	'supTxbWriter'
+		,	mr2.mr_name				AS	'supTxbWriterName'		
+		,  st.sup_txb_reg_date		AS	'supTxbRegDate'
+	FROM 
+		wt_supply_textbook	AS st
+		INNER JOIN
+		wt_textbook_basic_information AS tbi
+		ON
+		st.txb_code	
+		= 
+		tbi.txb_code
+		INNER JOIN
+		wt_member_registration	AS mr
+		ON
+		st.txb_receiver_id 
+		=
+		mr.mr_id
+		LEFT join
+		wt_member_registration	AS mr2
+		ON
+		st.sup_txb_writer
+		=	
+		mr2.mr_id		
 	ORDER BY sup_txb_code ASC
 	LIMIT #{startRow},#{rowPerPage};
 </select>
@@ -451,6 +495,7 @@ UPDATE wt_textbook_basic_information
 		,	wt.wh_txb_date			AS	whTxbDate
 		,	wt.stock_txb_quantity	AS	stockTxbQuantity
 		,	wt.wh_txb_writer		AS	whTxbWriter
+		,	mr.mr_name				AS 	whTxbWriterName
 		,	wt.wh_txb_reg_date		AS	whTxbRegDate
 		,	wt.wh_txb_remark		AS	whTxbRemark
 		,	tbi.txb_code			AS	txbCode
@@ -467,6 +512,12 @@ UPDATE wt_textbook_basic_information
 		wt.txb_code
 		=
 		tbi.txb_code
+		LEFT join
+		wt_member_registration AS mr
+		ON
+		wt.wh_txb_writer 
+		=
+		mr.mr_id
 	ORDER BY wt.wh_txb_code ASC
 	LIMIT #{startRow},#{rowPerPage};
 

@@ -7,33 +7,28 @@
 		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
-			<form class="form-inline" id="searchForm" action="/getTxbInfoSearch" method="GET" >  
-			<select class="form-control" name="infoTxbSk" id="selectItSk">
-				<option disabled="disabled" selected="selected">::검색조건::</option>
-				<option value="txb_code">교재코드</option>
-				<option value="txb_name">교재명</option>
-				<option value="txb_publisher">출판사</option>
-				<option value="txb_author">저자</option>
-				<option value="txb_writer">작성자아이디</option>
-			</select> 
-			<div class="form-group">
-			<input type="text" id="infoTxbSv" class="form-control" name="infoTxbSv" placeholder="검색어를 입력해주세요"/>
-				<div class="input-group-btn pull-right">
-					<button class="btn btn-default form-group" id="searchItBtn" type="button">검색</button>
-				</div>
-			</div>
-		</form>
-		
-		<div class="container-fluid" style="margin: 10px;">
-		</div>			
-		
-
 	        <div class="product-status mg-b-15">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-status-wrap">
+                        <div class="product-status-wrap drp-lst">
                             <h4 th:text="${mainTitle}"></h4>
+							<form class="form-inline" id="searchForm" action="/getTxbInfoSearch" method="GET" >  
+								<select class="form-control" name="infoTxbSk" id="selectItSk">
+									<option disabled="disabled" selected="selected">::검색조건::</option>
+									<option value="txb_code">교재코드</option>
+									<option value="txb_name">교재명</option>
+									<option value="txb_publisher">출판사</option>
+									<option value="txb_author">저자</option>
+									<option value="txb_writer">작성자아이디</option>
+								</select> 
+								<div class="form-group">
+								<input type="text" id="infoTxbSv" class="form-control" name="infoTxbSv" placeholder="검색어를 입력해주세요"/>
+									<div class="input-group-btn pull-right">
+										<button class="btn btn-default form-group" id="searchItBtn" type="button">검색</button>
+									</div>
+								</div>
+							</form><br><br>                             
                             <div class="add-product">
                                 <a href="/addTextbookInfo">신규교재등록하기</a>
                             </div>
@@ -97,7 +92,6 @@
                             </div>
                             <div class="container-fluid" style="margin: 10px;">
 								<a th:if="${currentPage eq null}" href="/textbookInfoList" class="btn btn-default" role="button">전체리스트보기</a>
-								<a href="#" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 							</div>
                         </div>
                     </div>

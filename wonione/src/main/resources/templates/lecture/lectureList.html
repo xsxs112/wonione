@@ -35,7 +35,7 @@
 											  <td>
 						                        <div class="modal-bootstrap shadow-inner responsive-mg-b-0">
 						                            <div class="modal-area-button">
-						                                <a class="lecOsCodeBtn" href="#" th:value="${lec.lecOsCode}" data-toggle="modal" data-target="#PrimaryModalalert" role="button">상세보기</a>
+						                                <a class="lecOsCodeBtn" href="#" th:value="${lec.lecOsCode}" data-toggle="modal" data-target="#PrimaryModalalert" role="button">[[${lec.lecName}]]</a>
 						                                <input class="lecOsCode" type="hidden" th:value="${lec.lecOsCode}">
 						                            </div>
 						                        </div>												  
@@ -63,24 +63,21 @@
 	                                        </td>
 	                                    </tr>
 	                                    <div class="login-form-area edu-pd mg-b-15">
-						                        <div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
-						                            <div class="modal-dialog">
-						                                <div class="modal-content">
-							                                    <div class="modal-body" id="check">
-																</div>
-						                                    <div class="modal-footer">
-						                                        <button data-dismiss="modal" id="modalConfirmBtn" th:value="${lec.lecOpCode}"  class="btn btn-default lecOpCode">확인</button>
-						                                        <a data-dismiss="modal" class="btn btn-default" href="#" role="button">닫기</a>
-						                                    </div>
-					                                   	 </div>
-						                                </div>
-						                            </div>
-						                        </div>
+				                        	<div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+				                            	<div class="modal-dialog">
+					                                <div class="modal-content">
+					                                    <div class="modal-body" id="check">
+														</div>
+					                                    <div class="modal-footer">
+					                                        <button data-dismiss="modal" id="modalConfirmBtn" th:value="${lec.lecOpCode}"  class="btn btn-default lecOpCode">확인</button>
+					                                        <a data-dismiss="modal" class="btn btn-default" href="#" role="button">닫기</a>
+														</div>
+													</div>
+												</div>
+				                            </div>
+				                        </div>
 										</th:block>
                              	   </table>
-                            	    <div class="container-fluid" style="margin: 10px;">
-										<a href="#" class="btn btn-default" role="button">메인페이지로</a>
-									</div>                             	   
 	                                </div>
 								</div>
 							</div>

@@ -7,29 +7,29 @@
 		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
-		<form class="form-inline " id="searchForm" action="/getWhTxbSearch" method="GET" >  
-			<select class="form-control" name="whTxbSk" id="selectWtSk">
-				<option disabled="disabled" selected="selected">::검색조건::</option>
-				<option value="wt.wh_txb_code">교재입고코드</option>
-				<option value="tbi.txb_code">교재코드</option>
-				<option value="tbi.txb_name">교재명</option>
-				<option value="tbi.txb_publisher">출판사</option>
-				<option value="tbi.txb_author">저자</option>
-				<option value="tbi.txb_writer">작성자아이디</option>
-			</select> 
-			<div class="form-group">
-			<input type="text" id="whTxbSv" class="form-control" name="whTxbSv" placeholder="검색어를 입력해주세요"/>
-				<div class="input-group-btn pull-right">
-					<button class="btn btn-default" id="searchWhBtn" type="button">검색</button>
-				</div>
-			</div>
-		</form>
 	        <div class="product-status mg-b-15">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-status-wrap">
+                        <div class="product-status-wrap drp-lst">
                             <h4 th:text="${mainTitle}"></h4>
+							<form class="form-inline " id="searchForm" action="/getWhTxbSearch" method="GET" >  
+								<select class="form-control" name="whTxbSk" id="selectWtSk">
+									<option disabled="disabled" selected="selected">::검색조건::</option>
+									<option value="wt.wh_txb_code">교재입고코드</option>
+									<option value="tbi.txb_code">교재코드</option>
+									<option value="tbi.txb_name">교재명</option>
+									<option value="tbi.txb_publisher">출판사</option>
+									<option value="tbi.txb_author">저자</option>
+									<option value="tbi.txb_writer">작성자아이디</option>
+								</select> 
+								<div class="form-group">
+								<input type="text" id="whTxbSv" class="form-control" name="whTxbSv" placeholder="검색어를 입력해주세요"/>
+									<div class="input-group-btn pull-right">
+										<button class="btn btn-default" id="searchWhBtn" type="button">검색</button>
+									</div>
+								</div>
+							</form>                            
                             <div class="add-product">
                                 <a href="/addTextbookWaho">입고내역등록하기</a>
                             </div>
@@ -37,71 +37,87 @@
                                 <table>
                                     <tr>
 				      				  <th>교재입고코드</th>
-									  <th>교재정보보기</th>
 									  <th>교재명</th>
-									  <th>출판사</th>
-									  <th>저자</th>
 									  <th>입고수량</th>
 									  <th>입고일자</th>
 									  <th>재고수량</th>
-									  <th>작성자아이디</th>
+									  <th>작성자</th>
 									  <th>비고</th>
                                     </tr>
 							<th:block th:each="gtl : ${getTextbookList}">
 									<tr>
 									  <td th:text="${gtl.whTxbCode}"></td>
-									  <td><a th:value="${gtl.txbCode}" role="button">교재정보보기</a></td>
-									  <td th:text="${gtl.txbName}"></td>
-									  <td th:text="${gtl.txbPublisher}"></td>
-									  <td th:text="${gtl.txbAuthor}"></td>
+									  <td>
+				                      	<div class="modal-bootstrap shadow-inner responsive-mg-b-0">
+				                          <div class="modal-area-button">
+				                            <a class="txbDeailBtn" href="#" th:value="${gtl.txbCode}" data-toggle="modal" data-target="#PrimaryModalalert" role="button">[[${gtl.txbName}]]</a>
+				                            <input class="txbCode" type="hidden" th:value="${gtl.txbCode}">
+				                          </div>
+				                        </div>									  
+									  </td>
 									  <td th:text="${gtl.whTxbQuantity}"></td>
 									  <td th:text="${gtl.whTxbDate}"></td>
 									  <td th:unless="${gtl.stockTxbQuantity} eq null" th:text="${gtl.stockTxbQuantity}"></td>
 									  
-									  <td th:text="${gtl.whTxbWriter}"></td>
+									  <td th:text="${gtl.whTxbWriterName}"></td>
 									  <td th:text="${gtl.whTxbRemark}"></td>
 									</tr>
+									<div class="login-form-area edu-pd mg-b-15">
+										<div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-body" id="txbDetail">
+													</div>
+													<div class="modal-footer">
+														<button data-dismiss="modal" id="modalConfirmBtn"  class="btn btn-default">확인</button>
+														<a data-dismiss="modal" class="btn btn-default" href="#" role="button">닫기</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>    									
 							</th:block>
                                 </table>
                             </div>
                             <div class="custom-pagination" th:if="${currentPage ne null}">
 								<ul class="pagination">
 									<li class="page-item">
-										<a class="page-link" th:href="@{/textbookOwnList}">처음</a>
+										<a class="page-link" th:href="@{/textbookWahoList}">처음</a>
 									</li>
 									<li class="page-item">
 										<span th:if="${currentPage > 1}">
-											<a class="page-link" th:href="@{/textbookOwnList(currentPage=(${currentPage}-1))}">이전</a>
+											<a class="page-link" th:href="@{/textbookWahoList(currentPage=(${currentPage}-1))}">이전</a>
 										</span>
 									</li>
 								</ul>
 								<ul class="pagination">
 									<li class="page-item">
 									<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
-										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/textbookOwnList(currentPage=${num})}"></a>
+										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/textbookWahoList(currentPage=${num})}"></a>
 									</th:block>
 									</li>
 								</ul>
 								<ul class="pagination">
 									<li class="page-item">
 										<span th:if="${currentPage ne lastPage}">
-											<a th:href="@{/textbookOwnList(currentPage=(${currentPage}+1))}">다음</a>
+											<a th:href="@{/textbookWahoList(currentPage=(${currentPage}+1))}">다음</a>
 										</span>
 		    						</li>
 		    						<li class="page-item">
-		    							<a th:href="@{/textbookOwnList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
+		    							<a th:href="@{/textbookWahoList(currentPage=${lastPage})}" id="lastPageBtn" role="button">마지막</a>
 		    						</li>
 								</ul>
                             </div>
                             <div class="container-fluid" style="margin: 10px;">
 								<a th:if="${currentPage eq null}" href="/textbookWahoList" class="btn btn-default" role="button">전체리스트보기</a>
-								<a href="#" class="btn btn-default" role="button">교재관리 메인페이지로</a>
 							</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>		
+        </div>
+    
+        		
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
 	$('#searchWhBtn').click(function(){
@@ -130,6 +146,51 @@
 			return;
 		};
 	});
+	$('.txbDeailBtn').click(function(){
+		console.log('txbDeailBtn');
+		var txbCode = $(this).parents().children('.txbCode').val();
+		var html = '';
+		console.log(txbCode + ' < -- txbCode');
+		 var request = $.ajax({
+			  url: "/txbDetail",
+			  method: "POST",
+			  data: { txbCode : txbCode },
+			  dataType: "json"
+			});
+			 
+			request.done(function(data) {
+				console.log(data);
+					html ='';
+					html +='<h3>';
+					html += data.txbCode;
+					html +=' 교재정보보기</h3>';
+					html +='<table class="table">';
+					html +='<tr><td>교재코드</td>';
+					html +='<td>';
+					html += data.txbCode;
+					html += '</td></tr>';
+					html +='<tr><td>교재명</td>';
+					html +='<td>';
+					html +=data.txbName;
+					html +='</td></tr>';
+					html +='<tr><td>출판사</td>';
+					html +='<td>';
+					html +=data.txbPublisher;
+					html +='</td></tr>';
+					html +='<tr><td>저자</td>';
+					html +='<td>';
+					html +=data.txbAuthor;
+					html +='</td></tr>';
+					html +='</table>';
+					$('#txbDetail').empty();
+					$('#txbDetail').append(html);
+			});
+			 
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			}); 
+			
+	});	
 
 	
 	</script>

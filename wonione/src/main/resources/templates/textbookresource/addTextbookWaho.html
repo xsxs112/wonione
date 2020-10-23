@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="all-form-element-inner">
-                                        <form action="/textbookWahoRegister" method="post" id="addForm">
+                                        <form action="/addTextbookWaho" method="post" id="addForm">
 									<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
 									<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
                                             <div class="form-group-inner">
@@ -42,6 +42,7 @@
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                                         <div class="form-select-list">
                                                             <select class="form-control custom-select-value" id="txbCode" name ="txbCode">
+                                                            <option disabled="disabled" selected="selected">::교재를 선택하세요::</option>
 																<th:block th:each=" til : ${textbookInfoList} ">
 																	<option th:value=${til.txbCode}>[[${til.txbName}]]</option>
 																</th:block>	
@@ -81,16 +82,13 @@
                                                     </div>
                                                 </div>
                                             </div>                                                    
-                        					<a href="/textbookOwnList" class="btn btn-default" role="button">취소</a>
+                        					<a href="/textbookWahoList" class="btn btn-default" role="button">취소</a>
                                             <button class="btn btn-primary login-submit-cs" type="button" id="addBtn">등록</button>
                                         </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                        		<div class="container-fluid" style="margin: 10px;">
-									<a href="#" class="btn btn-default" role="button">교재관리 메인페이지로</a>
-								</div>        
                             </div>
                         </div>
                         

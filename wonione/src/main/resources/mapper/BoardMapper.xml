@@ -6,7 +6,7 @@
     
 <mapper namespace="cafe24.wio.mapper.BoardMapper">
 
-	<!-- 공지사항, 자료게시판  resultMap -->
+	<!-- 공지 사항, 자료 게시판  resultMap -->
 	<resultMap type="Board" id="boardResultMap">
 		<result column="board_num"          property="boardNum"/>
       	<result column="board_menu"         property="boardMenu"/>
@@ -19,7 +19,7 @@
       	<result column="board_file"   		property="boardFile"/>
 	</resultMap>
 	
-	<!-- 수강후기  resultMap -->
+	<!-- 수강 후기  resultMap -->
 	<resultMap type="Review" id="reviewResultMap">
 		<result column="review_num"          property="reviewNum"/>
       	<result column="review_writer_id"         property="reviewWriterId"/>
@@ -29,7 +29,7 @@
      	<result column="review_reg_date"		property="reviewRegDate"/>
 	</resultMap>
 	
-	<!-- 공지사항 리스트 조회  -->
+	<!-- 공지 사항 리스트 조회  -->
 	<select id="getNotice" resultType="Board" parameterType="Board" resultMap="boardResultMap">
 		SELECT
 			b.board_num,
@@ -49,7 +49,7 @@
 			board_reg_date DESC;
 	</select>
 	
-	<!-- 공지사항 검색  -->
+	<!-- 공지 사항 검색  -->
 	<select id="getSearchNotice" resultType="Board" resultMap="boardResultMap">
 	SELECT 
 		board_num,
@@ -69,7 +69,7 @@
 		board_menu = '공지사항';	
 	</select>
 	
-	<!-- 공지사항 등록  -->
+	<!-- 공지 사항 등록  -->
 	<insert id="addNotice" parameterType="Board">
 		INSERT INTO wt_board(
 			board_num,
@@ -91,7 +91,7 @@
 			, #{boardFile});
 	</insert>
 	
-	<!-- 자료게시판 리스트 조회-->
+	<!-- 자료 게시판 리스트 조회-->
 	<select id="getDataLibrary" resultType="Board" parameterType="Board" resultMap="boardResultMap">
 		SELECT
 			b.board_num,
@@ -111,7 +111,7 @@
 			board_reg_date DESC;
 	</select>
 
-	<!-- 자료게시판 등록  -->
+	<!-- 자료 게시판 등록  -->
 	<insert id="addDataLibrary" parameterType="Board">
 		INSERT INTO wt_board(
 			board_num,
@@ -133,7 +133,7 @@
 			, #{boardFile});
 	</insert>
 
-	<!-- 자료게시판 검색  -->
+	<!-- 자료 게시판 검색  -->
 	<select id="getSearchDataLibrary" resultType="Board" resultMap="boardResultMap">
 	SELECT 
 		board_num,
@@ -204,7 +204,7 @@
 		board_num = #{boardNum};
 	</delete>
 
-	<!-- 수강후기 리스트 조회  -->
+	<!-- 수강 후기 리스트 조회  -->
 	<select id="getReview" resultType="Review" parameterType="Review" resultMap="reviewResultMap">
 		SELECT
 			r.review_num,
@@ -222,5 +222,21 @@
 		ORDER BY 
 			review_reg_date DESC;
 	</select>
+	
+	<!-- 수강 후기 등록  -->
+	<insert id="addReview" parameterType="Review">
+		INSERT INTO wt_review(
+			review_num,
+			review_writer_id,
+			review_grade,
+			review_reg_date,
+			review_comment
+		)VALUES(
+			#{reviewNum}
+			, #{reviewWriterId}
+			, #{reviewGrade}
+			, NOW()
+			, #{reviewComment});
+	</insert>
 
 </mapper>

@@ -16,6 +16,12 @@ public class LectureService {
 	@Autowired
 	private LectureMapper lectureMapper;
 	
+	//강의예정리스트 검색
+	public List<Map<String,Object>> getLecOsSearch(String lecOsSk, String lecOsSv){
+			List<Map<String,Object>> lecOsList = lectureMapper.getLecOsSearch(lecOsSk, lecOsSv);
+		return lecOsList;
+	}
+	
 	/**
 	 * 강의코드 자동증가
 	 * @return String lecOpCode
