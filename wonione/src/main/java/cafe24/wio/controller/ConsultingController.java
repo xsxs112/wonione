@@ -46,9 +46,9 @@ public class ConsultingController {
 		
 		if(consulting != null) {
 			consultingService.addConsultingWrite(consulting);
-			return "redirect:/addConsulting";
+			return "redirect:/consultingList";
 		}else {
-			return "consulting/addConsulting";
+			return "consulting/consultingList";
 		}
 	}
 	//상담내역리스트
