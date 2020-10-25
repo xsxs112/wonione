@@ -1,5 +1,6 @@
 package cafe24.wio.service;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,9 @@ private MemberMapper memberMapper;
 			
 			List<Member> infoSearch = memberMapper.getSearchMember(sk, sv);
 			
-			if(infoSearch != null) {
+			
+				if(infoSearch != null && "::검색 조건::".equals(infoSearch)) {
+
 				for(int i = 0; i<infoSearch.size(); i++) {
 					
 					int memberLevel = 0;

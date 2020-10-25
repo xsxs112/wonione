@@ -41,10 +41,10 @@ public class MemberController {
 								  ,@RequestParam(value = "sk", required = false) String sk
 								  ,@RequestParam(value = "sv", required = false) String sv) {
 		
-		List<Member> memberList = memberService.getSearchMember(sk, sv);
+		List<Member> WIOMemberList = memberService.getSearchMember(sk, sv);
 		
 		model.addAttribute("title", "회원 정보 검색");
-		model.addAttribute("memberList", memberList);
+		model.addAttribute("WIOMemberList", WIOMemberList);
 		
 		return "member/WIOMemberList";
 	}
@@ -213,6 +213,7 @@ public class MemberController {
 		
 		model.addAttribute("title", "구성원 목록 조회");
 		model.addAttribute("WIOMemberList", WIOMemberList);
+		model.addAttribute("WIOMemberList", memberService.getWIOMemberList());
 		
 		return "member/WIOMemberList";
 	}

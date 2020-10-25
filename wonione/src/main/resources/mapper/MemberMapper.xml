@@ -7,12 +7,16 @@
 
 	<!-- 6. 구성원 리스트 검색 처리 -->
 	<select id="getSearchMember" parameterType="String" resultType="Member">
-		SELECT 
-				mr_id
-			, 	mr_name
-			, 	level_num
-		FROM 
-			wt_member_registration
+		SELECT
+				mr.mr_id			AS mrId
+			,	mr.mr_name			AS mrName
+			,	l.level_name		AS levelName
+		FROM
+			wt_member_registration 	AS mr
+		INNER JOIN
+			wt_level				AS l
+		ON
+		mr.level_num = l.level_num
 		WHERE
 			${sk}  LIKE CONCAT('%',#{sv},'%');
 	</select>
@@ -177,6 +181,14 @@
 			, 	mr_pw				AS mrPw
 			, 	mr_name				AS mrName
 			, 	level_num			AS levelNum
+			,	mr_phone 			AS mrPhone
+			, 	mr_addr 			AS mrAddr
+			, 	mr_target_score 	AS mrTargetScore
+			, 	pm_r_code 			AS pmRCode
+			, 	mr_account_num 		AS mrAccountNum
+			, 	shuttle_num 		AS shuttleNum
+			, 	mr_join_date 		AS mrJoinDate
+			, 	mr_reg_date 		AS mrRegDate
 		FROM 
 			wt_member_registration;
 	</select>
