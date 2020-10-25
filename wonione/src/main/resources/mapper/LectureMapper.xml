@@ -59,6 +59,24 @@ INSERT INTO wt_lecture_open
 
 </insert>
 
+<!-- 강의예정리스트 수정하기 -->
+<update id="modifyLecOs">
+UPDATE wt_lecture_open_schedule
+	SET
+		lec_name=		#{lecName},
+		mr_teacher_id=	#{mrTeacherId},
+		lec_time_code=	#{lecTime},
+		lec_room_code=	#{lecRoom},
+		lec_day=		#{lecDay},
+		lec_level_code=	#{lecLevel},
+		lec_tuition=	#{lecTuition},
+		cla_capacity=	${claCapacity},
+		lec_st_date=	#{lecStartDate},
+		lec_fin_date=	#{lecFinalDate},
+		lec_os_remark=	#{lecOsRemark}
+	WHERE lec_os_code=	#{lecOsCode};
+</update>
+
 <!-- 강의예정리스트 상세보기 -->
 <select id="getLecOsListOnly" resultType="hashMap">
 SELECT
@@ -66,12 +84,15 @@ SELECT
 	,los.lec_name				AS	'lecName'
 	,los.mr_teacher_id			AS	'mrTeacherId'
 	,mr.mr_name					AS	'mrTeacherName'
+	,lrt.lec_number				AS	'lecTime'
 	,lrt.lec_starttime			AS	'lecStartTime'
 	,lrt.lec_endtime			AS	'lecEndTime'
-	,lrt.lec_designation		AS 	'lecTimeName'
-	,lrr.lec_designation		AS	'lecRoom'
+	,lrt.lec_designation		AS	'lecTimeName'
+	,lrr.lec_number 			AS	'lecRoom'
+	,lrr.lec_designation		AS	'lecRoomName'
 	,los.lec_day				AS	'lecDay'
-	,lrl.lec_designation		AS	'lecLevel'
+	,lrl.lec_number				AS	'lecLevel'
+	,lrl.lec_designation		AS	'lecLevelName'
 	,los.lec_tuition			AS	'lecTuition'
 	,
 	(SELECT COUNT(c.lec_os_code)
@@ -368,31 +389,92 @@ WHERE
 
 </select>
 
+<!-- 강의예정코드로 강의리스트조회 -->
+<select id="getOnlyLecOsList" resultType="hashMap">
+SELECT
+	los.lec_os_code				AS	'lecOsCode'
+	,los.lec_name				AS	'lecName'
+	,los.mr_teacher_id			AS	'mrTeacherId'
+	,mr.mr_name					AS	'mrTeacherName'
+	,lrt.lec_starttime			AS	'lecStartTime'
+	,lrt.lec_endtime			AS	'lecEndTime'
+	,lrt.lec_designation		AS 	'lecTimeName'
+	,lrr.lec_designation		AS	'lecRoom'
+	,los.lec_day				AS	'lecDay'
+	,lrl.lec_designation		AS	'lecLevel'
+	,los.lec_tuition			AS	'lecTuition'
+	,
+	(SELECT COUNT(c.lec_os_code)
+		FROM wt_course AS c
+	WHERE los.lec_os_code = c.lec_os_code)
+								AS	'lecApplyCount'
+	,los.cla_capacity			AS	'lecClaCapacity'
+	,los.lec_st_date			AS	'lecStartDate'
+	,los.lec_fin_date			AS	'lecFinalDate'
+	,los.lec_os_writer			AS 	'lecOsWriter'
+	,los.lec_os_reg_date		AS	'lecOsRegDate'
+	,los.lec_os_remark			AS	'lecOsRemark'
+FROM
+	wt_lecture_open_schedule AS los
+	INNER JOIN
+	wt_member_registration AS mr
+	ON
+	los.mr_teacher_id = mr.mr_id
+	LEFT JOIN
+	wt_lec_resource AS lrt
+	ON
+	los.lec_time_code = lrt.lec_number
+	LEFT JOIN
+	wt_lec_resource AS lrr
+	ON
+	los.lec_room_code = lrr.lec_number
+	LEFT join
+	wt_lec_resource AS lrl
+	ON
+	los.lec_level_code = lrl.lec_number
+	WHERE 
+	los.lec_os_code = #{lecOsCode};
+
+</select>
+
 <!-- 강의예정리스트 날짜별로 조회 -->
 <select id="getLecOsListDate" resultType="hashMap">
 <![CDATA[
 SELECT
-	  lec_os_code			AS 'lecOsCode'
-	, lec_name				AS 'lecName'
-	, mr_teacher_id			AS 'mrTeacherId'
-	, mr_teacher_id			AS 'mrTeacherName'
-	, lec_time_code			AS 'lecTime'
-	, lec_room_code			AS 'lecRoom'
-	, lec_day				AS 'lecDay'
-	, lec_level_code		AS 'lecLevel'
-	, lec_tuition			AS 'lecTuition'
-	, cla_capacity			AS 'claCapacity'
-	, lec_st_date			AS 'lecStartDate'
-	, lec_fin_date			AS 'lecFinalDate'
-	, lec_os_writer			AS 'lecOsWriter'
-	, lec_os_reg_date		AS 'lecOsRegDate'
-	, lec_os_remark			AS 'lecOsRemark'
+	los.lec_os_code				AS	'lecOsCode'
+	,los.lec_name				AS	'lecName'
+	,los.mr_teacher_id			AS	'mrTeacherId'
+	,mr.mr_name					AS	'mrTeacherName'
+	,lrt.lec_starttime			AS	'lecStartTime'
+	,lrt.lec_endtime			AS	'lecEndTime'
+	,lrt.lec_designation		AS 	'lecTimeName'
+	,lrr.lec_designation		AS	'lecRoom'
+	,los.lec_day				AS	'lecDay'
+	,lrl.lec_designation		AS	'lecLevel'
+	,los.lec_st_date			AS	'lecStartDate'
+	,los.lec_fin_date			AS	'lecFinalDate'
 FROM
-	wt_lecture_open_schedule	AS los
+	wt_lecture_open_schedule AS los
+	INNER JOIN
+	wt_member_registration AS mr
+	ON
+	los.mr_teacher_id = mr.mr_id
+	LEFT JOIN
+	wt_lec_resource AS lrt
+	ON
+	los.lec_time_code = lrt.lec_number
+	LEFT JOIN
+	wt_lec_resource AS lrr
+	ON
+	los.lec_room_code = lrr.lec_number
+	LEFT join
+	wt_lec_resource AS lrl
+	ON
+	los.lec_level_code = lrl.lec_number
 WHERE 
-	#{lecStDate}<=los.lec_st_date AND los.lec_st_date<= #{lecFinDate}
+	#{lecStartDate}<=los.lec_st_date AND los.lec_st_date<= #{lecFinalDate}
 	OR
-	#{lecStDate}<=los.lec_fin_date AND los.lec_fin_date <= #{lecFinDate};
+	#{lecStartDate}<=los.lec_fin_date AND los.lec_fin_date <= #{lecFinalDate};
 ]]>
 </select>
 
@@ -428,7 +510,6 @@ INSERT INTO wt_lecture_open_schedule
 	, #{lecOsWriter}
 	, CURRENT_TIME()
 	, #{lecOsRemark});
-
 </insert>
 
 

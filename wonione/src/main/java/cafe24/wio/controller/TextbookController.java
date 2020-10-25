@@ -29,6 +29,46 @@ public class TextbookController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 	
+	//교재 입고정보 수정하기
+	@PostMapping("/modifyTextbookWaho")
+	public String modifyTxbWaho(WhTextbook whTextbook
+			,@RequestParam(value="whTxbCode",required = false)String whTxbCode
+								,@RequestParam(value="txbCode",required = false)String txbCode
+								,@RequestParam(value="whTxbQuantity",required = false)String whTxbQuantity
+								,@RequestParam(value="stockTxbQuantity",required = false)String whStockQuantity
+								,@RequestParam(value="whTxbDateTime",required = false)String whTxbDateTime
+								,@RequestParam(value="whTxbRemark",required = false)String whTxbRemark
+								,@RequestParam(value="whTxbModifier",required = false)String whTxbModifier) {
+		textbookService.modifyTxbWaho(whTextbook);
+		
+		return "redirect:/textbookWahoList";
+	}
+	
+	//교재 입고정보 수정하기
+	@GetMapping("/modifyTextbookWaho")
+	public String modifyTxbWaho(Model model
+							,HttpSession session
+							,@RequestParam(value="whTxbCode", required = false)String whTxbCode) {
+		Map<String,Object> whTextbook = textbookService.getOnlyTxbWaho(whTxbCode);
+		String sessionId = session.getAttribute("SID").toString();
+		String sessionName = session.getAttribute("SNAME").toString();
+		List<Map<String,Object>> textbookinfolist
+							= textbookService.selectExistTxbWaho();
+		System.out.println(whTextbook + " < -- whTextbook");
+		//최근날짜 재고수량 가져오기
+		int stockResult = textbookService.getStockTxbQuantity(whTextbook.get("txbCode").toString());
+		model.addAttribute("title", "교재입고 수정");
+		model.addAttribute("mainTitle", "교재입고 수정");
+		model.addAttribute("whTextbook", whTextbook);
+		model.addAttribute("textbookinfolist", textbookinfolist);
+		model.addAttribute("stockResult", stockResult);
+		
+		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("sessionName", sessionName);
+		
+		
+		return "textbookresource/modifyTextbookWaho";
+	}
 	
 	//교재 기본 정보 수정하기
 	@PostMapping("/modifyTextbookInfo")

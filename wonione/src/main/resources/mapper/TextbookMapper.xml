@@ -194,6 +194,39 @@ INSERT INTO wt_supply_textbook
 <!-- ************************교재입고************************* -->
 <!-- *********************** START ************************* -->
 
+<!-- 입고내역 수정 -->
+<update id="modifyTxbWaho">
+
+UPDATE wt_warehousing_textbook
+	SET
+		txb_code=#{txbCode},
+		wh_txb_quantity=#{whTxbQuantity},
+		wh_txb_date=#{whTxbDateTime},
+		stock_txb_quantity=#{stockTxbQuantity},
+		wh_txb_remark=#{whTxbRemark},
+		wh_txb_modifier=#{whTxbModifier},
+		wh_txb_modify_date=NOW()
+	WHERE wh_txb_code=#{whTxbCode};
+</update>
+
+<!-- 입고내역이 있는 교재정보만 가져오기 -->
+<select id="selectExistTxbWaho" resultType="hashMap">
+SELECT
+	tbi.txb_code		AS	'txbCode'
+	,tbi.txb_name		AS	'txbName'
+	,tbi.txb_publisher	AS	'txbPublisher'
+	,tbi.txb_author		AS	'txbAuthor'
+	,tbi.txb_writer		AS	'txbWriter'
+FROM
+	wt_warehousing_textbook	AS wt
+	LEFT JOIN 
+	wt_textbook_basic_information	AS tbi
+	ON
+	wt.txb_code = tbi.txb_code 
+	GROUP BY wt.txb_code ;
+
+</select>
+
 <!-- 가장최근날짜의 재고수량 조회 -->
 <select id="getStockTxbQuantity" resultType="int" parameterType="String">
 	SELECT 
@@ -232,6 +265,41 @@ INSERT INTO wt_supply_textbook
 	FROM
 		wt_warehousing_textbook
 	ORDER BY wh_txb_code DESC LIMIT 1
+</select>
+
+<!-- 교재코드로 입고정보 조회 -->
+<select id="getOnlyTxbWaho" resultType="hashMap">
+	SELECT
+			wt.wh_txb_code			AS	whTxbCode	
+		,	wt.txb_code				AS	txbCode
+		,	wt.wh_txb_quantity		AS	whTxbQuantity
+		,	wt.wh_txb_date			AS	whTxbDate
+		,	wt.stock_txb_quantity	AS	stockTxbQuantity
+		,	wt.wh_txb_writer		AS	whTxbWriter
+		,	mr.mr_name				AS 	whTxbWriterName
+		,	wt.wh_txb_reg_date		AS	whTxbRegDate
+		,	wt.wh_txb_remark		AS	whTxbRemark
+		,	tbi.txb_code			AS	txbCode
+		,	tbi.txb_name			AS	txbName
+		,	tbi.txb_publisher		AS	txbPublisher
+		,	tbi.txb_author			AS	txbAuthor
+		,	tbi.txb_writer			AS	txbWriter
+		,	tbi.txb_reg_date		AS	txbRegDate
+	FROM
+		wt_textbook_basic_information AS tbi
+		RIGHT JOIN
+		wt_warehousing_textbook AS wt
+		on
+		wt.txb_code
+		=
+		tbi.txb_code
+		INNER JOIN 
+		wt_member_registration	AS mr
+		ON 
+		wt.wh_txb_writer = mr.mr_id
+	WHERE	
+	wt.wh_txb_code = #{whTxbCode};
+
 </select>
 
 <!-- 교재 입고내역 검색 -->
