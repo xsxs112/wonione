@@ -14,7 +14,11 @@
 		<result column="pm_info_reg_date" 	property="pmInfoRegDate"/>
 		<result column="mr_name" 			property="mrName"/>
 		<result column="award_bm_price" 	property="awardBmPrice"/>	
-		<result column="pmInfoPayerName"    property="pmInfoPayerName"/>			
+		<result column="pmInfoPayerName"    property="pmInfoPayerName"/>	
+		<result column="lec_os_code"    property="lecOsCode"/>
+		<result column="lec_room_code"    property="lecRoomCode"/>			
+		<result column="lec_name"    property="lecName"/>		
+	
 </resultMap>
 
 <!-- 장학금지급내역 리스트 -->
@@ -239,8 +243,41 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 
 </select>
 
+<!-- 수업명가져오기   -->
+
+<select id="classCode" resultType="hashMap"  parameterType="String">
+	
+	SELECT 
+		los.lec_name
+		,lo.lec_os_code
+	FROM 
+		wt_lecture_open as lo
+	inner join
+		wt_lecture_open_schedule as los
+	on
+		lo.lec_os_code = los.lec_os_code ;
+
+</select>
 
 
+
+<!-- 장학금 순위 가져오기 -->
+<select id="scholarshipCount" resultType="hashMap" parameterType="String">
+	SELECT 
+	   mr_id
+	   ,CASE
+	      WHEN 
+	      (COUNT(g.test_round) = 3 )then ROUND(AVG(g.grade_man_score)) 
+	       END
+	FROM 
+	   wt_grade_management AS g
+	WHERE 
+	   lec_os_code = #{lecOsCode}
+	GROUP BY g.mr_id
+	HAVING 
+	   COUNT(g.test_round) = 3
+	ORDER BY grade_man_score asc;
+</select>
 
 </mapper>  
     

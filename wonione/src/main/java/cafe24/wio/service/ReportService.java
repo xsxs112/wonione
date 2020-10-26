@@ -18,7 +18,6 @@ public class ReportService {
 	
 	//보고서 목록
 	public List<Report> getReportList(Report report){
-		System.out.println(report +"<--report");
 		List<Report> reportList = reportMapper.getReportList(report);
 		return reportList;
 	}
@@ -39,7 +38,6 @@ public class ReportService {
 	      String reCode = tempCode + String.valueOf(reCodeMax.get("max"));
 	      
 	      
-	      System.out.println("reCode ------------> " + reCode);
 	      
 	      return reCode;
 	   }
@@ -59,13 +57,11 @@ public class ReportService {
 	//강의예정코드조회	
 	public List<Map<String, Object>> classCode() {
 		List<Map<String, Object>> clCode = reportMapper.classCode();
-		System.out.println(clCode);
 		return clCode;
 	}	
 	//강의자 조회
 	public List<Map<String, Object>> writeName(){
 		List<Map<String, Object>> wName = reportMapper.writeName();
-		System.out.println(wName);
 		return wName;
 		
 	}
