@@ -31,14 +31,14 @@
 				})
 				
 				$('.refuseBtn').click(function() {
-					var inputRefuse = prompt('사유', '거절 사유를 입력해주세요');
+					var inputRefuse = prompt('사유', '반려 사유를 입력해주세요');
 					var reCode = $(this).val();
 					
 					if(inputRefuse != null){
 						var refuse = $.ajax({
 						url : "/approval",
 						method : "GET",
-						data : {reState : "거절", reCode : reCode, inputRefuse : inputRefuse},
+						data : {reState : "반려", reCode : reCode, inputRefuse : inputRefuse},
 						dataType: "text"
 						})
 						
@@ -89,7 +89,7 @@
 										<th>휴가 끝나는 날짜</th>
 										<th>사유</th>
 										<th>구분</th>
-										<th>승인/거절</th>
+										<th>승인/반려</th>
 										<th>상태</th>
 										<th>승인날짜</th>
 										<th>삭제</th>
@@ -104,7 +104,7 @@
 										<td th:text="${l.reReason}"></td>
 										<td th:text="${l.sortation}"></td>
 										<td ><button type = "button" class = "apprBtn" name = "apprBtn" th:value="${l.reCode}">승인</button>
-										<button type = "button" class = "refuseBtn" name = "refuseBtn" th:value="${l.reCode}">거절</button></td>
+										<button type = "button" class = "refuseBtn" name = "refuseBtn" th:value="${l.reCode}">반려</button></td>
 										<td th:text="${l.reState}"></td>
 										<td th:text="${l.reProcessingDate}"></td>
 										<td><a th:data-mCode="${l.reCode}" class ="reDelete">삭제</a></td>

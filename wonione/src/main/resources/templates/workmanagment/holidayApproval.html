@@ -33,8 +33,6 @@
 				var holidaySt = $('#holidaySt').val();
 				var reReason = $('textarea[name=reReason]').val();
 				
-				
-				
 				if (startDate == null || startDate == '') {
 					alert('휴가 시작 날짜를 입력해주세요');
 					return;
@@ -169,12 +167,12 @@
 												</tr>
 												<tr>
 													<td>구분</td>
-													<td><select class="form-control" id = "holidaySt">
-															<option>연차</option>
-															<option>월차</option>
-															<option>정기휴가</option>
-															<option>경조사</option>
-															<option>포상휴가</option>
+													<td><select class="form-control" id = "holidaySt" name = "holidaySt">
+															<option value="연차">연차</option>
+															<option value="월차">월차</option>
+															<option value="정기휴가">정기휴가</option>
+															<option value="경조사">경조사</option>
+															<option value="포상휴가">포상휴가</option>
 													</select></td>
 												</tr>
 												<tr>
@@ -200,7 +198,7 @@
 												</tr>
 												<tr>
 													<td>담당자</td>
-													<td><input type="text" th:value="${approvalRequest.reSupervisor}" class="form-control"></td>
+													<td><input type="text" readonly="readonly" value = "이원장" class="form-control"></td>
 												</tr>
 												<tr>
 													<td>비고</td>
