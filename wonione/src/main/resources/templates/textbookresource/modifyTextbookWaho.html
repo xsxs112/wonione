@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="layout/default">
+	
+	<th:block layout:fragment="customTitle">
+		<title th:text="${title}"></title> 
+	</th:block>
+	<th:block layout:fragment="customContent">
+		<div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="sparkline12-list">
+                      <div class="sparkline12-hd"> 
+                          <div class="main-sparkline12-hd">
+                              <h1 th:text="${mainTitle}"></h1>
+                          </div>
+                      </div>
+                      <div class="sparkline12-graph">
+                          <div class="basic-login-form-ad">
+                              <div class="row">
+                                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                      <div class="all-form-element-inner">
+                                          <form action="/modifyTextbookWaho" method="post" id="modifyForm">
+                                              <div class="form-group-inner">
+                                                  <div class="row">
+                                                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                          <label class="login2 pull-right pull-right-pro">교재입고코드</label>
+                                                      </div>
+                                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                          <input type="text" disabled class="form-control" th:value="${whTextbook.whTxbCode}" />
+                                                          <input type="hidden" name="whTxbCode" id="whTxbCode" th:value="${whTextbook.whTxbCode}" >
+                                                      </div>
+                                                  </div>
+                                              </div>                                                      
+                                        <div class="form-group-inner">
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                    <label class="login2 pull-right pull-right-pro">교재명</label>
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                    <div class="form-select-list">
+                                                        <select class="form-control custom-select-value" id="txbCode" name ="txbCode">
+                                                        	<option selected="selected" th:value="${whTextbook.txbCode}">[[${whTextbook.txbName}]]</option>
+														<th:block th:each=" til : ${textbookinfolist} ">
+															<option th:value=${til.txbCode} th:unless="${whTextbook.txbName eq til.txbName}">[[${til.txbName}]]</option>
+														</th:block>	
+														</select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                      <div class="form-group-inner">
+                                          <div class="row">
+                                              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                  <label class="login2 pull-right pull-right-pro">입고수량</label>
+                                              </div>
+                                              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                  <input type="number" class="form-control" name="whTxbQuantity" id="whTxbQuantity" onFocus="this.value=0; return true;" placeholder="수량을 입력해주세요"/>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="form-group-inner">
+                                          <div class="row">
+                                              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                  <label class="login2 pull-right pull-right-pro">재고수량</label>
+                                              </div>
+                                              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                  <input type="text" class="form-control" name="stockTxbQuantity" id="stockTxbQuantity" th:value="${stockResult}" placeholder="교재를 먼저 선택해주세요" readonly="readonly"/>
+                                                  <input type="hidden" id="stockQuanTitySave" th:value="${stockResult}">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="form-group-inner">
+                                          <div class="row">
+                                           <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                             <label class="login2 pull-right pull-right-pro">입고일자</label>
+                                         	</div>
+                                              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                                  <input type="date" class="form-control" th:value="${whTextbook.whTxbDate}" id="whTxbDate"/>
+                                              </div>
+                                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                  <input type="time" class="form-control" th:value="${whTextbook.whTxbTime}" id="whTxbTime"/>
+                                              </div>
+                                                  <input type="hidden" th:value="${whTextbook.whTxbDateTime}" id="whTxbDateTime" name="whTxbDateTime"/>                                                  
+                                          </div>
+                                      </div>                                      
+                                      <div class="form-group-inner">
+                                          <div class="row">
+                                              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                  <label class="login2 pull-right pull-right-pro">수정자</label>
+                                              </div>
+                                              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                  <input type="text" disabled class="form-control" th:value="${sessionName}"/>
+                                                  <input type="hidden" th:value="${sessionId}" name="whTxbModifier"/>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="form-group-inner">
+                                          <div class="row">
+                                              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                  <label class="login2 pull-right pull-right-pro">비고</label>
+                                              </div>
+                                              <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                  <textarea class="form-control" name="whTxbRemark" placeholder="비고사항을 입력하세요."></textarea>
+                                              </div>
+                                          </div>
+                                      </div>
+                                              <button class="btn btn-primary login-submit-cs" type="button" id="modifyBtn">수정</button>
+                          					<a href="/textbookWahoList" class="btn btn-default" role="button">취소</a>
+                                          </form>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	
+	$('#txbCode').change(function(){
+		var txbCode = $('#txbCode').val();
+		console.log('change');
+		console.log(txbCode);
+		$('#whTxbQuantity').val(0);
+		 var request = $.ajax({
+			  url: "/getTxbStock",
+			  method: "GET",
+			  data: { txbCode : txbCode },
+			  dataType: "json"
+			});
+			request.done(function(data) {
+				console.log(data);
+				$('#stockTxbQuantity').val(data);
+				$('#stockQuanTitySave').val(data);
+			});
+			request.fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});
+	});
+	$('#whTxbQuantity').change(function(){
+		var whTxbQuantity = parseInt($('#whTxbQuantity').val());
+		var stockTxbQuantity = parseInt($('#stockQuanTitySave').val());
+		console.log(whTxbQuantity + ' < --whTxbQuantity');
+		console.log(stockTxbQuantity + ' < --stockQuanTitySave');
+		if(whTxbQuantity != 0 && whTxbQuantity>0){
+			var result = 0;
+			result = (stockTxbQuantity + whTxbQuantity);
+			console.log(result + ' < --stockTxbQuantity + whTxbQuantity');
+			$('#stockTxbQuantity').val(result);
+		}
+		$('#whTxbQuantity').focus(function(){
+			$('#stockTxbQuantity').val($('#stockQuanTitySave').val());
+			console.log($('#stockQuanTitySave').val());
+		})
+		return false;
+	});
+	
+	$('#modifyBtn').click(function(){
+		console.log('modifyBtn');
+		var modifyForm = $('#modifyForm');
+		var whTxbQuantity = $('#whTxbQuantity').val();
+		var whTxbDateTime = $('#whTxbDateTime').val();
+		var whTxbDate = $('#whTxbDate').val();
+		var whTxbTime = $('#whTxbTime').val();
+		var finalDateTime = '';
+		var date = new Date();
+		var year = date.getFullYear(); 
+	    var month = date.getMonth()+1;
+	    var day = date.getDate();
+	    var seconds = date.getSeconds();
+	    if ((day+"").length < 2) {
+	        day = "0" + day;
+	    }
+	    var getToday = year+"-"+month+"-"+day;
+		console.log(whTxbQuantity + ' < --whTxbQuantity 등록버튼 클릭 시');
+		console.log(whTxbDate + ' < --whTxbDate 등록버튼 클릭 시');
+		console.log(whTxbTime + ' < --whTxbTime 등록버튼 클릭 시');
+		console.log(whTxbDateTime + ' < --whTxbDateTime 등록버튼 클릭 시');
+		console.log(seconds);
+	    console.log(getToday);
+
+		if(whTxbQuantity ==0 || whTxbQuantity == ''){
+			alert('입고수량을 입력해주세요');
+			$('#whTxbQuantity').focus();			
+			return;
+		}else if(whTxbQuantity < 0){
+			alert('0보다 큰 값을 입력해주세요');
+			$('#whTxbQuantity').focus();
+			return;
+		}else if(whTxbDate == undefined || whTxbDate == ''){
+			alert('입고일자를 선택해주세요');
+			return;
+		}
+		if(getToday < whTxbDate){
+			alert('입고일자를 다시선택해주세요');
+			return ;
+		}
+	    finalDateTime = (whTxbDate + ' ' + whTxbTime + seconds);
+	    console.log(finalDateTime + ' < --finalDateTime 등록버튼 클릭 시');
+	    $('#whTxbDateTime').val(finalDateTime);
+		if(confirm('수정하시겠습니까?')){
+			modifyForm.submit(); 
+		}
+	});	
+	
+	</script>                
+	</th:block>
+	<th:block layout:fragment="customJsScript">
+	 
+	</th:block>
+</html>

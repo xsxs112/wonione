@@ -45,7 +45,7 @@
 									  <th>작성자</th>
 									  <th>비고</th>
                                       <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
-                                      <th th:if="${SLEVEL eq '1'}">삭제</th>											  
+                                      <!-- <th th:if="${SLEVEL eq '1'}">삭제</th> -->											  
                                     </tr>
 							<th:block th:each="gtl : ${getTextbookList}">
 									<tr>
@@ -65,11 +65,11 @@
 									  <td th:text="${gtl.whTxbWriterName}"></td>
 									  <td th:text="${gtl.whTxbRemark}"></td>
                                       <td th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
-                                          <button data-toggle="tooltip" title="수정" th:value="${gtl.txbCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                          <button data-toggle="tooltip" title="수정" th:value="${gtl.whTxbCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                       </td>
-                                      <td th:if="${SLEVEL eq '1'}">
-                                      	<button data-toggle="tooltip" title="삭제" th:value="${gtl.txbCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                      </td>									  
+<!--                                       <td th:if="${SLEVEL eq '1'}">
+                                      	<button data-toggle="tooltip" title="삭제" th:value="${gtl.whTxbCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                      </td>	 -->								  
 									</tr>
 									<div class="login-form-area edu-pd mg-b-15">
 										<div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
@@ -171,7 +171,7 @@
 				console.log(data);
 					html ='';
 					html +='<h3>';
-					html += data.txbCode;
+					html += data.txbName;
 					html +=' 교재정보보기</h3>';
 					html +='<table class="table">';
 					html +='<tr><td>교재코드</td>';
@@ -199,7 +199,13 @@
 			  alert( "Request failed: " + textStatus );
 			}); 
 			
-	});	
+	});
+	$('.modifyBtn').click(function(){
+		console.log('수정버튼클릭');
+		var whTxbCode = $(this).val();
+		console.log(whTxbCode);
+		location.href="/modifyTextbookWaho?whTxbCode="+whTxbCode;
+	})
 
 	
 	</script>

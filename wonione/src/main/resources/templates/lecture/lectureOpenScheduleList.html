@@ -50,7 +50,6 @@
                                         <th>등록일자</th>
                                         <th style="text-align: center;">비고사항</th>
 	                                    <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
-	                                    <th th:if="${SLEVEL eq '1'}">삭제</th>                                        
                                         <th>등록</th>
                                     </tr>
                                     <th:block th:each="losl : ${lectureOsList}">
@@ -79,9 +78,6 @@
 											  </td>
 			                                <td th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
 			                                    <button data-toggle="tooltip" title="수정" th:value="${losl.lecOsCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-			                                </td>
-			                                <td th:if="${SLEVEL eq '1'}">
-			                                	<button data-toggle="tooltip" title="삭제" th:value="${losl.lecOsCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 			                                </td>
 	                                        <td th:if="${SLEVEL eq '1' OR SLEVEL eq '2' OR SLEVEL eq '3'}">
 	                                       		<button type="button" class="btn btn-dafault openLectureBtn" th:value="${losl.lecOsCode}">등록</button>
@@ -145,56 +141,53 @@
 			});
 			 
 			request.done(function(data) {
-				for(var i=0; i<data.length; i++){
-					console.log(data[i]);
-					console.log(data.length);
+					console.log(data);
 					html ='';
 					html +='<h3>';
-					html += data[i].lecName;
+					html += data.lecName;
 					html +=' 강의예정상세보기</h3>';
 					html +='<table class="table">';
 					html +='<tr><td>강의명</td>';
 					html +='<td>';
-					html +=data[i].lecName;
+					html +=data.lecName;
 					html +='</td></tr>';
 					html +='<tr><td>강의시간구분</td>';
 					html +='<td>';
-					html +=data[i].lecTimeName;
+					html +=data.lecTimeName;
 					html +=' ( ';
-					html +=data[i].lecStartTime;
+					html +=data.lecStartTime;
 					html +=' ~ ';
-					html +=data[i].lecEndTime;
+					html +=data.lecEndTime;
 					html +=' ) </td></tr>';
 					html +='<tr><td>강의요일</td>';
 					html +='<td>';
-					html +=data[i].lecDay;
+					html +=data.lecDay;
 					html +='</td></tr>';
 					html +='<tr><td>강의수준</td>';
 					html +='<td>';
-					html +=data[i].lecLevel;
+					html +=data.lecLevelName;
 					html +='</td></tr>';
 					html +='<tr><td>강의실</td>';
 					html +='<td>';
-					html +=data[i].lecRoom;
+					html +=data.lecRoomName;
 					html +='</td></tr>';
 					html +='<tr><td>현재 신청인원</td>';
 					html +='<td>';
-					html +=data[i].lecApplyCount;
+					html +=data.lecApplyCount;
 					html +=' 명</td></tr>';
 					html +='<tr><td>수강정원</td>';
 					html +='<td>';
-					html +=data[i].lecClaCapacity;
+					html +=data.lecClaCapacity;
 					html +=' 명</td></tr>';
 					html +='<tr><td>수업료</td>';
 					html +='<td>';
-					html +=data[i].lecTuition;
+					html +=data.lecTuition;
 					html +=' 원 </td></tr>';
 					html +='</table>';
 					html +='';
 					html +='';
 					$('#check').empty();
 					$('#check').append(html);
-				}
 			});
 			 
 			request.fail(function( jqXHR, textStatus ) {
@@ -250,7 +243,7 @@
 					if(data == 1){
 						alert('이미 개설되었거나 종료된 강의입니다.');
 					}else if(data == 0){
-						if(confirm('개강하시겠습니까?')){
+						if(confirm('강의리스트에 등록하시겠습니까??')){
 							var openLecture = $.ajax({
 								  url: "/addLectureOpen",
 								  method: "POST",
@@ -275,6 +268,12 @@
 			  alert( "Request failed: " + textStatus );
 			});
 		
+	});
+	$('.modifyBtn').click(function(){
+		console.log('modifyBtn');
+		var lecOsCode = $(this).val();
+		console.log(lecOsCode);
+		location.href="/modifyLecOpenSchedule?lecOsCode="+lecOsCode;
 	});
 	</script>
 	</th:block>

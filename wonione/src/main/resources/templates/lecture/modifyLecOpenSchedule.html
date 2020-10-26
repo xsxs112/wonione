@@ -19,16 +19,14 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="all-form-element-inner">
-                                        <form action="/addLectureOpenSchedule" method="post" id="addForm">
-									<input type="hidden" th:value="${sessionId}" name="lecOsWriter" id="lecOsWriter">
-									<input type="hidden" th:value="${lecOsCode}" name="lecOsCode" id="lecOsCode">
+                                        <form action="/modifyLecOpenSchedule" method="post" id="addForm">
                                             <div class="form-group-inner">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                         <label class="login2 pull-right pull-right-pro">강의개설예정코드</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" disabled class="form-control" th:value="${lecOsCode}"/>
+                                                        <input type="text" class="form-control" th:value="${lectureOsList.lecOsCode}" id="lecOsCode" name="lecOsCode" readonly="readonly"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -38,7 +36,7 @@
                                                         <label class="login2 pull-right pull-right-pro">강의명</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" class="form-control" id="lecName" name="lecName" placeholder="강의명을 입력해주세요"/>
+                                                        <input type="text" class="form-control" th:value="${lectureOsList.lecName}" id="lecName" name="lecName" placeholder="강의명을 입력해주세요"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -50,11 +48,11 @@
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                                         <div class="form-select-list">
                                                             <select class="form-control custom-select-value" id="mrTeacherId" name ="mrTeacherId">
-                                                            <option th:unless="${sessionLevel eq '2'}" disabled="disabled" selected="selected">::강사를 선택하세요::</option>
-	                                                            <th:block th:unless="${sessionLevel eq '2'}" th:each=" tl : ${teacherList}">
-	                                                            	<option th:value="${tl.mrTeacherId}">[[${tl.mrTeacherName}]]</option>                                                       
+	                                                            <option  th:value="${lectureOsList.mrTeacherId}" selected="selected">[[${lectureOsList.mrTeacherName}]]</option>
+	                                                            <th:block th:each=" tl : ${teacherList}">
+	                                                            	<option th:unless="${lectureOsList.mrTeacherId eq tl.mrTeacherId}"
+	                                                            			th:value="${tl.mrTeacherId}">[[${tl.mrTeacherName}]]</option>                                                       
 	                                                            </th:block>
-	                                                            <option th:if="${sessionLevel eq '2'}" th:value="${sessionId}" selected="selected">[[${sessionName}]]</option>
 															</select>
                                                         </div>
                                                     </div>
@@ -68,9 +66,11 @@
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                                         <div class="form-select-list">
                                                             <select class="form-control custom-select-value" id="lecRoom" name ="lecRoom">
-                                                            <option disabled="disabled" selected="selected">::강의실을 선택하세요::</option>
+                                                            <option th:value="${lectureOsList.lecRoom}" selected="selected">[[${lectureOsList.lecRoomName}]]</option>
 	                                                            <th:block th:each="lr : ${lectureRoom}">
-	                                                            	<option th:value="${lr.lecRoom}">[[${lr.lecRoomName}]]</option>                                                       
+	                                                            	<option
+	                                                            	th:unless="${lectureOsList.lecRoom eq lr.lecRoom}"
+	                                                            	 th:value="${lr.lecRoom}">[[${lr.lecRoomName}]]</option>                                                       
 	                                                            </th:block>
 															</select>
                                                         </div>
@@ -85,9 +85,14 @@
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                                         <div class="form-select-list">
                                                             <select class="form-control custom-select-value" id="lecTime" name ="lecTime">
-                                                            <option disabled="disabled" selected="selected">::강의시간을 선택하세요::</option>
+																<option th:value="${lectureOsList.lecTime}" selected="selected">
+																	[[${lectureOsList.lecTimeName}]] : [[${lectureOsList.lecStartTime}]] ~ [[${lectureOsList.lecEndTime}]]
+																</option>
 	                                                            <th:block th:each="lecT : ${lectureTime}">
-	                                                            	<option th:value="${lecT.lecTime}">[[${lecT.lecTimeName}]] : [[${lecT.lecStartTime}]] ~ [[${lecT.lecEndTime}]]</option>                                                       
+	                                                            	<option th:value="${lecT.lecTime}"
+	                                                            			th:unless="${lectureOsList.lecTime eq lecT.lecTime}">
+	                                                            		[[${lecT.lecTimeName}]] : [[${lecT.lecStartTime}]] ~ [[${lecT.lecEndTime}]]
+	                                                            	</option>                                                       
 	                                                            </th:block>
 															</select>
                                                         </div>
@@ -100,7 +105,7 @@
                                                         <label class="login2 pull-right pull-right-pro">강의요일</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" class="form-control" id="lecDay" name="lecDay" placeholder="강의요일을 입력해주세요"/>
+                                                        <input type="text" class="form-control" id="lecDay" th:value="${lectureOsList.lecDay}" name="lecDay" />
                                                     </div>
                                                 </div>
                                             </div>                                            	                                                  
@@ -112,9 +117,11 @@
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                                         <div class="form-select-list">
                                                             <select class="form-control custom-select-value" id="lecLevel" name ="lecLevel">
-                                                            <option disabled="disabled" selected="selected">::강의수준을 선택하세요::</option>
+																<option th:value="${lectureOsList.lecLevel}">[[${lectureOsList.lecLevelName}]]</option>
 	                                                            <th:block th:each="ll : ${lectureLevel}">
-	                                                            	<option th:value="${ll.lecLevel}">[[${ll.lecLevelName}]]</option>                                                       
+	                                                            	<option th:value="${ll.lecLevel}"
+	                                                            			th:unless="${lectureOsList.lecLevel eq ll.lecLevel}">
+	                                                            	[[${ll.lecLevelName}]]</option>                                                       
 	                                                            </th:block>
 															</select>
                                                         </div>
@@ -128,7 +135,7 @@
                                                         <label class="login2 pull-right pull-right-pro">수강정원</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="number" class="form-control" name="claCapacity" 
+                                                        <input type="number" class="form-control" name="claCapacity" th:value="${lectureOsList.lecClaCapacity}"
                                                         id="claCapacity" onFocus="this.value=0; return true;" placeholder="수강정원을 입력해주세요"/>
                                                     </div>
                                                 </div>
@@ -139,7 +146,7 @@
                                                         <label class="login2 pull-right pull-right-pro">수강료</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="number" class="form-control" name="lecTuition" 
+                                                        <input type="number" class="form-control" name="lecTuition" th:value="${lectureOsList.lecTuition}"
                                                         id="lecTuition" onFocus="this.value=0; return true;" placeholder="수강료를 입력해주세요"/>
                                                     </div>
                                                 </div>
@@ -156,21 +163,13 @@
 	                                            	</div>
                                                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
                                                         <label class="login2 pull-center pull-center-pro">개강일자</label>
-                                                        <input type="date" class="form-control" name="lecStartDate" id="lecStartDate"/>
+                                                        <input type="date" class="form-control" 
+                                                        		th:value ="${lectureOsList.lecStartDate}" name="lecStartDate" id="lecStartDate"/>
                                                     </div>
                                                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6">
                                                     	<label class="login2 pull-center pull-center-pro">종강일자</label>
-                                                        <input type="date"class="form-control"  name="lecFinalDate" id="lecFinalDate">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group-inner">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <label class="login2 pull-right pull-right-pro">작성자</label>
-                                                    </div>
-                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <input type="text" disabled class="form-control" th:value="${sessionName}"  th:placeholder="${sessionName}"/>
+                                                        <input type="date"class="form-control"
+                                                        		th:value ="${lectureOsList.lecFinalDate}"  name="lecFinalDate" id="lecFinalDate">
                                                     </div>
                                                 </div>
                                             </div>
@@ -180,7 +179,7 @@
                                                         <label class="login2 pull-right pull-right-pro">비고</label>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                        <textarea class="form-control" name="lecOsRemark" placeholder="비고사항을 입력하세요."></textarea>
+                                                        <textarea class="form-control" name="lecOsRemark" th:value="${lectureOsList.lecOsRemark}">[[${lectureOsList.lecOsRemark}]]</textarea>
                                                     </div>
                                                 </div>
                                             </div>                                            
@@ -207,6 +206,9 @@
 		                            </div>
 		                        </div>  
 		                        <!--End Modal Contents Area -->                              
+                        		<div class="container-fluid" style="margin: 10px;">
+									<a href="#" class="btn btn-default" role="button">강의관리 메인페이지로</a>
+								</div>        
                             </div>
                         </div>
                     </div>
@@ -300,8 +302,8 @@
 			alert('종료날짜를 선택해주세요');
 			return;
 		}
-		if(confirm('등록하시겠습니까?')){
-			addForm.submit();
+		if(confirm('수정하시겠습니까?')){
+		addForm.submit();
 		}
 	});
 	$('#checkBtn').click(function(){
@@ -367,7 +369,7 @@
 			request.fail(function( jqXHR, textStatus ) {
 			  alert( "Request failed: " + textStatus );
 			});
-		}
+			}
 	})	
 	</script>  		
 	</th:block>
