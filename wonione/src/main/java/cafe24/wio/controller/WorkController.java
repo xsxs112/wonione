@@ -516,7 +516,7 @@ public class WorkController {
 			@RequestParam(value = "holidaySt", required = false) String holidaySt) {
 
 		// approvalRequest에 입력받은 값들을 셋팅한다
-
+		System.out.println(holidaySt + " <<<<holidaySt");
 		approvalRequest.setMrId(mrId);
 		approvalRequest.setReStartDate(reStartDate);
 		approvalRequest.setReEndDate(reEndDate);
@@ -530,7 +530,6 @@ public class WorkController {
 	}
 
 	@GetMapping("/holidayApproval")
-	@PostMapping("/holidayApproval")
 	public String holiRequest(ApprovalRequest approvalRequest, Model model, HttpSession session) {
 
 		String now = apprRequestService.getNow();
