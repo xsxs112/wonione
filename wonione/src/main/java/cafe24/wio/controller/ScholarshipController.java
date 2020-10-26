@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 
-
+import cafe24.wio.service.ReportService;
 import cafe24.wio.service.ScholarshipService;
 import cafe24.wio.bean.ScholarShip;
 
@@ -34,14 +34,18 @@ public class ScholarshipController {
 	@RequestMapping(value="/getScholarList", method= RequestMethod.GET)
 	public String getScholarList(Model model, ScholarShip  scholarship ,HttpSession session
 								,@RequestParam(value = "mrName", required = false) String mrId
+								,@RequestParam(value = "lecOsCode", required = false) String lecOsCode
 								,@RequestParam( value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		
 		Map<String,Object> countScholarShipList =scholarshipService.countScholarShipList(currentPage);
-		
+		Map<String,Object> scholarshipCount = scholarshipService.scholarshipCount(lecOsCode);
 		String scholarCode = scholarshipService.ScholarReCode();
 		String sessionName= session.getAttribute("SNAME").toString();
 		String sessionId = session.getAttribute("SID").toString();
+		List<Map<String, Object>>  classcode = scholarshipService.classCode();
 		
+		model.addAttribute("classCode", classcode);
+		model.addAttribute("scholarshipCount", scholarshipCount);
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("scholarCode", scholarCode);

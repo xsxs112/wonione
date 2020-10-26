@@ -27,6 +27,20 @@
 					    </div>
 						</form>
 						<br>
+						<form id="scholarCount" class="form-inline" action="/serchScholar" method="post">  
+							<select name ="" class="form-control" id="${classcode}">
+											<option>::강의명::</option>
+											<th:block th:each="s : ${classCode}">
+												<option th:value="${s.lec_os_code}">[[${s.lec_name}]]</option>
+											</th:block>
+										</select> 
+						<div class="form-group">
+						    <div class="input-group-btn pull-right">
+						        <button class="btn btn-default form-group" type="button" id="ShowScholar">성적보기</button>
+						   </div>
+					    </div>
+						</form>
+						<br>
 						<br>
 						<form id="scholarSubmitForm" action="/getScholarList" method="POST">
 						<table id="member_table">

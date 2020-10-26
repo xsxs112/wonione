@@ -11,7 +11,7 @@ import cafe24.wio.bean.ScholarShip;
 @Mapper
 public interface ScholarshipMapper {
 
-	//장학금지급내역리스
+	//장학금지급내역리스트
 	public List<ScholarShip> getScholarList(ScholarShip scholarship);
 	
 	//장학금 상세보기
@@ -46,4 +46,12 @@ public interface ScholarshipMapper {
 	
 	//보고서 리스트 페이징
 	public List<Report> countScholarShipList(Map<String,Object> scholarMap);
+	
+	//장학금지급을 위한 성적순위
+	public Map<String, Object> scholarshipCount(String lecOsCode);
+	
+	//과목명 가져오기
+	public List<Map<String, Object>> classCode();
+	
+	
 }

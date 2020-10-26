@@ -120,14 +120,14 @@
 			});
 		 
 			request.done(function(data) {
-				 alert(JSON.stringify(data)); 
+				 //alert(JSON.stringify(data)); 
 				  $('#lecOpenCode').attr('value', data.lecOpenCode);
 				console.log("data.lecOpenCode-->"+ data.lecOpenCode); 
-				  }
+				  
 			});
 			
 			request.fail(function( jqXHR, textStatus ) {
-			  alert( "error" + textStatus );
+			  alert( "결과가없습니다." + textStatus );
 			});
 		  
 	  });  
