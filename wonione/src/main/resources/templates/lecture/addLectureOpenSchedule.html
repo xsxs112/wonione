@@ -193,8 +193,8 @@
                                 </div>
                                 <!--Start Modal Contents Area -->
                                  <div class="login-form-area edu-pd mg-b-15">
-		                        <div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
-		                            <div class="modal-dialog">
+		                        <div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade " role="dialog">
+		                            <div class="modal-dialog modal-lg">
 		                                <div class="modal-content">
 			                                    <div class="modal-body" id="modalContent">
 												</div>
@@ -343,7 +343,10 @@
 					 html += '<th>강의시간구분</th>';
 					 html += '<th>강의요일</th>';
 					 html += '<th>강의실</th>';
-					 html += '<th>강사명</th></tr>';
+					 html += '<th>강사명</th>';
+					 html += '<th>시작일</th>';
+					 html += '<th>종료일</th></tr>';
+										 
 					 
 					for(var i=0; i<data.length; i++){
 						console.log(data[i]);
@@ -356,7 +359,9 @@
 						html += data[i].lecEndTime + ' ) </td>';
 						html +='<td>'+ data[i].lecDay +'</td>';
 						html +='<td>' + data[i].lecRoom +'</td>';
-						html +='<td>' + data[i].mrTeacherName +'</td></tr>';
+						html +='<td>' + data[i].mrTeacherName +'</td>';
+						html +='<td>' + data[i].lecStartDate +'</td>';
+						html +='<td>' + data[i].lecFinalDate +'</td></tr>';
 					}
 						html +='</table>';
 					modalContent.empty();

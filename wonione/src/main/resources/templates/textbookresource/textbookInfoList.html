@@ -43,7 +43,7 @@
                                         <th>작성자아이디</th>
                                         <th>등록일자</th>
                                         <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
-                                        <th th:if="${SLEVEL eq '1'}">삭제</th>
+                                        <!-- <th th:if="${SLEVEL eq '1'}">삭제</th> -->
                                     </tr>
                                     <th:block th:each="til : ${textbookInfoList}">
 	                                    <tr>
@@ -57,9 +57,9 @@
 	                                        <td th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
 	                                            <button data-toggle="tooltip" title="수정" th:value="${til.txbCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
 	                                        </td>
-	                                        <td th:if="${SLEVEL eq '1'}">
+<!-- 	                                        <td th:if="${SLEVEL eq '1'}">
 	                                        	<button data-toggle="tooltip" title="삭제" th:value="${til.txbCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-	                                        </td>
+	                                        </td> -->
 	                                    </tr>
                                     </th:block>
                                 </table>
