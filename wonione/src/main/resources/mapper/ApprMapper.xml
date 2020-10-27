@@ -6,6 +6,30 @@
     
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
+	<!-- 삭제된 외출시간 구하기 -->
+	<select id = "getDeleteGoingout" parameterType="string" resultType="AttManagement">
+
+		SELECT attendance_code AS attCode
+				
+				, going_out_time AS goingOut
+				, going_out_stTime AS goingOutStTime
+				, going_out_endTime AS goingOutEndTime
+				
+			FROM wt_attendance_management
+					
+		WHERE attendance_code = #{attCode};
+		
+	</select>
+	
+	<update id = "deleteGoingOut" parameterType="string">
+		UPDATE wt_attendance_management
+		SET
+			going_out_stTime=null,
+			going_out_endTime=null
+		WHERE 
+			attendance_code = #{attCode};
+	</update>
+	
 	
 	<select id = "getModifyRequest" parameterType="string" resultType="string">
 

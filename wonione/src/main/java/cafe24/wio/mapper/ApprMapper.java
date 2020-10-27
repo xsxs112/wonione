@@ -15,6 +15,10 @@ public interface ApprMapper {
 	
 	
 	
+	public AttManagement getDeleteGoingout(String attCode);
+
+	public int deleteGoingOut(String attCode);
+	
 	public String countConfirm(String attCode);
 
 	public AttTimeManage getAttTimeManage(String SID);
