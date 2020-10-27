@@ -15,132 +15,127 @@
                         <li>
                             <a class="has-arrow" href="#" style="font-weight: bolder; background-color: white; color: #202e59;">
 							   <span class="glyphicon glyphicon-home"  style=" margin-right: 10px; font-size: larger;"></span>
-							   <span class="mini-click-non" >회원관리 !</span>
+							   <span class="mini-click-non" >회원관리</span>
 							</a>
                             <ul class="submenu-angle" aria-expanded="true">
                                 <li>
 	                                <a class="has-arrow" href="/" >
-	                                	<span class="mini-sub-pro">구성원관리 !</span>
+	                                	<span class="mini-sub-pro">구성원관리</span>
 	                                </a>
 		                            <ul class="submenu-angle menu-font" aria-expanded="true">
-	                                	<li><a href="/getWIOMemberList"><span class="mini-sub-pro">구성원 목록O</span></a></li>
-	                                	<li th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}"><a href="/addWIOMember"><span class="mini-sub-pro">구성원 등록!</span></a></li>
+	                                	<li><a href="/getWIOMemberList"><span class="mini-sub-pro">구성원 목록</span></a></li>
+	                                	<li th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}"><a href="/addWIOMember"><span class="mini-sub-pro">구성원 등록</span></a></li>
 	                            	</ul>
                                 </li>
-                            <li>
+                            <li th:if="${session.SLEVEL ne 4}">
                          		<a href="/consultingList"  >
-								   <span class="mini-click-non">상담관리 O</span>
+								   <span class="mini-click-non">상담관리</span>
 								</a>
                         	</li>
                         	<li>
-                         		<a class="has-arrow" href="/"  >
-								   <span class="mini-click-non">환불관리 !</span>
+                         		<a href="/refundApplication"  >
+								   <span class="mini-click-non">환불신청</span>
 								</a>
-                            	<ul class="submenu-angle menu-font" aria-expanded="true">
-                                	<li><a href="/refundApplication"><span class="mini-sub-pro">환불신청 !</span></a></li>
-                                	<li th:if="${session.SLEVEL == 1}"><a href="#"><span class="mini-sub-pro">환불내역 !</span></a></li>
-                                	<li th:if="${session.SLEVEL == 1}"><a href="#"><span class="mini-sub-pro">환불결제 !</span></a></li>
-                            	</ul>
                         	</li>
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false" style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-barcode"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">운영관리 !</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false" style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-barcode"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">운영관리</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li>
 	                                <a class="has-arrow" href="/" >
-	                                	<span class="mini-sub-pro">교재관리 !</span>
+	                                	<span class="mini-sub-pro">교재관리</span>
 	                                </a>
 		                            <ul class="submenu-angle menu-font" aria-expanded="true">
-	                                	<li><a href="/textbookInfoList"><span class="mini-sub-pro">교재정보 O</span></a></li>
-	                                	<li><a href="/textbookWahoList"><span class="mini-sub-pro">교재입고!</span></a></li>
-	                                	<li><a href="/textbookSupplyList"><span class="mini-sub-pro">교재지급!</span></a></li>
+	                                	<li><a href="/textbookInfoList"><span class="mini-sub-pro">교재정보</span></a></li>
+	                                	<li><a href="/textbookWahoList"><span class="mini-sub-pro">교재입고</span></a></li>
+	                                	<li><a href="/textbookSupplyList"><span class="mini-sub-pro">교재지급</span></a></li>
 	                            	</ul>
                                 </li>
                                 <li>
 	                                <a class="has-arrow" href="/" >
-	                                	<span class="mini-sub-pro">비품관리 !</span>
+	                                	<span class="mini-sub-pro">비품관리</span>
 	                                </a>
 		                            <ul class="submenu-angle menu-font" aria-expanded="true">
-	                                	<li><a href="/equipmentList"><span class="mini-sub-pro">비품 정보!</span></a></li>
-	                                	<li><a href="/equipWhList"><span class="mini-sub-pro">비품 입고!</span></a></li>
+	                                	<li><a href="/equipmentList"><span class="mini-sub-pro">비품 정보</span></a></li>
+	                                	<li><a href="/equipWhList"><span class="mini-sub-pro">비품 입고</span></a></li>
 	                            	</ul>
                                 </li>                                                             
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false" style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-folder-open"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">과정관리 !</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false" style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-folder-open"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">과정관리</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-	                             <li ><a href="/lectureOpenScheduleList"><span class="mini-sub-pro">강의 예정목록!</span></a></li>
-	                             <li ><a href="/lectureList"><span class="mini-sub-pro">강의 개설현황!</span></a></li>
-	                             <li ><a href="/lecTimetablefullCalendar"><span class="mini-sub-pro">시간표 O</span></a></li>
+	                             <li ><a href="/lectureOpenScheduleList"><span class="mini-sub-pro">강의 예정목록</span></a></li>
+	                             <li ><a href="/lectureList"><span class="mini-sub-pro">강의 개설현황</span></a></li>
+	                             <li ><a href="/lecTimetablefullCalendar"><span class="mini-sub-pro">시간표</span></a></li>
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false" style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-book"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">평가관리 #</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false" style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-book"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">평가관리</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                               	<li ><a href="/QuestionList"><span class="mini-sub-pro">문제 리스트 O</span></a></li>
+                               	<li ><a href="/QuestionList"><span class="mini-sub-pro">문제 리스트</span></a></li>
 	                            <li>
 	                         		<a class="has-arrow" href="/"  >
-									   <span class="mini-sub-pro">성적관리 !</span>
+									   <span class="mini-sub-pro">성적관리</span>
 									</a>
 	                            	<ul class="submenu-angle menu-font" aria-expanded="true">
-	                                	<li><a href="/getGradeList"><span class="mini-sub-pro">학생성적!</span></a></li>
-	                                	<li><a href="/getScholarList"><span class="mini-sub-pro">장학금지급내역 !</span></a></li>
+	                                	<li><a href="/getGradeList"><span class="mini-sub-pro">학생성적</span></a></li>
+	                                	<li><a href="/getScholarList"><span class="mini-sub-pro">장학금지급내역 </span></a></li>
                            			</ul>
                         		</li>
                             </ul>
 	                           
                         </li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"  style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-user"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">인사관리 !</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"  style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-user"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">인사관리</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a class="has-arrow" href="#" ><span class="mini-sub-pro">업무보고서 !</span></a>
+                                <li><a class="has-arrow" href="#" ><span class="mini-sub-pro">업무보고서</span></a>
                                 	<ul class="submenu-angle menu-font" aria-expanded="true">
-                                			<li><a href="/getReportList"><span class="mini-sub-pro">강의 업무 계획서!</span></a></li>
-                                			<li><a href="/getGradeReportList"><span class="mini-sub-pro">성적 업무 보고서!</span></a></li>
+                                			<li><a href="/getReportList"><span class="mini-sub-pro">강의 업무 계획서</span></a></li>
+                                			<li><a href="/getGradeReportList"><span class="mini-sub-pro">성적 업무 보고서</span></a></li>
                            			</ul>
                                 </li>
                                 <li>
                          			<a class="has-arrow" href="/" >
-								   		<span class="mini-click-non">급여관리 !</span>
+								   		<span class="mini-click-non">급여관리</span>
 									</a>
                             			<ul class="submenu-angle menu-font" aria-expanded="true">
-                                			<li><a href="/officersPayIndex"><span class="mini-sub-pro">직원급여관리 !</span></a></li>
-                                			<li><a href="/staffPayIndex"><span class="mini-sub-pro">강사급여관리 !</span></a></li>
-                                			<li><a href="/getPayList"><span class="mini-sub-pro">급여목록 !</span></a></li>
+                                			<li><a href="/officersPayIndex"><span class="mini-sub-pro">직원급여관리</span></a></li>
+                                			<li><a href="/staffPayIndex"><span class="mini-sub-pro">강사급여관리</span></a></li>
+                                			<li><a href="/getPayList"><span class="mini-sub-pro">급여목록</span></a></li>
                             			</ul>
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"  style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-hourglass" style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">근태관리 !</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"  style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-hourglass" style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">근태관리</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                             	<li>
 	                                <a class="has-arrow" href="/" >
-	                                	<span class="mini-sub-pro">출퇴근 !</span>
+	                                	<span class="mini-sub-pro">출퇴근</span>
 	                                </a>
 		                            <ul class="submenu-angle menu-font" aria-expanded="true">
-	                                	<li><a href="/workAttendanceList"><span class="mini-sub-pro">출퇴근 !</span></a></li>
-	                                	<li><a href="/addAttManage"><span class="mini-sub-pro">출퇴근시간관리!</span></a></li>
+	                                	<li><a href="/workAttendanceList"><span class="mini-sub-pro">출퇴근</span></a></li>
+	                                	<li><a href="/addAttManage"><span class="mini-sub-pro">출퇴근시간관리</span></a></li>
 	                            	</ul>
                                 </li>
                                 <li>
 	                                <a class="has-arrow" href="/" >
-	                                	<span class="mini-sub-pro">휴가 !</span>
+	                                	<span class="mini-sub-pro">휴가</span>
 	                                </a>
 		                            <ul class="submenu-angle menu-font" aria-expanded="true">
-	                                	<li><a href="/holidayApproval"><span class="mini-sub-pro">휴가신청 !</span></a></li>
-	                                	<li th:if="${session.SLEVEL eq 1}"><a href="/holidayList"><span class="mini-sub-pro">휴가신청관리!</span></a></li>
+	                                	<li><a href="/holidayApproval"><span class="mini-sub-pro">휴가신청</span></a></li>
+	                                	<li th:if="${session.SLEVEL eq 1}"><a href="/holidayList"><span class="mini-sub-pro">휴가신청관리</span></a></li>
 	                            	</ul>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false" style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-list-alt"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">게시판관리 !</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false" style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-list-alt"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">게시판관리</span></a>
                             <ul class="submenu-angle interface-mini-nb-dp" aria-expanded="false">
-                                <li ><a href="/getNotice"><span class="mini-sub-pro">공지사항 !</span></a></li>
-                                <li ><a href="/getDataLibrary"><span class="mini-sub-pro">자료게시판 !</span></a></li>
-                                <li ><a href="/getReview"><span class="mini-sub-pro">수강후기 !</span></a></li>
+                                <li ><a href="/getNotice"><span class="mini-sub-pro">공지사항</span></a></li>
+                                <li ><a href="/getDataLibrary"><span class="mini-sub-pro">자료게시판</span></a></li>
+                                <li ><a href="/getReview"><span class="mini-sub-pro">수강후기</span></a></li>
                             </ul>
                         </li>
                     </ul>

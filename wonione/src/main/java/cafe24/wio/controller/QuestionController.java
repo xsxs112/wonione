@@ -240,7 +240,7 @@ public class QuestionController {
 	public String fullCalendar(Model model) {
 		return "question/fullcalendar";
 	}
-	
+	//풀캘린더
 	@PostMapping(value="/fullCalendar",produces = "application/json")
 	@ResponseBody
 	public List<Map<String, Object>> lecTimetablefullCalendar(){

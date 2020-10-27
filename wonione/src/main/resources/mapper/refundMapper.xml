@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cafe24.wio.mapper.refundMapper">
+	<select id="refundCount" resultType="int">
+		SELECT  
+			count(app_sid)
+		FROM 
+			wt_course
+		WHERE 
+			app_sid =#{sessionId};
+	</select>
+	<select id="refundList" resultType="hashMap" parameterType="map">
+		<![CDATA[
+			SELECT 
+				ca.rowNum   AS rowNum
+					 	,ar_date
+					 	,lec_name
+					 	,lec_os_code
+					 	,lec_tuition
+					 	,lec_st_date
+					 	,lec_fin_date
+			
+			FROM 
+			   (SELECT
+			      (@rowNum := @rowNum+1) AS rowNum
+			      ,a.ar_date
+			      ,s.lec_name
+			      ,o.lec_os_code
+			      ,s.lec_tuition
+			      ,s.lec_st_date
+			      ,s.lec_fin_date
+			FROM   
+			   wt_lecture_open_schedule AS s
+				INNER JOIN 
+				wt_course AS c
+				ON 
+				s.lec_os_code = c.lec_os_code
+				INNER JOIN 
+				wt_lecture_open AS o
+				ON 
+				s.lec_os_code = o.lec_os_code
+				INNER JOIN 
+				wt_academy_receipts AS a
+				ON 
+				c.app_group_sid = a.ar_g_sid
+			   JOIN
+			   (SELECT @rowNum :=0 ) AS r   
+			
+			WHERE 
+				c.app_sid=#{sessionId} && DATEDIFF(DATE_SUB(s.lec_fin_date,INTERVAL 1 MONTH),s.lec_st_date)>=NOW() 
+				ORDER BY c.app_sid ASC) AS ca
+				LIMIT #{startRow},#{rowPerPage};    
+		]]>
+	</select>
+</mapper>
