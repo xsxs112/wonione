@@ -7,7 +7,76 @@
  
  
 	 $(function(){	
-	 	//강사 미지급목록 조회
+	 
+	 	//강사 년도별 조회
+	 	$(document).on('change', '#iyCode',(function(){
+	 		var iyCode = $('select[name=iyCode] option:selected').val();
+	 		var request = $.ajax({
+					url: "/yearStaffPay",
+					method: "POST",
+					data: {	iyCode : iyCode },
+					dataType: "json"
+				});
+				request.done(function(data){
+					html = '';
+					
+					for(var i=0; i<data.length; i++){
+					
+					html += '<tr>';
+					html += '<td style="text-align: center;">'+data[i].spCode+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].spDate+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].spPay+'원</td>';
+		  			html += '<td style="text-align: center;">'+data[i].spRegDate+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].spWriter+'</td>';
+		  			html += '</tr>'
+					
+					$("#searchPayList2").empty();
+					$("#searchPayList2").append(html);		
+					};		
+				});
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				});	
+				
+	 	}));	 
+	 
+	 	//직원 년도별 조회
+	 	$(document).on('change', '#iyCode',(function(){
+	 		var iyCode = $('select[name=iyCode] option:selected').val();
+	 		var request = $.ajax({
+					url: "/yearOffiPay",
+					method: "POST",
+					data: {	iyCode : iyCode },
+					dataType: "json"
+				});
+				request.done(function(data){
+					html = '';
+					
+					for(var i=0; i<data.length; i++){
+					
+					html += '<tr>';
+					html += '<td style="text-align: center;">'+data[i].opCode+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].opDate+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].opPay+'원</td>';
+		  			html += '<td style="text-align: center;">'+data[i].opRegDate+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].opWriter+'</td>';
+		  			html += '</tr>'
+					
+					$("#searchPayList").empty();
+					$("#searchPayList").append(html);		
+					};		
+				});
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "Request failed: " + textStatus );
+				});	
+				
+	 	}));
+	 	
+	 	//강사 월별 조회
 	 	$(document).on('change', '#pRTitle',(function(){
 	 		var pRTitle = $('select[name=pRTitle] option:selected').val();
 	 		var request = $.ajax({
@@ -26,7 +95,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].spPay+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].spPay+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spWriter+'</td>';
 		  			html += '</tr>'
@@ -41,7 +110,7 @@
 				
 	 	}));	 
 	 
-	 	//직원 미지급목록 조회
+	 	//직원 월별 조회
 	 	$(document).on('change', '#pRTitle',(function(){
 	 		var pRTitle = $('select[name=pRTitle] option:selected').val();
 	 		var request = $.ajax({
@@ -60,7 +129,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].opPay+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].opPay+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opWriter+'</td>';
 		  			html += '</tr>'
@@ -92,7 +161,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].spPay+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].spPay+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spWriter+'</td>';
 		  			html += '</tr>'
@@ -124,7 +193,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].opPay+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].opPay+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opWriter+'</td>';
 		  			html += '</tr>'
@@ -161,7 +230,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].opPay+'</td>';
+		  			html += '<td style="text-align: center;">'+data[i].opPay+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opWriter+'</td>';
 		  			html += '</tr>'
@@ -198,7 +267,7 @@
 	  				html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 	  				html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 	  				html += '<td style="text-align: center;">'+data[i].spDate+'</td>';
-	  				html += '<td style="text-align: center;">'+data[i].spPay+'</td>';
+	  				html += '<td style="text-align: center;">'+data[i].spPay+'원</td>';
 	  				html += '<td style="text-align: center;">'+data[i].spRegDate+'</td>';
 	  				html += '<td style="text-align: center;">'+data[i].spWriter+'</td>';
 	  				html += '</tr>';
@@ -211,4 +280,12 @@
 					alert( "Request failed: " + textStatus );
 				});	
 	 	})); 
+	 	
+	 	//숫자 3자리마다 콤마
+	 	function numberWithCommas(x) {
+		  x = x.replace(/[^0-9]/g,'');   // 입력값이 숫자가 아니면 공백
+		  x = x.replace(/,/g,'');          // ,값 공백처리
+		  $().val(x.replace(/\B(?=(\d{3})+(?!\d))/g, ",")); // 정규식을 이용해서 3자리 마다 , 추가 
+		}
+
 	 });

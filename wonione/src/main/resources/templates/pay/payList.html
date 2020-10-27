@@ -114,10 +114,10 @@
 		  		</select>
 			</div>	
 			<div style="width:10%; float:left" >
-				<select name ="iyCode" class="form-control">
+				<select name ="iyCode" id ="iyCode" class="form-control" >
 		  			<option>::시행년도::</option>
 		  			<th:block th:each="i : ${insuranceYear}">
-			  			<option id ="iyCode" th:value="${i.iyCode}" >[[${i.iyCode+'년'}]]</option>
+			  			<option th:value="${i.iyCode}" >[[${i.iyCode+'년'}]]</option>
 		  			</th:block>
 		  		</select>
 			</div>	

@@ -69,6 +69,54 @@
 		<result column="p_r_ect"						property="pREct"/>			
 	</resultMap>
 	
+	<!-- 강사급여 년도별 조회 -->
+	<select id="yearStaffPay" resultType="StaffPay">
+		 SELECT 
+			 sp.sp_code 					AS spCode
+			,sp.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,IFNULL(sp.sp_date, '미지급')		AS spDate
+			,sp.sp_pay						AS spPay
+			,sp.sp_reg_date					AS spRegDate
+			,sp.sp_writer	  				AS spWriter	
+		FROM
+			wt_staff_pay 					AS sp
+			LEFT JOIN 
+			wt_member_registration			AS mr
+			on
+			sp.mr_id = mr.mr_id	
+			LEFT JOIN 
+			wt_staff_pay_deduction AS spd
+			on
+			sp.sp_code = spd.spd_code			
+		WHERE	 
+			spd.iy_code = #{iyCode};
+	</select>
+	
+	<!-- 직원급여 년도별 조회 -->
+	<select id="yearOffiPay" resultType="OfficersPay">
+		 SELECT 
+			 op.op_code 					AS opCode
+			,op.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,IFNULL(op.op_date, '미지급')		AS opDate
+			,op.op_pay						AS opPay
+			,op.op_reg_date					AS opRegDate
+			,op.op_writer	  				AS opWriter	
+		FROM
+			wt_officers_pay 				AS op
+			LEFT JOIN 
+			wt_member_registration			AS mr
+			on
+			op.mr_id = mr.mr_id	
+			LEFT JOIN 
+			wt_officers_pay_deduction AS opd
+			on
+			op.op_code = opd.opd_code			
+		WHERE	 
+			opd.iy_code = #{iyCode};
+	</select>
+	
 	<!-- 강사급여 월별 조회 -->
 	<select id="monthStaffPay" resultType="StaffPay">
 		 SELECT 

@@ -27,6 +27,30 @@ public class PayController {
 	// log4j로 로그 찍기 위한 객체 삽입
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(PayController.class);
+	
+	//강사급여 년도별 조회하기
+	@PostMapping(value = "/yearStaffPay",produces = "application/json")
+	@ResponseBody
+	public List<OfficersPay> yearStaffPay( Model model
+			,@RequestParam(value = "iyCode", required = false) float iyCode ){
+		List<OfficersPay> yearStaffPayList = payService.yearStaffPay(iyCode);
+		System.out.println(yearStaffPayList + "<=== yearStaffPayList");
+		
+		model.addAttribute("yearStaffPayList", yearStaffPayList);
+		return yearStaffPayList;		
+	}
+	
+	//직원급여 년도별 조회하기
+	@PostMapping(value = "/yearOffiPay",produces = "application/json")
+	@ResponseBody
+	public List<OfficersPay> yearOffiPay( Model model
+			,@RequestParam(value = "iyCode", required = false) float iyCode ){
+		List<OfficersPay> yearOffiPayList = payService.yearOffiPay(iyCode);
+		System.out.println(yearOffiPayList + "<=== yearOffiPayList");
+		
+		model.addAttribute("yearOffiPayList", yearOffiPayList);
+		return yearOffiPayList;		
+	}
 
 	//강사급여 월별 조회하기
 	@PostMapping(value = "/monthStaffPay",produces = "application/json")

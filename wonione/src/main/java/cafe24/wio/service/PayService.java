@@ -110,14 +110,26 @@ public class PayService {
 
 	//직원급여 월별 조회하기
 	public List<OfficersPay> monthOffiPay(float pRTitle) {
-		List<OfficersPay> nonOffiPayList = payMapper.monthOffiPay(pRTitle);
-		return nonOffiPayList;
+		List<OfficersPay> monthOffiPayList = payMapper.monthOffiPay(pRTitle);
+		return monthOffiPayList;
 	}
 
 	//강사급여 월별 조회하기
 	public List<OfficersPay> monthStaffPay(float pRTitle) {
 		List<OfficersPay> monthStaffPayList = payMapper.monthStaffPay(pRTitle);
 		return monthStaffPayList;
+	}
+	
+	//직원급여 년도별 조회하기
+	public List<OfficersPay> yearOffiPay(float iyCode) {
+		List<OfficersPay> yearOffiPayList = payMapper.yearOffiPay(iyCode);
+		return yearOffiPayList;
+	}
+
+	//강사급여 년도별 조회하기
+	public List<OfficersPay> yearStaffPay(float iyCode) {
+		List<OfficersPay> yearStaffPayList = payMapper.yearStaffPay(iyCode);
+		return yearStaffPayList;
 	}
 	
 }

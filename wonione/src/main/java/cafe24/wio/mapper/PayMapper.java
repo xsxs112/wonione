@@ -65,6 +65,12 @@ public interface PayMapper {
 	public List<OfficersPay> monthOffiPay(float pRTitle);
 	
 	//강사급여 월별 조회하기
-	public List<OfficersPay> monthStaffPay(float pRTitle);	
+	public List<OfficersPay> monthStaffPay(float pRTitle);
+	
+	//직원급여 년도별 조회하기
+	public List<OfficersPay> yearOffiPay(float iyCode);
+	
+	//강사급여 년도별 조회하기
+	public List<OfficersPay> yearStaffPay(float iyCode);		
 	
 }
