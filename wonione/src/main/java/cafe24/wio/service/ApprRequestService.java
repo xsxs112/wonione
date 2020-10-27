@@ -22,6 +22,18 @@ public class ApprRequestService {
 	
 	
 	
+	public AttManagement getDeleteGoingout(String attCode) {
+		
+		
+		return apprMapper.getDeleteGoingout(attCode);
+	}
+	
+	public int deleteGoingOut(String attCode) {
+		
+		
+		return apprMapper.deleteGoingOut(attCode);
+	}
+	
 	public String countConfirm(String attCode) {
 		
 		

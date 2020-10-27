@@ -29,7 +29,17 @@ public class WorkController {
 	private ApprRequestService apprRequestService;
 
 	
-	
+	//외출시간 삭제
+	@GetMapping(value = "/deleteGoingOut", produces = "application/json")
+	@ResponseBody
+	public AttManagement deleteGoingOut(@RequestParam(value = "attCode", required = false) String attCode) {
+		
+		
+		apprRequestService.deleteGoingOut(attCode);
+		AttManagement getDeleteGoingout = apprRequestService.getDeleteGoingout(attCode);
+		
+		return getDeleteGoingout;
+	}
 	
 	@GetMapping("/getModifyRequest")
 	@ResponseBody
@@ -91,23 +101,103 @@ public class WorkController {
 	
 	
 	@GetMapping("/modifyAttendance")
-	public String modifyAttendance(Model model, @RequestParam(value = "attCode", required = false) String attCode) {
-
+	public String modifyAttendance(Model model, AttTimeManage attTimeManage,HttpSession session,
+									@RequestParam(value = "attCode", required = false) String attCode) {
+		
 		AttManagement attManagementDetail = apprRequestService.getAttManagemetDetail(attCode);
-		System.out.println(attManagementDetail.getModifyRequest() + "사유다");
 		model.addAttribute("attManagementDetail", attManagementDetail);
+		
+		String sid = (String) session.getAttribute("SID");
+		AttTimeManage getAttTimeManage = apprRequestService.getAttTimeManage(sid);
+		
+		String getStTime;
+		String getMTime;
+		String getWorkTime;
+		
+		if(getAttTimeManage == null ) {
+			getStTime = "정보 없음";
+			getMTime = "정보 없음";
+			getWorkTime = "정보 없음";
+		}else {
+			if(getAttTimeManage.getmStTime()==null || "".equals(getAttTimeManage.getmStTime()==null)
+					|| getAttTimeManage.getmEndTime() ==null || "".equals(getAttTimeManage.getmEndTime())) {
+				getMTime = "정보 없음";
+			}else {
+				getMTime = getAttTimeManage.getmStTime().substring(0, 5) +" ~ " + getAttTimeManage.getmEndTime().substring(0, 5);
+
+			}
+			getStTime = getAttTimeManage.getWorkStTime().substring(0, 5) +" ~ " + getAttTimeManage.getWorkEndTime().substring(0, 5);
+			getWorkTime = getAttTimeManage.getWorkTime();
+
+		}
+		attTimeManage.setWorkStTime(getStTime);
+		attTimeManage.setmStTime(getMTime);
+		attTimeManage.setWorkTime(getWorkTime);
+		
+		
+		model.addAttribute("attTimeManage", attTimeManage);
 		
 		
 		return "workmanagment/modifyAttendance";
 	}
-
+	
+	
+	/*
+	 * @GetMapping("/workAttendanceList") public String workAttenkdanceList(Model
+	 * model, AttManagement attManagement, AttTimeManage attTimeManage, HttpSession
+	 * session) {
+	 * 
+	 * String sid = (String) session.getAttribute("SID"); List<AttManagement>
+	 * getAttendanceList = apprRequestService.getAttendanceList(sid); AttTimeManage
+	 * getAttTimeManage = apprRequestService.getAttTimeManage(sid);
+	 * 
+	 * String getStTime; String getMTime; String getWorkTime;
+	 * 
+	 * if(getAttTimeManage == null ) { getStTime = "정보 없음"; getMTime = "정보 없음";
+	 * getWorkTime = "정보 없음"; }else { if(getAttTimeManage.getmStTime()==null ||
+	 * "".equals(getAttTimeManage.getmStTime()==null) ||
+	 * getAttTimeManage.getmEndTime() ==null ||
+	 * "".equals(getAttTimeManage.getmEndTime())) { getMTime = "정보 없음"; }else {
+	 * getMTime = getAttTimeManage.getmStTime().substring(0, 5) +" ~ " +
+	 * getAttTimeManage.getmEndTime().substring(0, 5);
+	 * 
+	 * } getStTime = getAttTimeManage.getWorkStTime().substring(0, 5) +" ~ " +
+	 * getAttTimeManage.getWorkEndTime().substring(0, 5); getWorkTime =
+	 * getAttTimeManage.getWorkTime();
+	 * 
+	 * } attTimeManage.setWorkStTime(getStTime); attTimeManage.setmStTime(getMTime);
+	 * attTimeManage.setWorkTime(getWorkTime);
+	 * 
+	 * 
+	 * 
+	 * model.addAttribute("getAttendanceList", getAttendanceList);
+	 * model.addAttribute("attTimeManage", attTimeManage);
+	 * 
+	 * return "workmanagment/workAttendance"; }
+	 */
+	
+	
+	
+	
+	
+	
+	/*
+	 * @GetMapping("/modifyAttendance") public String modifyAttendance(Model
+	 * model, @RequestParam(value = "attCode", required = false) String attCode) {
+	 * 
+	 * AttManagement attManagementDetail =
+	 * apprRequestService.getAttManagemetDetail(attCode);
+	 * model.addAttribute("attManagementDetail", attManagementDetail);
+	 * 
+	 * 
+	 * return "workmanagment/modifyAttendance"; }
+	 */
 	
 	
 	@PostMapping("/attendanceModifyRequest")
 	public String attendanceModifyRequest(@RequestParam(value = "reReason", required = false) String reReason,
 			@RequestParam(value = "attCode", required = false) String attCode) {
 
-		System.out.println(reReason + "<-reReason");
 		apprRequestService.attendanceModifyRequest(attCode, reReason);
 
 		return "redirect:/workAttendanceList";
@@ -391,7 +481,8 @@ public class WorkController {
 
 		return "redirect:/workAttendanceList";
 	}
-
+	
+	//출퇴근 리스트에서 업무시간
 	@GetMapping("/workAttendanceList")
 	public String workAttendanceList(Model model, AttManagement attManagement, AttTimeManage attTimeManage, HttpSession session) {
 
