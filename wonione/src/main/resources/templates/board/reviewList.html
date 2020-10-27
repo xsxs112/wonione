@@ -9,39 +9,54 @@
 	
 	<th:block layout:fragment="customContent">
 	
-	<form action="addReview" class="container-fluid">		
 			 
 		<h1 align="center">수강 후기</h1>
-
-			<button type="submit" class="btn btn-default btn-success pull-right" style="margin-bottom:10px"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>수강 후기 등록</button>
-			
-		<table class ="table table-striped">
-			<thead>
-				<tr class="info">
-					<th>작성자 ID</th>
-					<th>작성자</th>
-					<th>평점</th>
-					<th>코멘트</th>
-					<th>작성 일자</th>
-					<!-- <th>관리</th> -->
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="r : ${reviewList}">
-					<td th:text=${r.reviewWriterId}></td>
-					<td th:text=${r.reviewWriterName}></td>
-					<td th:text=${r.reviewGrade}></td>
-					<td th:text=${r.reviewComment}></td>
-					<td th:text=${r.reviewRegDate}></td>
-					<!-- <td>
-                        <button data-toggle="tooltip" title="수정" th:value="${r.reviewNum}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                        <button data-toggle="tooltip" title="삭제" th:value="${r.reviewNum}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                    </td> -->
-				</tr>
-			</tbody>
-		</table>	
-	</form>
-	
+		
+		<form action="addReview" class="container-fluid">
+			<button type="submit" class="btn btn-default btn-success pull-right" style="margin-bottom:10px" th:if="${session.SLEVEL == 1} or ${session.SLEVEL == 4}">
+				<i class="fa fa-pencil-square-o" aria-hidden="true">수강 후기 등록</i>
+			</button>
+		</form>
+		
+		<div class="container-fluid">
+			<table class ="table table-striped">
+				<thead>
+					<tr class="info">
+						<th>작성자 ID</th>
+						<th>작성자</th>
+						<th>평점</th>
+						<th>코멘트</th>
+						<th>작성 일자</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="r : ${reviewList}">
+						<td th:text=${r.reviewWriterId}></td>
+						<td th:text=${r.reviewWriterName}></td>
+						<td th:text=${r.reviewGrade}></td>
+						<td th:text=${r.reviewComment}></td>
+						<td th:text=${r.reviewRegDate}></td>
+						<td>
+							<form action="modifyReview" class="container-fluid" th:if="${session.SLEVEL == 1} or ${session.SLEVEL == 4} and ${session.SID == r.reviewWriterId}">
+		                        <button data-toggle="tooltip" title="수정" th:value="${r.reviewNum}" class="pd-setting-ed modifyBtn">
+		                        	<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+		                        </button>
+		                    </form>
+	                    </td>
+						<td>
+							<form action="removeReview" class="container-fluid" th:if="${session.SLEVEL == 1} or ${session.SLEVEL == 4} and ${session.SID == r.reviewWriterId}">
+		                        <button data-toggle="tooltip" title="삭제" th:value="${r.reviewNum}" class="pd-setting-ed removeBtn">
+		                        	<i class="fa fa-trash-o" aria-hidden="true"></i>
+		                        </button>
+		                    </form>
+	                    </td>
+					</tr>
+				</tbody>
+			</table>	
+		</div>
+		<!-- <script src="js/review.js"></script> -->
 	</th:block>
 	
 	<th:block layout:fragment="customJsScript">

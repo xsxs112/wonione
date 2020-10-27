@@ -31,7 +31,9 @@
 		
 		<form action="addDataLibrary" class="container-fluid">
 		
-			<button type="submit" class="btn btn-default btn-success pull-right" style="margin-bottom:10px"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>게시물 등록</button>
+			<button type="submit" class="btn btn-default btn-success pull-right" style="margin-bottom:10px" th:if="${session.SLEVEL == 1} or ${session.SLEVEL == 2}">
+				<i class="fa fa-pencil-square-o" aria-hidden="true">게시물 등록</i>
+			</button>
 		
 			<table class ="table table-striped">
 				<thead>

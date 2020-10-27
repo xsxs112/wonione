@@ -35,11 +35,17 @@
 			<tr th:each="b : ${Board}">
 				<td colspan="6" align="left" th:utext=${b.boardContents}></td>
 			</tr>								
+			<tr class="info">
+				<th colspan="6">첨부파일</th>
+			</tr>
+			<tr th:each="b : ${Board}">
+				<td colspan="6" align="left" th:utext=${b.boardFile}></td>
+			</tr>								
 		</table>
 		
 		<div style=	"margin-bottom:10px" th:each="b : ${Board}">
-			<a th:href="@{/modifyDataLibrary(boardNum=${b.boardNum})}" class="btn btn-default btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>수정</a>
-			<a th:href="@{/removeDataLibrary(boardNum=${b.boardNum})}" class="btn btn-default btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</a>
+			<a th:href="@{/modifyDataLibrary(boardNum=${b.boardNum})}" th:if="${session.SLEVEL == 1} or ${session.SLEVEL == 2}" class="btn btn-default btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>수정</a>
+			<a th:href="@{/removeDataLibrary(boardNum=${b.boardNum})}" th:if="${session.SLEVEL == 1} or ${session.SLEVEL == 2}" class="btn btn-default btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i>삭제</a>
 		</div>
 		<div style=	"margin-bottom:10px" th:each="b : ${Board}">
 			<a href="/getDataLibrary" class="btn btn-default btn-info">리스트로 돌아가기</a>
