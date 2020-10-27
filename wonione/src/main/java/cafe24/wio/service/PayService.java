@@ -97,9 +97,15 @@ public class PayService {
 	}
 
 	//직원급여 미지급목록 조회하기
-	public OfficersPay nonOffiPay(String opDate) {
-		OfficersPay nonOffiPayList = payMapper.nonOffiPay(opDate);
+	public List<OfficersPay> nonOffiPay() {
+		List<OfficersPay> nonOffiPayList = payMapper.nonOffiPay();
 		return nonOffiPayList;
+	}
+
+	//강사급여 미지급목록 조회하기
+	public List<StaffPay> nonStaffPay() {
+		List<StaffPay> nonStaffPayList = payMapper.nonStaffPay();		
+		return nonStaffPayList;
 	}
 	
 }

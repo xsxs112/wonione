@@ -67,7 +67,28 @@
 		<result column="mr_join_date"					property="mrJoinDate"/>
 		<result column="mr_account_num"					property="mrAccountNum"/>	
 		<result column="p_r_ect"						property="pREct"/>			
-	</resultMap>	
+	</resultMap>
+		
+	<!-- 강사급여 미지급목록 조회 -->
+	<select id="nonStaffPay" resultType="StaffPay">
+		 SELECT 
+			 sp.sp_code 					AS spCode
+			,sp.mr_id 						AS mrId
+			,mr.mr_name						AS mrName
+			,IFNULL(sp.sp_date, '미지급')		AS spDate
+			,sp.sp_pay						AS spPay
+			,sp.sp_reg_date					AS spRegDate
+			,sp.sp_writer	  				AS spWriter	
+		FROM
+			wt_staff_pay 					AS sp
+			LEFT JOIN 
+			wt_member_registration			AS mr
+			on
+			sp.mr_id = mr.mr_id	
+		WHERE	 
+			sp.sp_date is NULL;
+	</select>
+	
 	<!-- 직원급여 미지급목록 조회 -->
 	<select id="nonOffiPay" resultType="OfficersPay">
 		 SELECT 
