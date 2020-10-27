@@ -60,4 +60,11 @@ public interface PayMapper {
 	
 	//강사급여 미지급목록 조회하기
 	public List<StaffPay> nonStaffPay();
+	
+	//직원급여 월별 조회하기
+	public List<OfficersPay> monthOffiPay(float pRTitle);
+	
+	//강사급여 월별 조회하기
+	public List<OfficersPay> monthStaffPay(float pRTitle);	
+	
 }
