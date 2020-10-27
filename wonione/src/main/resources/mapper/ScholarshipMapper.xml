@@ -17,7 +17,8 @@
 		<result column="pmInfoPayerName"    property="pmInfoPayerName"/>	
 		<result column="lec_os_code"    property="lecOsCode"/>
 		<result column="lec_room_code"    property="lecRoomCode"/>			
-		<result column="lec_name"    property="lecName"/>		
+		<result column="lec_name"    property="lecName"/>	
+		<result column="grade_man_score"    property="gradeManScore"/>
 	
 </resultMap>
 
@@ -115,29 +116,25 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 		
 </select>
 
-<!-- 학생이름 별 과목가져오기 -->
+<!-- 과목별 학생이름 가져오기 -->
 
 <select id="sNameClass" resultType="hashMap" >
 				
-	SELECT 
-		os.lec_name,
-		wc.lec_os_code
+	select
+		mr.mr_name
+		,mr.mr_id 
 	FROM 
-		wt_lecture_open_schedule  as os
-	inner join
 		wt_lecture_open as lo
-	on
-		os.lec_os_code = lo.lec_os_code 
-	inner join
+	inner join 
 		wt_course as wc
-	on 
-		lo.lec_os_code = wc.lec_os_code 
-	inner join
+	on
+		lo.lec_os_code  = wc.lec_os_code 
+	inner join 
 		wt_member_registration as mr
-	on 
+	on
 		mr.mr_id = wc.app_sid 
 	WHERE 
-		mr.mr_id = #{mrId};
+		lo.lec_os_code = #{lecOsCode};
 </select>
 
 <!-- 지급자가져오기  -->
@@ -259,24 +256,26 @@ SELECT IFNULL((SELECT max(CAST(SUBSTRING(pm_info_code,11) AS DECIMAL))+1 FROM wt
 
 </select>
 
-
-
 <!-- 장학금 순위 가져오기 -->
 <select id="scholarshipCount" resultType="hashMap" parameterType="String">
 	SELECT 
-	   mr_id
+	   mr_name as 'mrName'  
 	   ,CASE
 	      WHEN 
 	      (COUNT(g.test_round) = 3 )then ROUND(AVG(g.grade_man_score)) 
-	       END
+	       END as grade_man_score
 	FROM 
 	   wt_grade_management AS g
+	inner join
+	   wt_member_registration as mr
+	on
+		g.mr_id = mr.mr_id
 	WHERE 
 	   lec_os_code = #{lecOsCode}
 	GROUP BY g.mr_id
 	HAVING 
 	   COUNT(g.test_round) = 3
-	ORDER BY grade_man_score asc;
+	ORDER BY grade_man_score desc limit 3;
 </select>
 
 </mapper>  
