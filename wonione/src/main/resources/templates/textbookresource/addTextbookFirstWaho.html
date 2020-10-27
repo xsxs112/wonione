@@ -20,7 +20,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="all-form-element-inner">
-                                        <form action="/addTextbookFirstWaho" method="post" id="addForm">
+                                        <form action="/addTextbookFirstWaho" method="POST" id="addForm">
 									<input type="hidden" th:value="${whTxbCode}" name="whTxbCode">
 									<input type="hidden" th:value="${sessionId}" name="whTxbWriter">
                                             <div class="form-group-inner">
@@ -42,7 +42,7 @@
                                                         <div class="form-select-list">
                                                             <select class="form-control custom-select-value" id="txbCode" name ="txbCode">
 																<th:block>
-																	<option th:value=${textbookBasicInfo.txbCode} selected="selected">[[${textbookBasicInfo.txbName}]]</option>
+																	<option th:value=${txbInfoList.txbCode} selected="selected">[[${txbInfoList.txbName}]]</option>
 																</th:block>																	
 															</select>
                                                         </div>
@@ -105,6 +105,7 @@
 	<script type="text/javascript">
 	$('#addBtn').click(function(){
 		console.log('addBtn');
+		var addForm = $('#addForm');
 		var txbCode = $('#txbCode').val();
 		var whTxbQuantity = $('#whTxbQuantity').val();
 		console.log(whTxbQuantity);

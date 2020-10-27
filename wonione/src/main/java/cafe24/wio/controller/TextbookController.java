@@ -19,6 +19,7 @@ import cafe24.wio.bean.SupplyTextbook;
 import cafe24.wio.bean.TextbookBasicInfo;
 import cafe24.wio.bean.WhTextbook;
 import cafe24.wio.service.TextbookService;
+import groovyjarjarpicocli.CommandLine.Help.Ansi.Text;
 
 
 @Controller
@@ -27,7 +28,6 @@ public class TextbookController {
 	@Autowired
 	private TextbookService textbookService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(TextbookController.class);
 	
 	//교재 입고정보 수정하기
 	@PostMapping("/modifyTextbookWaho")
@@ -89,15 +89,15 @@ public class TextbookController {
 	public String modifyTxbInfo(Model model
 									,HttpSession session
 									,@RequestParam(value="txbCode", required = false) String txbCode) {
-		TextbookBasicInfo textbookBasicInfo= textbookService.getOnlyTxbInfo(txbCode);
+		Map<String,Object> textbookBasicInfo= textbookService.getOnlyTxbInfo(txbCode);
 		String txbModifierId = session.getAttribute("SID").toString();
 		String txbModifierName = session.getAttribute("SNAME").toString();
 		model.addAttribute("title", "교재기본정보 수정");
 		model.addAttribute("mainTitle", "교재기본정보 수정");
 		model.addAttribute("txbCode", txbCode);
-		model.addAttribute("txbName", textbookBasicInfo.getTxbName());
-		model.addAttribute("txbPublisher", textbookBasicInfo.getTxbPublisher());
-		model.addAttribute("txbAuthor", textbookBasicInfo.getTxbAuthor());
+		model.addAttribute("txbName", textbookBasicInfo.get("txbName"));
+		model.addAttribute("txbPublisher", textbookBasicInfo.get("txbPublisher"));
+		model.addAttribute("txbAuthor", textbookBasicInfo.get("txbAuthor"));
 		model.addAttribute("txbModifierId", txbModifierId);
 		model.addAttribute("txbModifierName", txbModifierName);
 		
@@ -195,18 +195,9 @@ public class TextbookController {
 		int result = 1;
 		if(whTxbCodeCheck.size()<1) {
 			result = 0;
-		}else {
-			logger.info(whTxbCodeCheck.toString());
 		}
 		return result;
 	 }
-	
-	//입고내역유무 체크
-	@GetMapping("/whTxbCheck")
-	public String wahoTextbookCheck() {
-	
-		return "whTxbCheck";
-	}
 
 	//교재 지급내역 조회
 	@GetMapping("/textbookSupplyList")
@@ -239,7 +230,7 @@ public class TextbookController {
 		
 		textbookService.addTextbookInfo(txbBasicInfo);
 		String txbInfoCode = textbookService.getAddTxbInfoCode();
-		TextbookBasicInfo textbookBasicInfo = textbookService.getOnlyTxbInfo(txbInfoCode);
+		Map<String,Object> textbookBasicInfo = textbookService.getOnlyTxbInfo(txbInfoCode);
 		String sessionName = session.getAttribute("SNAME").toString();
 		model.addAttribute("title", "교재등록 완료  ");
 		model.addAttribute("mainTitle", "교재등록 완료 ");
@@ -272,6 +263,7 @@ public class TextbookController {
 			 					, WhTextbook whTextbook
 			 					,@RequestParam(value="txbCode", required = false)String txbCode
 			 					,@RequestParam(value="whTxbQuantity", required = false)String whTxbQuantity
+			 					,@RequestParam(value="whTxbWriter", required = false)String whTxbWriter
 			 					,@RequestParam(value="whTxbRemark", required = false)String whTxbRemark) {
 	
 		textbookService.addFirstWhTextbook(whTextbook);
@@ -287,20 +279,20 @@ public class TextbookController {
 	//교재 최초입고등록 
 	@GetMapping("/addTextbookFirstWaho")
 	public String addTextbookFirstWaho(Model model
-										,	HttpSession session
+										,HttpSession session
 										,@RequestParam(value="txbCode", required = false) String txbCode) {
 		
 		String sessionId = session.getAttribute("SID").toString();
-		//교재 기본정보조회
-		TextbookBasicInfo textbookBasicInfo = textbookService.getOnlyTxbInfo(txbCode);
 		//교재입고코드 자동증가
 		String whTxbCode = textbookService.getTxbWhMaxCode();
+		
+		Map<String,Object> txbInfoList =  textbookService.getOnlyTxbInfo(txbCode);
 		
 		model.addAttribute("title", "교재최초입고등록  ");
 		model.addAttribute("mainTitle", "교재최초입고등록 ");
 		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("whTxbCode", whTxbCode);
-		model.addAttribute("textbookBasicInfo", textbookBasicInfo);
+		model.addAttribute("txbInfoList", txbInfoList);
 		
 		return "textbookresource/addTextbookFirstWaho";
 	}
@@ -371,8 +363,8 @@ public class TextbookController {
 	//교재정보상세보기 ajax
 	@PostMapping(value="/txbDetail", produces = "application/json")
 	@ResponseBody
-	public TextbookBasicInfo txbDetail(@RequestParam(value="txbCode", required = false)String txbCode) {
-		TextbookBasicInfo textbookBasicInfo =
+	public Map<String,Object> txbDetail(@RequestParam(value="txbCode", required = false)String txbCode) {
+		Map<String,Object> textbookBasicInfo =
 							textbookService.getOnlyTxbInfo(txbCode);
 		return textbookBasicInfo;
 	}

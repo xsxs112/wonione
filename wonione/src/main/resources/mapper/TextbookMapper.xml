@@ -380,7 +380,9 @@ FROM
 		, stock_txb_quantity
 		, wh_txb_writer
 		, wh_txb_reg_date
-		, wh_txb_remark)VALUES (
+		, wh_txb_remark
+		, wh_txb_modifier	
+		, wh_txb_modify_date)VALUES (
 			#{whTxbCode}
 		,	#{txbCode}
 		,	${whTxbQuantity}
@@ -388,7 +390,9 @@ FROM
 		,	${whTxbQuantity}
 		,	#{whTxbWriter}
 		,	CURRENT_TIME()	
-		,	#{whTxbRemark});	
+		,	#{whTxbRemark}
+		,	''
+		,	'0000-00-00 00:00:00');	
 </insert>
 
 <!-- 교재입고등록 -->
@@ -401,7 +405,9 @@ FROM
 		, stock_txb_quantity
 		, wh_txb_writer
 		, wh_txb_reg_date
-		, wh_txb_remark)VALUES (
+		, wh_txb_remark
+		, wh_txb_modifier	
+		, wh_txb_modify_date)VALUES (
 			#{whTxbCode}
 		, 	#{txbCode}
 		, 	${whTxbQuantity}
@@ -416,7 +422,9 @@ FROM
 			ORDER BY wt.wh_txb_date DESC LIMIT 1)+${whTxbQuantity}
 		, #{whTxbWriter}
 		, CURRENT_TIME()	
-		, #{whTxbRemark});	
+		, #{whTxbRemark}
+		,	''
+		,	'0000-00-00 00:00:00');	
 </insert>
 
 <!-- 교재입고코드 자동증가를 위해 max에 +1을 한값 select -->
@@ -545,15 +553,15 @@ UPDATE wt_textbook_basic_information
 </select>
 
 <!-- 교재코드로 교재정보 가져오기 -->
-<select id="getOnlyTxbInfo" resultMap="resultTxbBasicInfo">
+<select id="getOnlyTxbInfo" resultType="hashMap">
 	SELECT 
-			txb_code
-		,   txb_name
-		,   txb_publisher
-		,   txb_author
-		,   txb_writer
-		,   txb_reg_date
-		,	txb_remark
+			tbi.txb_code		AS	'txbCode'
+		,   tbi.txb_name		AS	'txbName'
+		,   tbi.txb_publisher	AS	'txbPublisher'
+		,   tbi.txb_author		AS	'txbAuthor'
+		,   tbi.txb_writer		AS	'txbWriter'
+		,   tbi.txb_reg_date	AS	'txbRegDate'
+		,	tbi.txb_remark		AS	'txbRemark'
 	FROM 
 		wt_textbook_basic_information AS tbi
 	WHERE

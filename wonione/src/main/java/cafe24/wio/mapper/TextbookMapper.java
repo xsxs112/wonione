@@ -94,7 +94,7 @@ public interface TextbookMapper {
 	public String getTxbInfoMaxCode();
 	
 	//교재코드로 교재정보 가져오기 
-	public TextbookBasicInfo getOnlyTxbInfo(String txbCode);
+	public Map<String,Object> getOnlyTxbInfo(String txbCode);
 	
 	//교재정보등록시 삽입될 코드(PK) 가져오기 
 	public String getAddTxbInfoCode();

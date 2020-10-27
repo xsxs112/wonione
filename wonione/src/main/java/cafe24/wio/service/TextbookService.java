@@ -281,8 +281,8 @@ public class TextbookService {
 	 * @param txbInfoCode
 	 * @return TextbookBasicInfo textbookBasicInfo
 	 */
-	public TextbookBasicInfo getOnlyTxbInfo(String txbCode) {
-		TextbookBasicInfo textbookBasicInfo = textbookMapper.getOnlyTxbInfo(txbCode);
+	public Map<String,Object> getOnlyTxbInfo(String txbCode) {
+		Map<String,Object> textbookBasicInfo = textbookMapper.getOnlyTxbInfo(txbCode);
 		return textbookBasicInfo;
 	}
 	

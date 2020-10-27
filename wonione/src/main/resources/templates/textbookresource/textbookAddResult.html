@@ -12,7 +12,7 @@
 		<h2 th:text="${regResult}"></h2>
 	</div>
 		<table class="table table-bordered table-hover table-striped">
-			<th:block th:each="tbi : ${textbookBasicInfo}">
+			<th:block th:unless="${textbookBasicInfo eq null}" >
 				<thead>
 					<tr>
 					  <th>교재코드</th>
@@ -26,17 +26,17 @@
 				</thead>
 				<tbody>
 					<tr>
-					  <td th:text="${tbi.txbCode}"></td>
-					  <td th:text="${tbi.txbName}"></td>
-					  <td th:text="${tbi.txbPublisher}"></td>
-					  <td th:text="${tbi.txbAuthor}"></td>
-					  <td th:text="${tbi.txbWriter}"></td>
+					  <td th:text="${textbookBasicInfo.txbCode}"></td>
+					  <td th:text="${textbookBasicInfo.txbName}"></td>
+					  <td th:text="${textbookBasicInfo.txbPublisher}"></td>
+					  <td th:text="${textbookBasicInfo.txbAuthor}"></td>
+					  <td th:text="${textbookBasicInfo.txbWriter}"></td>
 					  <td th:text="${sessionName}"></td>
-					  <td th:text="${tbi.txbRegDate}"></td>
+					  <td th:text="${textbookBasicInfo.txbRegDate}"></td>
 					</tr>
 				</tbody>
 			</th:block>
-			<th:block th:each="twr : ${txbWhResult}">
+			<th:block th:unless ="${txbWhResult eq null}">
 				<thead>
 					<tr>
 						<th>교재입고코드</th>
@@ -51,14 +51,14 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td th:text="${twr.whTxbCode}"></td>
-						<td th:text="${twr.txbCode}"></td>
-						<td th:text="${twr.whTxbQuantity}"></td>
-						<td th:text="${twr.whTxbDate}"></td>
-						<td th:text="${twr.stockTxbQuantity}"></td>
-						<td th:text="${twr.whTxbWriter}"></td>
-						<td th:text="${twr.whTxbRegDate}"></td>
-						<td th:text="${twr.whTxbRemark}"></td>
+						<td th:text="${txbWhResult.whTxbCode}"></td>
+						<td th:text="${txbWhResult.txbCode}"></td>
+						<td th:text="${txbWhResult.whTxbQuantity}"></td>
+						<td th:text="${txbWhResult.whTxbDate}"></td>
+						<td th:text="${txbWhResult.stockTxbQuantity}"></td>
+						<td th:text="${txbWhResult.whTxbWriter}"></td>
+						<td th:text="${txbWhResult.whTxbRegDate}"></td>
+						<td th:text="${txbWhResult.whTxbRemark}"></td>
 					</tr>
 				</tbody>
 			</th:block> 
@@ -68,8 +68,5 @@
 			<a href="/textbookWahoList" class="btn btn-default" role="button">입고 내역</a>
 			<a href="/textbookSupplyList" class="btn btn-default" role="button">지급 내역</a>
 		</div>
-	</th:block>
-	<th:block layout:fragment="customJsScript">
-	 
 	</th:block>
 </html>
