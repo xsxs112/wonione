@@ -38,7 +38,7 @@ public class ScholarshipController {
 								,@RequestParam( value="currentPage", required = false, defaultValue = "1") int currentPage) {
 		
 		Map<String,Object> countScholarShipList =scholarshipService.countScholarShipList(currentPage);
-		Map<String,Object> scholarshipCount = scholarshipService.scholarshipCount(lecOsCode);
+		List<Map<String, Object>> scholarshipCount = scholarshipService.scholarshipCount(lecOsCode);
 		String scholarCode = scholarshipService.ScholarReCode();
 		String sessionName= session.getAttribute("SNAME").toString();
 		String sessionId = session.getAttribute("SID").toString();
@@ -63,12 +63,21 @@ public class ScholarshipController {
 		
 	}
 	
+	//장학금 지급가능학생 보여주기 ajax호출
+	@PostMapping(value="/scholarshipCount", produces = "application/json")
+	@ResponseBody
+	public List<Map<String, Object>> scholarshipCount(
+										@RequestParam(value = "lecName", required = false) String lecOsCode){
+		 List<Map<String, Object>> scholarshipCount = scholarshipService.scholarshipCount(lecOsCode);
+		return scholarshipCount;
+	}
+	
 	//ajax호출
 	@PostMapping(value="/sNameClass", produces = "application/json")
 	@ResponseBody
-	public List<Map<String, Object>> sNameClass(Model model
-										,@RequestParam(value = "mrName", required = false) String mrId){
-		List<Map<String, Object>> sNameClass = scholarshipService.sNameClass(mrId);
+	public List<Map<String, Object>> sNameClass(
+										@RequestParam(value = "lecName", required = false) String lecOsCode){
+		List<Map<String, Object>> sNameClass = scholarshipService.sNameClass(lecOsCode);
 		
 		return sNameClass;
 		
@@ -90,10 +99,11 @@ public class ScholarshipController {
 									,@RequestParam(value="pmInfoCode", required=false) String pmInfoCode
 									,@RequestParam(value="awardBmPrice", required=false) String awardBmPrice
 									,@RequestParam(value="mrName", required=false) String mrName
+									,@RequestParam(value="lecOsCode", required=false) String lecOsCode
 									,@RequestParam(value="pmInfoPayer", required=false) String pmInfoPayer){
-		
 		int result = scholarshipService.giveScholarShip(scholarship);
 		String scholarCode = scholarshipService.ScholarReCode();
+		
 		model.addAttribute("ScholarShip", scholarship);
 		model.addAttribute("scholarCode", scholarCode);
 		model.addAttribute("result", result);

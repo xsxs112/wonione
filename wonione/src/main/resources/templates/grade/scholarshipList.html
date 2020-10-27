@@ -27,19 +27,32 @@
 					    </div>
 						</form>
 						<br>
-						<form id="scholarCount" class="form-inline" action="/serchScholar" method="post">  
-							<select name ="" class="form-control" id="${classcode}">
-											<option>::강의명::</option>
-											<th:block th:each="s : ${classCode}">
-												<option th:value="${s.lec_os_code}">[[${s.lec_name}]]</option>
-											</th:block>
-										</select> 
-						<div class="form-group">
-						    <div class="input-group-btn pull-right">
-						        <button class="btn btn-default form-group" type="button" id="ShowScholar">성적보기</button>
-						   </div>
-					    </div>
-						</form>
+						<form id="scholarCount" class="form-inline"  method="post">  
+							<select name="lecName" class="form-control" id="lecName">
+								<option>::강의명::</option>
+									<th:block th:each="s : ${classCode}">
+										<option th:value="${s.lec_os_code}" >[[${s.lec_name}]]</option>
+									</th:block>
+							</select> 
+							<div class="form-group modal-bootstrap shadow-inner responsive-mg-b-0">
+                       			<div class="modal-area-button">
+                           			<a id="ShowScholar" href="#" class="btn btn-default form-group" data-toggle="modal" data-target="#PrimaryModalalert" role="button">성적보기</a>
+                        		</div>
+                    	 	</div>
+                     	</form>
+                     <div class="login-form-area edu-pd mg-b-15">
+                        <div id="PrimaryModalalert" class="modal modal-edu-general default-popup-PrimaryModal fade" role="dialog">
+                           <div class="modal-dialog">
+                              <div class="modal-content">
+                                 <div class="modal-body" id="scholarshipCount">
+                                 </div>
+                                 <div class="modal-footer">
+                                    <a data-dismiss="modal" class="btn btn-default" href="#" role="button">닫기</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>   
 						<br>
 						<br>
 						<form id="scholarSubmitForm" action="/getScholarList" method="POST">
@@ -47,8 +60,8 @@
 							<thead>
 								<tr>
 									<th>장학코드</th>
-									<th>학생이름</th>
 									<th>수강과목</th>
+									<th>학생이름</th>
 									<th>지급액</th>
 									<th>지급자</th>
 									<th>저장</th>
@@ -59,16 +72,16 @@
 								<td>
 								<input class="form-control" th:value="${scholarCode}" name="pmInfoCode" readonly="readonly">
 									<td>
-										<select name ="mrName" class="form-control" id="mrName">
-											<option value="">::학생이름::</option>
-											<th:block th:each="s : ${sName}">
-												`<option th:value="${s.mr_id}">[[${s.mr_name}]]</option>
-											</th:block>
-										</select>
-									</td>
+										<select name ="lecName" class="form-control" id="lectureName">
+								<option>::강의명::</option>
+									<th:block th:each="s : ${classCode}">
+										<option th:value="${s.lec_os_code}" >[[${s.lec_name}]]</option>
+									</th:block>
+										</select> 
+										</td>
 									<td>
-										<select name ="lecName" class="form-control" id="className">
-											<option value="null">::수강과목::</option>
+										<select name ="mrName" class="form-control" id="studentName">
+											<option>::학생이름::</option>
 										</select>
 									</td>
 									<td>
@@ -185,48 +198,50 @@
 	 
 	 $(function() {
 		  $('#scholarSubmit').click(function(){
-			  console.log('클릭 이벤트');
+			  console.log('scholarSubmit 클릭 이벤트');
 			  	var scholarSubmitForm = $('#scholarSubmitForm');
-				var mrName = $('#mrName').val();
+			  	var lectureName = $('#lectureName').val();
+				var studentName = $('select[name=mrName] option:selected').val();
 				var awardBmPrice = $('#awardBmPrice').val();
-				console.log("mrName-->"+mrName);
+				console.log("lectureName-->"+lectureName);
+				console.log("studentName-->"+studentName);
 				console.log("awardBmPrice-->"+awardBmPrice);
 				
-				if(mrName == undefined || mrName ==''){
-					alert('장학금지급 등록을 위한 학생 이름을 입력해주세요');
+				if(studentName == undefined || studentName ==''){
+					alert('장학금지급 등록을 위한 학생이름을 입력해주세요');
 					return;
 				}else if(awardBmPrice == '' || awardBmPrice == undefined){
 					alert('장학금지급 등록을 위한 지급장학금액을 입력해주세요');
 					return;	
 				}
-				scholarSubmitForm.submit();
+				 scholarSubmitForm.submit(); 
 			}); 
 		}); 
 	 
-	 $('#mrName').change(function(){
+	 $('#lectureName').change(function(){
 		 var html = '';
-		 var mrName = $(this).val();
-		 console.log(mrName, "<-선택한학생이름");
+		 var lectureName = $(this).val();
+		 console.log(lecName, "<-선택한학생이름 내 이름은 아이슬");
 		 var request = $.ajax({
 	          url: "/sNameClass",
 	          method: "POST",
-	          data: { mrName : mrName },
+	          data: { lecName : lectureName },
 	          dataType: "json"
 	        });
 		 request.done(function( data ) {
-			 $('#className').empty();
-	         $('#className').children("option").remove();
-	         $('#className').append("<option selected='selected' disabled='disabled'>::수강과목::</option>");
+			 $('#studentName').empty();
+	         $('#studentName').children("option").remove();
+	         $('#studentName').append("<option selected='selected' disabled='disabled'>::학생이름::</option>");
 	 			console.log(data.length);
 	 			
 	 			for(var i=0; i<data.length; i++){
 	 				console.log(data[i]);
 	 				if(data[i].mrId == null){
 	 					html = '';
-	 					html += '<option value= "'+ data[i].lec_os_code +'" name="lec_os_code" >' +data[i].lec_name+ '</option>'
-	 					$('#className').append(html);
+	 					html += '<option value= "'+ data[i].mr_id +'" name="mrName" >' +data[i].mr_name+ '</option>'
+	 					$('#studentName').append(html);
 	 				}else{
-		                  $('#className').append("<option value='내용이 없습니다.'>" + "</option>");
+		                  $('#studentName').append("<option value='내용이 없습니다.'>" + "</option>");
 		               }  
 	 		    };   
 	        });
@@ -234,6 +249,57 @@
 	          alert( "Request failed: " + textStatus );
 	        }); 
 	 });  
+	 
+	 
+	 
+	 $('#lecName').change(function(){
+		 console.log("lecName change");
+		 $('#ShowScholar').click(function(){
+			 console.log("ShowScholar 클릭");
+			 var lecOsCode = $('select[name=lecName] option:selected').val();
+			 var html = '';
+			 var scholarshipCount = $('#scholarshipCount');
+			 console.log(lecOsCode);
+			 
+			 var request = $.ajax({
+				  url: "/scholarshipCount",  
+				  method: "POST", 
+				  data: {  lecName : lecOsCode }, 
+				  dataType: "json"
+				});
+			
+			 request.done(function(data) {
+				 console.log(data);
+				 console.log(data.length);
+					 	html ='';
+						html +='<h3>';
+						html +='성적순위</h3>';
+						html +='<table class="table table-hover" text-align:center;>';
+						html +='<th>학생이름</th>';
+						html +='<th>시험점수</th>';
+				 for(var i=0; i<data.length; i++){
+					 console.log(data[i]); 
+					 	html +='<tr>';
+						html +='<td>';
+						html += data[i].mrName;
+						html += '</td>';	
+						html +='<td>';
+						html += data[i].grade_man_score;
+						html += '</td></tr>';
+				 }
+						html +='</table>';
+						scholarshipCount.empty();
+						scholarshipCount.append(html);
+				 
+			 });
+			 
+			 request.fail(function( jqXHR, textStatus ) {
+				  alert( "결과가없습니다." + textStatus );
+				});
+		 
+       });
+	 
+	 });
 	 
 		</script>
 		

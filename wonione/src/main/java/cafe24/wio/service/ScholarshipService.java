@@ -68,9 +68,9 @@ public class ScholarshipService {
 			return mapList;
 		  }
 		
-	//학생이름별 과목 가져오기
-		public  List<Map<String,Object>> sNameClass(String mrId){
-			List<Map<String,Object>> sNameClass = scholarshipMapper.sNameClass(mrId);
+	//과목별 학생이름 가져오기
+		public  List<Map<String,Object>> sNameClass(String lecOsCode){
+			List<Map<String,Object>> sNameClass = scholarshipMapper.sNameClass(lecOsCode);
 			return sNameClass;
 		}
 		
@@ -85,8 +85,8 @@ public class ScholarshipService {
 			return scholarSearch;
 		}
 	//장학금지급을 위한 성적순위
-		public Map<String,Object> scholarshipCount(String lecOsCode){
-			Map<String,Object> scholarShipCount = scholarshipMapper.scholarshipCount(lecOsCode);
+		public  List<Map<String, Object>> scholarshipCount(String lecOsCode){
+			 List<Map<String, Object>> scholarShipCount = scholarshipMapper.scholarshipCount(lecOsCode);
 			return scholarShipCount;
 		}
 	

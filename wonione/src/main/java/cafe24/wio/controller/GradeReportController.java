@@ -107,7 +107,6 @@ private GradeReportService gradeReportService;
 		   String sessionId = session.getAttribute("SID").toString();
 		   Map<String, Object> lecOpenCodeNum = gradeReportService.lecOpenCodeNum(sessionId,lecOsCode);
 		   return lecOpenCodeNum;
-		   
 	   }
 	   
 	   
