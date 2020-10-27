@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import cafe24.wio.bean.LectureOpen;
 import cafe24.wio.bean.LectureOpenSchedule;
@@ -16,7 +17,56 @@ public class LectureService {
 	@Autowired
 	private LectureMapper lectureMapper;
 	
-	//강의예정리스트 검색
+	
+	//검색결과 유무 조회
+	public int checkSearchResult(String startPeriod
+								,String endPeriod
+								,String lecStartDate
+								,String lecFinalDate
+								,String selectlecOsSk
+								,String lecOsSv) {
+		int checkResult = 0;
+
+		if(startPeriod != null && endPeriod != null) {
+			List<Map<String,Object>> searchResultByPeriod = 
+							lectureMapper.lecOsSearchPeriod(lecStartDate, lecFinalDate, startPeriod, endPeriod);
+			if(searchResultByPeriod.size()==0) {
+				checkResult = 0;
+			}else {
+				checkResult = 1;
+			}
+		}else if(selectlecOsSk != null && lecOsSv != null) {
+			List<Map<String,Object>> searchResult =
+							lectureMapper.getLecOsSearch(selectlecOsSk, lecOsSv);
+			if(searchResult.size() ==0) {
+				checkResult = 0;
+			}else {
+				checkResult = 1;
+			}
+		}
+		
+		
+		return checkResult;
+	}
+	
+	//강의예정리스트 기간별 검색
+	public List<Map<String,Object>> lecOsSearchPeriod(String lecStartDate
+													, String lecFinalDate
+													, String startPeriod
+													, String endPeriod){
+		
+		List<Map<String,Object>> lectureOsList =
+				lectureMapper.lecOsSearchPeriod(lecStartDate, lecFinalDate, startPeriod, endPeriod);
+		
+		return lectureOsList;
+	}
+	
+	/**
+	 * 강의예정리스트 검색
+	 * @param lecOsSk
+	 * @param lecOsSv
+	 * @return List<Map<String,Object>> lecOsList
+	 */
 	public List<Map<String,Object>> getLecOsSearch(String lecOsSk, String lecOsSv){
 			List<Map<String,Object>> lecOsList = lectureMapper.getLecOsSearch(lecOsSk, lecOsSv);
 		return lecOsList;
