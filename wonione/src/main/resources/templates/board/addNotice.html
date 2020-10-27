@@ -81,7 +81,13 @@
 				alert('제목을 입력해주세요.');
 				boardTitle.focus();
 				return;
-			}else if(boardContents.val() == ''){
+			}
+			if(boardTitle.val().replace(/\s|　/gi, "").length == 0){
+				alert('제목을 공백으로 채울 수 없습니다.');
+				boardTitle.focus();
+				return;
+			}
+			if(boardContents.val() == ''){
 				alert('공지할 내용을 입력해주세요.');
 				boardContents.focus();
 				return;
