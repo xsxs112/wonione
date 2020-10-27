@@ -1,13 +1,17 @@
 /**
  * 2020-10-15 새로 생성
- * 
- * 
+ * 2020-10-27 미지급, 월별, 년도별 조회 완료
+ * (수정 필요) 숫자 3자리마다 콤마, 값 없을경우 목록 안뜨게 수정
  * 
  */
  
  
 	 $(function(){	
-	 
+	 	//숫자 3자리마다 콤마
+	 	function numberFormat(inputNumber) {
+		   return inputNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+		
 	 	//강사 년도별 조회
 	 	$(document).on('change', '#iyCode',(function(){
 	 		var iyCode = $('select[name=iyCode] option:selected').val();
@@ -27,7 +31,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].spPay+'원</td>';
+		  			html += '<td style="text-align: center;">'+numberFormat(data[i].spPay)+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spWriter+'</td>';
 		  			html += '</tr>'
@@ -61,7 +65,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].opPay+'원</td>';
+		  			html += '<td style="text-align: center;">'+numberFormat(data[i].opPay)+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opWriter+'</td>';
 		  			html += '</tr>'
@@ -95,7 +99,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].spPay+'원</td>';
+		  			html += '<td style="text-align: center;">'+numberFormat(data[i].spPay)+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spWriter+'</td>';
 		  			html += '</tr>'
@@ -129,7 +133,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].opPay+'원</td>';
+		  			html += '<td style="text-align: center;">'+numberFormat(data[i].opPay)+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opWriter+'</td>';
 		  			html += '</tr>'
@@ -161,7 +165,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].spPay+'원</td>';
+		  			html += '<td style="text-align: center;">'+numberFormat(data[i].spPay)+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].spWriter+'</td>';
 		  			html += '</tr>'
@@ -193,7 +197,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].opPay+'원</td>';
+		  			html += '<td style="text-align: center;">'+numberFormat(data[i].opPay)+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opWriter+'</td>';
 		  			html += '</tr>'
@@ -230,7 +234,7 @@
 		  			html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opDate+'</td>';
-		  			html += '<td style="text-align: center;">'+data[i].opPay+'원</td>';
+		  			html += '<td style="text-align: center;">'+numberFormat(data[i].opPay)+'원</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opRegDate+'</td>';
 		  			html += '<td style="text-align: center;">'+data[i].opWriter+'</td>';
 		  			html += '</tr>'
@@ -267,7 +271,7 @@
 	  				html += '<td style="text-align: center;">'+data[i].mrId+'</td>';
 	  				html += '<td style="text-align: center;">'+data[i].mrName+'</td>';
 	  				html += '<td style="text-align: center;">'+data[i].spDate+'</td>';
-	  				html += '<td style="text-align: center;">'+data[i].spPay+'원</td>';
+	  				html += '<td style="text-align: center;">'+numberFormat(data[i].spPay)+'원</td>';
 	  				html += '<td style="text-align: center;">'+data[i].spRegDate+'</td>';
 	  				html += '<td style="text-align: center;">'+data[i].spWriter+'</td>';
 	  				html += '</tr>';
@@ -281,11 +285,6 @@
 				});	
 	 	})); 
 	 	
-	 	//숫자 3자리마다 콤마
-	 	function numberWithCommas(x) {
-		  x = x.replace(/[^0-9]/g,'');   // 입력값이 숫자가 아니면 공백
-		  x = x.replace(/,/g,'');          // ,값 공백처리
-		  $().val(x.replace(/\B(?=(\d{3})+(?!\d))/g, ",")); // 정규식을 이용해서 3자리 마다 , 추가 
-		}
+	 	
 
 	 });
