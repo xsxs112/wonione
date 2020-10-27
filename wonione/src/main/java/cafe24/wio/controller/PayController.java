@@ -28,6 +28,30 @@ public class PayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(PayController.class);
 
+	//강사급여 월별 조회하기
+	@PostMapping(value = "/monthStaffPay",produces = "application/json")
+	@ResponseBody
+	public List<OfficersPay> monthStaffPay( Model model
+			,@RequestParam(value = "pRTitle", required = false) float pRTitle ){
+		List<OfficersPay> monthStaffPayList = payService.monthStaffPay(pRTitle);
+		System.out.println(monthStaffPayList + "<=== monthStaffPayList");
+		
+		model.addAttribute("monthStaffPayList", monthStaffPayList);
+		return monthStaffPayList;		
+	}
+	
+	//직원급여 월별 조회하기
+	@PostMapping(value = "/monthOffiPay",produces = "application/json")
+	@ResponseBody
+	public List<OfficersPay> monthOffiPay( Model model
+			,@RequestParam(value = "pRTitle", required = false) float pRTitle ){
+		List<OfficersPay> monthOffiPayList = payService.monthOffiPay(pRTitle);
+		System.out.println(monthOffiPayList + "<=== monthOffiPayList");
+		
+		model.addAttribute("monthOffiPayList", monthOffiPayList);
+				return monthOffiPayList;		
+	}
+	
 	//강사급여 미지급목록 조회하기
 	@PostMapping(value = "/nonStaffPay",produces = "application/json")
 	@ResponseBody

@@ -106,10 +106,10 @@
 				</label>
 			</div>			
 			<div style="width:10%; float:left">		
-				<select name ="pRTitle" class="form-control">
+				<select name ="pRTitle" id ="pRTitle" class="form-control" >
 		  			<option>::지급월::</option>
 		  			<th:block th:if="${s.pRTitle} >=1 and ${s.pRTitle} <=12" th:each="s : ${standardSheetHour}">
-			  			<option id ="pRTitle" th:value="${s.pRTitle}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
+			  			<option th:value="${s.pRTitle}" >[[${#numbers.formatInteger(s.pRTitle, 0, 'COMMA')+'월'}]]</option>
 		  			</th:block>
 		  		</select>
 			</div>	

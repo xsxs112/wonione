@@ -107,5 +107,17 @@ public class PayService {
 		List<StaffPay> nonStaffPayList = payMapper.nonStaffPay();		
 		return nonStaffPayList;
 	}
+
+	//직원급여 월별 조회하기
+	public List<OfficersPay> monthOffiPay(float pRTitle) {
+		List<OfficersPay> nonOffiPayList = payMapper.monthOffiPay(pRTitle);
+		return nonOffiPayList;
+	}
+
+	//강사급여 월별 조회하기
+	public List<OfficersPay> monthStaffPay(float pRTitle) {
+		List<OfficersPay> monthStaffPayList = payMapper.monthStaffPay(pRTitle);
+		return monthStaffPayList;
+	}
 	
 }
