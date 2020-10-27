@@ -78,6 +78,7 @@
 								<ul class="pagination">
 									<li class="page-item">
 									<th:block th:each="num : ${#numbers.sequence(startPageNum,lastPageNum)}">
+										<span th:if="${currentPage == num}" th:text="${num}"></span>									
 										<a class="page-link" th:unless="${currentPage eq num}" th:text="${num}" th:href="@{/equipmentList(currentPage=${num})}"></a>
 									</th:block>
 									</li>
