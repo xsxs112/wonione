@@ -56,5 +56,8 @@ public interface PayMapper {
 	public List<OfficersPay> insuranceYear();
 	
 	//직원급여 미지급목록 조회하기
-	public OfficersPay nonOffiPay(String opDate);
+	public List<OfficersPay> nonOffiPay();
+	
+	//강사급여 미지급목록 조회하기
+	public List<StaffPay> nonStaffPay();
 }

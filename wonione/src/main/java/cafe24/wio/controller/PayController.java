@@ -28,13 +28,57 @@ public class PayController {
 	// 콘솔로그 말고 이젠 이거 씁니다!!!!
 	private final static Logger logger = LoggerFactory.getLogger(PayController.class);
 
+	//강사급여 미지급목록 조회하기
+	@PostMapping(value = "/nonStaffPay",produces = "application/json")
+	@ResponseBody
+	public List<StaffPay> nonStaffPay(	Model model	) {
+		List<StaffPay> nonStaffPayList = payService.nonStaffPay();
+		System.out.println(nonStaffPayList + "<=== nonStaffPayList");
+		
+		model.addAttribute("nonStaffPayList", nonStaffPayList);
+		
+		return nonStaffPayList;
+	}
+	
 	//직원급여 미지급목록 조회하기
 	@PostMapping(value = "/nonOffiPay",produces = "application/json")
 	@ResponseBody
-	public OfficersPay nonOffiPay(String opDate) {
-		OfficersPay nonOffiPayList = payService.nonOffiPay(opDate);
+	public List<OfficersPay> nonOffiPay(	Model model	) {
+		List<OfficersPay> nonOffiPayList = payService.nonOffiPay();
+		System.out.println(nonOffiPayList + "<=== nonOffiPayList");
+		
+		model.addAttribute("nonOffiPayList", nonOffiPayList);
 		
 		return nonOffiPayList;
+	}
+	
+	// 직원 급여 검색	
+	@PostMapping(value = "/getSearchOPL",produces = "application/json")
+	@ResponseBody
+	public List<OfficersPay> getSearchOPL(	Model model
+			,@RequestParam(value = "offisk", required = false) String offisk
+			,@RequestParam(value = "offisv", required = false) String offisv) {
+		
+		List<OfficersPay> officersSPayList = payService.getSearchOPL(offisk, offisv);
+
+		model.addAttribute("officersSPayList", officersSPayList);
+		
+		return officersSPayList;
+	}
+	
+	//강사 급여 검색
+	@PostMapping(value = "/getSearchSPL",produces = "application/json")
+	@ResponseBody
+	public List<StaffPay> getSearchSPL(	Model model
+			,@RequestParam(value = "staffsk", required = false) String staffsk
+			,@RequestParam(value = "staffsv", required = false) String staffsv) {
+		
+		List<StaffPay> staffSPayList = payService.getSearchSPL(staffsk, staffsv);
+		System.out.println(" staffSPayList ->> "+staffSPayList);
+		
+		model.addAttribute("staffSPayList", staffSPayList);
+		
+		return staffSPayList;
 	}
 	
 	// 강사급여 삭제하기
@@ -106,36 +150,6 @@ public class PayController {
 		model.addAttribute("title", "급여목록조회");
 		
 		return "pay/payList";
-	}
-	
-	// 직원 급여 검색	
-	@PostMapping(value = "/getSearchOPL",produces = "application/json")
-	@ResponseBody
-	public List<OfficersPay> getSearchOPL(	Model model
-											,@RequestParam(value = "offisk", required = false) String offisk
-											,@RequestParam(value = "offisv", required = false) String offisv) {
-		
-		List<OfficersPay> officersSPayList = payService.getSearchOPL(offisk, offisv);
-		System.out.println(" officersSPayList ->> "+officersSPayList);
-		
-		model.addAttribute("officersSPayList", officersSPayList);
-		
-		return officersSPayList;
-	}
-	
-	//강사 급여 검색
-	@PostMapping(value = "/getSearchSPL",produces = "application/json")
-	@ResponseBody
-	public List<StaffPay> getSearchSPL(	Model model
-										,@RequestParam(value = "staffsk", required = false) String staffsk
-										,@RequestParam(value = "staffsv", required = false) String staffsv) {
-								
-		List<StaffPay> staffSPayList = payService.getSearchSPL(staffsk, staffsv);
-		System.out.println(" staffSPayList ->> "+staffSPayList);
-		
-		model.addAttribute("staffSPayList", staffSPayList);
-		
-		return staffSPayList;
 	}
 
 }
