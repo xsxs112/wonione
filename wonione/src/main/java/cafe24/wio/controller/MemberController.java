@@ -108,7 +108,7 @@ public class MemberController {
 			}
 		}
 		
-		return "redirect:/index";
+		return "redirect:/login";
 	}
 	
 	@GetMapping("/login")
