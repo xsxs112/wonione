@@ -24,7 +24,7 @@
 	                                </a>
 		                            <ul class="submenu-angle menu-font" aria-expanded="true">
 	                                	<li><a href="/getWIOMemberList"><span class="mini-sub-pro">구성원 목록O</span></a></li>
-	                                	<li><a href="/addWIOMember"><span class="mini-sub-pro">구성원 등록!</span></a></li>
+	                                	<li th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}"><a href="/addWIOMember"><span class="mini-sub-pro">구성원 등록!</span></a></li>
 	                            	</ul>
                                 </li>
                             <li>
@@ -145,7 +145,7 @@
                         </li>
                     </ul>
                         <h2 style="background-color: white; color: #202e59">배포일자 :</h2>
-                        <h2 style="background-color: white; color: #202e59">2020 - 10 - 22  </h2>
+                        <h2 style="background-color: white; color: #202e59">2020 - 10 - 23  </h2>
                 </nav>
             </div>
         </nav>

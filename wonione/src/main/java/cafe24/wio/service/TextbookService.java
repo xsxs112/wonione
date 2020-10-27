@@ -23,6 +23,44 @@ public class TextbookService {
 	private TextbookMapper textbookMapper;
 
 	/**
+	 * 입고정보수정 
+	 * @param whTextbook
+	 * @return
+	 */
+	public int modifyTxbWaho(WhTextbook whTextbook) {
+		int modifyResult = textbookMapper.modifyTxbWaho(whTextbook);
+		return modifyResult;
+	}
+	
+	/**
+	 * 입고내역이 있는 교재정보 가져오기
+	 * @return List<Map<String,Object>> txbInfoList
+	 */
+	public List<Map<String,Object>> selectExistTxbWaho(){
+		
+		List<Map<String,Object>> txbInfoList = 
+								textbookMapper.selectExistTxbWaho();
+		return txbInfoList;
+	}
+	
+	/**
+	 * 교재코드로 입고정보조회
+	 * @param txbCode
+	 * @return Map<String,Object> whTextbook 
+	 */
+	public Map<String,Object> getOnlyTxbWaho(String whTxbCode){
+		Map<String,Object> whTextbook =  textbookMapper.getOnlyTxbWaho(whTxbCode);
+		String whTxbDateTime = whTextbook.get("whTxbDate").toString();
+		String whTxbDate =whTxbDateTime.substring(0,10);
+		String whTxbTime =whTxbDateTime.substring(11);
+		whTextbook.remove("whTxbDate");
+		whTextbook.put("whTxbDateTime", whTxbDateTime);
+		whTextbook.put("whTxbDate", whTxbDate);
+		whTextbook.put("whTxbTime", whTxbTime);
+		return whTextbook;
+	}
+	
+	/**
 	 * 가장 최근날짜의 재고수량을 조회
 	 * @return int stockResult
 	 */

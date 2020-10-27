@@ -5,6 +5,30 @@
     
 <mapper namespace="cafe24.wio.mapper.MemberMapper">
 
+	<!-- 6. 구성원 리스트 검색 처리 -->
+	<select id="getSearchMember" parameterType="String" resultType="Member">
+		SELECT
+				mr.mr_id			AS mrId
+			,	mr.mr_name			AS mrName
+			,	l.level_name		AS levelName
+		FROM
+			wt_member_registration 	AS mr
+		INNER JOIN
+			wt_level				AS l
+		ON
+		mr.level_num = l.level_num
+		WHERE
+			${sk}  LIKE CONCAT('%',#{sv},'%');
+	</select>
+
+	<!-- 5. 구성원 등록 화면 셔틀버스 리스트 뽑아와서 선택하기. -->
+	<select id="getShuttleList" resultType="hashMap">
+		SELECT
+			shuttle_num	AS shuttleName
+		FROM
+			wt_shuttle
+	</select>
+
 
 	<!-- 4-1. 구성원 정보 수정 시, 은행 코드 대신 은행명으로 업데이트 하도록 처리 -->
 	<select id="getPmResourceList" resultType="hashMap">
@@ -25,6 +49,7 @@
 			,	pm_r_code		= 		#{pmRCode}
 			,	mr_account_num	=		#{mrAccountNum}
 			,	shuttle_num		=		#{shuttleNum}
+			,	mr_join_date	=		#{mrJoinDate}
 		WHERE 
 				mr_id= #{mrId}
 	</update>
@@ -118,23 +143,7 @@
 
 	<!-- 1-2. 구성원 정보 보기 -->
 	<select id="getMemberInfo" resultType="Member" parameterType="String">
-<!-- 	
-		SELECT
-				mr_id 					AS mrId
-			,	mr_pw 					AS mrPw
-			,	mr_name					AS mrName
-			,	mr_phone				AS mrPhone
-			,	mr_addr 				AS mrAddr
-			,	mr_target_score	 		AS mrTargetScore
-			,	pm_r_code 				AS pmRCode
-			,	mr_account_num	 		AS mrAccountNum
-			, 	mr_join_date 			AS mrJoinDate
-			, 	mr_reg_date 			AS mrRegDate
-		FROM
-			wt_member_registration 	AS m
-		WHERE
-			m.mr_id = #{mrId}
- -->
+
  
 	 	SELECT
 				m.mr_id				AS mrId
@@ -172,14 +181,14 @@
 			, 	mr_pw				AS mrPw
 			, 	mr_name				AS mrName
 			, 	level_num			AS levelNum
-			, 	mr_phone			AS mrPhone
-			, 	mr_addr				AS mrAddr
-			, 	mr_target_score		AS mrTargetScore
-			, 	pm_r_code			AS pmRCode
-			, 	mr_account_num		AS mrAccountNum
-			, 	shuttle_num			AS shuttleNum
-			,	mr_join_date		AS mrJoinDate
-			, 	mr_reg_date			AS mrRegDate
+			,	mr_phone 			AS mrPhone
+			, 	mr_addr 			AS mrAddr
+			, 	mr_target_score 	AS mrTargetScore
+			, 	pm_r_code 			AS pmRCode
+			, 	mr_account_num 		AS mrAccountNum
+			, 	shuttle_num 		AS shuttleNum
+			, 	mr_join_date 		AS mrJoinDate
+			, 	mr_reg_date 		AS mrRegDate
 		FROM 
 			wt_member_registration;
 	</select>

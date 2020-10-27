@@ -7,29 +7,29 @@
 		<title th:text="${title}"></title>
 	</th:block>
 	<th:block layout:fragment="customContent">
-			<form class="form-inline" id="searchForm" action="/equipSearch" method="GET" >  
-			<select class="form-control" name="equipSk" id="selectEqSk">
-				<option disabled="disabled" selected="selected">::검색조건::</option>
-				<option value="eq_code">비품코드</option>
-				<option value="eq_category">물품카테고리</option>
-				<option value="eq_name">품명</option>
-				<option value="eq_model_name">물품모델명</option>
-				<option value="eq_writer">작성자아이디</option>
-			</select> 
-			<div class="form-group">
-			<input type="text" id="equipSv" class="form-control" name="equipSv" placeholder="검색어를 입력해주세요"/>
-				<div class="input-group-btn pull-right">
-					<button class="btn btn-default form-group" id="searchEqBtn" type="button">검색</button>
-				</div>
-			</div>
-		</form>
 	        <div class="product-status mg-b-15">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-status-wrap">
+                        <div class="product-status-wrap drp-lst">
                             <h4 th:text="${mainTitle}"></h4>
-                            <div class="add-product">
+							<form class="form-inline" id="searchForm" action="/equipSearch" method="GET" >  
+								<select class="form-control" name="equipSk" id="selectEqSk">
+									<option disabled="disabled" selected="selected">::검색조건::</option>
+									<option value="eq_code">비품코드</option>
+									<option value="eq_category">물품카테고리</option>
+									<option value="eq_name">품명</option>
+									<option value="eq_model_name">물품모델명</option>
+									<option value="eq_writer">작성자아이디</option>
+								</select> 
+								<div class="form-group">
+								<input type="text" id="equipSv" class="form-control" name="equipSv" placeholder="검색어를 입력해주세요"/>
+									<div class="input-group-btn pull-right">
+										<button class="btn btn-default form-group" id="searchEqBtn" type="button">검색</button>
+									</div>
+								</div>
+							</form>                            
+                            <div class="add-product" th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
                                 <a href="/addEquipment">비품정보등록하기</a>
                             </div>
                             <div class="asset-inner">
@@ -42,7 +42,8 @@
 									  <td>작성자아이디</td>
 									  <td>등록일자</td>
 									  <td>비고</td>
-                                      <td>수정 / 삭제</td>
+                                      <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
+<!--                                       <th th:if="${SLEVEL eq '1'}">삭제</th> -->
                                     </tr>
 							<th:block th:each="eL : ${equipmentList}">
 								<tr>
@@ -53,10 +54,12 @@
 								  <td th:text="${eL.eqWriter}"></td> 
 								  <td th:text="${eL.eqReg_date}"></td> 
 								  <td th:text="${eL.eqRemark}"></td> 
-									<td>
-                                      <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                      <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                   </td>									  
+	                              <td th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">
+	                                 <button data-toggle="tooltip" title="수정" th:value="${eL.eqCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+	                              </td>
+<!-- 	                              <td th:if="${SLEVEL eq '1'}">
+	                             	<button data-toggle="tooltip" title="삭제" th:value="${eL.eqCode}" class="pd-setting-ed removeBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+	                              </td>	 -->								  
 								</tr>
 							</th:block>
                                 </table>
@@ -90,12 +93,11 @@
 		    						</li>
 								</ul>
                             </div>
-                            <div class="container-fluid" style="margin: 10px;">
-                            	<a th:if="${currentPage eq null}" href="/equipmentList" class="btn btn-default" role="button">전체리스트보기</a>                            </div>
-                            <div class="container-fluid" style="margin: 10px;">
-								<a href="#" class="btn btn-default " role="button">리스트메인페이지</a>
-								<a href="#" class="btn btn-default" role="button">비품관리 메인페이지로</a>
-							</div>
+                         	<th:block th:unless= "${href eq null}">
+	                           <div class="container-fluid" style="margin: 10px;">	
+	                           		<a th:href="${href}" class="btn btn-default" role="button">전체리스트보기</a>
+								</div>
+							</th:block>  
                         </div>
                     </div>
                 </div>

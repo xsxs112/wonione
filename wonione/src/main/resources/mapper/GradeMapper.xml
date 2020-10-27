@@ -142,10 +142,32 @@
 				  #{gradeManCode}
 				, #{mrName}
 				, #{testNumber}
-				, #{gradeManScore}
+				, ${gradeManScore}
 				, NOW());
 
 </insert>
+
+
+<!-- 수업명가져오기   -->
+
+<select id="classCode" resultType="hashMap"  parameterType="String">
+
+	SELECT 
+		lec_os_code
+		, lec_name
+		, mr_teacher_id
+		,m.mr_name
+   FROM 
+  		 wt_lecture_open_schedule AS lo
+   INNER JOIN 
+   		wt_member_registration AS m
+   on
+  		 lo.mr_teacher_id = m.mr_id
+   where
+  		 m.mr_id = #{sessionId};
+
+</select>
+
 
 <!-- 학생이름가져오기  -->
 <select id="sName" resultType="hashMap">

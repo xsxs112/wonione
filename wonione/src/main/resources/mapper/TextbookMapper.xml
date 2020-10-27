@@ -88,16 +88,38 @@ INSERT INTO wt_supply_textbook
 </select>
 
 <!-- 교재 지급내역 검색 -->
-<select id="getSuppTxbSearch" resultMap="resultSupplyTextbook">
-	SELECT 
-			sup_txb_code
-		,   txb_code
-		,   sup_txb_quantity
-		,   txb_receiver_id
-		,   sup_txb_date
-		,   sup_txb_writer
-		,   sup_txb_reg_date
-	FROM wt_supply_textbook
+<select id="getSuppTxbSearch" resultType="hashMap">
+		SELECT 
+			st.sup_txb_code			AS	'supTxbCode'
+		,	st.txb_code				AS	'txbCode'		
+		,	tbi.txb_name			AS	'txbName'
+		,  st.sup_txb_quantity		AS	'supTxbQuantity'
+		,  st.txb_receiver_id		AS	'txbReceiverId'
+		,	mr.mr_name				AS 	'txbReceiverName'	
+		,  st.sup_txb_date			AS	'supTxbDate'
+		,  st.sup_txb_writer		AS	'supTxbWriter'
+		,	mr2.mr_name				AS	'supTxbWriterName'		
+		,  st.sup_txb_reg_date		AS	'supTxbRegDate'
+	FROM 
+		wt_supply_textbook	AS st
+		INNER JOIN
+		wt_textbook_basic_information AS tbi
+		ON
+		st.txb_code	
+		= 
+		tbi.txb_code
+		INNER JOIN
+		wt_member_registration	AS mr
+		ON
+		st.txb_receiver_id 
+		=
+		mr.mr_id
+		LEFT join
+		wt_member_registration	AS mr2
+		ON
+		st.sup_txb_writer
+		=	
+		mr2.mr_id	
 	WHERE
 		${suppTxbSk} LIKE (CONCAT ('%',#{suppTxbSv},'%'));
 </select>
@@ -172,6 +194,39 @@ INSERT INTO wt_supply_textbook
 <!-- ************************교재입고************************* -->
 <!-- *********************** START ************************* -->
 
+<!-- 입고내역 수정 -->
+<update id="modifyTxbWaho">
+
+UPDATE wt_warehousing_textbook
+	SET
+		txb_code=#{txbCode},
+		wh_txb_quantity=#{whTxbQuantity},
+		wh_txb_date=#{whTxbDateTime},
+		stock_txb_quantity=#{stockTxbQuantity},
+		wh_txb_remark=#{whTxbRemark},
+		wh_txb_modifier=#{whTxbModifier},
+		wh_txb_modify_date=NOW()
+	WHERE wh_txb_code=#{whTxbCode};
+</update>
+
+<!-- 입고내역이 있는 교재정보만 가져오기 -->
+<select id="selectExistTxbWaho" resultType="hashMap">
+SELECT
+	tbi.txb_code		AS	'txbCode'
+	,tbi.txb_name		AS	'txbName'
+	,tbi.txb_publisher	AS	'txbPublisher'
+	,tbi.txb_author		AS	'txbAuthor'
+	,tbi.txb_writer		AS	'txbWriter'
+FROM
+	wt_warehousing_textbook	AS wt
+	LEFT JOIN 
+	wt_textbook_basic_information	AS tbi
+	ON
+	wt.txb_code = tbi.txb_code 
+	GROUP BY wt.txb_code ;
+
+</select>
+
 <!-- 가장최근날짜의 재고수량 조회 -->
 <select id="getStockTxbQuantity" resultType="int" parameterType="String">
 	SELECT 
@@ -212,9 +267,8 @@ INSERT INTO wt_supply_textbook
 	ORDER BY wh_txb_code DESC LIMIT 1
 </select>
 
-<!-- 교재 입고내역 검색 -->
-<select id="getWhTxbSearch"  resultType="hashMap" parameterType="Map">
-	
+<!-- 교재코드로 입고정보 조회 -->
+<select id="getOnlyTxbWaho" resultType="hashMap">
 	SELECT
 			wt.wh_txb_code			AS	whTxbCode	
 		,	wt.txb_code				AS	txbCode
@@ -222,6 +276,7 @@ INSERT INTO wt_supply_textbook
 		,	wt.wh_txb_date			AS	whTxbDate
 		,	wt.stock_txb_quantity	AS	stockTxbQuantity
 		,	wt.wh_txb_writer		AS	whTxbWriter
+		,	mr.mr_name				AS 	whTxbWriterName
 		,	wt.wh_txb_reg_date		AS	whTxbRegDate
 		,	wt.wh_txb_remark		AS	whTxbRemark
 		,	tbi.txb_code			AS	txbCode
@@ -238,9 +293,48 @@ INSERT INTO wt_supply_textbook
 		wt.txb_code
 		=
 		tbi.txb_code
+		INNER JOIN 
+		wt_member_registration	AS mr
+		ON 
+		wt.wh_txb_writer = mr.mr_id
 	WHERE	
-	${whTxbSk} LIKE(CONCAT('%',#{whTxbSv},'%'))
-	ORDER BY wt.wh_txb_code ASC
+	wt.wh_txb_code = #{whTxbCode};
+
+</select>
+
+<!-- 교재 입고내역 검색 -->
+<select id="getWhTxbSearch"  resultType="hashMap" >
+	
+	SELECT
+			wt.wh_txb_code			AS	whTxbCode	
+		,	wt.txb_code				AS	txbCode
+		,	wt.wh_txb_quantity		AS	whTxbQuantity
+		,	wt.wh_txb_date			AS	whTxbDate
+		,	wt.stock_txb_quantity	AS	stockTxbQuantity
+		,	wt.wh_txb_writer		AS	whTxbWriter
+		,	mr.mr_name				AS 	whTxbWriterName
+		,	wt.wh_txb_reg_date		AS	whTxbRegDate
+		,	wt.wh_txb_remark		AS	whTxbRemark
+		,	tbi.txb_code			AS	txbCode
+		,	tbi.txb_name			AS	txbName
+		,	tbi.txb_publisher		AS	txbPublisher
+		,	tbi.txb_author			AS	txbAuthor
+		,	tbi.txb_writer			AS	txbWriter
+		,	tbi.txb_reg_date		AS	txbRegDate
+	FROM
+		wt_textbook_basic_information AS tbi
+		RIGHT JOIN
+		wt_warehousing_textbook AS wt
+		on
+		wt.txb_code
+		=
+		tbi.txb_code
+		INNER JOIN 
+		wt_member_registration	AS mr
+		ON 
+		wt.wh_txb_writer = mr.mr_id
+	WHERE	
+	${whTxbSk} LIKE(CONCAT('%',#{whTxbSv},'%'));
 </select>
 
 <!-- 입고내역조회 -->
@@ -332,6 +426,44 @@ INSERT INTO wt_supply_textbook
 			MAX(CAST(SUBSTRING(wh_txb_code,12) AS DECIMAL))+1 
 		FROM 
 			wt_warehousing_textbook),1) AS max;
+</select>
+
+
+<!-- 입고리스트 조회 -->
+<select id="getTextbookWahoList" resultType="hashMap" parameterType="Map">
+	SELECT
+			wt.wh_txb_code			AS	whTxbCode	
+		,	wt.txb_code				AS	txbCode
+		,	wt.wh_txb_quantity		AS	whTxbQuantity
+		,	wt.wh_txb_date			AS	whTxbDate
+		,	wt.stock_txb_quantity	AS	stockTxbQuantity
+		,	wt.wh_txb_writer		AS	whTxbWriter
+		,	mr.mr_name				AS 	whTxbWriterName
+		,	wt.wh_txb_reg_date		AS	whTxbRegDate
+		,	wt.wh_txb_remark		AS	whTxbRemark
+		,	tbi.txb_code			AS	txbCode
+		,	tbi.txb_name			AS	txbName
+		,	tbi.txb_publisher		AS	txbPublisher
+		,	tbi.txb_author			AS	txbAuthor
+		,	tbi.txb_writer			AS	txbWriter
+		,	tbi.txb_reg_date		AS	txbRegDate
+	FROM
+		wt_textbook_basic_information AS tbi
+		RIGHT JOIN
+		wt_warehousing_textbook AS wt
+		on
+		wt.txb_code
+		=
+		tbi.txb_code
+		LEFT join
+		wt_member_registration AS mr
+		ON
+		wt.wh_txb_writer 
+		=
+		mr.mr_id
+	ORDER BY wt.wh_txb_code ASC
+	LIMIT #{startRow},#{rowPerPage};
+
 </select>
 
 
@@ -464,42 +596,6 @@ UPDATE wt_textbook_basic_information
 		,   CURRENT_TIME())
 </insert>
 
-<!-- 보유교재리스트 조회 -->
-<select id="getTextbookWahoList" resultType="hashMap" parameterType="Map">
-	SELECT
-			wt.wh_txb_code			AS	whTxbCode	
-		,	wt.txb_code				AS	txbCode
-		,	wt.wh_txb_quantity		AS	whTxbQuantity
-		,	wt.wh_txb_date			AS	whTxbDate
-		,	wt.stock_txb_quantity	AS	stockTxbQuantity
-		,	wt.wh_txb_writer		AS	whTxbWriter
-		,	mr.mr_name				AS 	whTxbWriterName
-		,	wt.wh_txb_reg_date		AS	whTxbRegDate
-		,	wt.wh_txb_remark		AS	whTxbRemark
-		,	tbi.txb_code			AS	txbCode
-		,	tbi.txb_name			AS	txbName
-		,	tbi.txb_publisher		AS	txbPublisher
-		,	tbi.txb_author			AS	txbAuthor
-		,	tbi.txb_writer			AS	txbWriter
-		,	tbi.txb_reg_date		AS	txbRegDate
-	FROM
-		wt_textbook_basic_information AS tbi
-		RIGHT JOIN
-		wt_warehousing_textbook AS wt
-		on
-		wt.txb_code
-		=
-		tbi.txb_code
-		LEFT join
-		wt_member_registration AS mr
-		ON
-		wt.wh_txb_writer 
-		=
-		mr.mr_id
-	ORDER BY wt.wh_txb_code ASC
-	LIMIT #{startRow},#{rowPerPage};
-
-</select>
 
 
 <!-- *********************** END ************************* -->

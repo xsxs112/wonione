@@ -23,15 +23,82 @@ public class LectureController {
 	@Autowired
 	private LectureService lectureService;
 
+	//강의예정리스트 수정하기
+	@PostMapping("/modifyLecOpenSchedule")
+	public String modifylecOs(	LectureOpenSchedule lectureOs
+								,@RequestParam(value="lecOsCode",required = false)String lecOsCode
+								,@RequestParam(value="lecName",required = false)String lecName
+								,@RequestParam(value="mrTeacherId",required = false)String mrTeacherId
+								,@RequestParam(value="lecTime",required = false)String lecTime
+								,@RequestParam(value="lecRoom",required = false)String lecRoom
+								,@RequestParam(value="lecDay",required = false)String lecDay
+								,@RequestParam(value="lecLevel",required = false)String lecLevel
+								,@RequestParam(value="lecTuition",required = false)String lecTuition
+								,@RequestParam(value="claCapacity",required = false)String claCapacity
+								,@RequestParam(value="lecStartDate",required = false)String lecStartDate
+								,@RequestParam(value="lecFinalDate",required = false)String lecFinalDate
+								,@RequestParam(value="lecRemark",required = false)String lecRemark) {
+		
+		lectureService.modifyLecOs(lectureOs);
+		
+		return "redirect:/lectureOpenScheduleList";
+	}
+	
+	
+	//강의예정리스트 수정하기
+	@GetMapping("/modifyLecOpenSchedule")
+	public String modifylecOs(Model model
+							,HttpSession session
+							, @RequestParam(value="lecOsCode", required = false) String lecOsCode) {
+		Map<String,Object> lectureOsList = 
+									lectureService.getLecOsListOnly(lecOsCode);
+		List<Map<String,Object>> teacherList = lectureService.getTeacherList();
+		List<Map<String,Object>> lectureLevel = lectureService.getLectureLevel();
+		List<Map<String,Object>> lectureTime = lectureService.getLectureTime();
+		List<Map<String,Object>> lectureRoom = lectureService.getLectureRoom();
+		String sessionId = session.getAttribute("SID").toString();
+		String sessionName = session.getAttribute("SNAME").toString();
+		String sessionLevel = session.getAttribute("SLEVEL").toString();
+		
+		model.addAttribute("title", "강의예정 수정하기");
+		model.addAttribute("mainTitle", "강의예정 수정하기");
+		model.addAttribute("lectureOsList", lectureOsList);
+		model.addAttribute("teacherList", teacherList);
+		model.addAttribute("lectureLevel", lectureLevel);
+		model.addAttribute("lectureRoom", lectureRoom);
+		model.addAttribute("lectureTime", lectureTime);
+		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("sessionLevel", sessionLevel);
+		
+		return "lecture/modifyLecOpenSchedule";
+	}
+	
+	//강의예정리스트 검색
+	@GetMapping("/lecOsSearch")
+	public String getLecOsSearch(Model model
+								,@RequestParam(value="lecOsSk",required = false)String lecOsSk
+								,@RequestParam(value="lecOsSv",required = false)String lecOsSv) {
+		List<Map<String,Object>> lectureOsList = 
+								lectureService.getLecOsSearch(lecOsSk, lecOsSv);
+		
+		model.addAttribute("title", "강의 예정 리스트");
+		model.addAttribute("mainTitle", "강의 예정 리스트");
+		model.addAttribute("lectureOsList", lectureOsList);
+		model.addAttribute("href", "/lectureOpenScheduleList");
+		
+		return "lecture/lectureOpenScheduleList";
+	}
+	
 	//강의예정리스트 날짜로 체크 ajax
 	@PostMapping(value="/lecOsCheckDate", produces="application/json")
 	@ResponseBody
 	public List<Map<String,Object>> getLecOsListDate(
-						 @RequestParam(value="lecStDate",required = false)String lecStDate
-						,@RequestParam(value="lecFinDate",required = false)String lecFinDate){
+						 @RequestParam(value="lecStartDate",required = false)String lecStartDate
+						,@RequestParam(value="lecFinalDate",required = false)String lecFinalDate){
 		
 		List<Map<String,Object>> lecOsListDate = 
-						lectureService.getLecOsListDate(lecStDate, lecFinDate);
+						lectureService.getLecOsListDate(lecStartDate, lecFinalDate);
 		return lecOsListDate;
 	}
 	
@@ -71,19 +138,21 @@ public class LectureController {
 	//강의예정리스트 1개만 조회 ajax
 	@PostMapping(value="/getLecOsListOnly",produces = "application/json")
 	@ResponseBody
-	public List<Map<String, Object>> getLecOsListOnly(
+	public Map<String, Object> getLecOsListOnly(
 									@RequestParam(value="lecOsCode",required = false) String lecOsCode){
 		
-		List<Map<String, Object>> lecOsList = lectureService.getLecOsListOnly(lecOsCode);
+		Map<String, Object> lecOsList = lectureService.getLecOsListOnly(lecOsCode);
 		return lecOsList;
 	}
 	
 	//강의리스트 조회
 	@GetMapping("/lectureList")
-	public String getLectureList(Model model) {
-		
+	public String getLectureList(Model model
+								,HttpSession session) {
 		List<Map<String, Object>> lectureList = lectureService.getLectureList();
 		List<Map<String,Object>> lectureStatus = lectureService.getLectureStatus();
+		String sessionLevel = session.getAttribute("SLEVEL").toString();
+		model.addAttribute("SLEVEL", sessionLevel);
 		model.addAttribute("title", "강의 리스트");
 		model.addAttribute("mainTitle", "강의 리스트");
 		model.addAttribute("lectureList", lectureList);
@@ -127,6 +196,7 @@ public class LectureController {
 		String lecOsCode = lectureService.getLecOsMaxCode();
 		String sessionId = session.getAttribute("SID").toString();
 		String sessionName = session.getAttribute("SNAME").toString();
+		String sessionLevel = session.getAttribute("SLEVEL").toString();
 		
 		model.addAttribute("title", "강의개설 신청페이지");
 		model.addAttribute("mainTitle", "강의개설 신청페이지");
@@ -137,6 +207,7 @@ public class LectureController {
 		model.addAttribute("lectureTime", lectureTime);
 		model.addAttribute("sessionId", sessionId);
 		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("sessionLevel", sessionLevel);
 		
 		
 		return "lecture/addLectureOpenSchedule";
@@ -147,16 +218,17 @@ public class LectureController {
 	public String lectureOpenScheduleList(Model model
 							,HttpSession session) {
 		
-		/* List<Object> lecApplyCount = lectureService.getApplyCount(); */
 		String lecOpCode = lectureService.getLecOpenCode();
 		List<Map<String,Object>> lectureOsList
 						= lectureService.getLectureOsList();
-		
+		String sessionId = session.getAttribute("SID").toString();
+		String sessionLevel = session.getAttribute("SLEVEL").toString();
+		model.addAttribute("SLEVEL", sessionLevel);
 		model.addAttribute("title", "강의 예정 리스트");
 		model.addAttribute("mainTitle", "강의 예정 리스트");
 		model.addAttribute("lectureOsList", lectureOsList);
 		model.addAttribute("lecOpCode", lecOpCode);
-		model.addAttribute("sessionId", session.getAttribute("SID").toString());
+		model.addAttribute("sessionId", sessionId);
 		
 		return "lecture/lectureOpenScheduleList";
 	}

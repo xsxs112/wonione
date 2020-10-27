@@ -31,6 +31,23 @@ public class WorkController {
 	
 	
 	
+	@GetMapping("/getModifyRequest")
+	@ResponseBody
+	public String getModifyRequest(@RequestParam(value = "attCode", required = false) String attCode) {
+		String modifyRequest = apprRequestService.getModifyRequest(attCode);
+		
+		return modifyRequest;
+	}
+	
+	
+	@GetMapping("/deleteAttendance")
+	public String deleteAttendance(@RequestParam(value = "attCode", required = false) String attCode) {
+		apprRequestService.deleteAttendance(attCode);
+		
+		return "redirect:/addAttManage";
+	}
+	
+	
 	@PostMapping("/attendanceModify")
 	public String attendanceModify(AttManagement attManagement ,@RequestParam(value = "attCode", required = false) String attCode
 									,@RequestParam(value = "attStTime", required = false) String attStTime
@@ -117,9 +134,16 @@ public class WorkController {
 	@GetMapping("/manageConfirm")
 	public String manageConfirm(AttManagement attManagement,
 			@RequestParam(value = "attCode", required = false) String attCode) {
-
-		apprRequestService.manageConfirm(attCode);
-
+		String confirm = apprRequestService.countConfirm(attCode);
+		if(confirm != null) {
+			confirm += ", 확인";
+		}else {
+			
+			confirm = "확인";
+		}
+		
+		
+		apprRequestService.manageConfirm(attCode,confirm);
 		return "redirect:/addAttManage";
 	}
 
@@ -369,16 +393,40 @@ public class WorkController {
 	}
 
 	@GetMapping("/workAttendanceList")
-	public String workAttendanceList(Model model, AttManagement attManagement, HttpSession session) {
+	public String workAttendanceList(Model model, AttManagement attManagement, AttTimeManage attTimeManage, HttpSession session) {
 
 		String sid = (String) session.getAttribute("SID");
 		List<AttManagement> getAttendanceList = apprRequestService.getAttendanceList(sid);
+		AttTimeManage getAttTimeManage = apprRequestService.getAttTimeManage(sid);
 		
-		//List<AttTimeManage> getAttTimeManage = apprRequestService.getAttTimeManage(sid);
+		String getStTime;
+		String getMTime;
+		String getWorkTime;
 		
-		System.out.println(getAttendanceList);
+		if(getAttTimeManage == null ) {
+			getStTime = "정보 없음";
+			getMTime = "정보 없음";
+			getWorkTime = "정보 없음";
+		}else {
+			if(getAttTimeManage.getmStTime()==null || "".equals(getAttTimeManage.getmStTime()==null)
+					|| getAttTimeManage.getmEndTime() ==null || "".equals(getAttTimeManage.getmEndTime())) {
+				getMTime = "정보 없음";
+			}else {
+				getMTime = getAttTimeManage.getmStTime().substring(0, 5) +" ~ " + getAttTimeManage.getmEndTime().substring(0, 5);
 
+			}
+			getStTime = getAttTimeManage.getWorkStTime().substring(0, 5) +" ~ " + getAttTimeManage.getWorkEndTime().substring(0, 5);
+			getWorkTime = getAttTimeManage.getWorkTime();
+
+		}
+		attTimeManage.setWorkStTime(getStTime);
+		attTimeManage.setmStTime(getMTime);
+		attTimeManage.setWorkTime(getWorkTime);
+		
+		
+		
 		model.addAttribute("getAttendanceList", getAttendanceList);
+		model.addAttribute("attTimeManage", attTimeManage);
 
 		return "workmanagment/workAttendance";
 	}
@@ -468,7 +516,7 @@ public class WorkController {
 			@RequestParam(value = "holidaySt", required = false) String holidaySt) {
 
 		// approvalRequest에 입력받은 값들을 셋팅한다
-
+		System.out.println(holidaySt + " <<<<holidaySt");
 		approvalRequest.setMrId(mrId);
 		approvalRequest.setReStartDate(reStartDate);
 		approvalRequest.setReEndDate(reEndDate);
@@ -482,7 +530,6 @@ public class WorkController {
 	}
 
 	@GetMapping("/holidayApproval")
-	@PostMapping("/holidayApproval")
 	public String holiRequest(ApprovalRequest approvalRequest, Model model, HttpSession session) {
 
 		String now = apprRequestService.getNow();

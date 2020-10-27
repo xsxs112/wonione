@@ -10,6 +10,9 @@ public class ScholarShip {
  private String awardBmPrice;
  private String mrName;
  private String pmInfoPayerName;
+ private String lecOsCode;
+ private String lecName;
+
 
 @Override
 public String toString() {
@@ -30,6 +33,10 @@ public String toString() {
 	builder.append(mrName);
 	builder.append(", pmInfoPayerName=");
 	builder.append(pmInfoPayerName);
+	builder.append(", lecOsCode=");
+	builder.append(lecOsCode);
+	builder.append(", lecName=");
+	builder.append(lecName);
 	builder.append("]");
 	return builder.toString();
 }
@@ -80,6 +87,17 @@ public String getPmInfoPayerName() {
 }
 public void setPmInfoPayerName(String pmInfoPayerName) {
 	this.pmInfoPayerName = pmInfoPayerName;
+} public String getLecOsCode() {
+	return lecOsCode;
+}
+public void setLecOsCode(String lecOsCode) {
+	this.lecOsCode = lecOsCode;
+}
+public String getLecName() {
+	return lecName;
+}
+public void setLecName(String lecName) {
+	this.lecName = lecName;
 }
 	
 }

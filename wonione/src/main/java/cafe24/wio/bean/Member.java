@@ -3,11 +3,11 @@ package cafe24.wio.bean;
 //Member Bean - 정진수
 
 public class Member {
-	private String  mrId;			//구성원 아이디
-	private String  mrPw;			//구성원 비밀번호
-	private String  mrName;			//구성원 이름
-	private int 	levelNum;		//권한 번호
-	private String  levelName;		//권한명
+	private String  mrId;			// 구성원 아이디
+	private String  mrPw;			// 구성원 비밀번호
+	private String  mrName;			// 구성원 이름
+	private int 	levelNum;		// 권한 번호
+	private String  levelName;		// 권한명
 	private String  mrPhone;		// 연락처
 	private String  mrAddr;			// 주소
 	private int 	mrTargetScore;	// 목표 점수

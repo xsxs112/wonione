@@ -1,5 +1,6 @@
 package cafe24.wio.service;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,46 @@ public class MemberService {
 	
 @Autowired
 private MemberMapper memberMapper;
+		
+
+		/**
+		 * 6. 구성원 정보 검색
+		 * @param sk
+		 * @param sv
+		 * @return
+		 */
+
+		public List<Member>getSearchMember(String sk, String sv){
+			
+			List<Member> infoSearch = memberMapper.getSearchMember(sk, sv);
+			
+			
+				if(infoSearch != null && "::검색 조건::".equals(infoSearch)) {
+
+				for(int i = 0; i<infoSearch.size(); i++) {
+					
+					int memberLevel = 0;
+					memberLevel = infoSearch.get(i).getLevelNum();
+					
+					if(memberLevel > 0) {
+						if(memberLevel == 1) {
+							infoSearch.get(i).setLevelName("관리자");
+						}else if(memberLevel == 2) {
+							infoSearch.get(i).setLevelName("시간 강사");
+						}else if(memberLevel == 3) {
+							infoSearch.get(i).setLevelName("일반 직원");
+						}else if(memberLevel == 4) {
+							infoSearch.get(i).setLevelName("학원생");
+						}else {
+							infoSearch.get(i).setLevelName("비회원");
+						}
+					}
+				}
+			}
+			
+			return infoSearch;
+			
+		}
 
 		/**
 		 * 5. 구성원 정보 수정

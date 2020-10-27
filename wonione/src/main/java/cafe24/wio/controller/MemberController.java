@@ -33,7 +33,21 @@ public class MemberController {
 	
 	
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
-
+	
+	
+	// 4. 구성원 정보 검색
+	@PostMapping("/getWIOMemberList")
+	public String getWIOMemberList(Model model
+								  ,@RequestParam(value = "sk", required = false) String sk
+								  ,@RequestParam(value = "sv", required = false) String sv) {
+		
+		List<Member> WIOMemberList = memberService.getSearchMember(sk, sv);
+		
+		model.addAttribute("title", "회원 정보 검색");
+		model.addAttribute("WIOMemberList", WIOMemberList);
+		
+		return "member/WIOMemberList";
+	}
 	
 	// 3. 구성원 정보 수정
 	@GetMapping("/modifyWIOMember")
@@ -119,7 +133,7 @@ public class MemberController {
 								,@RequestParam(value = "mrId"  			,required = false) String mrId
 								,@RequestParam(value = "mrPw"  			,required = false) String mrPw
 								,@RequestParam(value = "mrName"			,required = false) String mrName
-								,@RequestParam(value = "levelNum"		,required = false) int	   levelNum
+								,@RequestParam(value = "levelNum"	,required = false) int	  levelNum
 								,@RequestParam(value = "mrPhone"		,required = false) String mrPhone
 								,@RequestParam(value = "mrAddr"			,required = false) String mrAddr
 								,@RequestParam(value = "mrTargetScore"	,required = false) int    mrTargetScore
@@ -127,8 +141,7 @@ public class MemberController {
 								,@RequestParam(value = "mrAccountNum"	,required = false) String mrAccountNum
 								,@RequestParam(value = "shuttleNum"		,required = false) String shuttleNum
 								,@RequestParam(value = "mrJoinDate"		,required = false) String mrJoinDate) {
-		
-		
+		memberService.addWIOMember(member);
 		member.setMrId(mrId);
 		member.setMrPw(mrPw);
 		member.setMrName(mrName);
@@ -139,18 +152,17 @@ public class MemberController {
 		member.setMrAccountNum(mrAccountNum);
 		
 		//셔틀 신청 부분을 빈 칸으로 두면 에러가 발생하면서 '' 공백으로 값이 들어감. 그래서 조건문 처리.
-		if(shuttleNum.equals("")||shuttleNum.equals(null)) {
-			
-			member.setShuttleNum(null);
-			
-		}else if(mrJoinDate.equals("") || mrJoinDate.equals(null)) {
-			
-			member.setMrJoinDate(null);
-		}
+
 		
-		memberService.addWIOMember(member);
-		
-		// 권한이 학생일 경우 과정 선택 화면으로 이동
+		/*
+		 * if(shuttleNum.equals("")||shuttleNum.equals(null)) {
+		 * 
+		 * member.setShuttleNum(null);
+		 * 
+		 * }else if(mrJoinDate.equals("") || mrJoinDate.equals(null)) {
+		 * 
+		 * member.setMrJoinDate(null); }
+		 */
 		if(levelNum == 4) {
 			return "redirect:/getCourseSelection";
 		}
@@ -158,6 +170,7 @@ public class MemberController {
 		return "redirect:/getWIOMemberList";
 	}
 
+	
 	@GetMapping("/addWIOMember")
 	public String addWIOMember(Model model) {
 		
@@ -166,7 +179,11 @@ public class MemberController {
 		// 구성원 등록 시, 결제 코드 입력창에 결제 수단이 보이도록.
 		model.addAttribute("pmResourceList", memberMapper.getPmResourceList());
 		
+		// 구성원 등록 화면에서 레벨을 보여주는 것이 아닌 권한명을  보여주도록 처리함.
 		model.addAttribute("memberLevelName", memberMapper.getMemberLevelName());
+		
+		// 구성원 등록 화면에서 셔틀 리스트 보여주기. 나중에 셔틀 추가되는 사항을 고려함
+		model.addAttribute("shuttleList", memberMapper.getShuttleList());
 		
 		return "member/addWIOMember";
 	}
@@ -196,6 +213,7 @@ public class MemberController {
 		
 		model.addAttribute("title", "구성원 목록 조회");
 		model.addAttribute("WIOMemberList", WIOMemberList);
+		model.addAttribute("WIOMemberList", memberService.getWIOMemberList());
 		
 		return "member/WIOMemberList";
 	}

@@ -118,7 +118,21 @@ public class GradeReportService {
 		return studentTargetCount;
 		 
 	 }
+	
+	//업무계획서 코드 조회하기
+		public Map<String, Object> lecOpenCodeNum(String sessionId, String lecOsCode) {
+			 Map<String, Object> lecOpenCodeNum = gradeReportMapper.lecOpenCodeNum(sessionId, lecOsCode);
+			return lecOpenCodeNum;
+	}
+	 
 		
+	//선생님이름아이디가져오기
+		public Map<String, Object> teacherId(){
+			Map<String, Object> teacherId = gradeReportMapper.teacherId();
+			return teacherId;
+		}
+		
+	 
 	 //페이징
 		public Map<String,Object> countGradeReportList(int currentPage){
 			

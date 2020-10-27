@@ -3,6 +3,8 @@ package cafe24.wio.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +29,20 @@ public class GradeController {
 
 	// 성적리스트조회
 	@RequestMapping(value = "/getGradeList", method = RequestMethod.GET)
-	public String getGradeList(Grade grade, Model model
+	public String getGradeList(Grade grade, Model model, HttpSession session 
 								,@RequestParam( value="currentPage", required = false, defaultValue = "1") int currentPage
 								,@RequestParam(value = "lecName", required = false) String lecOsCode) {
 		List<Map<String, Object>> sName = gradeService.sName();
 		List<Map<String, Object>> testNum = gradeService.testNum();
 		List<Map<String, Object>> className = gradeService.gradeClassId();
 		List<Map<String, Object>> gradeClassId = gradeService.gradeClassId();
+		String sessionId = session.getAttribute("SID").toString();
+		List<Map<String, Object>> clCode = gradeService.classCode(sessionId);
 		String gradeCode = gradeService.gradeCode();
 		Map<String,Object> countGradeList = gradeService.countGradeList(currentPage);
 		model.addAttribute("title", "성적리스트");
 		model.addAttribute("gradeClassId", gradeClassId);
+		model.addAttribute("classCode", clCode);
 		model.addAttribute("className", className);
 		model.addAttribute("sName", sName);
 		model.addAttribute("testNum", testNum);

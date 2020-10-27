@@ -12,8 +12,17 @@ import cafe24.wio.bean.LectureOpenSchedule;
 @Mapper
 public interface LectureMapper {
 
+	//강의예정리스트 수정하기
+	public int modifyLecOs(LectureOpenSchedule lectureOs);
+	
+	//강의코드로 강의예정리스트 가져오기
+	public List<Map<String,Object>> getOnlyLecOsList(String lecOsCode);
+	
+	//강의예정리스트 검색
+	public List<Map<String,Object>> getLecOsSearch(String lecOsSk, String lecOsSv);
+	
 	//강의예정리스트 날짜별조회
-	public List<Map<String,Object>> getLecOsListDate(String lecStDate, String lecFinDate);
+	public List<Map<String,Object>> getLecOsListDate(String lecStartDate, String lecFinalDate);
 	
 	//강의코드 자동증가
 	public String getLecOpenCode();
@@ -29,7 +38,7 @@ public interface LectureMapper {
 								, String lecOpCode);
 	
 	//강의예정리스트 1개만 조회
-	public List<Map<String,Object>> getLecOsListOnly(String lecOsCode);
+	public Map<String,Object> getLecOsListOnly(String lecOsCode);
 	
 	//강의리스트 조회
 	public List<Map<String,Object>> getLectureList();

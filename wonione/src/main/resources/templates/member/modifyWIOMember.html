@@ -53,7 +53,13 @@
 				<tr>
 					<td>계좌 번호</td>
 					<td>
-						<input type="text" name="mrAccountNum" th:value="${member.mrAccountNum}"><!--  th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}" -->
+						<input type="text" name="mrAccountNum" th:value="${member.mrAccountNum}">
+					</td>
+				</tr>
+				<tr th:if="${session.SLEVEL eq 1 ||session.SLEVEL eq 2 || session.SLEVEL eq 3}">
+					<td>입사일(직원)</td>
+					<td>
+						<input type="date" name="mrJoinDate" th:value="${member.mrJoinDate}">
 					</td>
 				</tr>										
 			

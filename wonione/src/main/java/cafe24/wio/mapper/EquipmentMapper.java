@@ -11,6 +11,9 @@ import cafe24.wio.bean.WhEquipment;
 @Mapper
 public interface EquipmentMapper {
 
+	//비품코드로 비품정보 조회
+	public Map<String,Object> getEquipListOnly(String eqCode);
+	
 	//비품코드 maxcount
 	public String equipMaxCode();
 	
@@ -23,7 +26,7 @@ public interface EquipmentMapper {
 											, String equipSv);
 
 	//비품 입고내역 조회
-	public List<WhEquipment> getEquipWhList();
+	public List<Map<String,Object>> getEquipWhList();
 
 	//페이징을 위한 비품정보카운팅 
 	public int countEquipment();

@@ -9,9 +9,48 @@
   </th:block>
   
   <th:block layout:fragment="customContent">
-  
+  	
+  	<script>
+  		$(function(){
+  			
+  			// 검색 - 공백 체크하기
+  			var spaceCheck = /\s/g;
+  			
+  			
+  			
+  			$('#svBtn').click(function(){
+  				// sv - 입력값
+	  			var inputSv = $('select[name=sv]').val();
+  				var selectSk = $('select[name=sk]').val();
+  				
+  				if(selectSk = '::검색 조건::' || selectSk == undefined){
+  					alert('조건을 선택하세요');
+  					return;
+  				}else if(selectSk != '::검색 조건::'|| inputSv == '' || inputSv == undefined){
+  					alert('검색할 내용을 입력해 주세요');
+  					return true;
+  				}
+  				
+  				// 공백, 값없을때 검색되는 경우 처리하기. 2020.10.25_17:45
+  				
+  			});
+  		});	
+  	
+  	</script>
   
   		<h2>구성원 목록</h2>
+  		
+  		<form action="/getWIOMemberList" method="POST">
+  			<select name="sk">
+  				<option selected="selected" disabled="disabled">::검색 조건::</option>
+  				<option value="mr_id">아이디</option>
+  				<option value="mr_name">이름</option>
+  				<option value="level_name">권한</option>
+  			</select>
+  			<input type="text" name="sv">
+  			<button type="button" id="svBtn">검색</button>
+  		</form>
+  		
 	<div class="container-fluid">
 	  	<table class="table table-bordered table-hover" style="margin: 10px">
 	  		<thead>

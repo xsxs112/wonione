@@ -28,7 +28,6 @@ public class GradeReportController {
 @Autowired
 private GradeReportService gradeReportService;
 	
-
 	//성적업무보고서 리스트 
 	@RequestMapping(value="/getGradeReportList", method = RequestMethod.GET)
 	public String getGradeReportList(Model model, GradeReport gradeReport
@@ -55,17 +54,18 @@ private GradeReportService gradeReportService;
 		return "humanresource/gradereportDetail";
 	}
 	
-	//성적업무 보고서 작성하기
+	//성적업무 보고서 작성하기 
 	   @PostMapping("/GradeReportWrite")
 	   public String GradeReportInsert(GradeReport gradeReport
 	                        ,Model model, HttpSession session
 	                        ,@RequestParam(value="reportLecCode", required = false)String reportLecCode
 	                        ,@RequestParam(value="mrName", required = false) String mrName
-	                        ,@RequestParam(value="lecName", required = false) String lecName
+	                        ,@RequestParam(value="lecOpenCode", required = false) String lecOpenCode
 	                        ,@RequestParam(value="testNumber", required = false) String testNumber
-	                        ,@RequestParam(value="gradeAverage", required = false) String gradeAverage
-	                        ,@RequestParam(value="achievementRate",required=false)String achievementRate
+	                        ,@RequestParam(value="gradeAverage", required = false) int gradeAverage
+	                        ,@RequestParam(value="achievementRate",required=false) int achievementRate
 	                        ,@RequestParam(value="workReport", required = false) String workReport
+	                        ,@RequestParam(value="claPeople", required = false) int claPeople
 			   ) {
 		  String sessionName = session.getAttribute("SNAME").toString();
 		  String sessionId = session.getAttribute("SID").toString();
@@ -88,7 +88,7 @@ private GradeReportService gradeReportService;
 	     
 	      List<Map<String, Object>> testNum =  gradeReportService.testNum();
 	      List<Map<String, Object>> clCode = gradeReportService.classCode(sessionId);
-	     
+	      
 	      model.addAttribute("sessionName", sessionName);
 		  model.addAttribute("sessionId", sessionId);
 	      model.addAttribute("codeResult", codeResult);
@@ -98,6 +98,19 @@ private GradeReportService gradeReportService;
 	      return "humanresource/addGradereport";
 	   }
 	
+	//업무계획서코드 가져오기
+	   @PostMapping("/lecOpenCodeNum")
+	   @ResponseBody
+	   public Map<String, Object> lecOpenCodeNum(HttpSession session, 
+			   			@RequestParam(value = "lecOpenCode", required = false) String lecOsCode
+			   			 ) {
+		   String sessionId = session.getAttribute("SID").toString();
+		   Map<String, Object> lecOpenCodeNum = gradeReportService.lecOpenCodeNum(sessionId,lecOsCode);
+		   return lecOpenCodeNum;
+		   
+	   }
+	   
+	   
 	//평균점수 구하기
 	   @PostMapping("/gradeAvg")
 	   @ResponseBody
@@ -157,7 +170,5 @@ private GradeReportService gradeReportService;
 		return "redirect:/getGradeReportList";
 		
 	}
-	
-	
 	
 }

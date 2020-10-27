@@ -104,41 +104,71 @@ INSERT INTO wt_warehousing_equipment
 
 </insert> -->
 
+<!-- 비품코드로 비품정보 조회 -->
+<select id="getEquipListOnly" resultType="hashMap">
+SELECT 
+	 weq.wh_eq_code				AS	'whEqCode'
+	,eq.eq_code					AS	'eqCode'
+	,eq.eq_category				AS	'eqCategory'
+	,eq.eq_name					AS	'eqName'
+	,eq.eq_model_name			AS	'eqModelName'
+FROM
+	wt_equipment				AS eq
+	INNER JOIN
+	wt_warehousing_equipment	AS weq
+	ON
+	eq.eq_code = weq.eq_code
+WHERE
+	weq.eq_code = #{eqCode};
+
+
+</select>
+
 <!-- 비품 입고내역 검색 -->
 <select id="getEquipWhSearchList" parameterType="String" resultType="hashMap">
 SELECT 
-		wh_eq_code			AS	'whEqCode'
-	, 	eq_code				AS	'eqCode'
-	,	wh_eq_name			AS	'whEqName'
-	, 	wh_eq_unit_price	AS	'whEqUnitPrice'
-	, 	wh_eq_quantity		AS	'whEqQuantity'
-	, 	wh_eq_total			AS	'whEqTotal'		
-	, 	wh_eq_date			AS	'whEqDate'
-	, 	wh_eq_writer		AS	'whEqWriter'
-	,	wh_eq_reg_date		AS	'whEqRegDate'
-	, 	wh_eq_remark		AS	'whEqRemark'
+	wq.wh_eq_code			AS	'whEqCode'
+	,wq.eq_code				AS	'eqCode'
+	,wq.wh_eq_name			AS	'whEqName'
+	,wq.wh_eq_unit_price	AS	'whEqUnitPrice'
+	,wq.wh_eq_quantity		AS	'whEqQuantity'
+	,wq.wh_eq_total			AS	'whEqTotal'
+	,wq.wh_eq_date			AS	'whEqDate'
+	,wq.wh_eq_writer		AS	'whEqWriter'
+	,wq.wh_eq_reg_date		AS	'whEqRegDate'
+	,wq.wh_eq_remark		AS	'whEqRemark'
+	,mr.mr_name				AS	'whEqWriterName'
 FROM 
-	wt_warehousing_equipment
+	wt_warehousing_equipment	AS wq
+	INNER JOIN 
+	wt_member_registration		AS mr
+	on
+	wq.wh_eq_writer = mr.mr_id
 WHERE
 	${equipWhSk} LIKE (CONCAT ('%',#{equipWhSv},'%'));
 
 </select>
 
 <!-- 비품입고내역 조회 -->
-<select id="getEquipWhList" resultMap="whEquipmentResult">
+<select id="getEquipWhList" resultType="hashMap">
 SELECT 
-		wh_eq_code
-	, 	eq_code
-	,	wh_eq_name
-	, 	wh_eq_unit_price
-	, 	wh_eq_quantity
-	, 	wh_eq_total
-	, 	wh_eq_date
-	, 	wh_eq_writer
-	,	wh_eq_reg_date
-	, 	wh_eq_remark
+	wq.wh_eq_code			AS	'whEqCode'
+	,wq.eq_code				AS	'eqCode'
+	,wq.wh_eq_name			AS	'whEqName'
+	,wq.wh_eq_unit_price	AS	'whEqUnitPrice'
+	,wq.wh_eq_quantity		AS	'whEqQuantity'
+	,wq.wh_eq_total			AS	'whEqTotal'
+	,wq.wh_eq_date			AS	'whEqDate'
+	,wq.wh_eq_writer		AS	'whEqWriter'
+	,wq.wh_eq_reg_date		AS	'whEqRegDate'
+	,wq.wh_eq_remark		AS	'whEqRemark'
+	,mr.mr_name				AS	'whEqWriterName'
 FROM 
-	wt_warehousing_equipment
+	wt_warehousing_equipment	AS wq
+	INNER JOIN 
+	wt_member_registration		AS mr
+	on
+	wq.wh_eq_writer = mr.mr_id
 
 </select>
 

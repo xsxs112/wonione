@@ -84,6 +84,17 @@ public class ScholarshipService {
 			List<ScholarShip> scholarSearch = scholarshipMapper.serchScholar(awaBp, awaBpSc);
 			return scholarSearch;
 		}
+	//장학금지급을 위한 성적순위
+		public Map<String,Object> scholarshipCount(String lecOsCode){
+			Map<String,Object> scholarShipCount = scholarshipMapper.scholarshipCount(lecOsCode);
+			return scholarShipCount;
+		}
+	
+	//강의예정코드조회	
+		public List<Map<String, Object>> classCode() {
+			List<Map<String, Object>> clCode = scholarshipMapper.classCode();
+			return clCode;
+		}		
 		
 	//삭제처리
 		public int deleteScholarShip(String pmInfoCode) {

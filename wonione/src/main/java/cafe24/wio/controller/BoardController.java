@@ -224,7 +224,7 @@ public class BoardController {
 		return "board/dataLibraryList";
 	}
 
-	//수강후기 리스트 조회
+	//수강 후기 리스트 조회
 	@RequestMapping(value = "/getReview", method = RequestMethod.GET)
 	public String getReview(Model model, Review review) {
 
@@ -237,4 +237,43 @@ public class BoardController {
 		return "board/reviewList";
 	}
 	
+	//수강 후기 작성 @Post
+	@PostMapping("/addReview")
+	public String insertReview(Review review
+			  					,Model model
+			  					,@RequestParam(value="reviewNum", required = false) String reviewNum
+			  					,@RequestParam(value="reviewWriterId", required = false) String reviewWriterId
+			  					,@RequestParam(value="reviewGrade", required = false) double reviewGrade
+			  					,@RequestParam(value="reviewRegDate", required = false) String reviewRegDate
+			  					,@RequestParam(value="reviewComment", required = false) String reviewComment	  					
+			  					) {
+		  System.out.println("reviewNum -> " + reviewNum);
+		  System.out.println("reviewWriterId -> " + reviewWriterId);
+		  System.out.println("reviewGrade -> " + reviewGrade);
+		  System.out.println("reviewRegDate -> " + reviewRegDate);
+		  System.out.println("reviewComment -> " + reviewComment);
+		  boardService.addReview(review);
+		  model.addAttribute("Review", review);
+		  model.addAttribute("ReviewUpload", "/review");
+		  return "redirect:/getReview";
+	}	  
+	//수강 후기 작성 @Get
+	@GetMapping("/addReview")
+	public String insertReview(Model model, HttpSession session) {
+	
+	   session.getAttribute("SID");	//세션 아이디 받기
+	   String reviewNum = boardService.getReviewNum();
+	   System.out.println(reviewNum + " <-- reviewNum");
+	   model.addAttribute("reviewNum", reviewNum);
+      return "board/addReview";
+   }
+	
+	//수강 후기 삭제
+	@GetMapping("/removeReview")
+	public String removeReview(Model model
+			,@RequestParam(value="reviewNum", required = false) String reviewNum) {
+		boardService.removeReview(reviewNum);
+		System.out.println(reviewNum + "reviewNum");
+		return "redirect:/getReview";
+	}
 }

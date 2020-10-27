@@ -43,6 +43,16 @@ public interface TextbookMapper {
 	/************************************************
 	 * 교재입고
 	 *************************************************/
+	
+	//입고정보수정 
+	public int modifyTxbWaho(WhTextbook whTextbook);
+	
+	//입고내역이 있는 교재정보 가져오기
+	public List<Map<String,Object>> selectExistTxbWaho();
+	
+	//교재코드로 입고정보조회
+	public Map<String,Object> getOnlyTxbWaho(String whTxbCode);
+	
 	//페이징을 위한 입고내역 카운팅
 	public int countWhTxb();
 	

@@ -16,6 +16,12 @@ public class LectureService {
 	@Autowired
 	private LectureMapper lectureMapper;
 	
+	//강의예정리스트 검색
+	public List<Map<String,Object>> getLecOsSearch(String lecOsSk, String lecOsSv){
+			List<Map<String,Object>> lecOsList = lectureMapper.getLecOsSearch(lecOsSk, lecOsSv);
+		return lecOsList;
+	}
+	
 	/**
 	 * 강의코드 자동증가
 	 * @return String lecOpCode
@@ -72,6 +78,16 @@ public class LectureService {
 	}
 	
 	/**
+	 * 강의예정리스트 수정하기
+	 * @param lectureOs
+	 * @return int modifyResult
+	 */
+	public int modifyLecOs(LectureOpenSchedule lectureOs) {
+		int modifyResult = lectureMapper.modifyLecOs(lectureOs);
+		return modifyResult;
+	}
+	
+	/**
 	 * 개설된 강의 상태변경
 	 * @param changeLecStatus
 	 * @param lecOpCode
@@ -88,9 +104,9 @@ public class LectureService {
 	 * @param lecOsCode
 	 * @return List<Map<String,Object>> lecOsList
 	 */
-	public List<Map<String,Object>> getLecOsListOnly(String lecOsCode){
+	public Map<String,Object> getLecOsListOnly(String lecOsCode){
 		
-		List<Map<String,Object>> lecOsList = lectureMapper.getLecOsListOnly(lecOsCode);
+		Map<String,Object> lecOsList = lectureMapper.getLecOsListOnly(lecOsCode);
 		return lecOsList;
 	}
 	
@@ -158,14 +174,25 @@ public class LectureService {
 	}
 	
 	/**
+	 *  강의예정코드로 강의예정리스트가져오기 
+	 * @param lecOsCode
+	 * @return List<Map<String,Object>> getOnlyLecOsList
+	 */
+	public List<Map<String,Object>> getOnlyLecOsList(String lecOsCode){
+		
+		List<Map<String,Object>> getOnlyLecOsList = lectureMapper.getOnlyLecOsList(lecOsCode);
+		return getOnlyLecOsList;
+	}
+	
+	/**
 	 * 강의예정리스트 날짜별조회
 	 * @param lecStDate
 	 * @param lecFinDate
 	 * @return  List<LectureOpenSchedule> lecOsListDate
 	 */
-	public List<Map<String,Object>> getLecOsListDate(String lecStDate, String lecFinDate){
+	public List<Map<String,Object>> getLecOsListDate(String lecStartDate, String lecFinalDate){
 		List<Map<String,Object>> lecOsListDate = 
-							lectureMapper.getLecOsListDate(lecStDate, lecFinDate);
+							lectureMapper.getLecOsListDate(lecStartDate, lecFinalDate);
 		return lecOsListDate;
 	}
 	

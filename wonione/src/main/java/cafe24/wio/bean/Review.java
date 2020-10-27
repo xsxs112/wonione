@@ -5,7 +5,7 @@ public class Review {
 	public String reviewNum;
 	public String reviewWriterId;
 	public String reviewWriterName;
-	public int reviewGrade;
+	public double reviewGrade;
 	public String reviewComment;
 	public String reviewRegDate;
 	
@@ -27,10 +27,10 @@ public class Review {
 	public void setReviewWriterName(String reviewWriterName) {
 		this.reviewWriterName = reviewWriterName;
 	}
-	public int getReviewGrade() {
+	public double getReviewGrade() {
 		return reviewGrade;
 	}
-	public void setReviewGrade(int reviewGrade) {
+	public void setReviewGrade(double reviewGrade) {
 		this.reviewGrade = reviewGrade;
 	}
 	public String getReviewComment() {

@@ -15,31 +15,29 @@ public interface ApprMapper {
 	
 	
 	
-	public int attendanceModify(AttManagement attManagement);
+	public String countConfirm(String attCode);
+
+	public AttTimeManage getAttTimeManage(String SID);
 	
+	public String getModifyRequest(String attCode);
+
+	public int deleteAttendance(String attCode);
+	
+	public int attendanceModify(AttManagement attManagement);
 	
 	public int attendanceModifyRequest(String attCode, String reReason);
 	
-	
-	
 	public AttManagement getAttManagemetDetail(String attCode);
 	
-	
-	
 	public int notMealTime(String attCode);
-	
-	
-	
 	
 	public int earlyLeave(String attCode);
 	
 	public int late(String attCode);
 	
-	
 	public float MealTime(String SID);
 	
 	public float GoingOutTime(String attCode);
-	
 	
 	public String ListWorkTime(String SID);
 	
@@ -58,7 +56,7 @@ public interface ApprMapper {
 	public int setGoingOut(AttManagement attManagement);
 	
 	
-	public int manageConfirm(String attCode);
+	public int manageConfirm(String attCode, String confirm);
 	
 	
 	public List<AttManagement> confirmList();
