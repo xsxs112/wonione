@@ -12,6 +12,10 @@ import cafe24.wio.bean.LectureOpenSchedule;
 @Mapper
 public interface LectureMapper {
 
+	
+	//페이징을 위한 강의예정리스트 카운팅
+	public int countLecOs();
+	
 	//강의예정리스트 기간별 검색
 	public List<Map<String,Object>> lecOsSearchPeriod(String lecStartDate
 													, String lecFinalDate
@@ -63,7 +67,7 @@ public interface LectureMapper {
 	public List<LectureOpenSchedule> getLecOsCode();
 	
 	//강의예정 리스트
-	public List<Map<String,Object>> getLectureOsList();
+	public List<Map<String,Object>> getLectureOsList(Map<String,Object> lecOsMap);
 	
 	//시간강사목록 조회
 	public List<Map<String,Object>> getTeacherList();

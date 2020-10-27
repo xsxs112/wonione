@@ -1,5 +1,6 @@
 package cafe24.wio.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,16 @@ public class LectureService {
 	private LectureMapper lectureMapper;
 	
 	
-	//검색결과 유무 조회
+	/**
+	 * 검색결과 유무 조회
+	 * @param startPeriod
+	 * @param endPeriod
+	 * @param lecStartDate
+	 * @param lecFinalDate
+	 * @param selectlecOsSk
+	 * @param lecOsSv
+	 * @return int checkResult
+	 */
 	public int checkSearchResult(String startPeriod
 								,String endPeriod
 								,String lecStartDate
@@ -49,7 +59,14 @@ public class LectureService {
 		return checkResult;
 	}
 	
-	//강의예정리스트 기간별 검색
+	/**
+	 * 강의예정리스트 기간별 검색
+	 * @param lecStartDate
+	 * @param lecFinalDate
+	 * @param startPeriod
+	 * @param endPeriod
+	 * @return List<Map<String,Object>> lectureOsList
+	 */
 	public List<Map<String,Object>> lecOsSearchPeriod(String lecStartDate
 													, String lecFinalDate
 													, String startPeriod
@@ -59,6 +76,12 @@ public class LectureService {
 				lectureMapper.lecOsSearchPeriod(lecStartDate, lecFinalDate, startPeriod, endPeriod);
 		
 		return lectureOsList;
+	}
+	
+	//페이징을 위한 강의예정리스트 카운팅
+	public int countLecOs() {
+		
+		return 0;
 	}
 	
 	/**
@@ -246,16 +269,54 @@ public class LectureService {
 		return lecOsListDate;
 	}
 	
+	
 	/**
-	 * 강의예정 리스트
-	 * @return List Map String,Object lectureOsList
+	 * 강의 예정리스트
+	 * @param currentPage
+	 * @return Map<String,Object> resultMap
 	 */
-	public List<Map<String,Object>> getLectureOsList(){
+	public Map<String,Object> getLectureOsList(int currentPage){
 		
-		List<Map<String,Object>> lectureOsList = lectureMapper.getLectureOsList();
+		final int ROW_PER_PAGE = 5;
+	      
+	      int startRow = 0;
+	      
+	      int startPageNum = 1;
+	      int lastPageNum = ROW_PER_PAGE;
+	      
+	      if(currentPage > (ROW_PER_PAGE/2)) {
+	         startPageNum = currentPage - ((lastPageNum/2)-1);
+	         lastPageNum += startPageNum;
+	      }
+	      
+	      startRow = (currentPage - 1) * ROW_PER_PAGE ;
+	      
+	      Map<String,Object> lecOsMap = new HashMap<String,Object>();
+	            
+	      lecOsMap.put("startRow", startRow);
+	      lecOsMap.put("rowPerPage", ROW_PER_PAGE);
+
+	      double totalRowCount = lectureMapper.countLecOs();
+	      
+	      int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
+
+	      List<Map<String,Object>> lectureOsList = lectureMapper.getLectureOsList(lecOsMap);
 		
-		return lectureOsList;
+		
+	      if(currentPage >= (lastPage-4)) {
+		         lastPageNum = lastPage;
+		      }
+		      
+		      Map<String,Object> resultMap = new HashMap<String,Object>();
+		      resultMap.put("lectureOsList", lectureOsList);
+		      resultMap.put("lastPage", lastPage);
+		      resultMap.put("startPageNum", startPageNum);
+		      resultMap.put("lastPageNum", lastPageNum);
+		
+		return resultMap;
+		
 	}
+	
 	/**
 	 * 시간강사목록 조회
 	 * @param mrTeahcerId

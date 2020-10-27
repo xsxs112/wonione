@@ -255,19 +255,29 @@ public class LectureController {
 	//강의예정리스트 조회
 	@GetMapping("/lectureOpenScheduleList")
 	public String lectureOpenScheduleList(Model model
-							,HttpSession session) {
+							,HttpSession session
+							,@RequestParam(
+									  value="currentPage"
+									, required = false
+									, defaultValue = "1") int currentPage) {
 		
 		String lecOpCode = lectureService.getLecOpenCode();
-		List<Map<String,Object>> lectureOsList
-						= lectureService.getLectureOsList();
+		Map<String,Object> resultMap
+						= lectureService.getLectureOsList(currentPage);
+		System.out.println(resultMap.get("lectureOsList"));
+		
 		String sessionId = session.getAttribute("SID").toString();
 		String sessionLevel = session.getAttribute("SLEVEL").toString();
 		model.addAttribute("SLEVEL", sessionLevel);
 		model.addAttribute("title", "강의 예정 리스트");
 		model.addAttribute("mainTitle", "강의 예정 리스트");
-		model.addAttribute("lectureOsList", lectureOsList);
 		model.addAttribute("lecOpCode", lecOpCode);
 		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("lectureOsList", resultMap.get("lectureOsList"));
+		model.addAttribute("lastPage", resultMap.get("lastPage"));
+		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
+		model.addAttribute("lastPageNum", resultMap.get("lastPageNum"));
 		
 		return "lecture/lectureOpenScheduleList";
 	}

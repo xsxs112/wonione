@@ -195,6 +195,15 @@ WHERE
 <!-- *************************강의예정************************ -->
 <!-- *********************** START ************************* -->
 
+<!-- 페이징을 위한 강의예정리스트 카운팅 -->
+<select id="countLecOs" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM
+		wt_lecture_open_schedule;
+
+</select>
+
 <!-- 강의예정리스트 기간별 검색 -->
 <select id="lecOsSearchPeriod" resultType="hashMap">
 <![CDATA[
@@ -332,7 +341,7 @@ FROM
 <select id="getLecOsCode" resultType="LectureOpenSchedule" resultMap="resultLectureOS">
 SELECT 
 	lec_os_code
-FROM wt_lecture_open_schedule
+FROM wt_lecture_open_schedule	
 </select>
 
 <!-- 강의예정 리스트 조회 -->
@@ -382,7 +391,9 @@ FROM
 	INNER JOIN
 	wt_member_registration	AS mr2
 	ON 
-	los.lec_os_writer = mr2.mr_id;
+	los.lec_os_writer = mr2.mr_id
+	ORDER BY los.lec_os_code ASC
+	LIMIT #{startRow},#{rowPerPage}	;
 </select>
 
 <!-- 회원중 시간강사만 조회 -->
