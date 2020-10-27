@@ -29,18 +29,59 @@ public class WorkController {
 	private ApprRequestService apprRequestService;
 
 	
-	//외출시간 삭제
-	@GetMapping(value = "/deleteGoingOut", produces = "application/json")
+	@PostMapping(value = "/calculationTime", produces = "application/json")
 	@ResponseBody
-	public AttManagement deleteGoingOut(@RequestParam(value = "attCode", required = false) String attCode) {
+	public AttManagement calculationTime(AttManagement attManagement,@RequestParam(value = "attStTime", required = false) String attStTime,
+											@RequestParam(value = "attEndTime", required = false) String attEndTime,
+											@RequestParam(value = "goingOutStTime", required = false) String goingOutStTime,
+											@RequestParam(value = "goingOutEndTime", required = false) String goingOutEndTime,
+											@RequestParam(value = "realMealTime", required = false) String realMealTime) {
+		
+		attManagement.setAttStTime("1996-12-18 " + attStTime);
+		attManagement.setAttEndTime("1996-12-18 " + attEndTime);
+		attManagement.setGoingOutStTime("1996-12-18 " +goingOutStTime);
+		attManagement.setGoingOutEndTime("1996-12-18 " +goingOutEndTime);
+		//식사시간 구하기
+		float floatrealMealTime = Float.valueOf(realMealTime);
+		if(realMealTime == null) {
+			attManagement.setRealMealTime(0);
+		}else {
+			attManagement.setRealMealTime(floatrealMealTime);
+		}
+		//----------------------------------------------------------------------
+		
+		//외출시간 구하기
+		float goingOut = 0;
+		if("".equals(goingOutStTime) || "".equals(goingOutEndTime)) {
+			attManagement.setGoingOut(goingOut);
+		}
+		AttManagement calculationTime = apprRequestService.calculationTime(attManagement);
 		
 		
-		apprRequestService.deleteGoingOut(attCode);
-		AttManagement getDeleteGoingout = apprRequestService.getDeleteGoingout(attCode);
 		
-		return getDeleteGoingout;
+		return calculationTime;
 	}
 	
+	
+	
+	
+	/*
+	 * //외출시간 삭제
+	 * 
+	 * @GetMapping(value = "/deleteGoingOut", produces = "application/json")
+	 * 
+	 * @ResponseBody public AttManagement deleteGoingOut(@RequestParam(value =
+	 * "attCode", required = false) String attCode) {
+	 * 
+	 * 
+	 * apprRequestService.deleteGoingOut(attCode); AttManagement getDeleteGoingout =
+	 * apprRequestService.getDeleteGoingout(attCode);
+	 * 
+	 * return getDeleteGoingout; }
+	 */
+	
+	
+	//출퇴근 정보수정 요청
 	@GetMapping("/getModifyRequest")
 	@ResponseBody
 	public String getModifyRequest(@RequestParam(value = "attCode", required = false) String attCode) {
@@ -49,7 +90,7 @@ public class WorkController {
 		return modifyRequest;
 	}
 	
-	
+	//출퇴근 정보 삭제
 	@GetMapping("/deleteAttendance")
 	public String deleteAttendance(@RequestParam(value = "attCode", required = false) String attCode) {
 		apprRequestService.deleteAttendance(attCode);
@@ -58,6 +99,7 @@ public class WorkController {
 	}
 	
 	
+	//출퇴근 정보 수정
 	@PostMapping("/attendanceModify")
 	public String attendanceModify(AttManagement attManagement ,@RequestParam(value = "attCode", required = false) String attCode
 									,@RequestParam(value = "attStTime", required = false) String attStTime
@@ -99,7 +141,7 @@ public class WorkController {
 	
 	
 	
-	
+	//출퇴근 정보 수정화면
 	@GetMapping("/modifyAttendance")
 	public String modifyAttendance(Model model, AttTimeManage attTimeManage,HttpSession session,
 									@RequestParam(value = "attCode", required = false) String attCode) {
@@ -194,6 +236,7 @@ public class WorkController {
 	 */
 	
 	
+	//출퇴근 정보 수정 요청
 	@PostMapping("/attendanceModifyRequest")
 	public String attendanceModifyRequest(@RequestParam(value = "reReason", required = false) String reReason,
 			@RequestParam(value = "attCode", required = false) String attCode) {
@@ -203,6 +246,7 @@ public class WorkController {
 		return "redirect:/workAttendanceList";
 	}
 
+	//출퇴근 정보 상세보기
 	@GetMapping("/workAttendanceDetail")
 	public String workAttendanceDetail(Model model, @RequestParam(value = "attCode", required = false) String attCode) {
 
@@ -213,6 +257,7 @@ public class WorkController {
 		return "workmanagment/workAttendanceDetail";
 	}
 
+	//업무시간 삭제
 	@PostMapping("/workTimeDelete")
 	public String workTimeDelete(@RequestParam(value = "mrId", required = false) String mrId) {
 
@@ -220,7 +265,8 @@ public class WorkController {
 
 		return "redirect:/addAttManage";
 	}
-
+	
+	//관리자 확인
 	@GetMapping("/manageConfirm")
 	public String manageConfirm(AttManagement attManagement,
 			@RequestParam(value = "attCode", required = false) String attCode) {
@@ -236,7 +282,8 @@ public class WorkController {
 		apprRequestService.manageConfirm(attCode,confirm);
 		return "redirect:/addAttManage";
 	}
-
+	
+	//업무시간 수정
 	@PostMapping("/workTimeModify")
 	public String workTimeModify(AttTimeManage attTimeManage,
 			@RequestParam(value = "mrId", required = false) String mrId,
@@ -277,7 +324,8 @@ public class WorkController {
 
 		return "redirect:/addAttManage";
 	}
-
+	
+	//업무시간 저장
 	@PostMapping("/workTimeStorage")
 	public String workTimeStorage(AttTimeManage attTimeManage,
 			@RequestParam(value = "mrId", required = false) String mrId,
@@ -344,7 +392,8 @@ public class WorkController {
 
 		return attTimeManage;
 	}
-
+	
+	//출퇴근 관리 리스트
 	@RequestMapping(value = "/addAttManage", method = { RequestMethod.GET, RequestMethod.POST })
 	public String attManage(Model model) {
 
@@ -357,7 +406,8 @@ public class WorkController {
 		model.addAttribute("confirmList", confirmList);
 		return "workmanagment/addAttManage";
 	}
-
+	
+	//복귀시각, 외출 시간 구하기
 	@GetMapping("/goingOutEnd")
 	public String goingOutEnd(AttManagement attManagement, HttpSession session) {
 		String SID = (String) session.getAttribute("SID");
@@ -385,7 +435,7 @@ public class WorkController {
 		String SID = (String) session.getAttribute("SID");
 		String attCode = apprRequestService.getAttCode(SID);
 
-		apprRequestService.setWorkEndTime(attCode);
+		//apprRequestService.setWorkEndTime(attCode);
 
 		/* 지각,조퇴,외출 여부 구하고 비고란에 업데이트 */
 		int late = apprRequestService.late(attCode);
@@ -406,13 +456,15 @@ public class WorkController {
 
 		/* 근무시간 구하기 */
 		float realWorkTime = apprRequestService.getAttEndTime(attCode);
+		
+		
 		float getMealTime = apprRequestService.MealTime(SID);
-
-		int notMealTime = apprRequestService.notMealTime(attCode);
-
 		/* 만약 점심시간보다 늦게 출근 한 경우(리턴값 1) 일때 점심시간은 0 */
-		if (notMealTime == 1) {
-			getMealTime = 0;
+		if(getMealTime > 0) {
+			int notMealTime = apprRequestService.notMealTime(attCode);
+			if (notMealTime == 1) {
+				getMealTime = 0;
+			}
 		}
 		// ---------------------------------------------------
 
@@ -425,7 +477,6 @@ public class WorkController {
 			realWorkTime = (float) (workTimeHH + 0.5);
 		}
 
-		System.out.println(realWorkTime + "------------->실제 근무 시간");
 		// -------------------------------------------------------
 
 		/* 초과 근무시간 구하기 */
@@ -438,6 +489,7 @@ public class WorkController {
 		if (realWorkTime > fListWorkTime) {
 			overWorkTime = realWorkTime - fListWorkTime;
 			attManagement.setWorkOvertime(overWorkTime);
+			note += "초과 근무 ";
 			System.out.println(overWorkTime + "------------->초과 근무 시간");
 		}
 		attManagement.setAttCode(attCode);
