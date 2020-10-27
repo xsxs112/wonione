@@ -15,6 +15,8 @@ public interface ApprMapper {
 	
 	
 	
+	public AttManagement calculationTime(AttManagement attManagement);
+	
 	public AttManagement getDeleteGoingout(String attCode);
 
 	public int deleteGoingOut(String attCode);

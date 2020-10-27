@@ -6,6 +6,17 @@
     
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 	
+	<select id = "calculationTime" parameterType="AttManagement" resultType="AttManagement">
+
+
+		SELECT 
+			LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),3) AS goingOut
+			, LEFT((TIMESTAMPDIFF(MINUTE, #{attStTime}, #{attEndTime})/60),3) - LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),3) - #{realMealTime} AS attTime
+			
+	
+		
+	</select>
+	
 	<!-- 삭제된 외출시간 구하기 -->
 	<select id = "getDeleteGoingout" parameterType="string" resultType="AttManagement">
 
@@ -158,7 +169,7 @@
 	
 	<select id = "MealTime" parameterType="string" resultType="float">
 
-		SELECT meal_time
+		SELECT IFNULL(meal_time,0) 
 		FROM wt_attendance_time_manage
 		WHERE mr_id = #{SID};
 	
@@ -202,26 +213,26 @@
 	</select>
 	
 	
-	
-	<!-- 출근 리스트에서 일한시간 업데이트 -->
+<!-- 	
+	출근 리스트에서 일한시간 업데이트
 	<update id = "setWorkEndTime" parameterType="String">
 		UPDATE wt_attendance_management
 		SET
-			attendance_end_time=NOW()
+			attendance_end_time=SUBSTRING(NOW(),12,5)
 			
 			
 		WHERE	
 			attendance_code = #{attCode};
 
 	</update>
-	
+	 -->
 	
 	
 	<!-- 출근 리스트에서 일한시간 업데이트 -->
 	<update id = "setWorkTime" parameterType="AttManagement">
 		UPDATE wt_attendance_management
 		SET
-			attendance_end_time=NOW(),
+			attendance_end_time=SUBSTRING(NOW(),12,5),
 			attendance_time=#{attTime},
 			work_overtime=#{workOvertime},
 			real_meal_time = #{realMealTime},
@@ -440,23 +451,12 @@
 	<update id = "goingOutEnd" parameterType="string">
 		UPDATE wt_attendance_management
 		SET
-			going_out_endTime=NOW()
+			going_out_endTime=SUBSTRING(NOW(),12,5)
 		WHERE 
 			attendance_code = #{attCode};
 	</update>
 	
-	
-	
-	<update id = "workAttendanceEnd" parameterType="int">
-	
-		UPDATE wt_attendance_management
-		SET
-			attendance_end_time=NOW(),
-			attendance_note='조퇴'
-		WHERE 
-		TIME(NOW())<![CDATA[ < ]]>'18:00:00' AND attendance_code = #{attCode};
-	
-	</update>
+
 	
 	
 	
@@ -474,7 +474,7 @@
 	<update id = "goingStOut" parameterType="string">
 		UPDATE wt_attendance_management
 		SET
-			going_out_stTime=NOW()
+			going_out_stTime=SUBSTRING(NOW(),12,5)
 		WHERE 
 			attendance_code = #{attCode};
 	</update>
@@ -497,7 +497,7 @@
 	
 		INSERT INTO wt_attendance_management
 					(attendance_code, mr_id, attendance_date, attendance_start_time, attendance_end_time, attendance_time, attendance_note, going_out_time, going_out_stTime, going_out_endTime)
-			VALUES (#{attCode}, #{mrId}, LEFT(NOW(),10), right(NOW(),8), null, 0, '', 0, null, null)
+			VALUES (#{attCode}, #{mrId}, LEFT(NOW(),10), SUBSTRING(NOW(),12,5), null, 0, '', 0, null, null)
 		
 	</insert>
 

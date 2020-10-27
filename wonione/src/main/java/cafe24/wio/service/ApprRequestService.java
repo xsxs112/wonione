@@ -22,6 +22,12 @@ public class ApprRequestService {
 	
 	
 	
+	public AttManagement calculationTime(AttManagement attManagement) {
+		
+		
+		return apprMapper.calculationTime(attManagement);
+	}
+	
 	public AttManagement getDeleteGoingout(String attCode) {
 		
 		
