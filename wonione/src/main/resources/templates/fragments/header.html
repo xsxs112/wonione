@@ -27,21 +27,10 @@
                                             <ul class="nav navbar-nav mai-top-nav">
                                                 <li class="nav-item"><a href="/index" class="nav-link">Home</a>
                                                 </li>
-                                               <!--  <li class="nav-item"><a href="#" class="nav-link">About</a>
+                                                <li th:if="${session.SID eq null}" class="nav-item"><a href="/login" class="nav-link">로그인</a>
                                                 </li>
-                                                <li class="nav-item"><a href="#" class="nav-link">Services</a>
+                                                <li th:unless="${session.SID eq null}" class="nav-item"><a href="/logout" class="nav-link">로그아웃</a>
                                                 </li>
-                                                <li class="nav-item dropdown res-dis-nn" th:if="${session.SID != null}">
-                                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">Project <span class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
-                                                    <div role="menu" class="dropdown-menu animated zoomIn">
-                                                        <a href="#" class="dropdown-item">Documentation</a>
-                                                        <a href="#" class="dropdown-item">Expert Backend</a>
-                                                        <a href="#" class="dropdown-item">Expert FrontEnd</a>
-                                                        <a href="#" class="dropdown-item">Contact Support</a>
-                                                    </div>
-                                                </li> -->
-                                               <!--  <li class="nav-item" th:if="${session.SID != null}"><a href="#" class="nav-link">Support</a>
-                                                </li> -->
                                             </ul>
                                         </div>
                                     </div>
@@ -49,17 +38,7 @@
                                         <div class="header-right-info">
                                             <ul class="nav navbar-nav mai-top-nav header-right-menu">
                                                 <li class="nav-item" style="margin-right: 50px;">
-                                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-															<img src="#" alt="">
-															<span class="admin-name" th:if="${session.SID != null}" th:text="${session.SNAME + '님'}"></span>
-															<i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
-														</a>
-                                                    <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-                                                       	<!-- 로그아웃 처리 해야함.0916_22:05 -->
-                                                        <li><a href="/logout" th:if="${session.SID ne null}">
-                                                        	<span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
-                                                        </li>
-                                                    </ul>
+													<span class="admin-name" th:if="${session.SID != null}" th:text="${session.SNAME + '님 환영합니다.'}"></span>
                                                 </li>
                                             </ul>
                                         </div>

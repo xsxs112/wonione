@@ -10,9 +10,13 @@ public class MainController {
 	//이것은주석
 	//Pull Push Commit Test
 	@GetMapping("/")
-	public String main(Model model) {
-		model.addAttribute("title", "로그인");
-		return "redirect:/login";
+	public String main() {
+		
+		return "redirect:/index";
 	}
-
+	@GetMapping("/index")
+	public String index(Model model) {
+		model.addAttribute("title","메인화면");
+		return "index";
+	}
 }

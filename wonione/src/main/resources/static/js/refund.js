@@ -7,6 +7,10 @@
 	window.onload = function (){
 		$('#refundList').click();
 	}
-	
-
+	$('#refundCurrentSituation').click(function(){
+		alert('준비중입니다.');
+	});
+	$('#refundPayment').click(function(){
+		alert('준비중입니다.');
+	});
 })(jQuery); 
