@@ -1,7 +1,9 @@
 package cafe24.wio.service;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -132,34 +134,69 @@ private MemberMapper memberMapper;
 		 * 구성원 리스트 가져오기.
 		 * @return
 		 */
-	public List<Member> getWIOMemberList(){
+	public Map<String,Object> getWIOMemberList(int currentPage){
+		
+		final int ROW_PER_PAGE = 5;
+		
+		int startRow = 0;
+		
+		int startPageNum = 1;
+		int lastPageNum = ROW_PER_PAGE;
+		
+		if(currentPage > (ROW_PER_PAGE/2)) {
+			startPageNum = currentPage - ((lastPageNum/2)-1);
+			lastPageNum += startPageNum;
+		}
+		
+		startRow = (currentPage - 1) * ROW_PER_PAGE ;
+		
+		Map<String,Object> memberMap = new HashMap<String,Object>();
+		
+		
+		memberMap.put("startRow", startRow);
+		memberMap.put("rowPerPage", ROW_PER_PAGE);
 		
 		// 회원 정보가 담긴 WIOMemberList 객체 생성
-		List<Member> WIOMemberList = memberMapper.getWIOMemberList();
+		List<Member> WIOMemberList = memberMapper.getWIOMemberList(memberMap);
 		
-		//회원 정보가 null 이 아닐 경우 조회
-		if(WIOMemberList != null) {
-			for(int n=0; n<WIOMemberList.size(); n++) {
-				
-				//회원 레벨 변수 초기화
-				int memberLevel = 0;
-				memberLevel = WIOMemberList.get(n).getLevelNum();
-				if(memberLevel > 0) {
-					if(memberLevel == 1) {
-						WIOMemberList.get(n).setLevelName("관리자");
-					}else if(memberLevel == 2) {
-						WIOMemberList.get(n).setLevelName("시간 강사");
-					}else if(memberLevel == 3) {
-						WIOMemberList.get(n).setLevelName("일반 직원");
-					}else if(memberLevel == 4){
-						WIOMemberList.get(n).setLevelName("학원생");
-					}else {
-						WIOMemberList.get(n).setLevelName("비회원");
+		double totalRowCount = memberMapper.getCountMemberList();
+		
+		int lastPage = (int)Math.ceil((totalRowCount / ROW_PER_PAGE));
+		
+		if(currentPage >= (lastPage-4)) {
+			lastPageNum = lastPage;
+		}
+		
+			//회원 정보가 null 이 아닐 경우 조회
+			if(WIOMemberList != null) {
+				for(int n=0; n<WIOMemberList.size(); n++) {
+					
+					//회원 레벨 변수 초기화
+					int memberLevel = 0;
+					memberLevel = WIOMemberList.get(n).getLevelNum();
+					if(memberLevel > 0) {
+						if(memberLevel == 1) {
+							WIOMemberList.get(n).setLevelName("관리자");
+						}else if(memberLevel == 2) {
+							WIOMemberList.get(n).setLevelName("시간 강사");
+						}else if(memberLevel == 3) {
+							WIOMemberList.get(n).setLevelName("일반 직원");
+						}else if(memberLevel == 4){
+							WIOMemberList.get(n).setLevelName("학원생");
+						}else {
+							WIOMemberList.get(n).setLevelName("비회원");
+						}
 					}
 				}
 			}
-		}
-		
-		return WIOMemberList;
+			
+			Map<String,Object> WIOList = new HashMap<String,Object>();
+			
+			WIOList.put("WIOMemberList", WIOMemberList);
+			WIOList.put("lastPage", lastPage);
+			WIOList.put("startPageNum", startPageNum);
+			WIOList.put("lastPageNum", lastPageNum);
+
+		return WIOList;
 	}
 }

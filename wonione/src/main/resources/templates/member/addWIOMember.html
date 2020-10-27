@@ -35,7 +35,7 @@
 					  method:"GET",
 					  data: { mrId : mrId },
 					  dataType: "text"
-				});/
+				});
 				request.done(function(data){
 					console.log(data);
 					if(data != undefined && data != ''){
@@ -101,7 +101,7 @@
 				mrPw.focus();
 				return;
 			}else if(mrPw.match(spaceCheck)){
-				alert('비밀번호에 공백을 입력하셨습니다.');
+				alert('비밀번호에 공백이 포함되어 있습니다.');
 				mrPw.focus();
 				return;
 			}else if(pwCheck == '' || pwCheck == undefined){
@@ -129,8 +129,7 @@
 				alert('연락처 양식에 어긋납니다.');
 				mrPhone.focus();
 				return;
-			}
-			else if(mrAddr == '' || mrAddr == undefined){
+			}else if(mrAddr == '' || mrAddr == undefined){
 				alert('주소를 입력해 주세요');
 				mrAddr.focus();
 				return;
@@ -149,8 +148,6 @@
 			$('form').submit();
 		});
 	});
-		
-	
 	</script>
 	
 		
@@ -271,6 +268,5 @@
 			</form>
 		</div>
 	</th:block>
-	
 	
 </html>
