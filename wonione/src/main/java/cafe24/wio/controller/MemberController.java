@@ -3,6 +3,8 @@ package cafe24.wio.controller;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -207,13 +209,17 @@ public class MemberController {
 
 	//1. 리스트 가져오기
 	@GetMapping("/getWIOMemberList")
-	public String getWIOMemberList(Model model) {
+	public String getWIOMemberList(Model model
+								 , @RequestParam(value = "currentPage",required = false, defaultValue = "1") int currentPage) {
+	
+		Map<String,Object> WIOMemberList = memberService.getWIOMemberList(currentPage);
 		
-		List<Member> WIOMemberList = memberService.getWIOMemberList();
-		
-		model.addAttribute("title", "구성원 목록 조회");
-		model.addAttribute("WIOMemberList", WIOMemberList);
-		model.addAttribute("WIOMemberList", memberService.getWIOMemberList());
+		model.addAttribute("title", "구성원 목록");
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("WIOMemberList", WIOMemberList.get("WIOMemberList"));
+		model.addAttribute("lastPage", WIOMemberList.get("lastPage"));
+		model.addAttribute("startPageNum", WIOMemberList.get("startPageNum"));
+		model.addAttribute("lastPageNum", WIOMemberList.get("lastPageNum"));
 		
 		return "member/WIOMemberList";
 	}
