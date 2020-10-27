@@ -195,6 +195,62 @@ WHERE
 <!-- *************************강의예정************************ -->
 <!-- *********************** START ************************* -->
 
+<!-- 강의예정리스트 기간별 검색 -->
+<select id="lecOsSearchPeriod" resultType="hashMap">
+<![CDATA[
+SELECT
+	los.lec_os_code				AS	'lecOsCode'
+	,los.lec_name				AS	'lecName'
+	,los.mr_teacher_id			AS	'mrTeacherId'
+	,mr.mr_name					AS	'mrTeacherName'
+	,lrt.lec_starttime			AS	'lecStartTime'
+	,lrt.lec_endtime			AS	'lecEndTime'
+	,lrt.lec_designation		AS 	'lecTimeName'
+	,lrr.lec_designation		AS	'lecRoom'
+	,los.lec_day				AS	'lecDay'
+	,lrl.lec_designation		AS	'lecLevel'
+	,los.lec_tuition			AS	'lecTuition'
+	,
+	(SELECT COUNT(c.lec_os_code)
+		FROM wt_course AS c
+	WHERE los.lec_os_code = c.lec_os_code)
+								AS	'lecApplyCount'
+	,los.cla_capacity			AS	'lecClaCapacity'
+	,los.lec_st_date			AS	'lecStartDate'
+	,los.lec_fin_date			AS	'lecFinalDate'
+	,los.lec_os_writer			AS 	'lecOsWriter'
+	,mr2.mr_name				AS	'lecOsWriterName'	
+	,los.lec_os_reg_date		AS	'lecOsRegDate'
+	,los.lec_os_remark			AS	'lecOsRemark'
+FROM
+	wt_lecture_open_schedule AS los
+	INNER JOIN
+	wt_member_registration AS mr
+	ON
+	los.mr_teacher_id = mr.mr_id
+	LEFT JOIN
+	wt_lec_resource AS lrt
+	ON
+	los.lec_time_code = lrt.lec_number
+	LEFT JOIN
+	wt_lec_resource AS lrr
+	ON
+	los.lec_room_code = lrr.lec_number
+	LEFT join
+	wt_lec_resource AS lrl
+	ON
+	los.lec_level_code = lrl.lec_number
+	INNER JOIN
+	wt_member_registration	AS mr2
+	ON 
+	los.lec_os_writer = mr2.mr_id
+WHERE 
+	#{lecStartDate}<=${startPeriod} AND ${startPeriod}<= #{lecFinalDate}
+	OR
+	#{lecStartDate}<=${endPeriod} AND ${endPeriod} <= #{lecFinalDate};	
+]]>
+</select>
+
 <!-- 강의예정리스트 검색	-->
 <select id="getLecOsSearch" resultType="hashMap">
 SELECT
@@ -218,6 +274,7 @@ SELECT
 	,los.lec_st_date			AS	'lecStartDate'
 	,los.lec_fin_date			AS	'lecFinalDate'
 	,los.lec_os_writer			AS 	'lecOsWriter'
+	,mr2.mr_name				AS	'lecOsWriterName'	
 	,los.lec_os_reg_date		AS	'lecOsRegDate'
 	,los.lec_os_remark			AS	'lecOsRemark'
 FROM
@@ -238,6 +295,10 @@ FROM
 	wt_lec_resource AS lrl
 	ON
 	los.lec_level_code = lrl.lec_number
+	INNER JOIN
+	wt_member_registration	AS mr2
+	ON 
+	los.lec_os_writer = mr2.mr_id	
 	WHERE
 	${lecOsSk} LIKE (CONCAT('%',#{lecOsSv},'%'));
 
@@ -297,6 +358,7 @@ SELECT
 	,los.lec_st_date			AS	'lecStartDate'
 	,los.lec_fin_date			AS	'lecFinalDate'
 	,los.lec_os_writer			AS 	'lecOsWriter'
+	,mr2.mr_name				AS	'lecOsWriterName'
 	,los.lec_os_reg_date		AS	'lecOsRegDate'
 	,los.lec_os_remark			AS	'lecOsRemark'
 FROM
@@ -316,7 +378,11 @@ FROM
 	LEFT join
 	wt_lec_resource AS lrl
 	ON
-	los.lec_level_code = lrl.lec_number;
+	los.lec_level_code = lrl.lec_number
+	INNER JOIN
+	wt_member_registration	AS mr2
+	ON 
+	los.lec_os_writer = mr2.mr_id;
 </select>
 
 <!-- 회원중 시간강사만 조회 -->

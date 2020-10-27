@@ -12,6 +12,12 @@ import cafe24.wio.bean.LectureOpenSchedule;
 @Mapper
 public interface LectureMapper {
 
+	//강의예정리스트 기간별 검색
+	public List<Map<String,Object>> lecOsSearchPeriod(String lecStartDate
+													, String lecFinalDate
+													, String startPeriod
+													, String endPeriod);
+	
 	//강의예정리스트 수정하기
 	public int modifyLecOs(LectureOpenSchedule lectureOs);
 	

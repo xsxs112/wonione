@@ -74,6 +74,45 @@ public class LectureController {
 		return "lecture/modifyLecOpenSchedule";
 	}
 	
+	//검색결과 유무 조회
+	@PostMapping(value="/checkSearchResult", produces = "application/json")
+	@ResponseBody
+	public int checkSearchResult(@RequestParam(value="startPeriod",	 required = false)String startPeriod
+								,@RequestParam(value="endPeriod",	 required = false)String endPeriod
+								,@RequestParam(value="lecStartDate", required = false)String lecStartDate
+								,@RequestParam(value="lecFinalDate", required = false)String lecFinalDate
+								,@RequestParam(value="selectlecOsSk",required = false)String selectlecOsSk
+								,@RequestParam(value="lecOsSv",		 required = false)String lecOsSv) {
+		
+		/*원석이형...♥*/
+		int checkResult = lectureService.checkSearchResult(startPeriod
+														 , endPeriod
+														 , lecStartDate
+														 , lecFinalDate
+														 , selectlecOsSk
+														 , lecOsSv);
+		
+		return checkResult;
+	}
+	
+	//강의예정리스트 기간별검색
+	@GetMapping("/lecOsSearchPeriod")
+	public String getLecOsSearchPeriod(Model model
+									, @RequestParam(value="lecStartDate",required = false)String lecStartDate
+									, @RequestParam(value="lecFinalDate",required = false)String lecFinalDate
+									, @RequestParam(value="startPeriod",required = false)String startPeriod
+									, @RequestParam(value="endPeriod",required = false)String endPeriod) {
+		List<Map<String,Object>>lectureOsList = 
+								lectureService.lecOsSearchPeriod(lecStartDate, lecFinalDate, startPeriod, endPeriod);
+		
+		model.addAttribute("title", "강의 예정리스트 검색결과");
+		model.addAttribute("mainTitle", "검색결과는 다음과 같습니다.");
+		model.addAttribute("lectureOsList", lectureOsList);
+		model.addAttribute("href", "/lectureOpenScheduleList");
+		
+		return "lecture/lectureOpenScheduleList";
+	}
+	
 	//강의예정리스트 검색
 	@GetMapping("/lecOsSearch")
 	public String getLecOsSearch(Model model
@@ -82,8 +121,8 @@ public class LectureController {
 		List<Map<String,Object>> lectureOsList = 
 								lectureService.getLecOsSearch(lecOsSk, lecOsSv);
 		
-		model.addAttribute("title", "강의 예정 리스트");
-		model.addAttribute("mainTitle", "강의 예정 리스트");
+		model.addAttribute("title", "강의 예정리스트 검색결과");
+		model.addAttribute("mainTitle", "검색결과는 다음과 같습니다.");
 		model.addAttribute("lectureOsList", lectureOsList);
 		model.addAttribute("href", "/lectureOpenScheduleList");
 		

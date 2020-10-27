@@ -18,16 +18,20 @@
 									<option disabled="disabled" selected="selected">::검색조건::</option>
 									<option value="lec_os_code">강의예정코드</option>
 									<option value=lec_name>강의명</option>
-									<option value="mr_name">강사이름</option>
+									<option value="mr.mr_name">강사이름</option>
 									<option value="lec_os_writer">작성자아이디</option>
+									<option value="mr2.mr_name">작성자</option>
+									<option >기간별</option>
 								</select> 
-								<div class="form-group">
-								<input type="text" id="lecOsSv" class="form-control" name="lecOsSv" placeholder="검색어를 입력해주세요"/>
+								<div class="form-group" >
+								<div class="form-group form-group-inner" id="searchValueForm">
+									<input type="text" id="lecOsSv" class="form-control" name="lecOsSv" placeholder="검색어를 입력해주세요"/>
+	                            </div>
 									<div class="input-group-btn pull-right">
 										<button class="btn btn-default form-group" id="searchLecOsBtn" type="button">검색</button>
 									</div>
 								</div>
-							</form>                            
+							</form>
                             <div class="add-product" th:if="${SLEVEL eq '1' OR SLEVEL eq '2'}">                            
                                 <a href="/addLectureOpenSchedule">강의예정등록</a>
                             </div>
@@ -47,10 +51,11 @@
                                         <th>강사명</th>	
                                         <th>수업시작일자</th>
                                         <th>수업종료일자</th>
+                                        <th>작성자</th>
                                         <th>등록일자</th>
                                         <th style="text-align: center;">비고사항</th>
-	                                    <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}">수정</th>
-                                        <th>등록</th>
+	                                    <th th:if="${SLEVEL eq '1' OR SLEVEL eq '3'}" >수정</th>
+                                        <th th:if="${href eq null}">등록</th>
                                     </tr>
                                     <th:block th:each="losl : ${lectureOsList}">
 	                                    <tr>
@@ -68,6 +73,7 @@
 											  <td th:text="${losl.mrTeacherName}"></td>
 											  <td th:text="${losl.lecStartDate}"></td>
 											  <td th:text="${losl.lecFinalDate}"></td>
+											  <td th:text="${losl.lecOsWriterName}"></td>
 											  <td th:text="${losl.lecOsRegDate}"></td>
 											  <td>
 						                        <div class="modal-bootstrap shadow-inner responsive-mg-b-0">
@@ -80,7 +86,7 @@
 			                                    <button data-toggle="tooltip" title="수정" th:value="${losl.lecOsCode}" class="pd-setting-ed modifyBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
 			                                </td>
 	                                        <td th:if="${SLEVEL eq '1' OR SLEVEL eq '2' OR SLEVEL eq '3'}">
-	                                       		<button type="button" class="btn btn-dafault openLectureBtn" th:value="${losl.lecOsCode}">등록</button>
+	                                       		<button type="button" class="btn btn-dafault openLectureBtn" th:if= "${href eq null}" th:value="${losl.lecOsCode}">등록</button>
 	                                       	</td>
 	                                    </tr>
 	                                    <div class="login-form-area edu-pd mg-b-15">
@@ -112,23 +118,90 @@
 					</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
+	
+	//검색버튼 클릭이벤트
 	$('#searchLecOsBtn').click(function(){
 		var searchForm = $('#searchForm');
 		var selectlecOsSk = $('#selectlecOsSk').val();
 		var lecOsSv = $('#lecOsSv').val();
+		var lecStartDate = $('#lecStartDate').val();
+		var lecFinalDate = $('#lecFinalDate').val();
+		var startPeriod = $('#startPeriod').val();
+		var endPeriod = $('#endPeriod').val();
+		
 		console.log(selectlecOsSk + ' < -- selectlecOsSk');
 		console.log(lecOsSv + ' < -- lecOsSv');
-		if(selectlecOsSk == null || selectlecOsSk == undefined){
+		console.log(lecStartDate + ' < -- lecStartDate');
+		console.log(lecFinalDate + ' < -- lecFinalDate');
+		console.log(startPeriod + ' < -- startPeriod');
+		console.log(endPeriod + ' < -- endPeriod');
+		
+		if(selectlecOsSk == undefined || selectlecOsSk == undefined){
 			alert('검색조건을 선택해주세요');
 			return;
-		}else if(lecOsSv == null || lecOsSv == ''){
-			alert('검색어를 입력해주세요');
-			$('#lecOsSv').focus();
-			return;
 		}
-		searchForm.submit();
+		if(selectlecOsSk == '기간별'){
+			if(lecStartDate == undefined || lecStartDate == ''){
+				alert('개강일자를 선택해주세요');
+				return;
+			}else if(lecFinalDate == undefined || lecFinalDate == ''){
+				alert('종강일자를 선택해주세요');
+				return;
+			}else if(lecStartDate > lecFinalDate){
+				alert('종강일자가 개강일자보다 빠릅니다');
+				return;
+			}else{
+			var request = $.ajax({
+				  url: "/checkSearchResult",
+				  method: "POST",
+				  data: {	startPeriod : startPeriod ,
+							endPeriod : endPeriod,
+							lecStartDate : lecStartDate,
+							lecFinalDate : lecFinalDate	},
+				  dataType: "json"
+				});
+				 
+				request.done(function(data) {
+					if(data == 0 ){
+						alert('검색결과가 없습니다.');
+					}else{
+						searchForm.submit();
+					}
+				});
+				request.fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});
+			}
+		}else{
+			if(lecOsSv == undefined || lecOsSv == ''){
+				alert('검색어를 입력해주세요');
+				$('#lecOsSv').focus();
+				return;
+			}else{
+				var request = $.ajax({
+					  url: "/checkSearchResult",
+					  method: "POST",
+					  data: { selectlecOsSk : selectlecOsSk ,
+							  lecOsSv : lecOsSv	},
+					  dataType: "json"
+					});
+					 
+					request.done(function(data) {
+						if(data == 0 ){
+							alert('검색결과가 없습니다.');
+						}else{
+							searchForm.submit();
+						}
+					});
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+			}
+		}
+		
 	});	
 	
+	//강의예정상세보기 버튼 click 이벤트
 	$('.lecOsNameBtn').click(function(){
 		console.log('check');
 		var lecOsCode = $(this).parents().children('.lecOsCode').val();
@@ -196,6 +269,7 @@
 			
 	});	
 	
+	//비고상세보기 클릭이벤트
 	$('.lecRemarkBtn').click(function(){
 		var lecOsCode = $(this).parents().children('.lecRemarkBtn').val();
 		console.log(lecOsCode);
@@ -224,6 +298,7 @@
 			});
 	});
 	
+	//등록(강의리스트에 등록) 버튼 click 이벤트
 	$('.openLectureBtn').click(function(){
 		var lecOsCode = $(this).parents().children('.openLectureBtn').val();
 		var lecOpWriter = $('#sessionId').val();
@@ -269,11 +344,37 @@
 			});
 		
 	});
+	//수정버튼 click 이벤트
 	$('.modifyBtn').click(function(){
 		console.log('modifyBtn');
 		var lecOsCode = $(this).val();
 		console.log(lecOsCode);
 		location.href="/modifyLecOpenSchedule?lecOsCode="+lecOsCode;
+	});
+	
+	//검색조건 change 이벤트
+	$('#selectlecOsSk').change(function(){
+		console.log('change');
+		var selectedVal = $('#selectlecOsSk option:selected').val();
+		console.log(selectedVal);
+		if(selectedVal != undefined && selectedVal != ''){
+			html = '';
+			if(selectedVal == '기간별'){
+				console.log('기간별 테스트');
+				html+= '<label class="login2 pull-center pull-center-pro">개강일자</label>';
+				html+= '<input type="date" class="form-control" name="lecStartDate" id="lecStartDate"/>';
+				html+= '<label class="login2 pull-center pull-center-pro">종강일자</label>';
+				html+= '<input type="date" class="form-control" name="lecFinalDate" id="lecFinalDate"/>';
+				html+= '<input type="hidden" id= "startPeriod" name="startPeriod" value="los.lec_st_date">'
+				html+= '<input type="hidden" id="endPeriod" name="endPeriod" value="los.lec_fin_date">'
+				$('#searchForm').attr('action','/lecOsSearchPeriod');
+			}else{
+				html+= '<input type="text" id="lecOsSv" class="form-control" name="lecOsSv" placeholder="검색어를 입력해주세요"/>';
+				$('#searchForm').attr('action','/lecOsSearch');
+			}
+				$('#searchValueForm').empty();
+				$('#searchValueForm').append(html);
+		}
 	});
 	</script>
 	</th:block>
