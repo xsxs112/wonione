@@ -64,12 +64,7 @@ public class WorkController {
 			getWorkTime = intWorkTime;
 		}
 
-		
-		
-		
-		
-		
-		
+
 		
 		//외출시간 구하기(0~30분은 0.5시간 31~1시간은 1시간 처리)
 		float goingOut = 0;
@@ -95,6 +90,7 @@ public class WorkController {
 			floatrealMealTime = 0;
 			attManagement.setRealMealTime(0);
 		}else {
+			
 			attManagement.setRealMealTime(floatrealMealTime);
 		}
 		//----------------------------------------------------------------------
@@ -110,40 +106,22 @@ public class WorkController {
 		float overWorkTime = getWorkTime-dataWorkTime ;
 		if(overWorkTime <= 0) {
 			overWorkTime = 0;
+		}else {
+			attNote += "초과근무";
 		}
-		
+		System.out.println(overWorkTime + "걸러진 시간 ");
 		attManagement.setGoingOut(goingOut);
 		attManagement.setAttTime(getWorkTime);
 		attManagement.setRealMealTime(floatrealMealTime);
 		attManagement.setAttNote(attNote);
-		
-		
-		//AttManagement calculationTime = apprRequestService.calculationTime(attManagement);
+		attManagement.setWorkOvertime(overWorkTime);
 		
 		
 		
 		return attManagement;
 	}
 	
-	
-	
-	
-	/*
-	 * //외출시간 삭제
-	 * 
-	 * @GetMapping(value = "/deleteGoingOut", produces = "application/json")
-	 * 
-	 * @ResponseBody public AttManagement deleteGoingOut(@RequestParam(value =
-	 * "attCode", required = false) String attCode) {
-	 * 
-	 * 
-	 * apprRequestService.deleteGoingOut(attCode); AttManagement getDeleteGoingout =
-	 * apprRequestService.getDeleteGoingout(attCode);
-	 * 
-	 * return getDeleteGoingout; }
-	 */
-	
-	
+
 	//출퇴근 정보수정 요청
 	@GetMapping("/getModifyRequest")
 	@ResponseBody
@@ -175,13 +153,15 @@ public class WorkController {
 									,@RequestParam(value = "workOvertime", required = false) float workOvertime
 									,@RequestParam(value = "attNote", required = false) String attNote) {
 		
-		
-		
-
+		System.out.println(realMealTime);
 		attManagement.setAttCode(attCode);
 		attManagement.setAttStTime(attStTime);
 		attManagement.setAttEndTime(attEndTime);
+		System.out.println(realMealTime + "realMealTime");
+		
 		attManagement.setRealMealTime(realMealTime);
+		
+		
 		if(goingOutStTime == "") {
 			goingOutStTime = null;
 		}

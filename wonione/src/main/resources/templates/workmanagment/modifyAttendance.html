@@ -33,27 +33,7 @@
 			})
 			
 			
-/* 			$('#deleteGoingOut').click(function() {
-				var attCode = $('#attCode').val()
-				var request = $.ajax({
-					url : "/deleteGoingOut",
-					method : "GET",
-					data : {
-						attCode : attCode
-					},
-					dataType : "json"
-				});
-				request.done(function(data) {
-					$('#goingOutStTime').val(data.goingOutStTime);
-					$('#goingOutEndTime').val(data.goingOutEndTime);
-					
-				});
-				request.fail(function(jqXHR, textStatus) {
-					alert("Request failed: " + textStatus);
-				});
-			}); */
-			
-			
+
 			$('#deleteGoingOut').click(function() {
 				
 					$('.goingOutStTime').val('');
@@ -87,11 +67,10 @@
 					dataType : "json"
 				});
 				request.done(function(data) {
-					alert(data.goingOut);
 					$('.goingOut').val(data.goingOut);
 					$('.attTime').val(data.attTime);
-					$('#workOvertime').val(data.workOvertime);
-					$('#attNote').val(data.attNote);
+					$('.workOvertime').val(data.workOvertime);
+					$('.attNote').val(data.attNote);
 					
 				});
 				request.fail(function(jqXHR, textStatus) {
@@ -149,19 +128,19 @@
 												<tr>
 													<td>직급</td>
 													<td><input type="text" class="form-control"
-														name="mrName" th:value="${attManagementDetail.levelName}"
+														name="levelName" th:value="${attManagementDetail.levelName}"
 														readonly="readonly"></td>
 												</tr>
 												<tr>
 													<td>업무시간</td>
 													<td><input type="text" class="form-control"
-														name="mrName" th:value="${attTimeManage.workStTime}"
+														name="workStTime" th:value="${attTimeManage.workStTime}"
 														readonly="readonly"></td>
 												</tr>
 												<tr>
 													<td>식사시간</td>
 													<td><input type="text" class="form-control"
-														name="mrName" th:value="${attTimeManage.mStTime}"
+														name="mStTime" th:value="${attTimeManage.mStTime}"
 														readonly="readonly"></td>
 												</tr>
 												
@@ -179,7 +158,7 @@
 												<tr>
 													<td>출근 시간</td>
 													<td><input type="time" class="form-control attStTime attStTime"
-														name="goingOutStTime"
+														name="attStTime"
 														th:value="${attManagementDetail.attStTime}"></td>
 														<td> </td>
 													<td>외출 시간</td>
@@ -190,12 +169,12 @@
 												<tr>
 													<td>퇴근시간</td>
 													<td><input type="time" class="form-control attEndTime"
-														name="goingOutEndTime"
+														name="attEndTime"
 														th:value="${attManagementDetail.attEndTime}"></td>
 														<td> </td>
 													<td>근무 시간</td>
 													<td><input type="number" class="form-control attTime"
-														name="goingOutEndTime"
+														name="attTime"
 														th:value="${attManagementDetail.attTime}"></td>
 													
 												</tr>
@@ -207,7 +186,7 @@
 															class="btn btn-primary waves-effect waves-light">삭제</button></td>
 													<td>초과 근무 시간</td>
 													<td><input type="number" class="form-control workOvertime"
-														name="goingOutEndTime"
+														name="workOvertime"
 														th:value="${attManagementDetail.workOvertime}"></td>
 													
 												</tr>
@@ -218,12 +197,12 @@
 														<td> </td>
 													<td>비고</td>
 													<td><input type="text" class="form-control attNote"
-														name="goingOut" th:value="${attManagementDetail.attNote}"></td>
+														name="attNote" th:value="${attManagementDetail.attNote}"></td>
 												</tr>
 												<tr>
 													<td>식사 시간</td>
 													<td><input type="number" class="form-control realMealTime" 
-														name="goingOutEndTime" id = "realMealTime" th:value="${attManagementDetail.realMealTime}"></td>
+														name="realMealTime" id = "realMealTime" th:value="${attManagementDetail.realMealTime}"></td>
 													<td> </td>
 													<td colspan="2" ><button type="button" id="calculationTime"
 													class="btn btn-primary waves-effect waves-light" >계산</button>

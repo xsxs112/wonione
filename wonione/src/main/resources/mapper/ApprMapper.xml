@@ -35,23 +35,7 @@
 		WHERE m.attendance_code = #{attCode}
 		
 	</select>
-	
-	<!-- 수정 근무시간 구하기 -->
-	<select id = "calculationTime" parameterType="AttManagement" resultType="AttManagement">
-		SELECT 
-			LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),3) AS goingOut
-			, LEFT((TIMESTAMPDIFF(MINUTE, #{attStTime}, #{attEndTime})/60),3) - LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),3) - #{realMealTime} AS attTime
-			
-	</select>
-<!-- 	
-	수정 근무시간 구하기
-	<select id = "calculationTime" parameterType="AttManagement" resultType="AttManagement">
-		SELECT 
-			LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),3) AS goingOut
-			, LEFT((TIMESTAMPDIFF(MINUTE, #{attStTime}, #{attEndTime})/60),3) - LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),3) - #{realMealTime} AS attTime
-			
-	</select> -->
-	
+
 	<!-- 삭제된 외출시간 구하기 -->
 	<select id = "getDeleteGoingout" parameterType="string" resultType="AttManagement">
 
@@ -115,13 +99,13 @@
 		SET
 			attendance_start_time=#{attStTime},
 			attendance_end_time=#{attEndTime},
-			attendance_time=#{attTime},
+			attendance_time=${attTime},
 			attendance_note=#{attNote},
-			going_out_time=#{goingOut},
+			going_out_time=${goingOut},
 			going_out_stTime=#{goingOutStTime},
 			going_out_endTime=#{goingOutEndTime},
-			work_overtime=#{workOvertime},
-			real_meal_time=#{realMealTime},
+			work_overtime=${workOvertime},
+			real_meal_time=${realMealTime},
 			confirm = '수정 완료'
 		WHERE 
 			attendance_code = #{attCode};
