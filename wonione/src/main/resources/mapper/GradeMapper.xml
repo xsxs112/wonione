@@ -271,6 +271,15 @@ SELECT
 
 </select>
 
+<delete id="deleteGrade" parameterType="String">
+
+	DELETE 
+	FROM 
+		wt_grade_management 
+	WHERE 
+		grade_man_code = #{gradeManCode};
+
+</delete>
 
 
 </mapper>   

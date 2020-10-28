@@ -34,6 +34,9 @@ public interface GradeMapper {
 	//성적수정하기
 	public int updateGrade(Grade grade);
 	
+	//성적삭제하기
+	public int deleteGrade(String gradeManCode);
+	
 	//페이징을 위한 카운팅
 	public int countGrade();
 	

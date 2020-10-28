@@ -110,6 +110,12 @@ public class GradeService {
 		 
 	 }
 	 
+	 //성적삭제하기
+	 public int deleteGrade(String gradeManCode) {
+		 int delGrade = gradeMapper.deleteGrade(gradeManCode);
+		return delGrade;
+	 }
+	 
 	//페이징
 	public Map<String,Object> countGradeList(int currentPage){
 		

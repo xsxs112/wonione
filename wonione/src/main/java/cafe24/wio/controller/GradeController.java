@@ -147,6 +147,12 @@ public class GradeController {
 		return "redirect:/getGradeList";
 	}
 	
+	//성적삭제하기
+	@GetMapping("/deleteGrade")
+	public String deleteGrade(@RequestParam(value="gradeManCode", required= false) String gradeManCode) {
+		gradeService.deleteGrade(gradeManCode);
+		return "redirect:/getGradeList";
+	}
 	
 	
 	 
