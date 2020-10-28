@@ -20,6 +20,7 @@
 	    .consultingListCss th, .consultingListCss td {
 	      padding: 12px;
 	      border: 1px solid #ddd;
+	      text-align: center;
 	    }
 	    .consultingListCss tr td:first-child{
 	      text-align: center;
@@ -68,40 +69,38 @@
 		    <a th:href="@{/consultingList(currentPage=${lastPage})}">마지막</a>
   		<!-- ajax를 이용한 상세내용 화면출력  -->
   		<!-- ajax를 사용한 js는 /static/js/main.js -->
-  		<div class="container">
-			<form action="/upConsultingList" method="POST" id="consultingForm">
-				<div style="margin-top: 20px;">
-					<h4>상담정보</h4>
-					<table border="1" class="consultingListCss">
-			  			<tr>
-							<td hidden=""><input type="hidden" id="consultingCode" name="consultingCode"></td>
-			  				<td><label>제목</label></td>
-			  				<td colspan="2"><input type="text" id="consultingTitle" class="inputbox" name="consultingTitle"></td>
-			  				<td><label>강의반</label></td>
-			  				<td colspan="4"><input type="text" id="consultingClass" class="inputbox" name="consultingClass" readonly="readonly"></td>
-			  				
-			  			</tr>
-			  			<tr>
-			  				<td><label>일자</label></td>
-			  				<td  colspan="2"><input type="text" id="consultingDate" class="inputbox" name="consultingDate" readonly="readonly"></td>
-			  				<td><label>상담자</label></td>
-			  				<td hidden=""><input type="text" id="consultingTeacher" name="consultingTeacher"></td>
-			  				<td  colspan="2"><input type="text" id="consultingTeacherName" class="inputbox" readonly="readonly"></td>
-			  				<td><label>내담자</label></td>
-			  				<td><input type="text" id="consultingStudent" class="inputbox" name="consultingStudent" readonly="readonly"></td>
-			  			</tr>
-			  			<tr>
-			  				<td><label>상담내용</label></td>
-			  				<td colspan="7"><textarea id="consultingData" name="consultingData"></textarea></td>
-			  			</tr>
-			  		</table>
-		 		</div>
-		 			<!-- 상세내용을 화면출력시 그데이터를 바탕으로 수정과삭제처리 --><!-- 현재 form삭제 버튼 이동할 수정 ajax 만들어야한다.   -->
-					<button type="button" id="upConsulting" class="btn btn-default">수정</button>
-					<!-- 삭제처리는 미완성 -->
-					<button type="button" id="deleteConsulting" class="btn btn-default">삭제</button>
-			</form>
-		</div>
-		<script src="js/consulting.js"></script>
+		<form action="/upConsultingList" method="POST" id="consultingForm">
+			<div style="margin-top: 20px;">
+				<h4>상담정보</h4>
+				<table border="1" class="consultingListCss">
+		  			<tr>
+						<td hidden=""><input type="hidden" id="consultingCode" name="consultingCode"></td>
+		  				<td><label>제목</label></td>
+		  				<td colspan="2"><input type="text" id="consultingTitle" class="inputbox" name="consultingTitle"></td>
+		  				<td><label>강의반</label></td>
+		  				<td colspan="4"><input type="text" id="consultingClass" class="inputbox" name="consultingClass" readonly="readonly"></td>
+		  				
+		  			</tr>
+		  			<tr>
+		  				<td><label>일자</label></td>
+		  				<td  colspan="2"><input type="text" id="consultingDate" class="inputbox" name="consultingDate" readonly="readonly"></td>
+		  				<td><label>상담자</label></td>
+		  				<td hidden=""><input type="text" id="consultingTeacher" name="consultingTeacher"></td>
+		  				<td  colspan="2"><input type="text" id="consultingTeacherName" class="inputbox" readonly="readonly"></td>
+		  				<td><label>내담자</label></td>
+		  				<td><input type="text" id="consultingStudent" class="inputbox" name="consultingStudent" readonly="readonly"></td>
+		  			</tr>
+		  			<tr>
+		  				<td><label>상담내용</label></td>
+		  				<td colspan="7"><textarea id="consultingData" name="consultingData"></textarea></td>
+		  			</tr>
+		  		</table>
+	 		</div>
+	 			<!-- 상세내용을 화면출력시 그데이터를 바탕으로 수정과삭제처리 --><!-- 현재 form삭제 버튼 이동할 수정 ajax 만들어야한다.   -->
+				<button type="button" id="upConsulting" class="btn btn-default">수정</button>
+				<!-- 삭제처리는 미완성 -->
+				<button type="button" id="deleteConsulting" class="btn btn-default">삭제</button>
+		</form>
+	<script src="js/consulting.js"></script>
 	</th:block>
 </html>

@@ -28,7 +28,7 @@
 	                            	</ul>
                                 </li>
                             <li th:if="${session.SLEVEL < 4}">
-                         		<a href="/consultingList"  >
+                         		<a href="/consultingList">
 								   <span class="mini-click-non">상담관리</span>
 								</a>
                         	</li>
@@ -43,7 +43,7 @@
                             <a class="has-arrow" href="#" aria-expanded="false" style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-barcode"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">운영관리</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li>
-	                                <a class="has-arrow" href="/" >
+	                                <a class="has-arrow">
 	                                	<span class="mini-sub-pro">교재관리</span>
 	                                </a>
 		                            <ul class="submenu-angle menu-font" aria-expanded="true">
@@ -63,8 +63,8 @@
 	                                	<span class="mini-sub-pro">비품관리</span>
 	                                </a>
 		                            <ul class="submenu-angle menu-font" aria-expanded="true">
-	                                	<li><a href="/equipmentList"><span class="mini-sub-pro">비품 정보</span></a></li>
-	                                	<li><a href="/equipWhList"><span class="mini-sub-pro">비품 입고</span></a></li>
+	                                	<li><a href="/equipmentList"><span class="mini-sub-pro">비품정보</span></a></li>
+	                                	<li><a href="/equipWhList"><span class="mini-sub-pro">비품입고</span></a></li>
 	                            	</ul>
                                 </li>                                                             
                             </ul>
@@ -78,7 +78,7 @@
 	                             <li th:if="${session.SLEVEL < 4}">
 	                             	<a href="/lectureList"><span class="mini-sub-pro">강의 개설현황</span></a>
                            		 </li>
-	                             <li ><a href="/lecTimetablefullCalendar"><span class="mini-sub-pro">시간표</span></a></li>
+	                             <li><a href="/lecTimetablefullCalendar"><span class="mini-sub-pro">시간표</span></a></li>
                             </ul>
                         </li>
                         <li th:if="${session.SLEVEL ne null}">
@@ -103,7 +103,7 @@
                             <a class="has-arrow" href="#" aria-expanded="false"  style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-user"  style=" margin-right: 10px; font-size: larger;"></span> <span class="mini-click-non">인사관리</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li th:if="${session.SLEVEL < 3}">
-                                	<a class="has-arrow" href="#" ><span class="mini-sub-pro">업무보고서</span></a>
+                                	<a class="has-arrow"><span class="mini-sub-pro">업무보고서</span></a>
                                 	<ul class="submenu-angle menu-font" aria-expanded="true">
                                 			<li>
                                 				<a href="/getReportList"><span class="mini-sub-pro">강의 업무 계획서</span></a>
@@ -134,7 +134,7 @@
                             <a class="has-arrow" href="#" aria-expanded="false"  style="font-weight: bolder; background-color: white; color: #202e59;"><span class="glyphicon glyphicon-hourglass" style=" margin-right: 10px; font-size: larger;"></span><span class="mini-click-non">근태관리</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                             	<li th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}">
-	                                <a class="has-arrow" href="/" >
+	                                <a class="has-arrow">
 	                                	<span class="mini-sub-pro">출퇴근</span>
 	                                </a>
 		                            <ul class="submenu-angle menu-font" aria-expanded="true">
@@ -147,7 +147,7 @@
 	                            	</ul>
                                 </li>
                                 <li>
-	                                <a class="has-arrow" href="/" >
+	                                <a class="has-arrow">
 	                                	<span class="mini-sub-pro">휴가</span>
 	                                </a>
 		                            <ul class="submenu-angle menu-font" aria-expanded="true">
