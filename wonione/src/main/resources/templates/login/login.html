@@ -5,6 +5,11 @@
 	
 	<th:block layout:fragment="customTitle">
 		<title>Won I One</title>
+		<style>
+			body{
+				overflow:hidden;
+			}
+		</style>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script type="text/javascript">
 			$(function(){
@@ -41,6 +46,23 @@
 						});
 					}
 				});
+				$('#adminCheck').click(function(){
+					$('#mrIdCheck').attr("value","oid001");
+					$('#mrPw').attr("value","opw001");
+				});
+				$('#teacherCheck').click(function(){
+					$('#mrIdCheck').attr("value","oid002");
+					$('#mrPw').attr("value","opw002");
+				});
+				$('#staffCheck').click(function(){
+					$('#mrIdCheck').attr("value","oid003");
+					$('#mrPw').attr("value","opw003");
+				});
+				$('#studentCheck').click(function(){
+					$('#mrIdCheck').attr("value","sid001");
+					$('#mrPw').attr("value","spw001");
+				});
+				
 			});
 			
 		</script>
@@ -67,10 +89,10 @@
 				<fieldset class='text-center'>
 					<legend>Login</legend>
 				<div class='form-group'>
-					<input class='form-control' type='text'name="mrId" placeholder="아이디를 입력해주세요.">
+					<input class='form-control' type='text'name="mrId" placeholder="아이디를 입력해주세요." id="mrIdCheck">
 				</div>
 				<div class='form-group'>
-					<input class='form-control' type='password' name="mrPw" placeholder="비밀번호를 입력해주세요.">
+					<input class='form-control' type='password' name="mrPw" placeholder="비밀번호를 입력해주세요." id="mrPw">
 				</div>
 				<div class='text-center'>
 					<button type="submit" id="loginBtn" class="btn btn-default">로그인</button>
@@ -89,12 +111,13 @@
 		</div>
 		</div>
 		<div class="container">
-			<table class="table" style="background-color: white;">
+			<table class="table" style="background-color: white; text-align: center;">
 				<thead>
 					<tr>
 						<th>아이디</th>
 						<th>비밀번호</th>
 						<th>권한</th>
+						<th>아이디선택</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -102,21 +125,25 @@
 						<td>oid001</td>
 						<td>opw001</td>
 						<td>관리자</td>
+						<td><button type="button" class="btn btn-default" id="adminCheck">선택</button><td>
 					</tr>
 					<tr>
 						<td>oid002</td>
 						<td>opw002</td>
 						<td>시간강사</td>
+						<td><button type="button" class="btn btn-default" id="teacherCheck">선택</button><td>
 					</tr>
 					<tr>
 						<td>oid003</td>
 						<td>opw003</td>
 						<td>직원</td>
+						<td><button type="button" class="btn btn-default" id="staffCheck">선택</button><td>
 					</tr>
 					<tr>
 						<td>sid001</td>
 						<td>spw001</td>
 						<td>학생</td>
+						<td><button type="button" class="btn btn-default" id="studentCheck">선택</button><td>
 					</tr>
 				</tbody>
 			</table>

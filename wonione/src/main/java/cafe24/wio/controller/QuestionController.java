@@ -64,21 +64,7 @@ public class QuestionController {
 		questionService.QuestionScoreCheck(qeAnswer,StudentName,qeCode);
 		return 0;
 	}
-	//점수체크페이지
-	@GetMapping("/scoreCheck")
-	public String scoreCheck(Model model,@RequestParam(value="questionName", required = false) String questionName) {
-		model.addAttribute("questionName",questionName);
-		return "question/scoreCheck";
-		
-	}
-	//점수확인을 위한 아이디및 문제이름확인
-	@PostMapping(value = "/ScoreCheck" ,produces = "application/json")
-	@ResponseBody
-	public Map<String, Object> ScoreCheck(@RequestParam(value="scoreSid",required = false) String scoreSid
-										 ,@RequestParam(value="scoreCheckQuestionName",required = false) String scoreCheckQuestionName	) {
-		Map<String,Object>scoreSidMap = questionService.ScoreCheck(scoreSid,scoreCheckQuestionName);
-		return scoreSidMap;
-	}
+
 	//한번푼문제에 대한 권한처리
 	@PostMapping(value = "/QuestionSidCheck" ,produces = "application/json")
 	@ResponseBody
@@ -116,12 +102,6 @@ public class QuestionController {
         PrintWriter out = response.getWriter();
         out.println("<script>alert('등록되었습니다.');opener.document.location.reload();self.close();</script>");
         out.flush();
-	}
-	//0.3초간 있을 페이지
-	//바로 넘기면 값이 안넘어가기때문에 잠시동안 있을 페이지를 만든다.
-	@GetMapping("/secondsPage")
-	public String secondsPage() {
-		return "question/secondsPage";
 	}
 	//타이틀삭제
 	@PostMapping(value="/deleteQuestionTitle", produces = "application/json")
@@ -235,12 +215,12 @@ public class QuestionController {
 		int deleteCandidateQuestionResult = questionService.deleteCandidateQuestion(candidateQuestionId,candidateQuestionCodeName);
 		return deleteCandidateQuestionResult;
 	}
-	//풀캘린더 연습
+	//시간표 띄우기
 	@GetMapping("/lecTimetablefullCalendar")
 	public String fullCalendar(Model model) {
 		return "question/fullcalendar";
 	}
-	//풀캘린더
+	//시간표 ajax연결
 	@PostMapping(value="/fullCalendar",produces = "application/json")
 	@ResponseBody
 	public List<Map<String, Object>> lecTimetablefullCalendar(){
