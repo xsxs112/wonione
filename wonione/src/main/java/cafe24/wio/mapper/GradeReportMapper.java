@@ -35,7 +35,7 @@ public interface GradeReportMapper {
 	public Map<String, Object> gradeCode();
 	
 	//강의코드불러오기
-	public List<Map<String, Object>> classCode(String sessionId);
+	public Map<String, Object> classCode(String lecOpenCode);
 	
 	//업무목표점수가져오기
 	public Map<String, Object> targetScore(String sessionId, String lecOsCode);
@@ -56,7 +56,7 @@ public interface GradeReportMapper {
 	public Map<String, Object> studentTargetCount(String lecOsCode , String testRound);
 	
 	//업무계획서 코드 조회하기
-	public Map<String, Object> lecOpenCodeNum(String sessionId, String lecOsCode);
+	public List<Map<String, Object>> lecOpenCodeNum(String sessionId);
 	
 	//선생님아이디이름가져오기
 	public Map<String, Object> teacherId();

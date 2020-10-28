@@ -81,31 +81,40 @@ private GradeReportService gradeReportService;
 	   @GetMapping("/GradeReportWrite")
 	   public String GradeReportInsert(Model model ,HttpSession session 
 			   						,@RequestParam(value="lecOsCode", required = false) String lecOsCode
-			   						,@RequestParam(value="testRound", required = false) String testRound) {
+			   						,@RequestParam(value="testRound", required = false) String testRound
+			   						) {
 		  String sessionName= session.getAttribute("SNAME").toString();
 		  String sessionId = session.getAttribute("SID").toString();
 	      String codeResult =  gradeReportService.gradeCode();
 	     
 	      List<Map<String, Object>> testNum =  gradeReportService.testNum();
-	      List<Map<String, Object>> clCode = gradeReportService.classCode(sessionId);
+	      List<Map<String, Object>> lecOpenCodeNum = gradeReportService.lecOpenCodeNum(sessionId);
 	      
+	      model.addAttribute("lecOpenCodeNum", lecOpenCodeNum);
 	      model.addAttribute("sessionName", sessionName);
 		  model.addAttribute("sessionId", sessionId);
 	      model.addAttribute("codeResult", codeResult);
 	      model.addAttribute("title", "성적업무 보고서 작성하기");
 	      model.addAttribute("testNum", testNum);
-	      model.addAttribute("classCode", clCode);
 	      return "humanresource/addGradereport";
 	   }
 	
+	//업무계획서 코드로 강의명 가져오기
+	   @PostMapping("/classCode")
+	   @ResponseBody
+	   public Map<String, Object> classCode(
+			   							@RequestParam(value="lecOpenCode", required = false) String lecOpenCode) {
+		   	Map<String, Object> classCode =  gradeReportService.classCode(lecOpenCode);
+		   return classCode;
+	   }
+	   
+	   
 	//업무계획서코드 가져오기
 	   @PostMapping("/lecOpenCodeNum")
 	   @ResponseBody
-	   public Map<String, Object> lecOpenCodeNum(HttpSession session, 
-			   			@RequestParam(value = "lecOpenCode", required = false) String lecOsCode
-			   			 ) {
+	   public List<Map<String, Object>> lecOpenCodeNum(HttpSession session) {
 		   String sessionId = session.getAttribute("SID").toString();
-		   Map<String, Object> lecOpenCodeNum = gradeReportService.lecOpenCodeNum(sessionId,lecOsCode);
+		   List<Map<String, Object>> lecOpenCodeNum = gradeReportService.lecOpenCodeNum(sessionId);
 		   return lecOpenCodeNum;
 	   }
 	   
@@ -121,7 +130,6 @@ private GradeReportService gradeReportService;
 	   }
 	 
 	 //과목에 따른 학생 수
-	   
 	   @PostMapping("/claPeople")
 	   @ResponseBody
 	   public Map<String, Object> claPeople(
