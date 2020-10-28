@@ -7,13 +7,15 @@
 		<div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="logo-pro">
-                        <a href="index.html"><img class="main-logo" src="#" alt=""></a>
+                    <div class="logo-pro" style="text-align: right;">
+                    	<a href="/"><span style="border-bottom: 2px solid black;">HOME</span></a>
+                    	<span th:if="${session.SID eq null}" style="border-bottom: 2px solid black;"><a href="/login">로그인</a></span>
+                    	<span th:unless="${session.SID eq null}" style="border-bottom: 2px solid black;"><a href="/logout">로그아웃</a></span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="header-advance-area">
+        <div class="header-advance-area" style="margin-top: 1%">
             <div class="header-top-area" style="background-color: #242939;">
                 <div class="container-fluid">
                     <div class="row">
@@ -34,15 +36,6 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                        <div class="header-right-info">
-                                            <ul class="nav navbar-nav mai-top-nav header-right-menu">
-                                                <li class="nav-item" style="margin-right: 50px;">
-													<span class="admin-name" th:if="${session.SID != null}" th:text="${session.SNAME + '님 환영합니다.'}"></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -50,108 +43,153 @@
                 </div>
             </div>
             <!-- Mobile Menu start -->
-            <div class="mobile-menu-area">
+            <div class="mobile-menu-area">	
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="mobile-menu">
                                 <nav id="dropdown" style="display: block;">
                                     <ul class="mobile-menu-nav">
-                                        <li><a data-toggle="collapse" data-target="#Charts" href="#">회원관리 !<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <li th:if="${session.SLEVEL ne null}">
+                                        	<a data-toggle="collapse" data-target="#Charts" href="#">회원관리<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                             <ul class="collapse dropdown-header-top">
                                                 <li>
-                                                	<a href="#">구성원관리 !</a>
+                                                	<a href="#">구성원관리</a>
 						                            <ul>
-					                                	<li><a href="/getWIOMemberList"><span>구성원 목록O</span></a></li>
-					                                	<li><a href="/addWIOMember"><span>구성원 등록!</span></a></li>
+					                                	<li><a href="/getWIOMemberList"><span>구성원 목록</span></a></li>
+					                                	<li th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}">
+					                                		<a href="/addWIOMember"><span>구성원 등록</span></a>
+					                                	</li>
 					                            	</ul>
 				                            	</li>
-                                                 <li>
-												    <a href="#">상담관리 O</a>
-					                            	<ul class="submenu-angle menu-font" aria-expanded="true">
-					                                	<li><a href="/consultingWrite"><span class="mini-sub-pro">상담작성 O</span></a></li>
-					                                	<li><a href="/consultingList"><span class="mini-sub-pro">상담내역 O</span></a></li>
-					                            	</ul>
+                                                <li th:if="${session.SLEVEL < 4}">
+												    <a href="/consultingList">상담관리</a>
+					                        	</li>
+                                                <li th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 4}">
+												    <a href="/refundApplication">환불신청</a>
 					                        	</li>
                                             </ul>
                                         </li>
-                                        <li><a data-toggle="collapse" data-target="#demoevent" href="#">운영관리 !<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <li th:if="${session.SLEVEL ne null and session.SLEVEL < 4}">
+                                        	<a data-toggle="collapse" data-target="#demoevent" href="#">운영관리<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                             <ul id="demoevent" class="collapse dropdown-header-top">
                                                 <li>
-                                                	<a href="/textbookManage">교재관리 !</a>
+                                                	<a>교재관리</a>
+                                                	<ul>
+					                                	<li th:if="${session.SLEVEL < 4}">
+					                                		<a href="/textbookInfoList"><span>교재정보</span></a>
+				                                		</li>
+					                                	<li th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}">
+					                                		<a href="/textbookWahoList"><span>교재입고</span></a>
+					                                	</li>
+					                                	<li th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}">
+					                                		<a href="/textbookSupplyList"><span>교재지급</span></a>
+					                                	</li>
+					                            	</ul>
                                                 </li>
-                                                <li>
-                                                	<a href="/equipmentManage">비품관리 !</a>
+                                                <li th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}">
+                                                	<a>비품관리</a>
+                                                	<ul>
+					                                	<li>
+					                                		<a href="/equipmentList"><span>비품정보</span></a>
+				                                		</li>
+					                                	<li>
+					                                		<a href="/equipWhList"><span>비품입고</span></a>
+					                                	</li>
+					                            	</ul>
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a data-toggle="collapse" data-target="#demopro" href="#">과정관리 !<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <li th:if="${session.SLEVEL ne null}">
+                                        	<a data-toggle="collapse" data-target="#demopro" href="#">과정관리<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                             <ul id="demopro" class="collapse dropdown-header-top">
                                                 <li>
-                                                	<a href="/lectureManage">과정관리 !</a>
-                                                	<a href="/lecTimetablefullCalendar">시간표 O</a>
+                                                	<a href="/lectureOpenScheduleList" th:if="${session.SLEVEL < 4}">강의 예정목록</a>
+                                                	<a href="/lectureList" th:if="${session.SLEVEL < 4}">강의 개설현황</a>
+                                                	<a href="/lecTimetablefullCalendar">시간표</a>
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a data-toggle="collapse" data-target="#democrou" href="#">평가관리 !<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <li th:if="${session.SLEVEL ne null}">
+                                        	<a data-toggle="collapse" data-target="#democrou" href="#">평가관리<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                             <ul id="democrou" class="collapse dropdown-header-top">
                                                 <li>
                                                 	<a href="/QuestionList">문제리스트</a>
                                                 </li>
                                                 <li>
-				                                	<a href="#">성적관리 !</a>
+				                                	<a href="#">성적관리</a>
 						                            <ul class="submenu-angle menu-font" aria-expanded="true">
-					                                	<li><a href="/getGradeList"><span class="mini-sub-pro">학생성적 !</span></a></li>
-					                                	<li><a href="/getScholarList"><span class="mini-sub-pro">장학금지급내역 !</span></a></li>
+					                                	<li th:if="${session.SLEVEL < 3}">
+					                                		<a href="/getGradeList"><span class="mini-sub-pro">학생성적</span></a>
+				                                		</li>
+					                                	<li>
+					                                		<a href="/getScholarList"><span class="mini-sub-pro">장학금지급내역</span></a>
+				                                		</li>
 					                            	</ul>
                                                 </li>
                                                 
                                             </ul>
                                         </li>
-                                        <li><a data-toggle="collapse" data-target="#demolibra" href="#">인사관리 !<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <li th:if="${session.SLEVEL ne null and session.SLEVEL < 4}">
+                                        	<a data-toggle="collapse" data-target="#demolibra" href="#">인사관리<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                             <ul id="demolibra" class="collapse dropdown-header-top">
-                                                <li>
-                                                	<a href="#">업무보고서 !</a>
+                                                <li th:if="${session.SLEVEL < 3}">
+                                                	<a>업무보고서</a>
 						                            <ul class="submenu-angle menu-font" aria-expanded="true">
 					                                	<li><a href="/getReportList"><span class="mini-sub-pro">강의 업무 계획서</span></a></li>
-					                                	<li><a href="/getGradeReportList"><span class="mini-sub-pro">강의 업무 보고서</span></a></li>
+					                                	<li><a href="/getGradeReportList"><span class="mini-sub-pro">성적 업무 보고서</span></a></li>
 					                            	</ul>
                                                 </li>
                                                 <li>
-                                                	<a href="#">급여관리!</a>
+                                                	<a>급여관리</a>
 						                            <ul class="submenu-angle menu-font" aria-expanded="true">
-					                                	<li><a href="/officersPayIndex"><span class="mini-sub-pro">직원급여관리 !</span></a></li>
-					                                	<li><a href="/staffPayIndex"><span class="mini-sub-pro">강사급여관리 !</span></a></li>
-					                                	<li><a href="/getPayList"><span class="mini-sub-pro">급여목록 !</span></a></li>
+					                                	<li th:if="${session.SLEVEL eq 1}">
+					                                		<a href="/officersPayIndex"><span class="mini-sub-pro">직원급여관리</span></a>
+					                                	</li>
+					                                	<li th:if="${session.SLEVEL eq 1}">
+					                                		<a href="/staffPayIndex"><span class="mini-sub-pro">강사급여관리</span></a>
+					                                	</li>
+					                                	<li>
+					                                		<a href="/getPayList"><span class="mini-sub-pro">급여목록</span></a>
+					                                	</li>
 					                            	</ul>
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a data-toggle="collapse" data-target="#demodepart" href="#">근태관리 !<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <li th:if="${session.SLEVEL ne null and session.SLEVEL < 4}">
+                                        	<a data-toggle="collapse" data-target="#demodepart" href="#">근태관리<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                             <ul id="demodepart" class="collapse dropdown-header-top">
-                                                <li>
-                                                	<a href="#">출퇴근 !</a>
+                                                <li th:if="${session.SLEVEL eq 1 || session.SLEVEL eq 3}">
+                                                	<a>출퇴근</a>
 						                            <ul class="submenu-angle menu-font" aria-expanded="true">
-					                                	<li><a href="/workAttendanceList"><span class="mini-sub-pro">출퇴근 !</span></a></li>
-					                                	<li><a href="/attManage"><span class="mini-sub-pro">출퇴근시간관리 !</span></a></li>
+					                                	<li>
+					                                		<a href="/workAttendanceList"><span class="mini-sub-pro">출퇴근</span></a>
+					                                	</li>
+					                                	<li th:if="${session.SLEVEL eq 1}">
+					                                		<a href="/attManage"><span class="mini-sub-pro">출퇴근시간관리</span></a>
+					                                	</li>
 					                            	</ul>
                                                 </li>
                                               	<li>
-                                                	<a href="#">휴가</a>
+                                                	<a>휴가</a>
 						                            <ul>
-					                                	<li><a href="/holidayApproval"><span class="mini-sub-pro">휴가신청 !</span></a></li>
-					                                	<li><a href="/holidayList"><span class="mini-sub-pro">휴가신청관리 !</span></a></li>
+					                                	<li>
+					                                		<a href="/holidayApproval"><span class="mini-sub-pro">휴가신청</span></a>
+					                                	</li>
+					                                	<li th:if="${session.SLEVEL eq 1}">
+					                                		<a href="/holidayList"><span class="mini-sub-pro">휴가신청관리</span></a>
+					                                	</li>
 					                            	</ul>
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li><a data-toggle="collapse" data-target="#demo" href="#">게시판관리 !<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <li><a data-toggle="collapse" data-target="#demo">게시판관리<span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                             <ul id="demo" class="collapse dropdown-header-top">
-                                                <li><a href="/getNotice">공지사항 !</a>
+                                                <li><a href="/getNotice">공지사항</a>
                                                 </li>
-                                                <li><a href="/getDataLibrary">자료게시판 !</a>
+                                                <li><a href="/getDataLibrary">자료게시판</a>
                                                 </li>
-                                                <li><a href="#">수강후기 !</a>
+                                                <li><a href="/getReview">수강후기</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -169,13 +207,8 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="breadcome-list">
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <ul class="breadcome-menu">
-                                            <li><a href="/">Home</a> <span class="bread-slash">/</span>
-                                            </li>
-                                            <li><span class="bread-blod">기능페이지 추가공간</span>
-                                            </li>
-                                        </ul>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: right;">
+                                    	<span class="admin-name" th:if="${session.SID != null}" th:text="${session.SNAME + '님 환영합니다.'}"></span>
                                     </div>
                                 </div>
                             </div>
