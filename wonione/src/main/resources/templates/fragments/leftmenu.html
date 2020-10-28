@@ -113,15 +113,15 @@
                                				</li>
                            			</ul>
                                 </li>
-                                <li th:if="${session.SLEVEL < 4}">
+                                <li th:if="${session.SLEVEL eq 1}">
                          			<a class="has-arrow" href="/" >
 								   		<span class="mini-click-non">급여관리</span>
 									</a>
                             			<ul class="submenu-angle menu-font" aria-expanded="true">
-                                			<li th:if="${session.SLEVEL eq 1}">
+                                			<li>
                                 				<a href="/officersPayIndex"><span class="mini-sub-pro">직원급여관리</span></a>
                                				</li>
-                                			<li th:if="${session.SLEVEL eq 1}">
+                                			<li>
                                 				<a href="/staffPayIndex"><span class="mini-sub-pro">강사급여관리</span></a>
                                				</li>
                                 			<li>

@@ -140,13 +140,13 @@
 					                                	<li><a href="/getGradeReportList"><span class="mini-sub-pro">성적 업무 보고서</span></a></li>
 					                            	</ul>
                                                 </li>
-                                                <li>
+                                                <li th:if="${session.SLEVEL eq 1}">
                                                 	<a>급여관리</a>
 						                            <ul class="submenu-angle menu-font" aria-expanded="true">
-					                                	<li th:if="${session.SLEVEL eq 1}">
+					                                	<li>
 					                                		<a href="/officersPayIndex"><span class="mini-sub-pro">직원급여관리</span></a>
 					                                	</li>
-					                                	<li th:if="${session.SLEVEL eq 1}">
+					                                	<li>
 					                                		<a href="/staffPayIndex"><span class="mini-sub-pro">강사급여관리</span></a>
 					                                	</li>
 					                                	<li>
