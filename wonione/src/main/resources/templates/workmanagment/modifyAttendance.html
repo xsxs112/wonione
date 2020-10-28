@@ -67,6 +67,9 @@
 				var goingOutStTime = $('.goingOutStTime').val().substring(0,5);
 				var goingOutEndTime = $('.goingOutEndTime').val().substring(0,5);
 				var realMealTime = $('.realMealTime').val();
+				var mrId = $('#mrId').val();
+				var attCode = $('#attCode').val();
+				var attNote = $('.attNote').val();
 				
 				var request = $.ajax({
 					url : "/calculationTime",
@@ -76,15 +79,19 @@
 						attEndTime : attEndTime,
 						goingOutStTime : goingOutStTime,
 						goingOutEndTime : goingOutEndTime,
-						realMealTime : realMealTime
+						realMealTime : realMealTime,
+						mrId : mrId,
+						attCode : attCode,
+						attNote : attNote
 					},
 					dataType : "json"
 				});
 				request.done(function(data) {
-					//$('.goingOut').val(data.goingOut);
+					alert(data.goingOut);
+					$('.goingOut').val(data.goingOut);
 					$('.attTime').val(data.attTime);
-				//	$('#workOvertime').val(data.workOvertime);
-					//$('#attNote').val(data.attNote);
+					$('#workOvertime').val(data.workOvertime);
+					$('#attNote').val(data.attNote);
 					
 				});
 				request.fail(function(jqXHR, textStatus) {
@@ -129,7 +136,7 @@
 									<br>
 									<form action="/attendanceModify" method="POST"
 										id="modifyRequestForm">
-										<input type="hidden" name="mrId"> 
+										<input type="hidden" name="mrId" id = "mrId" th:value = "${attManagementDetail.mrId}"> 
 										<input type="hidden" name="attCode" id = "attCode" th:value="${attManagementDetail.attCode}">
 										<div style="width: 30%; float: left" class="container-fluid">
 											<table class = "table" style="border: 1px" >
@@ -215,7 +222,7 @@
 												</tr>
 												<tr>
 													<td>식사 시간</td>
-													<td><input type="number" class="form-control"
+													<td><input type="number" class="form-control realMealTime" 
 														name="goingOutEndTime" id = "realMealTime" th:value="${attManagementDetail.realMealTime}"></td>
 													<td> </td>
 													<td colspan="2" ><button type="button" id="calculationTime"
