@@ -15,6 +15,12 @@ public interface ApprMapper {
 	
 	
 	
+	public float getModifyGoingOutTime(AttManagement attManagement);
+	
+	public float getRealWorkTime(String attStTime,String attEndTime);
+	
+	public int attStTime(String stTime, String attCode);
+	
 	public AttManagement calculationTime(AttManagement attManagement);
 	
 	public AttManagement getDeleteGoingout(String attCode);

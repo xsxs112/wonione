@@ -29,37 +29,100 @@ public class WorkController {
 	private ApprRequestService apprRequestService;
 
 	
+	//수정 후 근무시간 계산
 	@PostMapping(value = "/calculationTime", produces = "application/json")
 	@ResponseBody
 	public AttManagement calculationTime(AttManagement attManagement,@RequestParam(value = "attStTime", required = false) String attStTime,
 											@RequestParam(value = "attEndTime", required = false) String attEndTime,
 											@RequestParam(value = "goingOutStTime", required = false) String goingOutStTime,
 											@RequestParam(value = "goingOutEndTime", required = false) String goingOutEndTime,
-											@RequestParam(value = "realMealTime", required = false) String realMealTime) {
+											@RequestParam(value = "realMealTime", required = false) String realMealTime,
+											@RequestParam(value = "mrId", required = false) String mrId,
+											@RequestParam(value = "attCode", required = false) String attCode,
+											@RequestParam(value = "attNote", required = false) String attNote) {
 		
-		attManagement.setAttStTime("1996-12-18 " + attStTime);
-		attManagement.setAttEndTime("1996-12-18 " + attEndTime);
+		attNote = "";
+		AttTimeManage getAttTimeManage = apprRequestService.getAttTimeManage(mrId); //업무 시간 정보
+		String stTime = attStTime + ":00"; //시간 계산 하기 위해 입력받은 출근 시간에서 :00 더함
+		int comparison = apprRequestService.attStTime(stTime,attCode); //업무시간보다 일찍 출근했으면 1을 리턴 -> 근무시간 계산 할 때 업무시간으로 셋팅
+		if(comparison == 1) {
+			attStTime = "1996-12-18 " + getAttTimeManage.getWorkStTime(); //업무시간으로 출근시간 셋팅
+			attManagement.setAttStTime(attStTime); //근무시간 계산할때 업무시간으로 셋팅
+		}else { //지각했다면
+			attStTime = "1996-12-18 " + stTime; //입력받은 값으로 셋팅
+			attManagement.setAttStTime(attStTime); //근무시간 계산할 때 출근시간으로 셋팅 (지각)
+			attNote += "지각"; //비고란에 지각 셋팅
+		}
+		attEndTime = "1996-12-18 " + attEndTime + ":00";
+		attManagement.setAttEndTime(attEndTime); //퇴근시간 셋팅
+		//근무시간 계산  퇴근 - 출근
+		float getWorkTime = apprRequestService.getRealWorkTime(attStTime,attEndTime); //근무시간 계산 됨
+		int intWorkTime = (int) getWorkTime;
+		if(getWorkTime%1 >=0.5) {
+			getWorkTime = (float) (intWorkTime + 0.5);
+		}else {
+			getWorkTime = intWorkTime;
+		}
+
+		
+		
+		
+		
+		
+		
+		
+		//외출시간 구하기(0~30분은 0.5시간 31~1시간은 1시간 처리)
+		float goingOut = 0;
 		attManagement.setGoingOutStTime("1996-12-18 " +goingOutStTime);
 		attManagement.setGoingOutEndTime("1996-12-18 " +goingOutEndTime);
+		
+		if("".equals(goingOutStTime) || "".equals(goingOutEndTime)) {//외출 시간이 없다면
+			goingOut = 0;
+		}else {
+			goingOut = apprRequestService.getModifyGoingOutTime(attManagement);
+			attNote += "외출";
+			int intgoingOut = (int) goingOut;
+			if(goingOut % 1 <0.5) {
+				goingOut = (float) (intgoingOut+0.5);
+			}else {
+				goingOut = intgoingOut+1;
+			}
+		}
+	
 		//식사시간 구하기
 		float floatrealMealTime = Float.valueOf(realMealTime);
 		if(realMealTime == null) {
+			floatrealMealTime = 0;
 			attManagement.setRealMealTime(0);
 		}else {
 			attManagement.setRealMealTime(floatrealMealTime);
 		}
 		//----------------------------------------------------------------------
+		getWorkTime = getWorkTime - goingOut - floatrealMealTime;
+		System.out.println("진짜 근무시간 " +getWorkTime );
 		
-		//외출시간 구하기
-		float goingOut = 0;
-		if("".equals(goingOutStTime) || "".equals(goingOutEndTime)) {
-			attManagement.setGoingOut(goingOut);
+		
+		//초과근무 구하기
+		
+		String stringWorkTime = getAttTimeManage.getWorkTime();
+		stringWorkTime = stringWorkTime.replace("시간", "");
+		float dataWorkTime = Float.parseFloat(stringWorkTime);
+		float overWorkTime = getWorkTime-dataWorkTime ;
+		if(overWorkTime <= 0) {
+			overWorkTime = 0;
 		}
-		AttManagement calculationTime = apprRequestService.calculationTime(attManagement);
+		
+		attManagement.setGoingOut(goingOut);
+		attManagement.setAttTime(getWorkTime);
+		attManagement.setRealMealTime(floatrealMealTime);
+		attManagement.setAttNote(attNote);
+		
+		
+		//AttManagement calculationTime = apprRequestService.calculationTime(attManagement);
 		
 		
 		
-		return calculationTime;
+		return attManagement;
 	}
 	
 	
@@ -113,6 +176,8 @@ public class WorkController {
 									,@RequestParam(value = "attNote", required = false) String attNote) {
 		
 		
+		
+
 		attManagement.setAttCode(attCode);
 		attManagement.setAttStTime(attStTime);
 		attManagement.setAttEndTime(attEndTime);
@@ -161,7 +226,7 @@ public class WorkController {
 			getMTime = "정보 없음";
 			getWorkTime = "정보 없음";
 		}else {
-			if(getAttTimeManage.getmStTime()==null || "".equals(getAttTimeManage.getmStTime()==null)
+			if(getAttTimeManage.getmStTime()==null || "".equals(getAttTimeManage.getmStTime())
 					|| getAttTimeManage.getmEndTime() ==null || "".equals(getAttTimeManage.getmEndTime())) {
 				getMTime = "정보 없음";
 			}else {
@@ -371,7 +436,8 @@ public class WorkController {
 
 		return "redirect:/addAttManage";
 	}
-
+	
+	
 	@GetMapping(value = "/checkWorkTimeList", produces = "application/json")
 	@ResponseBody
 	public int checkWorkTimeList(@RequestParam(value = "mrId", required = false) String mrId) {
@@ -435,7 +501,7 @@ public class WorkController {
 		String SID = (String) session.getAttribute("SID");
 		String attCode = apprRequestService.getAttCode(SID);
 
-		//apprRequestService.setWorkEndTime(attCode);
+		apprRequestService.setWorkEndTime(attCode);
 
 		/* 지각,조퇴,외출 여부 구하고 비고란에 업데이트 */
 		int late = apprRequestService.late(attCode);
@@ -502,7 +568,8 @@ public class WorkController {
 
 		return "redirect:/workAttendanceList";
 	}
-
+	
+	//출근 중복 확인
 	@ResponseBody
 	@GetMapping("/dateCheck")
 	public int dateCheck(HttpSession session, @RequestParam(value = "sid", required = false) String sid) {
@@ -511,7 +578,8 @@ public class WorkController {
 
 		return nowDate;
 	}
-
+	
+	//출근시간 저장
 	@GetMapping("/workAttendance")
 	public String workAttendance(Model model, AttManagement attManagement, HttpSession session) {
 		String sid = (String) session.getAttribute("SID");
@@ -523,7 +591,8 @@ public class WorkController {
 
 		return "redirect:/workAttendanceList";
 	}
-
+	
+	//외출시간 저장
 	@GetMapping("/goingStOut")
 	public String goingOut(AttManagement attManagement, HttpSession session) {
 
@@ -539,6 +608,7 @@ public class WorkController {
 	public String workAttendanceList(Model model, AttManagement attManagement, AttTimeManage attTimeManage, HttpSession session) {
 
 		String sid = (String) session.getAttribute("SID");
+		System.out.println(sid + "<<SID");
 		List<AttManagement> getAttendanceList = apprRequestService.getAttendanceList(sid);
 		AttTimeManage getAttTimeManage = apprRequestService.getAttTimeManage(sid);
 		
@@ -584,7 +654,7 @@ public class WorkController {
 		return "workmanagment/holidayDetail";
 	}
 
-	// 관리자 화면 삭제
+	// 관리자 화면 휴가 삭제
 	@GetMapping("/reDelete")
 	public String reDelete(Model model, @RequestParam(value = "reCode", required = false) String reCode) {
 
@@ -659,7 +729,6 @@ public class WorkController {
 			@RequestParam(value = "holidaySt", required = false) String holidaySt) {
 
 		// approvalRequest에 입력받은 값들을 셋팅한다
-		System.out.println(holidaySt + " <<<<holidaySt");
 		approvalRequest.setMrId(mrId);
 		approvalRequest.setReStartDate(reStartDate);
 		approvalRequest.setReEndDate(reEndDate);
@@ -671,7 +740,7 @@ public class WorkController {
 		return "redirect:/holidayApproval";
 
 	}
-
+	
 	@GetMapping("/holidayApproval")
 	public String holiRequest(ApprovalRequest approvalRequest, Model model, HttpSession session) {
 

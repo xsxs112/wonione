@@ -5,17 +5,52 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
+
 	
+	<!-- 수정 후 외출시간 구하기-->
+	<select id = "getModifyGoingOutTime" parameterType="string" resultType="float">
+
+		SELECT 
+			LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),4) AS goingOut
+
+		
+	</select>
+	
+	<!-- 수정 후 근무시간 (퇴근 - 출근) -->
+	<select id = "getRealWorkTime" parameterType="string" resultType="float">
+
+		SELECT 
+			LEFT((TIMESTAMPDIFF(MINUTE, #{attStTime}, #{attEndTime})/60),4) AS attendance_time
+
+		
+	</select>
+	
+	<!-- 업무시간보다 일찍 출근했으면 1을 리턴 -->
+	<select id = "attStTime" parameterType="string" resultType="int">
+
+		SELECT (t.att_start_time <![CDATA[ >= ]]> #{stTime})
+		FROM wt_attendance_management AS m
+				LEFT JOIN wt_attendance_time_manage AS t
+				ON m.mr_id = t.mr_id
+		WHERE m.attendance_code = #{attCode}
+		
+	</select>
+	
+	<!-- 수정 근무시간 구하기 -->
 	<select id = "calculationTime" parameterType="AttManagement" resultType="AttManagement">
-
-
 		SELECT 
 			LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),3) AS goingOut
 			, LEFT((TIMESTAMPDIFF(MINUTE, #{attStTime}, #{attEndTime})/60),3) - LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),3) - #{realMealTime} AS attTime
 			
-	
-		
 	</select>
+<!-- 	
+	수정 근무시간 구하기
+	<select id = "calculationTime" parameterType="AttManagement" resultType="AttManagement">
+		SELECT 
+			LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),3) AS goingOut
+			, LEFT((TIMESTAMPDIFF(MINUTE, #{attStTime}, #{attEndTime})/60),3) - LEFT((TIMESTAMPDIFF(MINUTE, #{goingOutStTime}, #{goingOutEndTime})/60),3) - #{realMealTime} AS attTime
+			
+	</select> -->
 	
 	<!-- 삭제된 외출시간 구하기 -->
 	<select id = "getDeleteGoingout" parameterType="string" resultType="AttManagement">
@@ -31,7 +66,7 @@
 		WHERE attendance_code = #{attCode};
 		
 	</select>
-	
+	<!-- 외출시간 삭제 -->
 	<update id = "deleteGoingOut" parameterType="string">
 		UPDATE wt_attendance_management
 		SET
@@ -41,7 +76,7 @@
 			attendance_code = #{attCode};
 	</update>
 	
-	
+	<!-- 출퇴근 정보 수정요청 내용 가져오기 -->
 	<select id = "getModifyRequest" parameterType="string" resultType="string">
 
 		SELECT modify_request as modifyRequest
@@ -50,6 +85,7 @@
 	
 	</select>
 	
+	<!-- 업무시간 가져오기 -->
 	<select id = "getAttTimeManage" parameterType="string" resultType="AttTimeManage">
 
 		SELECT m.mr_name AS mrName
@@ -66,14 +102,14 @@
 		
 	</select>
 	
-	
+	<!-- 출퇴근 정보 삭제 -->
 	<delete id="deleteAttendance" parameterType="string">
 	
 		DELETE FROM wt_attendance_management WHERE attendance_code=#{attCode};
 	
 	</delete>
 	
-	
+	<!-- 출퇴근 정보 수정 -->
 	<update id = "attendanceModify" parameterType="AttManagement">
 		UPDATE wt_attendance_management
 		SET
@@ -91,7 +127,7 @@
 			attendance_code = #{attCode};
 	</update>
 	
-	
+	<!-- 출퇴근 정보 수정 요청 -->
 	<update id = "attendanceModifyRequest" parameterType="AttManagement">
 		UPDATE wt_attendance_management
 			SET
@@ -166,7 +202,7 @@
 	
 	</select>
 	
-	
+	<!-- 식사시간 가져오기 -->
 	<select id = "MealTime" parameterType="string" resultType="float">
 
 		SELECT IFNULL(meal_time,0) 
@@ -175,7 +211,7 @@
 	
 	</select>
 	
-	
+	<!-- 외출 시간 가져오기 -->
 	<select id = "GoingOutTime" parameterType="string" resultType="float">
 
 		SELECT going_out_time
@@ -197,7 +233,7 @@
 	</select>
 	
 	
-	<!-- 출퇴근 관리 리스트에서 근무시간 가져오기 -->
+	<!-- 출퇴근 근무시간 가져오기 -->
 	<select id = "getWorkTime" parameterType="string" resultType="float">
 
 		SELECT (TIMESTAMPDIFF(minute, #{workStTime}, #{workEndTime})/60) AS work_time
@@ -213,20 +249,16 @@
 	</select>
 	
 	
-<!-- 	
-	출근 리스트에서 일한시간 업데이트
+	<!-- 퇴근 시간 저장 -->
 	<update id = "setWorkEndTime" parameterType="String">
 		UPDATE wt_attendance_management
 		SET
 			attendance_end_time=SUBSTRING(NOW(),12,5)
-			
-			
 		WHERE	
 			attendance_code = #{attCode};
 
 	</update>
-	 -->
-	
+
 	
 	<!-- 출근 리스트에서 일한시간 업데이트 -->
 	<update id = "setWorkTime" parameterType="AttManagement">
@@ -369,7 +401,7 @@
 	
 	</select>
 
-	
+	<!-- 업무시간 정보가 있는 직원 -->
 	<select id="checkWorkTimeList" resultType="int">
 		
 		SELECT  COUNT(a.mr_id)
@@ -447,7 +479,7 @@
 	
 	
 	
-	
+	<!-- 복귀시간 저장 -->
 	<update id = "goingOutEnd" parameterType="string">
 		UPDATE wt_attendance_management
 		SET
@@ -459,7 +491,7 @@
 
 	
 	
-	
+	<!-- 출근 중복 확인 -->
 	<select id="dateCheck" parameterType="string" resultType = "int">
 	
 		select COUNT(*) 
@@ -470,7 +502,7 @@
 	</select>
 
 	
-	
+	<!-- 외출시간 저장 -->
 	<update id = "goingStOut" parameterType="string">
 		UPDATE wt_attendance_management
 		SET
@@ -518,8 +550,8 @@
 	</select>
 
 	
+	<!-- 출근 리스트 정보 가져오기 -->
 	<select id = "getAttendanceList" parameterType="string" resultType="AttManagement">
-	
 	SELECT attendance_code as attCode
 				, mr_id as mrId 
 				, attendance_date as attDate

@@ -22,54 +22,80 @@ public class ApprRequestService {
 	
 	
 	
+	public float getModifyGoingOutTime(AttManagement attManagement) {
+		
+		
+		return apprMapper.getModifyGoingOutTime(attManagement);
+	}
+	
+	public float getRealWorkTime(String attStTime,String attEndTime) {
+		
+		
+		return apprMapper.getRealWorkTime(attStTime,attEndTime);
+	}
+	
+	public int attStTime(String stTime,String attCode) {
+		
+		
+		return apprMapper.attStTime(stTime,attCode);
+	}
+	
 	public AttManagement calculationTime(AttManagement attManagement) {
 		
 		
 		return apprMapper.calculationTime(attManagement);
 	}
-	
+
+	/* 삭제 후 외출시간 가져오기 */
 	public AttManagement getDeleteGoingout(String attCode) {
 		
 		
 		return apprMapper.getDeleteGoingout(attCode);
 	}
-	
+
+	/* 외출시간 삭제 */
 	public int deleteGoingOut(String attCode) {
 		
 		
 		return apprMapper.deleteGoingOut(attCode);
 	}
-	
+
+	/* confirm이 null인지 확인 */
 	public String countConfirm(String attCode) {
 		
 		
 		return apprMapper.countConfirm(attCode);
 	}
-	
+
+	/* 업무시간 가져오기 */
 	public AttTimeManage getAttTimeManage(String SID) {
 		
 		
 		return apprMapper.getAttTimeManage(SID);
 	}
-	
+
+	/* 수정 요청 내용 가져오기 */
 	public String getModifyRequest(String attCode) {
 		
 		
 		return apprMapper.getModifyRequest(attCode);
 	}
-	
+
+	/* 출퇴근 정보 삭제 */
 	public int deleteAttendance(String attCode) {
 		
 		
 		return apprMapper.deleteAttendance(attCode);
 	}
 	
+	/* 출퇴근 정보 수정 */
 	public int attendanceModify(AttManagement attManagement) {
 		
 		
 		return apprMapper.attendanceModify(attManagement);
 	}
-	
+
+	/* 출퇴근 정보 수정 요청 */
 	public int attendanceModifyRequest(String attCode,String reReason) {
 		
 		
@@ -77,28 +103,31 @@ public class ApprRequestService {
 	}
 	
 	
-	
+	/* 출퇴근 정보 상세보기 */
 	public AttManagement getAttManagemetDetail(String attCode) {
 		
 		
 		
 		return apprMapper.getAttManagemetDetail(attCode);
 	}
-	
+
+	/* 식사시간보다 늦게 출근한 경우 구하기 */
 	public int notMealTime(String attCode) {
 		
 		
 		
 		return apprMapper.notMealTime(attCode);
 	}
-	
+
+	/* 조퇴 유무 구하기 */
 	public int earlyLeave(String attCode) {
 		
 		
 		
 		return apprMapper.earlyLeave(attCode);
 	}
-	
+
+	/* 지각 유무 구하기 */
 	public int late(String attCode) {
 		
 		
@@ -106,7 +135,7 @@ public class ApprRequestService {
 		return apprMapper.late(attCode);
 	}
 	
-	
+	/* 식사시간 가져오기 */
 	public float MealTime(String SID) {
 		
 		
@@ -114,7 +143,7 @@ public class ApprRequestService {
 		return apprMapper.MealTime(SID);
 	}
 	
-	
+	/* 외출시간 구하기 */
 	public float GoingOutTime(String attCode) {
 		
 		
@@ -122,34 +151,39 @@ public class ApprRequestService {
 		return apprMapper.GoingOutTime(attCode);
 	}
 	
-	
+	/* 출퇴근 관리 리스트에서 근무시간 가져오기 */
 	public String ListWorkTime(String SID) {
 		
 		
 		
 		return apprMapper.ListWorkTime(SID);
 	}
-	
+
+	/* 출퇴근 근무시간 가져오기 */
 	public float getWorkTime(String workStTime, String workEndTime) {
 		
 		
 		
 		return apprMapper.getWorkTime(workStTime,workEndTime);
 	}
-	
+
+	/* 식사시간 가져오기 */
 	public float getMealTime(String mStTime,String mEndTime) {
 		
 		
 		
 		return apprMapper.getMealTime(mStTime,mEndTime);
 	}
-	
+
+	/* 퇴근시간 저장 */
 	public int setWorkEndTime(String attCode) {
 		
 		
 		
 		return apprMapper.setWorkEndTime(attCode);
 	}
+
+	/* 출근 리스트에서 근무 한 시간 업데이트 */
 	public int setWorkTime(AttManagement attManagement) {
 		
 		
@@ -157,7 +191,7 @@ public class ApprRequestService {
 		return apprMapper.setWorkTime(attManagement);
 	}
 	
-	
+	/* 퇴근시간 - 출근시간 구하기 */
 	public float getAttEndTime(String attCode) {
 		
 		
@@ -165,7 +199,7 @@ public class ApprRequestService {
 		return apprMapper.getAttEndTime(attCode);
 	}
 	
-	
+	/* 외출시간 저장 */
 	public int setGoingOut(AttManagement attManagement) {
 		
 		
@@ -175,7 +209,7 @@ public class ApprRequestService {
 	}
 	
 	
-	
+	/* 출퇴근 정보 확인 업데이트 */
 	public int manageConfirm(String attCode, String confirm) {
 		
 		
@@ -186,7 +220,7 @@ public class ApprRequestService {
 	
 	
 	
-	
+	/* 출퇴근 확인 리스트 */
 	public List<AttManagement> confirmList() {
 		
 		List<AttManagement> confirmList = apprMapper.confirmList();
@@ -196,7 +230,7 @@ public class ApprRequestService {
 	}
 	
 	
-	
+	/* 출퇴근 확인 전 리스트 */
 	public List<AttManagement> noConfirmList() {
 		
 		List<AttManagement> noConfirmList = apprMapper.noConfirmList();
@@ -206,21 +240,23 @@ public class ApprRequestService {
 	}
 	
 	
-	
+	/* 업무시간 삭제 */
 	public int workTimeDelete(String mrId) {
 		
 		
 		return apprMapper.workTimeDelete(mrId);
 		
 	}
-	
+
+	/* 업무시간 수정 */
 	public int workTimeModify(AttTimeManage attTimeManage) {
 		
 		
 		return apprMapper.workTimeModify(attTimeManage);
 		
 	}
-	
+
+	/* 업무시간 코드 생성 */
 	public String getTimeCode() {
 		
 		Map<String, Object> timeCodeMax =  apprMapper.getTimeCode();
@@ -235,7 +271,8 @@ public class ApprRequestService {
 		return timeCode;
 		
 	}
-	
+
+	/* 업무시간 저장 */
 	public int addWorkTime(AttTimeManage attTimeManage) {
 		
 		int checkNum = apprMapper.addWorkTime(attTimeManage);
@@ -245,7 +282,7 @@ public class ApprRequestService {
 		
 	}
 	
-	
+	/* 업무시간 정보가 있는 직원 */
 	public int checkWorkTimeList(String mrId) {
 		
 		int checkNum = apprMapper.checkWorkTimeList(mrId);
@@ -255,7 +292,7 @@ public class ApprRequestService {
 		
 	}
 	
-	
+	/* 출퇴근 상세보기가 없을 때 */
 	public AttTimeManage nullList(String mrId) {
 		
 		AttTimeManage attTimeManage = apprMapper.nullList(mrId);
@@ -265,6 +302,7 @@ public class ApprRequestService {
 		
 	}
 	
+	/* 직원 업무시간 상세보기 */
 	public AttTimeManage workerListDetail(String mrId) {
 		
 		AttTimeManage attTimeManage = apprMapper.workerListDetail(mrId);
@@ -274,7 +312,7 @@ public class ApprRequestService {
 		
 	}
 	
-	
+	/* 관리자 화면 출퇴근 관리 직원 리스트 가져오기 */
 	public List<Member> getWorkerList() {
 		
 		List<Member> getWorkerList = apprMapper.getWorkerList();
@@ -283,29 +321,32 @@ public class ApprRequestService {
 		return getWorkerList;
 	}
 	
-	
+	/* 복귀시간 저장 */
 	public int goingOutEnd(String attCode) {
 		
 		return apprMapper.goingOutEnd(attCode);
 	}
 	
+	/* 퇴근시간 저장 */
 	public int workAttendanceEnd(String attCode) {
 		
 		return apprMapper.workAttendanceEnd(attCode);
 	}
 	
+	/* 출근 중복 확인 */
 	public int dateCheck(String sid) {
 		
 		return apprMapper.dateCheck(sid);
 	}
 	
-	
+	/* 외출시간 저장 */
 	public int goingStOut(String attCode) {
 	
 		return apprMapper.goingStOut(attCode);
 	}
 	
 	
+	//출퇴근 코드 가져오기
 	public String getAttCode(String SID) {
 	
 		return apprMapper.getAttCode(SID);
@@ -377,6 +418,8 @@ public class ApprRequestService {
 		return apprMapper.reDelete(reCode);
 	}
 	
+	
+	/* ?? */
 	public int approval(ApprovalRequest approvalRequest) {
 		
 		
@@ -418,7 +461,7 @@ public class ApprRequestService {
 		return holliday;
 	}
 	
-	
+	//휴가코드 자동생성
 	public String getReCode() {
 		Map<String, Object> reCodeMax =  apprMapper.getReCode();
 		
@@ -438,6 +481,7 @@ public class ApprRequestService {
 		return reCode;
 	}
 	
+	//휴가생성
 	public int addholidayApproval(ApprovalRequest approvalRequest) {
 		
 		
