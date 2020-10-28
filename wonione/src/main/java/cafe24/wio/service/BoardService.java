@@ -113,7 +113,7 @@ public class BoardService {
 		return dataList;
 	}
 
-	
+	//수강 후기
 	//수강 후기 조회
 		public List<Review> getReview(Review review){
 			System.out.println(review + " <-- review");
@@ -149,16 +149,16 @@ public class BoardService {
 		return reviewNum;
 	}
 		
-	//자료게시판 수정
+	//수강 후기 수정
 	public int modifyReview(Review review) {
 		int modify = boardMapper.modifyReview(review);
 		return modify;
 	}
 	
-	//자료게시판 삭제
+	//수강 후기 삭제
 	public int removeReview(String reviewNum) {
-		int remove = boardMapper.removeReview(reviewNum);
-		return remove;
+		int removeReview = boardMapper.removeReview(reviewNum);
+		return removeReview;
 	}
 	
 }
