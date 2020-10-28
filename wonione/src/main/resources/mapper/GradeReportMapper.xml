@@ -124,10 +124,12 @@
 
 </delete>
 
+
 <!-- 자동증가코드  -->
 <select id="gradeCode" resultType="hashMap">
-	SELECT IFNULL((SELECT max(CAST(SUBSTRING(report_lec_code,11) AS DECIMAL))+1 FROM wt_report_lecture),1) AS max;
+	SELECT IFNULL((SELECT max(CAST(SUBSTRING(report_lec_code,12) AS DECIMAL))+1 FROM wt_report_lecture),1) AS max;
 </select>
+
 
 <!--보고서작성 쿼리문  -->
 <insert id="GradeReportWrite"  parameterType="GradeReport" >
@@ -174,18 +176,14 @@
 <select id="lecOpenCodeNum" parameterType="String" resultType="hashMap" >
 
 	SELECT 
- 		ol.lec_open_code as 'lecOpenCode'
+ 		ol.lec_open_code
+ 		,ol.mr_id 
 	FROM
 		wt_open_lecture AS ol
-	INNER JOIN
-		wt_report_lecture AS rl
-	ON
-		ol.mr_id = rl.mr_id
 	WHERE
-		ol.lec_open_sche_code = #{lecOsCode} and ol.mr_id = #{sessionId};
+		 ol.mr_id = #{sessionId};
 	
 </select>
-
 
 
 <!-- 수업명가져오기   -->
@@ -193,18 +191,16 @@
 <select id="classCode" resultType="hashMap"  parameterType="String">
 
 	SELECT 
-		lec_os_code
-		, lec_name
-		, mr_teacher_id
-		,m.mr_name
-   FROM 
-  		 wt_lecture_open_schedule AS lo
-   INNER JOIN 
-   		wt_member_registration AS m
-   on
-  		 lo.mr_teacher_id = m.mr_id
-   where
-  		 m.mr_id = #{sessionId};
+		 los.lec_name
+		 , los.lec_os_code 
+	FROM 
+		wt_open_lecture as lo
+	inner join
+		wt_lecture_open_schedule as los
+	on
+		lo.lec_open_sche_code = los.lec_os_code 
+	WHERE 
+ 		lo.lec_open_code = #{lecOpenCode};
 
 </select>
 

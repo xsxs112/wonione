@@ -46,9 +46,9 @@ public class GradeReportService {
 		
 	}
 	
-	//강의예정코드조회	
-	public List<Map<String, Object>> classCode(String sessionId) {
-		List<Map<String, Object>> clCode = gradeReportMapper.classCode(sessionId);
+	//업무계획번호로 강의명 조희	
+	public Map<String, Object> classCode(String lecOpenCode) {
+		Map<String, Object> clCode = gradeReportMapper.classCode(lecOpenCode);
 		System.out.println(clCode);
 		return clCode;
 	}	
@@ -120,12 +120,11 @@ public class GradeReportService {
 	 }
 	
 	//업무계획서 코드 조회하기
-		public Map<String, Object> lecOpenCodeNum(String sessionId, String lecOsCode) {
-			 Map<String, Object> lecOpenCodeNum = gradeReportMapper.lecOpenCodeNum(sessionId, lecOsCode);
+		public List<Map<String, Object>> lecOpenCodeNum(String sessionId) {
+			List<Map<String, Object>> lecOpenCodeNum = gradeReportMapper.lecOpenCodeNum(sessionId);
 			return lecOpenCodeNum;
 	}
 	 
-		
 	//선생님이름아이디가져오기
 		public Map<String, Object> teacherId(){
 			Map<String, Object> teacherId = gradeReportMapper.teacherId();

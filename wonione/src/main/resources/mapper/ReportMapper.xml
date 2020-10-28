@@ -22,51 +22,51 @@
 <!--보고서리스트  -->
 <select id="getReportList" resultType="Report"  resultMap="reportResultMap">
 	
-SELECT 
-		  lec_open_code
-		, lec_name
-		, mr_name
-		, lec_target
-		, lec_plan
-		, lec_etc
-		, open_lec_reg_date
-	FROM 
-		wt_open_lecture 
-	INNER JOIN
-		wt_member_registration 
-	ON
-		wt_member_registration.mr_id = wt_open_lecture.mr_id
-	inner join 
-		wt_lecture_open_schedule
-	on
-		wt_lecture_open_schedule.lec_os_code = wt_open_lecture.lec_open_sche_code 
-	ORDER by
-		wt_open_lecture.lec_open_code DESC;
+		SELECT 
+			  lec_open_code
+			, lec_name
+			, mr_name
+			, lec_target
+			, lec_plan
+			, lec_etc
+			, open_lec_reg_date
+		FROM 
+			wt_open_lecture 
+		INNER JOIN
+			wt_member_registration 
+		ON
+			wt_member_registration.mr_id = wt_open_lecture.mr_id
+		inner join 
+			wt_lecture_open_schedule
+		on
+			wt_lecture_open_schedule.lec_os_code = wt_open_lecture.lec_open_sche_code 
+		ORDER by
+			wt_open_lecture.lec_open_code DESC;
 </select>
 
 <!--보고서 상세보기  -->
 <select id="getReportDetailList" parameterType="String" resultType="Report"  resultMap="reportResultMap">
 	
-	SELECT 
-		  lec_open_code
-		, lec_name
-		, mr_name
-		, lec_target
-		, lec_plan
-		, lec_etc
-		, open_lec_reg_date
-	FROM 
-		wt_open_lecture 
-	INNER JOIN
-		wt_member_registration 
-	ON
-		wt_member_registration.mr_id = wt_open_lecture.mr_id
-	inner join 
-		wt_lecture_open_schedule
-	on
-		wt_lecture_open_schedule.lec_os_code = wt_open_lecture.lec_open_sche_code 
-	WHERE
-		lec_open_code = #{lecOpenCode};
+		SELECT 
+			  lec_open_code
+			, lec_name
+			, mr_name
+			, lec_target
+			, lec_plan
+			, lec_etc
+			, open_lec_reg_date
+		FROM 
+			wt_open_lecture 
+		INNER JOIN
+			wt_member_registration 
+		ON
+			wt_member_registration.mr_id = wt_open_lecture.mr_id
+		inner join 
+			wt_lecture_open_schedule
+		on
+			wt_lecture_open_schedule.lec_os_code = wt_open_lecture.lec_open_sche_code 
+		WHERE
+			lec_open_code = #{lecOpenCode};
 </select>
 
 <select id="getReCode" resultType="hashMap">
@@ -76,149 +76,147 @@ SELECT
 <!--보고서작성쿼리문  -->
 <insert id="getReportWrite" parameterType="Report">
    
-   INSERT INTO wt_open_lecture
-         ( lec_open_code
-         , lec_open_sche_code
-         , mr_id
-         , lec_target
-         , lec_plan
-         , lec_etc
-         , open_lec_reg_date)
-   VALUES(
-           #{lecOpenCode}
-         , #{lecName}
-         , #{mrName}
-         , #{lecTarget}
-         , #{lecPlan}
-         , #{lecEtc}
-         , NOW());
+	   INSERT INTO wt_open_lecture
+	         ( lec_open_code
+	         , lec_open_sche_code
+	         , mr_id
+	         , lec_target
+	         , lec_plan
+	         , lec_etc
+	         , open_lec_reg_date)
+	   VALUES(
+	           #{lecOpenCode}
+	         , #{lecName}
+	         , #{mrName}
+	         , #{lecTarget}
+	         , #{lecPlan}
+	         , #{lecEtc}
+	         , NOW());
 
 </insert>
 
 <!-- 수업명가져오기   -->
-
 <select id="classCode" resultType="hashMap"  parameterType="String">
 
-	SELECT
-		   lec_os_code
-		 , lec_name
-		 , mr_teacher_id
-		 , lec_time_code
-		 , lec_room_code
-		 , lec_day
-		 , lec_level_code
-		 , lec_st_date
-		 , lec_fin_date
-		 , lec_os_reg_date
-	FROM 
-		wt_lecture_open_schedule;
+		SELECT
+			   lec_os_code
+			 , lec_name
+			 , mr_teacher_id
+			 , lec_time_code
+			 , lec_room_code
+			 , lec_day
+			 , lec_level_code
+			 , lec_st_date
+			 , lec_fin_date
+			 , lec_os_reg_date
+		FROM 
+			wt_lecture_open_schedule;
 
 </select>
 
 <!-- 작성자이름가져오기  -->
 <select id="writeName" resultType="hashMap"  parameterType="String">
 
-	SELECT 
-		 mr_id
-		,mr_pw
-		,mr_name
-		,level_num
-		,mr_phone
-		,mr_addr
-		,mr_target_score
-		,pm_r_code
-		,mr_account_num
-		,shuttle_num
-		,mr_reg_date
-	FROM 
-		wt_member_registration
-	WHERE
-		level_num = 2;	
+		SELECT 
+			 mr_id
+			,mr_pw
+			,mr_name
+			,level_num
+			,mr_phone
+			,mr_addr
+			,mr_target_score
+			,pm_r_code
+			,mr_account_num
+			,shuttle_num
+			,mr_reg_date
+		FROM 
+			wt_member_registration
+		WHERE
+			level_num = 2;	
 		
 </select>
 
 <!-- 삭제처리  -->
 <delete id="deleteCode" parameterType="String">
-	DELETE 
-	FROM 
-		wt_open_lecture
-	WHERE 
-		lec_open_code= #{lecOpenCode};
+		 DELETE
+		FROM 
+			wt_open_lecture
+		WHERE 
+			lec_open_code= #{lecOpenCode};
 </delete>
 
 <!--보고서수정쿼리  -->
 <update id="updateCode" parameterType="Report">
-	UPDATE 
-		wt_open_lecture
-	SET 
-		  lec_target= #{lecTarget}
-		, lec_plan= #{lecPlan}
-		, lec_etc= #{lecEtc}
-		, open_lec_reg_date= NOW()
-	WHERE 
-		lec_open_code= #{lecOpenCode};
+		UPDATE 
+			wt_open_lecture
+		SET 
+			  lec_target= #{lecTarget}
+			, lec_plan= #{lecPlan}
+			, lec_etc= #{lecEtc}
+			, open_lec_reg_date= NOW()
+		WHERE 
+			lec_open_code= #{lecOpenCode};
 
 </update>
 
 <!-- 검색조건  -->
-
 <select id="getSearchList" resultType="Report"  resultMap="reportResultMap">
 	
-	SELECT 
-		  lec_open_code
-		, lec_name
-		, mr_name
-		, lec_target
-		, lec_plan
-		, lec_etc
-		, open_lec_reg_date
-	FROM 
-		wt_open_lecture
-	INNER JOIN
-		wt_member_registration 
-	ON
-		wt_member_registration.mr_id = wt_open_lecture.mr_id
-	inner join 
-		wt_lecture_open_schedule
-	on
-		wt_lecture_open_schedule.lec_os_code = wt_open_lecture.lec_open_sche_code 	
-	WHERE
-		${lecSk} LIKE CONCAT('%',#{lecSv},'%');	
+		SELECT 
+			  lec_open_code
+			, lec_name
+			, mr_name
+			, lec_target
+			, lec_plan
+			, lec_etc
+			, open_lec_reg_date
+		FROM 
+			wt_open_lecture
+		INNER JOIN
+			wt_member_registration 
+		ON
+			wt_member_registration.mr_id = wt_open_lecture.mr_id
+		inner join 
+			wt_lecture_open_schedule
+		on
+			wt_lecture_open_schedule.lec_os_code = wt_open_lecture.lec_open_sche_code 	
+		WHERE
+			${lecSk} LIKE CONCAT('%',#{lecSv},'%');	
 
 </select>
 
 <!-- 페이징 카운트-->
 <select id="countReport" resultType="int">
-      SELECT
-         COUNT(*)
-      FROM
-         wt_open_lecture;
+	      SELECT
+	         COUNT(*)
+	      FROM
+	         wt_open_lecture;
 </select>
 
 <!-- 페이징 -->
 <select id="countReportList" resultType="Report"  resultMap="reportResultMap">
 
-	SELECT 
-		  lec_open_code
-		, lec_name
-		, mr_name
-		, lec_target
-		, lec_plan
-		, lec_etc
-		, open_lec_reg_date
-	FROM 
-		wt_open_lecture 
-	INNER JOIN
-		wt_member_registration 
-	ON
-		wt_member_registration.mr_id = wt_open_lecture.mr_id
-	inner join 
-		wt_lecture_open_schedule
-	on
-		wt_lecture_open_schedule.lec_os_code = wt_open_lecture.lec_open_sche_code 	
-	ORDER by
-		wt_open_lecture.lec_open_code DESC
-	LIMIT #{startRow}, #{rowPerPage};
+		SELECT 
+			  lec_open_code
+			, lec_name
+			, mr_name
+			, lec_target
+			, lec_plan
+			, lec_etc
+			, open_lec_reg_date
+		FROM 
+			wt_open_lecture 
+		INNER JOIN
+			wt_member_registration 
+		ON
+			wt_member_registration.mr_id = wt_open_lecture.mr_id
+		inner join 
+			wt_lecture_open_schedule
+		on
+			wt_lecture_open_schedule.lec_os_code = wt_open_lecture.lec_open_sche_code 	
+		ORDER by
+			wt_open_lecture.lec_open_code DESC
+		LIMIT #{startRow}, #{rowPerPage};
 
 </select>
 
