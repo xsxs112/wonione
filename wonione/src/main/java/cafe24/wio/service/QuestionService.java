@@ -17,7 +17,7 @@ public class QuestionService {
 		
 	
 
-
+	//문제리스트 화면
 	public Map<String, Object> questionList(int currentPage) {
 		  //보여줄 행의 갯수
 	      final int ROW_PER_PAGE = 10;
@@ -56,7 +56,7 @@ public class QuestionService {
 	      
 	      return resultMap;
 	}
-
+	//문제출제 페이지
 	public Map<String, Object> question(int currentPage, String questionName) {
 			//보여줄 행의 갯수
 	      final int ROW_PER_PAGE = 1;
@@ -96,35 +96,28 @@ public class QuestionService {
 	      
 	      return resultMap;
 	}
-
+	//정답체크
 	public int QuestionScoreCheck(String qeAnswer, String studentName, int qeCode) {
 		int result= questionMapper.QuestionScoreCheck(qeAnswer,qeCode,studentName);
 		
 		return result;
 	}
-
-	public Map<String, Object> ScoreCheck(String scoreSid, String scoreCheckQuestionName) {
-		Map<String, Object> scoreSidMap = questionMapper.ScoreCheck(scoreSid,scoreCheckQuestionName);
-		return scoreSidMap;
-	}
-
+	//문제 중복체크
 	public String QuestionSidCheck(String questionSid, String questionName) {
 		String result = questionMapper.QuestionSidCheck(questionSid,questionName);
 		return result;
 	}
-
-	
-
+	//문제 타이틀 등록
 	public int insertQuestionTitle(Question question) {
 		int insertQuestionTitleResultResult = questionMapper.insertQuestionTitle(question);
 		return insertQuestionTitleResultResult;
 	}
-
+	//문제 타이틀 삭제
 	public int deleteQuestionTitle(String questionName) {
 		int deleteQuestionTitleResult = questionMapper.deleteQuestionTitle(questionName);
 		return deleteQuestionTitleResult;
 	}
-
+	//타이틀내 문제등록전 리스트
 	public Map<String, Object> titleQuestionList(int currentPage, String qtCodeName) {
 		//보여줄 행의 갯수
 	    final int ROW_PER_PAGE = 5;
@@ -164,31 +157,31 @@ public class QuestionService {
 	
 		return resultMap;
 	}
-
+	//문제등록전 리스트상세보기
 	public Map<String, Object> titleQuestionListView(String qeCode) {
 		Map<String, Object> titleQuestionListViewRsult = questionMapper.titleQuestionListView(qeCode);
 		return titleQuestionListViewRsult;
 	}
-
+	//문제등록
 	public int insertQuestion(Question question) {
 		int result = questionMapper.insertQuestion(question);
 		return result;
 	}
-
+	//문제수정
 	public void modifyQuestion(Question question) {
 		questionMapper.modifyQuestion(question);
 	}
-
+	//문제삭제
 	public int deleteQuestion(int qeCode) {
 		int deleteQuestionResult = questionMapper.deleteQuestion(qeCode);
 		return deleteQuestionResult;
 	}
-
+	//타이틀 수정
 	public int modifyQuestionTitle(String questionCodeName, String questionTitle) {
 		int modifyQuestionTitleResult = questionMapper.modifyQuestionTitle(questionCodeName,questionTitle);
 		return modifyQuestionTitleResult;
 	}
-
+	//타이틀수정전 이름체크
 	public int QuestionTitleNameCheck(String questionCodeName) {
 		int QuestionTitleNameCheckResult = questionMapper.QuestionTitleNameCheck(questionCodeName);
 		return QuestionTitleNameCheckResult;
@@ -233,12 +226,12 @@ public class QuestionService {
 	
 		return resultMap;
 	}
-
+	//점수확인
 	public Map<String, Object> questionScoreCheck(String questionSid, String questionCodeName) {
 		Map<String, Object> questionScoreCheckResult = questionMapper.questionScoreCheck(questionSid,questionCodeName);
 		return questionScoreCheckResult;
 	}
-
+	//응시 초기화
 	public int candidateQuestionInitialization(String candidateQuestionCodeName) {
 		int candidateQuestionInitializationResult = questionMapper.candidateQuestionInitialization(candidateQuestionCodeName);
 		return candidateQuestionInitializationResult;

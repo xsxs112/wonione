@@ -430,7 +430,7 @@
 			});
 			request.done(function(data) {
 				if(data == 0){
-					window.open('/Question?questionName='+questionName,'문제출제', 'width=600, height=285 left=600 top=100');
+					window.open('/Question?questionName='+questionName,'문제출제', 'width=600, height=320 left=600 top=100');
 				}else{
 					alert('해당 문제를 완료했던 아이디입니다.');
 				}

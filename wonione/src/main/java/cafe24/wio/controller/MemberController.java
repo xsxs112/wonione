@@ -83,7 +83,7 @@ public class MemberController {
 		
 		session.invalidate();
 		
-		return "redirect:/";
+		return "redirect:/login";
 	}
 
 	

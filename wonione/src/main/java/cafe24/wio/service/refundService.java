@@ -12,6 +12,8 @@ public class refundService {
 	
 	@Autowired
 	private cafe24.wio.mapper.refundMapper refundMapper;
+	
+	//환불신청페이지
 	public Map<String, Object> refundApplication(int currentPage, String sessionId) {
 		//보여줄 행의 갯수
 	      final int ROW_PER_PAGE = 10;
