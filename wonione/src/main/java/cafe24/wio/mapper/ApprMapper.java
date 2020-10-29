@@ -15,6 +15,8 @@ public interface ApprMapper {
 	
 	
 	
+	public int boolranEarlyLeave(String manageWorkEndTime,String attEndTime);
+
 	public float getModifyGoingOutTime(AttManagement attManagement);
 	
 	public float getRealWorkTime(String attStTime,String attEndTime);

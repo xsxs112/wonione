@@ -22,6 +22,12 @@ public class ApprRequestService {
 	
 	
 	
+	public int boolranEarlyLeave(String manageWorkEndTime, String attEndTime) {
+		
+		
+		return apprMapper.boolranEarlyLeave(manageWorkEndTime,attEndTime);
+	}
+	
 	public float getModifyGoingOutTime(AttManagement attManagement) {
 		
 		

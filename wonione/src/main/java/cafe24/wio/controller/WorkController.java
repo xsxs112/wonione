@@ -50,11 +50,25 @@ public class WorkController {
 			attManagement.setAttStTime(attStTime); //근무시간 계산할때 업무시간으로 셋팅
 		}else { //지각했다면
 			attStTime = "1996-12-18 " + stTime; //입력받은 값으로 셋팅
-			attManagement.setAttStTime(attStTime); //근무시간 계산할 때 출근시간으로 셋팅 (지각)
 			attNote += "지각"; //비고란에 지각 셋팅
 		}
+		String manageWorkEndTime = getAttTimeManage.getWorkEndTime();
+		int boolranEarlyLeave = apprRequestService.boolranEarlyLeave(manageWorkEndTime,attEndTime); //조퇴했으면 1을 리턴
+		if(boolranEarlyLeave == 1) {
+			if("".equals(attNote)) {
+				attNote += "조퇴";
+			}else {
+				attNote += ", 조퇴";
+			}
+		}
+		
+		
 		attEndTime = "1996-12-18 " + attEndTime + ":00";
-		attManagement.setAttEndTime(attEndTime); //퇴근시간 셋팅
+		
+		
+		
+		
+		
 		//근무시간 계산  퇴근 - 출근
 		float getWorkTime = apprRequestService.getRealWorkTime(attStTime,attEndTime); //근무시간 계산 됨
 		int intWorkTime = (int) getWorkTime;
@@ -68,14 +82,17 @@ public class WorkController {
 		
 		//외출시간 구하기(0~30분은 0.5시간 31~1시간은 1시간 처리)
 		float goingOut = 0;
-		attManagement.setGoingOutStTime("1996-12-18 " +goingOutStTime);
-		attManagement.setGoingOutEndTime("1996-12-18 " +goingOutEndTime);
 		
 		if("".equals(goingOutStTime) || "".equals(goingOutEndTime)) {//외출 시간이 없다면
 			goingOut = 0;
 		}else {
 			goingOut = apprRequestService.getModifyGoingOutTime(attManagement);
-			attNote += "외출";
+			if("".equals(attNote)) {
+				attNote += "외출";
+				
+			}else {
+				attNote += ", 외출";
+			}
 			int intgoingOut = (int) goingOut;
 			if(goingOut % 1 <0.5) {
 				goingOut = (float) (intgoingOut+0.5);
@@ -95,11 +112,9 @@ public class WorkController {
 		}
 		//----------------------------------------------------------------------
 		getWorkTime = getWorkTime - goingOut - floatrealMealTime;
-		System.out.println("진짜 근무시간 " +getWorkTime );
 		
 		
 		//초과근무 구하기
-		
 		String stringWorkTime = getAttTimeManage.getWorkTime();
 		stringWorkTime = stringWorkTime.replace("시간", "");
 		float dataWorkTime = Float.parseFloat(stringWorkTime);
@@ -107,15 +122,17 @@ public class WorkController {
 		if(overWorkTime <= 0) {
 			overWorkTime = 0;
 		}else {
-			attNote += "초과근무";
+			if("".equals(attNote)) {
+				attNote += "초과근무";
+			}else {
+				attNote += ", 초과근무";
+			}
 		}
-		System.out.println(overWorkTime + "걸러진 시간 ");
 		attManagement.setGoingOut(goingOut);
 		attManagement.setAttTime(getWorkTime);
 		attManagement.setRealMealTime(floatrealMealTime);
 		attManagement.setAttNote(attNote);
 		attManagement.setWorkOvertime(overWorkTime);
-		
 		
 		
 		return attManagement;
@@ -188,14 +205,14 @@ public class WorkController {
 	
 	//출퇴근 정보 수정화면
 	@GetMapping("/modifyAttendance")
-	public String modifyAttendance(Model model, AttTimeManage attTimeManage,HttpSession session,
+	public String modifyAttendance(Model model, AttTimeManage attTimeManage,
 									@RequestParam(value = "attCode", required = false) String attCode) {
 		
 		AttManagement attManagementDetail = apprRequestService.getAttManagemetDetail(attCode);
 		model.addAttribute("attManagementDetail", attManagementDetail);
 		
-		String sid = (String) session.getAttribute("SID");
-		AttTimeManage getAttTimeManage = apprRequestService.getAttTimeManage(sid);
+		String mid = attManagementDetail.getMrId();
+		AttTimeManage getAttTimeManage = apprRequestService.getAttTimeManage(mid);
 		
 		String getStTime;
 		String getMTime;

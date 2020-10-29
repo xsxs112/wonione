@@ -7,6 +7,14 @@
 	<mapper namespace="cafe24.wio.mapper.ApprMapper">
 
 	
+	<!-- 조퇴 확인하기 조퇴했으면 1을 리턴-->
+	<select id = "boolranEarlyLeave" parameterType="string" resultType="int">
+
+		SELECT (#{manageWorkEndTime} <![CDATA[ >= ]]> #{attEndTime});
+
+		
+	</select>
+	
 	<!-- 수정 후 외출시간 구하기-->
 	<select id = "getModifyGoingOutTime" parameterType="string" resultType="float">
 
