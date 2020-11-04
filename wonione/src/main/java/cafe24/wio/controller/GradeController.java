@@ -67,7 +67,6 @@ public class GradeController {
 		return idName;
 		
 	}
-
 	
 	// 성적상세보기리스트
 	@GetMapping("/gradePage")
@@ -82,18 +81,20 @@ public class GradeController {
 
 	// 조건검색
 	@PostMapping("/serchGrade")
-	public String serchGrade(Model model,
+	public String serchGrade(Model model,HttpSession session ,
 							@RequestParam(value = "lecGd", required = false) String lecGd,
 							@RequestParam(value = "lecGds", required = false) String lecGds) {
 		List<Grade> countGradeList = gradeService.searchGrade(lecGd, lecGds);
 		logger.info("serchGrade gradeList-->" + countGradeList);
 		List<Map<String, Object>> sName = gradeService.sName();
 		List<Map<String, Object>> testNum = gradeService.testNum();
-		String gradeCode = gradeService.gradeCode();
+		String sessionId = session.getAttribute("SID").toString();
+		List<Map<String, Object>> clCode = gradeService.classCode(sessionId);
+
 		model.addAttribute("countGradeList", countGradeList);
 		model.addAttribute("sName", sName);
 		model.addAttribute("testNum", testNum);
-		model.addAttribute("gradeCode", gradeCode);
+		model.addAttribute("clCode", clCode);
 		return "grade/gradeList";
 
 	}
@@ -118,7 +119,8 @@ public class GradeController {
 			@RequestParam(value = "mrId", required = false) String mrId,
 			@RequestParam(value = "testNumber", required = false) String testNumber,
 			@RequestParam(value = "gradeManScore", required = false) String gradeManScore,
-			@RequestParam(value = "gradeManRegDate", required = false) String gradeManRegDate) {
+			@RequestParam(value = "gradeManRegDate", required = false) String gradeManRegDate,
+			@RequestParam(value = "lecOsCode", required = false) String lecOsCode) {
 		int result  = gradeService.insertGrade(grade);
 		model.addAttribute("Grade", grade);
 		String gradeCode = gradeService.gradeCode();
