@@ -137,12 +137,14 @@
 				, mr_id
 				, test_round
 				, grade_man_score
+				, lec_os_code
 				, grade_man_reg_date)
 	VALUES (
 				  #{gradeManCode}
 				, #{mrName}
 				, #{testNumber}
 				, ${gradeManScore}
+				, #{lecName}
 				, NOW());
 
 </insert>
@@ -153,18 +155,18 @@
 <select id="classCode" resultType="hashMap"  parameterType="String">
 
 	SELECT 
-		lec_os_code
-		, lec_name
-		, mr_teacher_id
-		,m.mr_name
-   FROM 
-  		 wt_lecture_open_schedule AS lo
-   INNER JOIN 
-   		wt_member_registration AS m
-   on
-  		 lo.mr_teacher_id = m.mr_id
-   where
-  		 m.mr_id = #{sessionId};
+		lo.lec_op_writer 
+		,los.lec_name
+		,lo.lec_os_code
+	FROM 
+		wt_lecture_open as lo
+	inner join
+		wt_lecture_open_schedule as los
+	on
+		lo.lec_os_code = los.lec_os_code
+	WHERE 
+		lo.lec_op_writer = #{sessionId} ;
+  
 
 </select>
 
