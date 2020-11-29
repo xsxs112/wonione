@@ -47,7 +47,7 @@
 			<div style="text-align: right; margin-right: 50px; margin-bottom: 10px;">
 				<a href="/QuestionList"><button type="button" class="btn btn-default">타이틀로</button></a>
 			</div>
-			<div style="margin-right: 50px;">
+			<div style="margin-right: 50px;" th:if="${lastPage ne 0}">
 				<button type="button" class="btn btn-default" id="candidateQuestionInitialization">응시 초기화</button>
 			</div>
 			<div class="form-inline">
@@ -69,7 +69,7 @@
 		  				<th>삭제</th>
 		  			</tr>
 		  		</thead>	  
-		  		<tbody id="changeDataCandidateQuestionList">
+		  		<tbody id="changeDataCandidateQuestionList" th:if="${candidateQuestionList != ''}">
 	  				<tr th:each="c : ${candidateQuestionList}">
 		  				<td th:text="${#numbers.formatInteger(c.rowNum,0,'POINT')}" id="effectivenessNumber"></td>
 		  				<td hidden="" th:text="${c.qc_student}" id="candidateQuestionId"></td>
@@ -79,11 +79,16 @@
 		  				<td th:text="${c.qc_date}"></td>
 		  				<td><button type="button" class="btn btn-default deleteCandidateQuestion">삭제</button></td>
 		  			</tr>
-		  		</tbody>	
+		  		</tbody>
+		  		<tbody th:if="${lastPage eq 0}">	
+	  				<tr>
+		  				<td colspan="6">응시인원이 없습니다.</td>
+	  				</tr>
+  				</tbody>
 	  		</table>
   		</div>
-  		<a th:href="@{/candidateQuestionList(qtCodeName=(${qtCodeName}))}">처음</a>
-		    
+  		<div th:if="${lastPage ne 0}">
+  			<a th:href="@{/candidateQuestionList(qtCodeName=(${qtCodeName}))}">처음</a>
 		    <span th:if="${currentPage > 1}"><a th:href="@{/candidateQuestionList(currentPage=(${currentPage}-1),qtCodeName=(${qtCodeName})}">이전</a></span>
 		    <span th:unless="${currentPage > 1}" th:text="이전"></span>
 		    
@@ -95,6 +100,7 @@
 		    <span th:if="${currentPage != lastPage}"><a th:href="@{/candidateQuestionList(currentPage=(${currentPage}+1),qtCodeName=(${qtCodeName}))}">다음</a></span>
 		    <span th:unless="${currentPage != lastPage}" th:text="다음"></span>
 		    <a th:href="@{/candidateQuestionList(currentPage=${lastPage},qtCodeName=(${qtCodeName}))}">마지막</a>
+	    </div>
   	</div>
 	<script src="js/question.js"></script>
 	</th:block>

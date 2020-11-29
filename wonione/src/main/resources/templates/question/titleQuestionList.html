@@ -52,18 +52,28 @@
 		  				<th class="qCenter">출제자</th>
 		  			</tr>
 		  		</thead>	  
-		  		<tbody>
+		  		<tbody th:if="${titleQuestionList ne null}">
 	  				<tr th:each="tql : ${titleQuestionList}">
 		  				<td th:text="${#numbers.formatInteger(tql.rowNum,0,'POINT')}"></td>
-		  				<td><input type="hidden" th:value="${tql.qe_code}" name="qeCode"><a th:text="${tql.qt_title}" class="titleQuestionListView"></a></td>
+		  				<td>
+		  					<input type="hidden" th:value="${tql.qe_code}" name="qeCode">
+		  					<input type="hidden" th:value="${tql.qt_codename}" name="qeCodeName">
+		  					<a th:text="${tql.qt_title}" class="titleQuestionListView"></a>
+	  					</td>
 		  				<td th:text="${tql.qe_data}"></td>
 		  				<td th:text="${tql.qe_score}"></td>
 		  				<td th:text="${tql.qe_answer}"></td>
 		  				<td th:text="${tql.mr_name}"></td>
 		  			</tr>
-		  		</tbody>	
+		  		</tbody>
+		  		<tbody th:if="${lastPage eq 0}">
+		  			<tr>
+		  				<td colspan="6">문제가 없습니다.</td>
+		  			</tr>
+		  		</tbody>
 	  		</table>
   		</div>
+  		<div th:if="${lastPage ne 0}">
   			<a th:href="@{/titleQuestionList(qtCodeName=(${qtCodeName}))}">처음</a>
 		    <span th:if="${currentPage > 1}"><a th:href="@{/titleQuestionList(qtCodeName=${qtCodeName},currentPage=(${currentPage}-1))}">이전</a></span>
 		    <span th:unless="${currentPage > 1}" th:text="이전"></span>
@@ -76,6 +86,7 @@
 		    <span th:if="${currentPage != lastPage}"><a th:href="@{/titleQuestionList(qtCodeName=${qtCodeName},currentPage=${currentPage}+1)}">다음</a></span>
 		    <span th:unless="${currentPage != lastPage}" th:text="다음"></span>
 		    <a th:href="@{/titleQuestionList(qtCodeName=${qtCodeName},currentPage=${lastPage})}">마지막</a>
+		</div>    
   	</div>
   	<div style="text-align: right;">
   		<input type="hidden" th:value="${qtCodeName}" class="titleQuestionListCodeName">

@@ -3,6 +3,11 @@
  * 수정일 2020-10-06
  */
 (function ($) {
+	//테스트용 문제 제거방지
+	$('#notDeleteQuestionTitle').click(function(){
+		alert('해당 문제는 삭제할수 없습니다. \n새로 타이틀을 생성해주세요.');
+	});
+	
 	//인원확인에서 삭제버튼
 	$(document).on('click','.deleteCandidateQuestion',function(){
 		var candidateQuestionId = $(this).parents().children('#candidateQuestionId').text();
@@ -247,16 +252,26 @@
 			alert('취소하셨습니다.');
 		}
 	});
-	
 	//수정처리
 	$(document).on('click','#modifyQuestion',function(){
 		if(confirm('수정하시겠습니까?')){
-			$('#modifyViewForm').submit();
 			alert('수정되었습니다.');
 		}else{
 			alert('취소하셨습니다.');
 		}
 	});
+	//한글입력방지
+	function checkNoKr(e) {
+		 var objTarget = e.srcElement || e.target;
+		 if(objTarget.type == 'text') {
+		  var value = objTarget.value;
+		  if(/[ㄱ-ㅎㅏ-ㅡ가-핳]/.test(value)) {
+		   alert('한글은 사용하실 수 없습니다.');
+		   objTarget.value = objTarget.value.replace(/[ㄱ-ㅎㅏ-ㅡ가-핳]/g,'');
+		  }
+		 }
+		};
+
 	//문제등록
 	$('#insertQuestion').click(function(){
 		var qtCodeName = $('.titleQuestionListCodeName').val();
@@ -323,7 +338,7 @@
 			html += '</tr>';
 			html += '</table>';
 			html += '<div style="text-align: center;">';
-			html += '<input type="button" class="btn btn-defult" value="수정" style="margin-right: 50px;" id="modifyQuestion">';
+			html += '<input type="submit" class="btn btn-defult" value="수정" style="margin-right: 50px;" id="modifyQuestion">';
 			html += '<input type="button" class="btn btn-defult deleteQuestion" value="삭제">';
 			html += '</div>';
 			$("#modifyViewForm").empty();
