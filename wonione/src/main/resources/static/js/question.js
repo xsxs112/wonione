@@ -3,6 +3,7 @@
  * 수정일 2020-10-06
  */
 (function ($) {
+	window.jQuery1_11_2 = jQuery.noConflict(true);
 	//테스트용 문제 제거방지
 	$('#notDeleteQuestionTitle').click(function(){
 		alert('해당 문제는 삭제할수 없습니다. \n새로 타이틀을 생성해주세요.');
