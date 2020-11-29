@@ -136,5 +136,11 @@
 		    <a th:href="@{/QuestionList(currentPage=${lastPage})}">마지막</a>
   	</div>
 	<script src="js/question.js"></script>
+	<script type="text/javascript">
+		//테스트용 문제 제거방지
+		$('#notDeleteQuestionTitle').click(function(){
+			alert('해당 문제는 삭제할수 없습니다. \n새로 타이틀을 생성해주세요.');
+		});
+	</script>
 	</th:block>
 </html>
